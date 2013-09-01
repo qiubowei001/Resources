@@ -12,16 +12,24 @@ playerInfo = {
 	SKILLID2 = 9,
 	SKILLID3 = 10,
 	SKILLID4 = 11,
-	
 }
+
+
+local tPlayerSkillInd = 
+{	playerInfo.SKILLID1,
+	playerInfo.SKILLID2,
+	playerInfo.SKILLID3,
+	playerInfo.SKILLID4
+}
+
 
 --玩家经验配置表
 local tPlayerExp = 
 {
-	[1] = 5,
-	[2] = 20,
-	[3] = 20,
-	[4] = 20,
+	[1] = 500,
+	[2] = 5,
+	[3] = 5,
+	[4] = 5,
 	[5] = 20,
 	[6] = 20,
 	[7] = 20,
@@ -51,8 +59,8 @@ function p.Initplayer()
 	player[playerInfo.LEVEL] = 1;
 	
 	
-	player[playerInfo.SKILLID1] = 0;
-	player[playerInfo.SKILLID2] = 0;
+	player[playerInfo.SKILLID1] = 6;
+	player[playerInfo.SKILLID2] = 12;
 	player[playerInfo.SKILLID3] = 0;
 	player[playerInfo.SKILLID4] = 0;
 	
@@ -237,3 +245,20 @@ function player.InitAttAction(ndamage,pmonster)
 					}
 	return tAttAction
 end
+
+
+
+function player.AddNewSkill(learningskillid)
+	if player[playerInfo.SKILLID1] == 0 then
+		player[playerInfo.SKILLID1] = learningskillid;
+		return;
+	end
+	
+	for i,v in pairs(tPlayerSkillInd) do
+		if player[v] == 0 then
+			player[v] = learningskillid;
+			break;
+		end
+	end
+end
+

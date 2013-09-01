@@ -22,8 +22,8 @@ function p.LearnSkillCallback(tag,sender)
 		learningskillid = grandomskill3
 	end
 	
-	player[playerInfo.SKILLID1] = learningskillid;
-	
+	player.AddNewSkill(learningskillid);
+
 	--πÿ±’ΩÁ√Ê 
 	local layer = p.GetParent()
 	local scene = Main.GetGameScene();

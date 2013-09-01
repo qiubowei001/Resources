@@ -560,7 +560,7 @@ local function main()
     --g_sceneGame:addChild(createlayerMenu())
 	g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup))
 	
-	SkillUpGradeUI.LoadUI();
+	--SkillUpGradeUI.LoadUI();
 	
     CCDirector:sharedDirector():runWithScene(g_sceneGame)
 end
