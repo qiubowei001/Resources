@@ -102,15 +102,6 @@ function Main.menuCallbackOpenPopup(tag,sender)
 end
 
 
---刷新技能显示
-function Main.RefreshSkill()		
-	if glayerMenu == nil then
-		return
-	end
-	
-	--player[playerInfo.SKILLID4];
-		
-end
 	
 function p.brickSetXY(pbrick,X,Y)
 		--cclog("setPosition: %0.2f, %0.2f", X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight+brickInfo.brickHeight/2)
@@ -455,7 +446,11 @@ local function main()
 				
 				magiceff.ClearMagicEff(tParamEvn);	
 				
-				--
+				
+				
+				
+				--所有技能冷却+1
+				player.SkillCoolDown();
 				
 				
 				--==显示玩家数据==--
@@ -467,7 +462,9 @@ local function main()
 				tolua.cast(GOLDlabel, "CCLabelTTF")
 				GOLDlabel:setString("G:"..player[playerInfo.GOLD]) 
 				
-
+				
+				
+				
 	
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
 				--=====================处于释放魔法并选中单体模式========================--

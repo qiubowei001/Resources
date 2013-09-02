@@ -29,5 +29,6 @@ dofile("LuaScript/SkillBar.lua")
 
 dofile("LuaScript/SkillUpGradeUI.lua")
 
+dofile("LuaScript/TimerBuff.lua")
 
 dofile("LuaScript/Main.lua")

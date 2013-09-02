@@ -47,6 +47,7 @@ MAGIC_DEF_TABLE = {
 	CHOOSE_PARAM = 28,
 	SPELL_TYPE = 29,
 	NEXT_MAGIC = 30,
+	CDROUND = 31,
 }
 
 
@@ -210,7 +211,7 @@ magictable = {}
 	magictable[6][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
 	magictable[6][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[6][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-	
+	magictable[6][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	--玩家 眩晕单个怪物效果
 	magictable[7]={}
@@ -296,7 +297,8 @@ magictable = {}
 	magictable[12][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[12][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[12][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
-
+	magictable[12][MAGIC_DEF_TABLE.CDROUND] =  5
+	
 --暴击概率
 	magictable[13]={}
 	magictable[13][MAGIC_DEF_TABLE.ID] = 13
@@ -319,6 +321,7 @@ magictable = {}
 	magictable[14][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 14
 	magictable[14][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[14][MAGIC_DEF_TABLE.DESCPTION] = "提升玩家闪避率100"
+	magictable[14][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	
 
@@ -429,13 +432,21 @@ magictable = {}
 
 --施放技能 失败返回FALSE 成功返回中招对象列表,以及 EFF实例列表
 function p.SpellMagic(nMagicId,pBrickSingle,pLine)
-	cclog("SpellMagic nMagicId:"..nMagicId)
 	local tTargetList = {}
 	local tEffList = {}
 	if magictable[nMagicId] == nil then
 		return false;
 	end
 
+	--玩家使用技能 则重新计算CD
+	if nMagicId <1000 then
+		
+		if player.UseSKill(nMagicId) == false then
+		
+			return;
+		end
+	end
+	
 	local magicinfo = magictable[nMagicId];
 
 	--NEXT_MAGIC

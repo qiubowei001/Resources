@@ -4,8 +4,15 @@ local p = SkillBar;
 local glayerMenu = nil;
 
 
+local  cdlabeltag = 9999;
 
-
+local tSkillCD = 
+{
+5,
+5,
+5,
+5,
+}
 
 
 
@@ -40,6 +47,23 @@ function p.Init(menuCallbackOpenPopup)
 		glayerMenu:addChild(menu, 1,1)
 		--]]
 
+		--初始化技能信息显示
+		local tTmp = 
+		{
+		item1,
+		item2,
+		item3,
+		item4,
+		}
+		
+		for i,v in pairs(tTmp) do
+			local cdLabel = CCLabelTTF:create("", "Arial", 20)
+			v:addChild(cdLabel,2)
+			cdLabel:setColor(ccc3(255,0,0))
+			cdLabel:setPosition(30, 30)
+			cdLabel:setTag(cdlabeltag);			
+		end
+		
 		p.refreshSkill();
 		
         return glayerMenu
@@ -54,9 +78,26 @@ function p.GetMagicIdFromTag(nTag)
 	player[playerInfo.SKILLID3],
 	player[playerInfo.SKILLID4],
 	}
-	
 	return t[nTag];
 end
+
+
+function p.GetTagFromId(nSkillId)
+	local t = {
+	player[playerInfo.SKILLID1],
+	player[playerInfo.SKILLID2],
+	player[playerInfo.SKILLID3],
+	player[playerInfo.SKILLID4],
+	}
+	
+	for i,v in pairs() do
+		if v == nSkillId then
+			return i;
+		end
+	end
+	
+end
+
 
 function p.refreshSkill()
 	local t = {
@@ -64,6 +105,13 @@ function p.refreshSkill()
 	player[playerInfo.SKILLID2],
 	player[playerInfo.SKILLID3],
 	player[playerInfo.SKILLID4],
+	}
+	
+	local t2 = {
+	player[playerInfo.SKILLCD1],
+	player[playerInfo.SKILLCD2],
+	player[playerInfo.SKILLCD3],
+	player[playerInfo.SKILLCD4],
 	}
 	
 	local menu = glayerMenu:getChildByTag(1)
@@ -86,12 +134,18 @@ function p.refreshSkill()
 		
 		local item = menu:getChildByTag(i)
 		tolua.cast(item, "CCMenuItemImage")
-	
 		item:setNormalSpriteFrame(frame0)
-		item:setSelectedSpriteFrame(frame0)	
+		item:setSelectedSpriteFrame(frame0)
+	
+		local label = item:getChildByTag(cdlabeltag)
+		tolua.cast(label, "CCLabelTTF")
+		if t[i] ~= 0 then
+			label:setString("CD:"..t2[i].."/"..magictable[t[i]][MAGIC_DEF_TABLE.CDROUND])			
+		end
 	end
-
 end
+
+
 
 
 
