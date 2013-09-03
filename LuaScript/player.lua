@@ -17,6 +17,11 @@ playerInfo = {
 	SKILLCD3 = 14,
 	SKILLCD4 = 15,
 	
+	WEAPON 	 = 16,
+	ARMOR	 = 17,
+	NECKLACE = 18,
+	RING	 = 19,
+	CAPE 	 = 20,
 	
 }
 
@@ -82,7 +87,12 @@ function p.Initplayer()
 	player[playerInfo.SKILLCD4] = 0;
 	
 	
-	
+	player[playerInfo.WEAPON] 	= 1001;
+	player[playerInfo.ARMOR] 	= 2001;
+	player[playerInfo.NECKLACE] = 3001;
+	player[playerInfo.RING] 	= 4001;
+	player[playerInfo.CAPE] 	= 5001;
+						  
 	
 	player.AttAdjFuncT = {};
 	player.DamageAdjFuncT = {};
@@ -153,13 +163,13 @@ function p.takedamage(ndamage,pmonster)
 end
 
 function p.drinkBlood(nNum)
-	local nRecovery = nNum*2;
+	local nRecovery = nNum*2*(TimerBuff.GetRatio());
 	p.AddHp(nRecovery)
 	return player[playerInfo.HP];
 end
 
 function player.takeGold(nNum)
-	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum;
+	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
 	return player[playerInfo.GOLD];
 end
 
@@ -255,7 +265,7 @@ end
 
 function player.InitAttAction(ndamage,pmonster)
 	local tAttAction={
-						damage = ndamage,
+						damage = ndamage*(TimerBuff.GetRatio()),
 						target = pmonster,
 						criticalrate = player.CriticalRate,
 						criticalchance = player.CriticalChance,

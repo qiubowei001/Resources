@@ -54,6 +54,9 @@ function p.GetRandomSkillId()
 		end
 	end
 
+	--
+	
+	
 	--排序(从小到大)
 	table.sort(tPlayerSkillFilt,function(a,b) return a>b end)
 	

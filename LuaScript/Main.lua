@@ -414,6 +414,10 @@ local function main()
 					local gold = player.takeGold(nNum);	
 				end
 				
+				--µ¹¼ÆÊ±BUFF
+				local buff = TimerBuff.GetTimerBuff()
+				TimerBuff.SetTimerBuff(buff+nNum*10)
+				
 				
 				
 				Main.gamephase = GameLogicPhase.AFTER_PLAYER_ACT;
@@ -556,6 +560,8 @@ local function main()
     g_sceneGame:addChild(createlayerMain())
     --g_sceneGame:addChild(createlayerMenu())
 	g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup))
+	TimerBuff.LoadUI()
+	
 	
 	--SkillUpGradeUI.LoadUI();
 	
