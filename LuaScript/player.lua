@@ -2,7 +2,7 @@ player = {}
 local p = player;
 playerInfo = {
 	HP =1,
-	ATT =2,
+	ATT = 2,
 	GOLD = 3,
 	BUFFATT = 4,
 	EXP = 5,
@@ -22,6 +22,10 @@ playerInfo = {
 	NECKLACE = 18,
 	RING	 = 19,
 	CAPE 	 = 20,
+	
+	Entity_HP    =21,
+	Entity_HPMAX =22,
+	Entity_ATT   =23,
 	
 }
 
@@ -170,22 +174,21 @@ end
 
 function player.takeGold(nNum)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
+	
+	if player[playerInfo.GOLD] >= 100 then
+		EquipUpGradeUI.LoadUI();
+	end
+	
+	local levlabel = layerMain:getChildByTag(3)
+	tolua.cast(levlabel, "CCLabelTTF")
+	levlabel:setString("G:"..player[playerInfo.GOLD])	
+	
 	return player[playerInfo.GOLD];
+	
+	--
 end
 
---[[
-local tPlayerExp = 
-{
-	[1] = {10}
-	[2] = {20}
-	[3] = {20}
-	[4] = {20}
-	[5] = {20}
-	[6] = {20}
-	[7] = {20}
-	[8] = {20}
-}
-]]
+
 function player.GainEXP()
 	player[playerInfo.EXP] = player[playerInfo.EXP] + 1;
 
@@ -383,3 +386,43 @@ function player.SkillCoolDown()
 	
 	SkillBar.refreshSkill()
 end
+
+function player.UpGradeEquip(nEquipId)
+	local ntype = tEquipType[nEquipId][3]
+	
+	local tTmp = {
+		playerInfo.WEAPON 	,
+		playerInfo.ARMOR 	,
+		playerInfo.NECKLACE ,
+		playerInfo.RING,
+		playerInfo.CAPE,
+	}
+	
+	local index = tTmp[ntype];
+	
+	player[index] = nEquipId;	
+	
+	player[playerInfo.GOLD] = player[playerInfo.GOLD]  - 100
+	
+	--刷新金币显示
+	local levlabel = layerMain:getChildByTag(3)
+	tolua.cast(levlabel, "CCLabelTTF")
+	levlabel:setString("G:"..player[playerInfo.GOLD])	
+
+	
+	if player[playerInfo.GOLD] >= 100 then
+		EquipUpGradeUI.LoadUI();
+	end
+end
+
+--更新玩家实体数据
+function player.UpdateEntityData()
+	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]
+	player[playerInfo.Entity_ATT] = player[playerInfo.ATT] + player[playerInfo.ATT] + player[playerInfo.BUFFATT]
+	
+	--装备数据叠加
+	
+	
+end
+
+

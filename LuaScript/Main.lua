@@ -563,7 +563,7 @@ local function main()
 	TimerBuff.LoadUI()
 	
 	
-	--SkillUpGradeUI.LoadUI();
+	--EquipUpGradeUI.LoadUI();
 	
     CCDirector:sharedDirector():runWithScene(g_sceneGame)
 end
