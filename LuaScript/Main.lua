@@ -91,9 +91,9 @@ function Main.menuCallbackOpenPopup(tag,sender)
 				Main.selectMode = SELECTMODE.SINGLE_BRICK;
 
 				--选择一个LINE 	
-				local tiplabel = layerMain:getChildByTag(g_Tiplabeltag)
-				tolua.cast(tiplabel, "CCLabelTTF")
-				tiplabel:setString("Sin") 
+				MainUI.SetMainUITip("Sin")
+
+
 			else
 				--其他情况直接释放
 				magic.SpellMagic(nMagicId);
@@ -460,14 +460,15 @@ local function main()
 				--==显示玩家数据==--
 				local hplabel = layerMain:getChildByTag(g_HPlabeltag)
 				tolua.cast(hplabel, "CCLabelTTF")
-				hplabel:setString("HP:"..player[playerInfo.HP].."/"..player[playerInfo.HPMAX])			
+				hplabel:setString("HP:"..player[playerInfo.HP].."/"..player[playerInfo.Entity_HPMAX])			
            
 				local GOLDlabel = layerMain:getChildByTag(g_goldlabeltag)
 				tolua.cast(GOLDlabel, "CCLabelTTF")
 				GOLDlabel:setString("G:"..player[playerInfo.GOLD]) 
 				
-				
-				
+
+
+				MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
 				
 	
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
@@ -479,10 +480,7 @@ local function main()
 						magiceff.DoMagicEff(tParamEvn);							
 				end
 				Main.selectMode = SELECTMODE.NORMAL
-				
-				local tiplabel = layerMain:getChildByTag(g_Tiplabeltag)
-				tolua.cast(tiplabel, "CCLabelTTF")
-				tiplabel:setString("Nor") 
+				MainUI.SetMainUITip("Nor")
 			end
         end
 
@@ -505,52 +503,12 @@ local function main()
 		
 		 BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(brickfallLogic, 0.3, false)	
 
-		player.Initplayer();
+		
+		--主界面初始化
+		MainUI.LoadUI()
 		
 		
-		--显示玩家血量
-		local hpLabel = CCLabelTTF:create("HP:"..player[playerInfo.HP].."/"..player[playerInfo.HPMAX], "Arial", 20)
-			layerMain:addChild(hpLabel)
-			hpLabel:setColor(ccc3(255,0,0))
-			hpLabel:setPosition(410, 220)
-			hpLabel:setTag(g_HPlabeltag);
-
-			
-		--显示玩家攻击
-		local ATlabel = CCLabelTTF:create("AT:"..player[playerInfo.ATT], "Arial", 20)
-			layerMain:addChild(ATlabel)
-			ATlabel:setColor(ccc3(255,0,0))
-			ATlabel:setPosition(390, 180)
-			ATlabel:setTag(g_ATlabeltag);
-
-		--显示玩家金币
-		local GOLDlabel = CCLabelTTF:create("G:"..player[playerInfo.GOLD], "Arial", 20)
-			layerMain:addChild(GOLDlabel)
-			GOLDlabel:setColor(ccc3(255,0,0))
-			GOLDlabel:setPosition(390, 150)
-			GOLDlabel:setTag(g_goldlabeltag);		
-
-
-		--显示动作提示
-		local Tiplabel = CCLabelTTF:create("Nor","Arial", 20)
-			layerMain:addChild(Tiplabel)
-			Tiplabel:setColor(ccc3(255,0,0))
-			Tiplabel:setPosition(390, 110)
-			Tiplabel:setTag(g_Tiplabeltag);		--]]
-
-		--显示玩家经验
-		local EXPlabel = CCLabelTTF:create("exp:"..player[playerInfo.EXP], "Arial", 20)
-			layerMain:addChild(EXPlabel)
-			EXPlabel:setColor(ccc3(255,0,0))
-			EXPlabel:setPosition(390, 80)
-			EXPlabel:setTag(g_EXPlabeltag);		
-
-		--显示玩家等级
-		local LEVlabel = CCLabelTTF:create("LEV:"..player[playerInfo.LEVEL], "Arial", 20)
-			layerMain:addChild(LEVlabel)
-			LEVlabel:setColor(ccc3(255,0,0))
-			LEVlabel:setPosition(390, 270)
-			LEVlabel:setTag(g_LEVlabeltag);					
+		player.Initplayer();		
         return layerMain
     end
 

@@ -18,3 +18,10 @@ gameover
 
 增加一种技能伤害不稳定（random 10-200）
 技能建议参考GRINDQUEST
+
+
+题材可以学习teacher story
+
+
+
+refresh的地方（穿装备）

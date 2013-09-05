@@ -103,6 +103,8 @@ function p.Initplayer()
 	
 	player.CriticalChance = 30 --暴击概率
 	player.CriticalRate = 2    --暴击比率
+
+	player.UpdateEntityData();
 	
 end
 
@@ -110,8 +112,8 @@ end
 function p.AddHp(nRecovery)
 	player[playerInfo.HP] = player[playerInfo.HP] + nRecovery
 	
-	if player[playerInfo.HP] >= player[playerInfo.HPMAX] then
-		player[playerInfo.HP] = player[playerInfo.HPMAX]
+	if player[playerInfo.HP] >= player[playerInfo.Entity_HPMAX] then
+		player[playerInfo.HP] = player[playerInfo.Entity_HPMAX]
 	end
 end
 
@@ -179,10 +181,7 @@ function player.takeGold(nNum)
 		EquipUpGradeUI.LoadUI();
 	end
 	
-	local levlabel = layerMain:getChildByTag(3)
-	tolua.cast(levlabel, "CCLabelTTF")
-	levlabel:setString("G:"..player[playerInfo.GOLD])	
-	
+	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
 	return player[playerInfo.GOLD];
 	
 	--
@@ -196,25 +195,21 @@ function player.GainEXP()
 		--升级
 		player[playerInfo.EXP] = player[playerInfo.EXP] - tPlayerExp[player[playerInfo.LEVEL]]
 		player[playerInfo.LEVEL] = player[playerInfo.LEVEL]+1
-		
-		local levlabel = layerMain:getChildByTag(6)
-		tolua.cast(levlabel, "CCLabelTTF")
-		levlabel:setString("lev:"..player[playerInfo.LEVEL])
-		
+
+		MainUI.SetMainUILEV(player[playerInfo.LEVEL])
 		
 		SkillUpGradeUI.LoadUI();
 		
 	end
 	
-	local GOLDlabel = layerMain:getChildByTag(5)
-	tolua.cast(GOLDlabel, "CCLabelTTF")
-	GOLDlabel:setString("exp:"..player[playerInfo.EXP])
+
+	MainUI.SetMainUIEXP(player[playerInfo.EXP])	
 	return player[playerInfo.EXP];
 end
 
 
 function player.GetAttack()
-	local att = player[playerInfo.ATT] + player[playerInfo.BUFFATT];
+	local att = player[playerInfo.Entity_ATT];
 	return  att;
 end
 
@@ -405,10 +400,10 @@ function player.UpGradeEquip(nEquipId)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD]  - 100
 	
 	--刷新金币显示
-	local levlabel = layerMain:getChildByTag(3)
-	tolua.cast(levlabel, "CCLabelTTF")
-	levlabel:setString("G:"..player[playerInfo.GOLD])	
-
+	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+	
+	--更新实体数据
+	player.UpdateEntityData();
 	
 	if player[playerInfo.GOLD] >= 100 then
 		EquipUpGradeUI.LoadUI();
@@ -418,11 +413,29 @@ end
 --更新玩家实体数据
 function player.UpdateEntityData()
 	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]
-	player[playerInfo.Entity_ATT] = player[playerInfo.ATT] + player[playerInfo.ATT] + player[playerInfo.BUFFATT]
+	player[playerInfo.Entity_ATT] = player[playerInfo.ATT]
 	
 	--装备数据叠加
+	local tEquipId = {
+	player[playerInfo.WEAPON] 	,
+	player[playerInfo.ARMOR] 	,
+	player[playerInfo.NECKLACE] ,
+	player[playerInfo.RING] 	,
+	player[playerInfo.CAPE] 	,
+	}
 	
+	for i,v in pairs(tEquipId) do
+		if v ~= 0 then
+			player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + tEquipType[v][4]
+			player[playerInfo.Entity_HPMAX] = player[playerInfo.Entity_HPMAX] + tEquipType[v][5]	
+		end	
+	end
 	
+	--技能BUFF叠加
+	player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + player[playerInfo.BUFFATT]
+	
+	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
+	MainUI.SetMainUIATK(player[playerInfo.Entity_ATT])
 end
 
 

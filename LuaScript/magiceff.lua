@@ -21,18 +21,15 @@ function p.eff01(pobj,Tparam1)
 			cclog("add atk to player")
 				--==显示玩家数据==--		
 			player[playerInfo.BUFFATT] = Tparam1.addAttack;		
-			local ATTlabel = layerMain:getChildByTag(2)		
-			tolua.cast(ATTlabel, "CCLabelTTF")
-			ATTlabel:setString("ATT:"..player.GetAttack())
+			player.UpdateEntityData();
+
 end
 
 function p.effclr01()
 			cclog("remove atk from player")
 			player[playerInfo.BUFFATT] = 0;
 				--==显示玩家数据==--
-			local ATTlabel = layerMain:getChildByTag(2)
-			tolua.cast(ATTlabel, "CCLabelTTF")
-			ATTlabel:setString("ATT:"..player.GetAttack())	
+			player.UpdateEntityData();
 end
 
 
