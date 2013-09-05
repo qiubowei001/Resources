@@ -98,6 +98,12 @@ function p.Initplayer()
 	player[playerInfo.CAPE] 	= 5001;
 						  
 	
+	
+	player[playerInfo.Entity_HP] 	= 0;
+	player[playerInfo.Entity_HPMAX] 	= 0;
+	player[playerInfo.Entity_ATT] 	= 0;
+
+	
 	player.AttAdjFuncT = {};
 	player.DamageAdjFuncT = {};
 	
@@ -433,9 +439,18 @@ function player.UpdateEntityData()
 	
 	--¼¼ÄÜBUFFµþ¼Ó
 	player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + player[playerInfo.BUFFATT]
-	
 	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 	MainUI.SetMainUIATK(player[playerInfo.Entity_ATT])
+	
+		--[[local GOLDlabel = CCLabelTTF:create("G:"..player[playerInfo.GOLD], "Arial", 20)
+		local Tiplabel = CCLabelTTF:create("Nor","Arial", 20)
+		local EXPlabel = CCLabelTTF:create("exp:"..player[playerInfo.EXP], "Arial", 20)
+		local LEVlabel = CCLabelTTF:create("LEV:"..player[playerInfo.LEVEL], "Arial", 20)--]]
+	
+	MainUI.SetMainUILEV(player[playerInfo.LEVEL])
+	MainUI.SetMainUIEXP(player[playerInfo.EXP])
+	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+	
 end
 
 

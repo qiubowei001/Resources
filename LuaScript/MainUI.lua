@@ -15,14 +15,14 @@ function p.LoadUI()
 
 
 		--显示玩家血量
-		local hpLabel = CCLabelTTF:create("HP:"..player[playerInfo.HP].."/"..player[playerInfo.Entity_HPMAX], "Arial", 20)
+		local hpLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(hpLabel)
 			hpLabel:setColor(ccc3(255,0,0))
 			hpLabel:setPosition(0, 220)
 			hpLabel:setTag(g_HPlabeltag);
 		
 		--显示玩家攻击
-		local ATlabel = CCLabelTTF:create("AT:"..player[playerInfo.Entity_ATT], "Arial", 20)
+		local ATlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(ATlabel)
 			ATlabel:setColor(ccc3(255,0,0))
 			ATlabel:setPosition(0, 180)
@@ -30,7 +30,7 @@ function p.LoadUI()
 					
 			
 		--显示玩家金币
-		local GOLDlabel = CCLabelTTF:create("G:"..player[playerInfo.GOLD], "Arial", 20)
+		local GOLDlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(GOLDlabel)
 			GOLDlabel:setColor(ccc3(255,0,0))
 			GOLDlabel:setPosition(0, 150)
@@ -44,26 +44,27 @@ function p.LoadUI()
 			Tiplabel:setTag(g_Tiplabeltag);		--]]
 
 		--显示玩家经验
-		local EXPlabel = CCLabelTTF:create("exp:"..player[playerInfo.EXP], "Arial", 20)
+		local EXPlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(EXPlabel)
 			EXPlabel:setColor(ccc3(255,0,0))
 			EXPlabel:setPosition(0, 80)
 			EXPlabel:setTag(g_EXPlabeltag);		
 
 		--显示玩家等级
-		local LEVlabel = CCLabelTTF:create("LEV:"..player[playerInfo.LEVEL], "Arial", 20)
+		local LEVlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(LEVlabel)
 			LEVlabel:setColor(ccc3(255,0,0))
 			LEVlabel:setPosition(0, 270)
 			LEVlabel:setTag(g_LEVlabeltag);		
 	
 	
-    bglayer:setPosition(CCPointMake(380, 25))
+    bglayer:setPosition(CCPointMake(400, 25))
 	local scene = Main.GetGameScene();
-	scene:addChild(bglayer)
+	scene:addChild(bglayer,3)
 	bglayer:setTag(UIdefine.MainUI);
 	
 end
+
 
 function p.SetMainUILEV(nLEV)
 	local label = bglayer:getChildByTag(g_LEVlabeltag)

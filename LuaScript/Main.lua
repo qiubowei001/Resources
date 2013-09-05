@@ -458,17 +458,8 @@ local function main()
 				
 				
 				--==显示玩家数据==--
-				local hplabel = layerMain:getChildByTag(g_HPlabeltag)
-				tolua.cast(hplabel, "CCLabelTTF")
-				hplabel:setString("HP:"..player[playerInfo.HP].."/"..player[playerInfo.Entity_HPMAX])			
-           
-				local GOLDlabel = layerMain:getChildByTag(g_goldlabeltag)
-				tolua.cast(GOLDlabel, "CCLabelTTF")
-				GOLDlabel:setString("G:"..player[playerInfo.GOLD]) 
-				
-
-
 				MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+				MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 				
 	
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
