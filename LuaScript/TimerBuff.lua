@@ -26,7 +26,12 @@ function p.GetRatio()
 end
 
 function p.SetTimerBuff(nBuff)
-	g_TimerBuff = nBuff;
+	if nBuff >= 400 then
+		g_TimerBuff = 400
+	else
+		g_TimerBuff = nBuff;
+	end
+	
 end
 
 function p.GetTimerBuff()
@@ -34,12 +39,15 @@ function p.GetTimerBuff()
 end
 
 function p.TimerBuffTick()
-	g_TimerBuff = g_TimerBuff - 1
+	local step = 0;
+	local nRatio = p.GetRatio()
+
+	g_TimerBuff = g_TimerBuff - nRatio
 	if g_TimerBuff < 0 then
 		g_TimerBuff = 0
 	end
 	
-	TimeBuffBarLabel:setString("Buff:"..g_TimerBuff.."Ratio:"..p.GetRatio())			
+	TimeBuffBarLabel:setString("Buff:"..math.floor(g_TimerBuff).."Ratio:"..p.GetRatio())			
 end
 
 function p.LoadUI()

@@ -26,7 +26,9 @@ playerInfo = {
 	Entity_HP    =21,
 	Entity_HPMAX =22,
 	Entity_ATT   =23,
-	
+	Entity_CRITICALRATE   =24,
+	Entity_CRITICALCHANCE   =25,
+	Entity_DODGECHANCE 	= 26,
 }
 
 
@@ -70,7 +72,7 @@ function p.Initplayer()
 	magic_effect_afterplayeract = {}
 	magic_effect_aftermonatt = {}
  
-	player[playerInfo.HP] = 110;
+	player[playerInfo.HP] = 120;
 	player[playerInfo.HPMAX] = 110;
 	
 	player[playerInfo.ATT] = 3;
@@ -103,13 +105,18 @@ function p.Initplayer()
 	player[playerInfo.Entity_HPMAX] 	= 0;
 	player[playerInfo.Entity_ATT] 	= 0;
 
-	
+	player[playerInfo.Entity_CRITICALRATE] 	= 0;
+	player[playerInfo.Entity_CRITICALCHANCE] 	= 0;
+	player[playerInfo.Entity_DODGECHANCE] 	= 0;
+
 	player.AttAdjFuncT = {};
 	player.DamageAdjFuncT = {};
 	
-	player.CriticalChance = 30 --暴击概率
+	player.CriticalChance = 0 --暴击概率
 	player.CriticalRate = 2    --暴击比率
 
+	player.Dodgechance = 0;
+	
 	player.UpdateEntityData();
 	
 end
@@ -130,7 +137,7 @@ function p.InitDamageAction(ndamage,pmonster)
 	local tDamageAction={
 						damage = ndamage,
 						attacker = pmonster,
-						dodgechance = 0;
+						dodgechance = player[playerInfo.Entity_DODGECHANCE];
 					}
 	return tDamageAction
 end
@@ -272,7 +279,7 @@ function player.InitAttAction(ndamage,pmonster)
 						damage = ndamage*(TimerBuff.GetRatio()),
 						target = pmonster,
 						criticalrate = player.CriticalRate,
-						criticalchance = player.CriticalChance,
+						criticalchance = player[playerInfo.Entity_CRITICALCHANCE],
 					}
 	return tAttAction
 end
@@ -420,6 +427,11 @@ end
 function player.UpdateEntityData()
 	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]
 	player[playerInfo.Entity_ATT] = player[playerInfo.ATT]
+	player[playerInfo.Entity_CRITICALRATE]   =	player.CriticalRate
+	player[playerInfo.Entity_CRITICALCHANCE]   =player.CriticalChance 
+	player[playerInfo.Entity_DODGECHANCE] 	= player.Dodgechance;
+
+	
 	
 	--装备数据叠加
 	local tEquipId = {
@@ -433,7 +445,9 @@ function player.UpdateEntityData()
 	for i,v in pairs(tEquipId) do
 		if v ~= 0 then
 			player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + tEquipType[v][4]
-			player[playerInfo.Entity_HPMAX] = player[playerInfo.Entity_HPMAX] + tEquipType[v][5]	
+			player[playerInfo.Entity_HPMAX] = player[playerInfo.Entity_HPMAX] + tEquipType[v][5]
+			player[playerInfo.Entity_CRITICALCHANCE]   = player[playerInfo.Entity_CRITICALCHANCE] +  tEquipType[v][7]
+			player[playerInfo.Entity_DODGECHANCE]  = player[playerInfo.Entity_DODGECHANCE]  + tEquipType[v][8]
 		end	
 	end
 	
@@ -441,11 +455,8 @@ function player.UpdateEntityData()
 	player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + player[playerInfo.BUFFATT]
 	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 	MainUI.SetMainUIATK(player[playerInfo.Entity_ATT])
+
 	
-		--[[local GOLDlabel = CCLabelTTF:create("G:"..player[playerInfo.GOLD], "Arial", 20)
-		local Tiplabel = CCLabelTTF:create("Nor","Arial", 20)
-		local EXPlabel = CCLabelTTF:create("exp:"..player[playerInfo.EXP], "Arial", 20)
-		local LEVlabel = CCLabelTTF:create("LEV:"..player[playerInfo.LEVEL], "Arial", 20)--]]
 	
 	MainUI.SetMainUILEV(player[playerInfo.LEVEL])
 	MainUI.SetMainUIEXP(player[playerInfo.EXP])
