@@ -33,6 +33,8 @@ dofile("LuaScript/TimerBuff.lua")
 
 dofile("LuaScript/EquipUpGradeUI.lua")
 
+dofile("LuaScript/SpriteConfig.lua")
+
 dofile("LuaScript/testSprite.lua")
 
 dofile("LuaScript/MainUI.lua")
