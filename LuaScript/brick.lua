@@ -25,8 +25,8 @@ local tbrickTypeInfo = {}
 	tbrickTypeInfo[tbrickType.GOLD] = 	 {4,"gold"}
 	
 	
-local choseefftag = 1;
-local deathefftag = 2;
+local choseefftag = 3001;
+local deathefftag = 3002;
 local Magicefftag = 3000;
 		
 function brick.setChosed(pbrick)
@@ -35,21 +35,20 @@ function brick.setChosed(pbrick)
 	end	
 	
 		local texturechose = CCTextureCache:sharedTextureCache():addImage("chooseeffect.png")
-        local rect = CCRectMake(0, 0, 78, 78)
+        local rect = CCRectMake(0, 0, 100, 100)
         local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
         local spriteeff = CCSprite:createWithSpriteFrame(frame0)
 		spriteeff:setPosition(brickWidth/2, brickHeight/2);		
 		pbrick:addChild(spriteeff)
 		spriteeff:setTag(choseefftag)
 		pbrick.chosed = true;
+		spriteeff:setOpacity(150)
 		
 		
-		
-		--local tintblue = CCTintBy:create(1, 255, 255, 255)
-		local tintblue = CCTintTo:create(1, 0, 255, 0)
-		--local tintblue_back = tintblue:reverse()
-		--local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
-		spriteeff:runAction(tintblue)
+		local tintblue = CCTintBy:create(0.5, 0, -255, -255)
+		local tintblue_back = tintblue:reverse()
+		local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
+		spriteeff:runAction(blue)
 	
 	
 end
@@ -67,7 +66,10 @@ end
 
 						
 function brick.setdeatheffect(pbrick)
-
+		
+		
+		return;
+		--[[
 		if  pbrick:getChildByTag(deathefftag) ~= nil then
 		
 			return;
@@ -80,14 +82,16 @@ function brick.setdeatheffect(pbrick)
 		spriteeff:setPosition(brickWidth, brickHeight);		
 		pbrick:addChild(spriteeff)
 		spriteeff:setTag(deathefftag)
-		--pbrick.chosed = true;	
+		--pbrick.chosed = true;	--]]
 end
 
 function brick.removedeatheff(pbrick)
+	return;
+		--[[
 	if  pbrick:getChildByTag(deathefftag) == nil then
 		return;
 	end
-	pbrick:removeChildByTag(deathefftag, true)
+	pbrick:removeChildByTag(deathefftag, true)--]]
 end 
 
 
@@ -148,18 +152,23 @@ end
 
 function brick.creatMonster(monsterid)
 		--创建空白NODE作为底层
+		--[[
+		local texture = CCTextureCache:sharedTextureCache():addImage("chooseeffect.png")	
+		local rect1 = CCRectMake(0, 0, 78, 78)
+        local frame0 = CCSpriteFrame:createWithTexture(texture, rect1)
+         local spriteParent = CCSprite:createWithSpriteFrame(frame0)
+		--]]
+		
 		local spriteParent = CCSprite:create();
 		local brickWidth = brickInfo.brickWidth ;
 		local brickHeight = brickInfo.brickHeight;
 		local rect = CCRectMake(0, 0, brickWidth, brickHeight)
 		spriteParent:setTextureRect(rect)
-		----
-		
 		
 		
 		local spriteBrick = SpriteManager.creatBrickSprite(monsterid)
 		spriteParent:addChild(spriteBrick, 0, 1)
-		--spriteParent:setPosition(CCPointMake(brickWidth , brickHeight))
+		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
    
 		
 		monster.InitMonster(spriteParent,monsterid);

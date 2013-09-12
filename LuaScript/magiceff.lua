@@ -514,7 +514,7 @@ MAGIC_EFFtable = {}
 	
 	
 	
-	
+
 	
 --为玩家新增技能特效
 function p.AddPlayerMagicEff(efffuncid,nPhase)
