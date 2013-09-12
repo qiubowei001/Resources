@@ -60,7 +60,7 @@ function p.LoadUI()
 	TimeBuffBarLabel:setTag(TimeBuffBarLabeltag);		
 
 	
-    bglayer:setPosition(CCPointMake(380, 25))
+    bglayer:setPosition(CCPointMake(760, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer)
 	bglayer:setTag(UIdefine.TimeBuffBarUI);

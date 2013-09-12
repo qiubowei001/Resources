@@ -1,21 +1,21 @@
-test = {}
-local p = test;
+SpriteManager = {}
+local p = SpriteManager;
 
-function p.creatDog()
+function p.creatBrickSprite(nSpriteId)
 		local spriteid = 1
         local frameWidth = SpriteConfig[spriteid].Width
         local frameHeight = SpriteConfig[spriteid].Height
 
         -- create dog animate
-        local textureDog = CCTextureCache:sharedTextureCache():addImage(SpriteConfig[spriteid].Name..".png")
+        local textureDog = CCTextureCache:sharedTextureCache():addImage("brick/"..SpriteConfig[spriteid].Name..".png")
         local rect = CCRectMake(0, 0, frameWidth, frameHeight)
 		
 		
         local frame0 = CCSpriteFrame:createWithTexture(textureDog, rect)
 		
 		local animFrames = CCArray:create()
-		local spriteDog = CCSprite:createWithSpriteFrame(frame0)
-        spriteDog.isPaused = false
+		local sprite = CCSprite:createWithSpriteFrame(frame0)
+        sprite.isPaused = false
 		
 		for y = 0, SpriteConfig[1].FrameNumY-1 do
 			for x = 0,SpriteConfig[1].FrameNumX-1 do
@@ -26,14 +26,16 @@ function p.creatDog()
 			end
 		end
 		
-		
-        
+
         local animation = CCAnimation:createWithSpriteFrames(animFrames, 0.02)
-		
         local animate = CCAnimate:create(animation);
-        spriteDog:runAction(CCRepeatForever:create(animate))
-		spriteDog:setScale(0.8);
-        --CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(tick, 0, false)
-		spriteDog:setPosition(200,200);
-        return spriteDog
+        sprite:runAction(CCRepeatForever:create(animate))
+		--sprite:setScale(0.8);
+		
+		local brickWidth = brickInfo.brickWidth ;
+		local brickHeight = brickInfo.brickHeight;
+		
+		sprite:setScaleX(brickWidth/frameWidth);
+		sprite:setScaleY(brickHeight/frameHeight);
+        return sprite
     end

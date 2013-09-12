@@ -58,7 +58,7 @@ function p.LoadUI()
 			LEVlabel:setTag(g_LEVlabeltag);		
 	
 	
-    bglayer:setPosition(CCPointMake(400, 25))
+    bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,3)
 	bglayer:setTag(UIdefine.MainUI);

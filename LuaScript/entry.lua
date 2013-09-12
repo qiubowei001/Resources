@@ -35,7 +35,7 @@ dofile("LuaScript/EquipUpGradeUI.lua")
 
 dofile("LuaScript/SpriteConfig.lua")
 
-dofile("LuaScript/testSprite.lua")
+dofile("LuaScript/SpriteManager.lua")
 
 dofile("LuaScript/MainUI.lua")
 

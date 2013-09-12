@@ -35,13 +35,23 @@ function brick.setChosed(pbrick)
 	end	
 	
 		local texturechose = CCTextureCache:sharedTextureCache():addImage("chooseeffect.png")
-        local rect = CCRectMake(0, 0, 23, 22)
+        local rect = CCRectMake(0, 0, 78, 78)
         local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
         local spriteeff = CCSprite:createWithSpriteFrame(frame0)
-		spriteeff:setPosition(brickWidth, brickHeight);		
+		spriteeff:setPosition(brickWidth/2, brickHeight/2);		
 		pbrick:addChild(spriteeff)
 		spriteeff:setTag(choseefftag)
 		pbrick.chosed = true;
+		
+		
+		
+		--local tintblue = CCTintBy:create(1, 255, 255, 255)
+		local tintblue = CCTintTo:create(1, 0, 255, 0)
+		--local tintblue_back = tintblue:reverse()
+		--local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
+		spriteeff:runAction(tintblue)
+	
+	
 end
 
 
@@ -121,8 +131,8 @@ function brick.init(pbrick,nType)
 
 		pbrick.IsAbleLink = true;
 		pbrick.nType = nType;
-		pbrick:setScaleX((brickWidth)/frameWidth);
-		pbrick:setScaleY((brickHeight)/frameHeight);
+		--pbrick:setScaleX((brickWidth)/frameWidth);
+		--pbrick:setScaleY((brickHeight)/frameHeight);
 	
 		pbrick.brickSpeed = brickInfo.brickSpeed;
 		pbrick.movetoTime = winSize.height/brickInfo.brickSpeed;
@@ -137,14 +147,24 @@ function brick.init(pbrick,nType)
 end
 
 function brick.creatMonster(monsterid)
-		local textureBrick = CCTextureCache:sharedTextureCache():addImage(monster.GetMonsterIconPath(monsterid))		
-        local rect = CCRectMake(0, 0, frameWidth, frameHeight)
-        local frame0 = CCSpriteFrame:createWithTexture(textureBrick, rect)
-        
-		local spriteBrick = CCSprite:createWithSpriteFrame(frame0)
-		monster.InitMonster(spriteBrick,monsterid);
-		brick.init(spriteBrick,tbrickType.MONSTER)
-        return spriteBrick;
+		--创建空白NODE作为底层
+		local spriteParent = CCSprite:create();
+		local brickWidth = brickInfo.brickWidth ;
+		local brickHeight = brickInfo.brickHeight;
+		local rect = CCRectMake(0, 0, brickWidth, brickHeight)
+		spriteParent:setTextureRect(rect)
+		----
+		
+		
+		
+		local spriteBrick = SpriteManager.creatBrickSprite(monsterid)
+		spriteParent:addChild(spriteBrick, 0, 1)
+		--spriteParent:setPosition(CCPointMake(brickWidth , brickHeight))
+   
+		
+		monster.InitMonster(spriteParent,monsterid);
+		brick.init(spriteParent,tbrickType.MONSTER)
+        return spriteParent;
 end
 
 

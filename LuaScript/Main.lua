@@ -512,9 +512,6 @@ local function main()
 	TimerBuff.LoadUI()
 	
 	
-	local test = test.creatDog()
-	g_sceneGame:addChild(test,5,9998)
-	
     CCDirector:sharedDirector():runWithScene(g_sceneGame)
 end
 

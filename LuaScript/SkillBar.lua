@@ -65,6 +65,7 @@ function p.Init(menuCallbackOpenPopup)
 		end
 		
 		p.refreshSkill();
+		glayerMenu:setPosition(10, 230)
 		
         return glayerMenu
 end
