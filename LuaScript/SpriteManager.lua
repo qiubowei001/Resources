@@ -1,8 +1,7 @@
 SpriteManager = {}
 local p = SpriteManager;
 
-function p.creatBrickSprite(nSpriteId)
-		local spriteid = 1
+function p.creatBrickSprite(spriteid)
         local frameWidth = SpriteConfig[spriteid].Width
         local frameHeight = SpriteConfig[spriteid].Height
 
@@ -17,8 +16,8 @@ function p.creatBrickSprite(nSpriteId)
 		local sprite = CCSprite:createWithSpriteFrame(frame0)
         sprite.isPaused = false
 		
-		for y = 0, SpriteConfig[1].FrameNumY-1 do
-			for x = 0,SpriteConfig[1].FrameNumX-1 do
+		for y = 0, SpriteConfig[spriteid].FrameNumY-1 do
+			for x = 0,SpriteConfig[spriteid].FrameNumX-1 do
 			
 				local rect = CCRectMake((frameWidth)*x,frameHeight*y ,frameWidth, frameHeight)
 				local frame = CCSpriteFrame:createWithTexture(textureDog, rect)

@@ -19,16 +19,18 @@ tbrickType =
 }
 
 local tbrickTypeInfo = {}
-	tbrickTypeInfo[tbrickType.MONSTER] = {1,"monster"}
-	tbrickTypeInfo[tbrickType.SWORD] =   {2,"sword"}
-	tbrickTypeInfo[tbrickType.BLOOD] =   {3,"blood"}
-	tbrickTypeInfo[tbrickType.GOLD] = 	 {4,"gold"}
+										--SPRITE ID
+	tbrickTypeInfo[tbrickType.MONSTER] = {1}
+	tbrickTypeInfo[tbrickType.SWORD] =   {3}
+	tbrickTypeInfo[tbrickType.BLOOD] =   {7}
+	tbrickTypeInfo[tbrickType.GOLD] = 	 {4,5,6}
 	
 	
 local choseefftag = 3001;
 local deathefftag = 3002;
 local Magicefftag = 3000;
-		
+local MainSpritetag = 3003;
+
 function brick.setChosed(pbrick)
 	if  pbrick:getChildByTag(choseefftag) ~= nil then
 		return;
@@ -39,18 +41,17 @@ function brick.setChosed(pbrick)
         local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
         local spriteeff = CCSprite:createWithSpriteFrame(frame0)
 		spriteeff:setPosition(brickWidth/2, brickHeight/2);		
-		pbrick:addChild(spriteeff)
-		spriteeff:setTag(choseefftag)
+		pbrick:addChild(spriteeff,3,choseefftag)
 		pbrick.chosed = true;
-		spriteeff:setOpacity(150)
+		spriteeff:setOpacity(250)
 		
 		
-		local tintblue = CCTintBy:create(0.5, 0, -255, -255)
-		local tintblue_back = tintblue:reverse()
-		local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
-		spriteeff:runAction(blue)
-	
-	
+		--local tintblue = CCTintBy:create(1, -255, -255, 0)
+		--local tintblue_back = tintblue:reverse()
+		--local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
+		local opacity = CCFadeTo:create(0.4, 115)
+		spriteeff:runAction(opacity)
+		--spriteeff:runAction(tintblue)
 end
 
 
@@ -66,32 +67,35 @@ end
 
 						
 function brick.setdeatheffect(pbrick)
-		
-		
-		return;
-		--[[
 		if  pbrick:getChildByTag(deathefftag) ~= nil then
-		
 			return;
 		end
+
+		--隐藏主SPRITE
+		local mainsprite = pbrick:getChildByTag(MainSpritetag)
+		tolua.cast(mainsprite, "CCSprite")
+		mainsprite:setVisible(false)
 		
-		local texturechose = CCTextureCache:sharedTextureCache():addImage("brickeffect/death.png")
-        local rect = CCRectMake(0, 0, 106, 96)
-        local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
-        local spriteeff = CCSprite:createWithSpriteFrame(frame0)
-		spriteeff:setPosition(brickWidth, brickHeight);		
-		pbrick:addChild(spriteeff)
-		spriteeff:setTag(deathefftag)
-		--pbrick.chosed = true;	--]]
+		
+		local spritedeath = SpriteManager.creatBrickSprite(2)
+		pbrick:addChild(spritedeath)
+		spritedeath:setTag(deathefftag)
+		spritedeath:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
 end
 
 function brick.removedeatheff(pbrick)
-	return;
-		--[[
+	--显示主SPRITE
+	local mainsprite = pbrick:getChildByTag(MainSpritetag)
+	if  mainsprite ~= nil then
+		tolua.cast(mainsprite, "CCSprite")
+		mainsprite:setVisible(true)
+	end
+	
+	
 	if  pbrick:getChildByTag(deathefftag) == nil then
 		return;
 	end
-	pbrick:removeChildByTag(deathefftag, true)--]]
+	pbrick:removeChildByTag(deathefftag, true)
 end 
 
 
@@ -150,27 +154,23 @@ function brick.init(pbrick,nType)
 		
 end
 
+function brick.createParentSprite()
+	local spriteParent = CCSprite:create();
+	local brickWidth = brickInfo.brickWidth ;
+	local brickHeight = brickInfo.brickHeight;
+	local rect = CCRectMake(0, 0, brickWidth, brickHeight)
+	spriteParent:setTextureRect(rect)
+	return spriteParent;
+end
+
 function brick.creatMonster(monsterid)
-		--创建空白NODE作为底层
-		--[[
-		local texture = CCTextureCache:sharedTextureCache():addImage("chooseeffect.png")	
-		local rect1 = CCRectMake(0, 0, 78, 78)
-        local frame0 = CCSpriteFrame:createWithTexture(texture, rect1)
-         local spriteParent = CCSprite:createWithSpriteFrame(frame0)
-		--]]
+		local spriteParent = brick.createParentSprite();
 		
-		local spriteParent = CCSprite:create();
-		local brickWidth = brickInfo.brickWidth ;
-		local brickHeight = brickInfo.brickHeight;
-		local rect = CCRectMake(0, 0, brickWidth, brickHeight)
-		spriteParent:setTextureRect(rect)
-		
-		
-		local spriteBrick = SpriteManager.creatBrickSprite(monsterid)
-		spriteParent:addChild(spriteBrick, 0, 1)
+		local spriteBrick = SpriteManager.creatBrickSprite(1)
+		spriteParent:addChild(spriteBrick)
+		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
    
-		
 		monster.InitMonster(spriteParent,monsterid);
 		brick.init(spriteParent,tbrickType.MONSTER)
         return spriteParent;
@@ -179,45 +179,47 @@ end
 
 
 function brick.creatBrick(nType)
-        local textureBrick = CCTextureCache:sharedTextureCache():addImage("brick/"..tbrickTypeInfo[nType][2]..".png")	
-		local rect = CCRectMake(0, 0, frameWidth, frameHeight)
-        local frame0 = CCSpriteFrame:createWithTexture(textureBrick, rect)
-        local spriteBrick = CCSprite:createWithSpriteFrame(frame0)
+		local spriteParent = brick.createParentSprite();
 		
-		brick.init(spriteBrick,nType)
-	    return spriteBrick
+		local spriteBrick = SpriteManager.creatBrickSprite(tbrickTypeInfo[nType][1])
+		spriteParent:addChild(spriteBrick)
+		spriteBrick:setTag(MainSpritetag)
+		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+   
+		brick.init(spriteParent,nType)
+	    return spriteParent
 end
 
 
 function brick.creatGoldBrick(nType)
 		local num = Goldbrick.init()
 		
-		local picind = "";
+		local picind = 0;
 		if num <=3 then
-			picind = ""
+			picind = 4
 		elseif num <= 7 then
-			picind = "1"
+			picind = 5
 		else
-			picind = "2"
+			picind = 6
 		end
+		local spriteParent = brick.createParentSprite();
 		
+		local spriteBrick = SpriteManager.creatBrickSprite(picind)
+		spriteParent:addChild(spriteBrick)
+		spriteBrick:setTag(MainSpritetag)
+		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+   
 		
-		local textureBrick = CCTextureCache:sharedTextureCache():addImage("brick/"..tbrickTypeInfo[nType][2]..picind..".png")	
-		local rect = CCRectMake(0, 0, frameWidth, frameHeight)
-        local frame0 = CCSpriteFrame:createWithTexture(textureBrick, rect)
-        local spriteBrick = CCSprite:createWithSpriteFrame(frame0)
+		brick.init(spriteParent,nType)
 		
-		brick.init(spriteBrick,nType)
-		
-		--spriteBrick:setTexture(CCTextureCache:sharedTextureCache():addImage("brick/"..tbrickTypeInfo[nType][2]..picind..".png"))
-   		spriteBrick.GOLD =  num;
-		local goldlabel = CCLabelTTF:create(spriteBrick.GOLD, "Arial", 35)
-		spriteBrick:addChild(goldlabel)
+		spriteParent.GOLD =  num;
+		local goldlabel = CCLabelTTF:create(spriteParent.GOLD, "Arial", 35)
+		spriteParent:addChild(goldlabel)
 		goldlabel:setColor(ccc3(255,255,0))
 		goldlabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth/3)
 
 	
-        return spriteBrick
+        return spriteParent
 end
 
 function brick.AddMagicEff(effinfoT,nPhase,pbrick)
