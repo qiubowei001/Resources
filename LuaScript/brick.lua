@@ -76,11 +76,26 @@ function brick.setdeatheffect(pbrick)
 		tolua.cast(mainsprite, "CCSprite")
 		mainsprite:setVisible(false)
 		
+
 		
-		local spritedeath = SpriteManager.creatBrickSprite(2)
+		local spritedeath = SpriteManager.creatBrickSprite(8)
 		pbrick:addChild(spritedeath)
 		spritedeath:setTag(deathefftag)
 		spritedeath:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+
+		--增加晃动效果
+		local moveaction1 = CCMoveBy:create(0.02, ccp(3,0))
+		local moveaction2 = moveaction1:reverse()
+		
+		local arr = CCArray:create()
+		arr:addObject(moveaction1)
+		arr:addObject(moveaction2)
+		arr:addObject(moveaction2)
+		arr:addObject(moveaction1)
+		local actionshake = CCRepeatForever:create(CCSequence:create(arr))
+	
+		--local actionshake = CCRepeatForever:create( CCSequence:createWithTwoActions( moveaction1, moveaction2,moveaction2,moveaction1) )
+		spritedeath:runAction(actionshake)
 end
 
 function brick.removedeatheff(pbrick)

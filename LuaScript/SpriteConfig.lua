@@ -51,5 +51,11 @@ SpriteConfig[7].Height = 72
 SpriteConfig[7].FrameNumX = 1
 SpriteConfig[7].FrameNumY = 1
 
+SpriteConfig[8] = {}
+SpriteConfig[8].Name = "monster/1scare"
+SpriteConfig[8].Width = 80
+SpriteConfig[8].Height = 75
+SpriteConfig[8].FrameNumX = 6
+SpriteConfig[8].FrameNumY = 4
 
 
