@@ -67,6 +67,7 @@ end
 
 						
 function brick.setdeatheffect(pbrick)
+		local id = pbrick.monsterId
 		if  pbrick:getChildByTag(deathefftag) ~= nil then
 			return;
 		end
@@ -78,7 +79,7 @@ function brick.setdeatheffect(pbrick)
 		
 
 		
-		local spritedeath = SpriteManager.creatBrickSprite(8)
+		local spritedeath = SpriteManager.creatBrickSprite(monster.GetScarePicIdFromMonsterId(id))
 		pbrick:addChild(spritedeath)
 		spritedeath:setTag(deathefftag)
 		spritedeath:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
@@ -181,7 +182,7 @@ end
 function brick.creatMonster(monsterid)
 		local spriteParent = brick.createParentSprite();
 		
-		local spriteBrick = SpriteManager.creatBrickSprite(1)
+		local spriteBrick = SpriteManager.creatBrickSprite(monster.GetPicIdFromMonsterId(monsterid))
 		spriteParent:addChild(spriteBrick)
 		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))

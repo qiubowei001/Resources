@@ -17,7 +17,8 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[1]["HP"] = 10
 	MONSTER_TYPE[1]["HPadj"] = 3
-	
+	MONSTER_TYPE[1]["PICID"] = 1
+	MONSTER_TYPE[1]["ScarePICID"] = 8
 	
 	
 	MONSTER_TYPE[2] = {}
@@ -25,14 +26,16 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[2]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[2]["HP"] = 10
 	MONSTER_TYPE[2]["HPadj"] = 3
+	MONSTER_TYPE[2]["PICID"] = 1
+	MONSTER_TYPE[2]["ScarePICID"] = 8
 	
 	MONSTER_TYPE[3] = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
 	MONSTER_TYPE[3]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[3]["HP"] = 10
 	MONSTER_TYPE[3]["HPadj"] = 3
-
-	
+	MONSTER_TYPE[3]["PICID"] = 1
+	MONSTER_TYPE[3]["ScarePICID"] = 8
 	
 	MONSTER_TYPE[4] = {}
 	MONSTER_TYPE[4]["name"] = "SlimeKing"
@@ -40,6 +43,8 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[4]["MAgicRound"] = {1} 
 	MONSTER_TYPE[4]["HP"] = 10
 	MONSTER_TYPE[4]["HPadj"] = 3
+	MONSTER_TYPE[4]["PICID"] = 9
+	MONSTER_TYPE[4]["ScarePICID"] = 10
 	
 	MONSTER_TYPE[5] = {}
 	MONSTER_TYPE[5]["name"] = "FireSpider"
@@ -47,20 +52,25 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[5]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[5]["HP"] = 10
 	MONSTER_TYPE[5]["HPadj"] = 3
-
+	MONSTER_TYPE[5]["PICID"] = 11
+	MONSTER_TYPE[5]["ScarePICID"] = 12
 	
 	MONSTER_TYPE[6] = {}
 	MONSTER_TYPE[6]["name"] = "littleFireSpider"
 	MONSTER_TYPE[6]["MAgic"] = nil
 	MONSTER_TYPE[6]["HP"] = 10
 	MONSTER_TYPE[6]["HPadj"] = 3
-
+	MONSTER_TYPE[6]["PICID"] = 13
+	MONSTER_TYPE[6]["ScarePICID"] = 14
+	
 	MONSTER_TYPE[7] = {}
 	MONSTER_TYPE[7]["name"] = "FrozenEye"
 	MONSTER_TYPE[7]["MAgic"] = {1009} --技能列表
 	MONSTER_TYPE[7]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[7]["HP"] = 10
 	MONSTER_TYPE[7]["HPadj"] = 3
+	MONSTER_TYPE[7]["PICID"] = 1
+	MONSTER_TYPE[7]["ScarePICID"] = 8
 	
 	MONSTER_TYPE[8] = {}
 	MONSTER_TYPE[8]["name"] = "FireEye"
@@ -68,13 +78,17 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[8]["MAgicRound"] = {1} --无限
 	MONSTER_TYPE[8]["HP"] = 10
 	MONSTER_TYPE[8]["HPadj"] = 3
-
+	MONSTER_TYPE[8]["PICID"] = 1
+	MONSTER_TYPE[8]["ScarePICID"] = 8
+	
 	MONSTER_TYPE[9] = {}
 	MONSTER_TYPE[9]["name"] = "Bat"
 	MONSTER_TYPE[9]["MAgic"] = {1011} --技能列表
 	MONSTER_TYPE[9]["MAgicRound"] = {1} --无限
 	MONSTER_TYPE[9]["HP"] = 10
 	MONSTER_TYPE[9]["HPadj"] = 3
+	MONSTER_TYPE[9]["PICID"] = 1
+	MONSTER_TYPE[9]["ScarePICID"] = 8
 	
 	MONSTER_TYPE[10] = {}
 	MONSTER_TYPE[10]["name"] = "wizard"
@@ -82,9 +96,21 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[10]["HP"] = 10
 	MONSTER_TYPE[10]["HPadj"] = 3
+	MONSTER_TYPE[10]["PICID"] = 1
+	MONSTER_TYPE[10]["ScarePICID"] = 8
+	
+	
+function monster.GetPicIdFromMonsterId(nMonsterId)
+	return MONSTER_TYPE[nMonsterId]["PICID"]	
+end
+	
+function monster.GetScarePicIdFromMonsterId(nMonsterId)
+	return MONSTER_TYPE[nMonsterId]["ScarePICID"]	
+end
 	
 --初始化怪物数据
 function monster.InitMonster( pBrick,nid)
+		pBrick.monsterId = nid
 		pBrick.moninfo = 
 		{
 		[monsterInfo.HP] = MONSTER_TYPE[nid]["HP"] + math.random(-MONSTER_TYPE[nid]["HPadj"],MONSTER_TYPE[nid]["HPadj"]),
