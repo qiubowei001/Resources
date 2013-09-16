@@ -87,8 +87,8 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[9]["MAgicRound"] = {1} --нчоч
 	MONSTER_TYPE[9]["HP"] = 10
 	MONSTER_TYPE[9]["HPadj"] = 3
-	MONSTER_TYPE[9]["PICID"] = 1
-	MONSTER_TYPE[9]["ScarePICID"] = 8
+	MONSTER_TYPE[9]["PICID"] = 15
+	MONSTER_TYPE[9]["ScarePICID"] = 16
 	
 	MONSTER_TYPE[10] = {}
 	MONSTER_TYPE[10]["name"] = "wizard"
