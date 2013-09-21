@@ -207,7 +207,21 @@ local function main()
 		
 	 
 		local actionto = CCMoveTo:create(pbrick.movetoTime, ccp(positionx, positiony))
-		pbrick:runAction(actionto)
+		
+		local randombounce = math.random(80,110)
+		local randomtime = randombounce/1000
+		local actionto2 = CCMoveTo:create(randomtime, ccp(positionx, positiony + randombounce))
+		local actionto3 = CCMoveTo:create(randomtime*2, ccp(positionx, positiony))
+		local actiontoease =  CCEaseBounceOut:create(actionto3)
+		local arr = CCArray:create()		
+		arr:addObject(actionto)
+			arr:addObject(actionto2)
+		
+		   arr:addObject(actiontoease)
+		  -- arr:addObject(actionto3)
+		local  seq = CCSequence:create(arr)
+
+		pbrick:runAction(seq)
 
 		if X>=1 and X <=brickInfo.brick_num_X and Y>=1 and Y<=brickInfo.brick_num_Y then
 			Board[X][Y] = pbrick;
@@ -255,6 +269,8 @@ local function main()
 					end
 					pbrick.movetoTime = timeinterval;					
 					brickMoveTo(pbrick,i,Ytarget);			
+					--加入JUMP特效
+					
 				else
 					break;
 				end	
