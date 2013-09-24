@@ -1,12 +1,7 @@
 Main = {}
 local p = Main;
 -- for CCLuaEngine traceback
-function __G__TRACKBACK__(msg)
-    CCLuaLog("----------------------------------------")
-    CCLuaLog("LUA ERROR: " .. tostring(msg) .. "\n")
-    CCLuaLog(debug.traceback())
-    CCLuaLog("----------------------------------------")
-end
+
 
 
 
@@ -45,7 +40,6 @@ local g_LEVlabeltag =6;
 
 local glayerMenu = nil;
 
-local g_sceneGame = nil;
 
 function Main.GetGameScene()
 	return g_sceneGame;
@@ -123,8 +117,7 @@ for i = 1,brickInfo.brick_num_X do
 end
 
 
-
-local function main()
+function p.main(nMission)
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
@@ -139,6 +132,8 @@ local function main()
 
     local winSize = CCDirector:sharedDirector():getWinSize()
 
+	mission.SetMission(nMission);
+	
 	
 	
 	local function IfBoardFull()
@@ -521,14 +516,10 @@ local function main()
 
    
 
-    g_sceneGame = CCScene:create()
+   
     g_sceneGame:addChild(createlayerMain())
-    --g_sceneGame:addChild(createlayerMenu())
-	g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup))
+    g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup))
 	TimerBuff.LoadUI()
-	
-	
-    CCDirector:sharedDirector():runWithScene(g_sceneGame)
 end
 
-xpcall(main, __G__TRACKBACK__)
+

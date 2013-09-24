@@ -8,6 +8,7 @@ local g_goldlabeltag= 3;
 local g_Tiplabeltag = 4;
 local g_EXPlabeltag = 5;
 local g_LEVlabeltag =6;
+local g_missionlabeltag =7;
 local bglayer = nil;
 
 function p.LoadUI()
@@ -58,11 +59,20 @@ function p.LoadUI()
 			LEVlabel:setTag(g_LEVlabeltag);		
 	
 	
+		--œ‘ æMISSION
+		local missionLabel = CCLabelTTF:create("", "Arial", 20)
+			bglayer:addChild(missionLabel)
+			missionLabel:setColor(ccc3(255,0,0))
+			missionLabel:setPosition(0, 420)
+			missionLabel:setTag(g_missionlabeltag);
+			
     bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,3)
 	bglayer:setTag(UIdefine.MainUI);
 	
+	
+	p.SetMainUIMission(mission.GetMissionDesc())
 end
 
 
@@ -101,4 +111,10 @@ function p.SetMainUITip(sTip)
 	local tiplabel = bglayer:getChildByTag(g_Tiplabeltag)
 	tolua.cast(tiplabel, "CCLabelTTF")
 	tiplabel:setString(sTip) 	
+end
+
+function p.SetMainUIMission(sMission)
+	local tiplabel = bglayer:getChildByTag(g_missionlabeltag)
+	tolua.cast(tiplabel, "CCLabelTTF")
+	tiplabel:setString(sMission.."") 
 end

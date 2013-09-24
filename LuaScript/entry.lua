@@ -1,9 +1,23 @@
 cclog = function(...)
        CCLuaLog(string.format(...))
 		end
-	
+
+
+function __G__TRACKBACK__(msg)
+    CCLuaLog("----------------------------------------")
+    CCLuaLog("LUA ERROR: " .. tostring(msg) .. "\n")
+    CCLuaLog(debug.traceback())
+    CCLuaLog("----------------------------------------")
+end
+
+		
 math.randomseed(os.time())
 
+
+g_sceneGame = CCScene:create();
+CCDirector:sharedDirector():runWithScene(g_sceneGame)
+ 
+dofile("LuaScript/MissionSelectUI.lua")
 
 dofile("LuaScript/UIdefine.lua")
 
@@ -41,3 +55,6 @@ dofile("LuaScript/MainUI.lua")
 
 
 dofile("LuaScript/Main.lua")
+
+--xpcall(Main.main, __G__TRACKBACK__)
+xpcall(MissionSelectUI.LoadUI, __G__TRACKBACK__)
