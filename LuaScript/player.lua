@@ -257,7 +257,7 @@ function player.Attack(tAttAction)
 	local nDamage = tAttAction.damage
 	local target = tAttAction.target
 	
-	local tAttAction = player.InitAttAction(nDamage,target)
+	--local tAttAction = player.InitAttAction(nDamage,target)
 					
 	--遍历攻击调整函数
 	for k,func in pairs(player.AttAdjFuncT) do
