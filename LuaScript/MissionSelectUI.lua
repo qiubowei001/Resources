@@ -50,5 +50,12 @@ function p.LoadUI()
 		bgSprite:setScale(5);
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer)
+	
+
+		emitter = CCParticleSystemQuad:new()
+		emitter:autorelease()
+		local filename = "Particle/LavaFlow.plist"
+		emitter:initWithFile(filename)
+		bglayer:addChild(emitter, 10)
 		
 end
