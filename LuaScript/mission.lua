@@ -14,8 +14,8 @@ MISSION_TABLE[1]["config"] =
 {
 --回合数 --{怪物ID,怪物概率}
 {3		,	{9},		{100}		 },
-{1000		,	{2,4},		{95,5		}},
-{20000		,	{4},		{100		}},
+{10		,	{2,4},		{95,5		}},
+{20		,	{4},		{100		}},
 }
 
 MISSION_TABLE[2] = {}
@@ -24,8 +24,8 @@ MISSION_TABLE[2]["config"] =
 {
 --回合数 --{怪物ID,怪物概率}
 {3		,	{9},		{100}		 },
-{1000		,	{2,4},		{95,5		}},
-{20000		,	{4},		{100		}},
+{10		,	{2,4},		{95,5		}},
+{20		,	{4},		{100		}},
 }
 
 MISSION_TABLE[3] = {}
@@ -34,8 +34,8 @@ MISSION_TABLE[3]["config"] =
 {
 --回合数 --{怪物ID,怪物概率}
 {3		,	{9},		{100}		 },
-{1000		,	{2,4},		{95,5		}},
-{20000		,	{4},		{100		}},
+{10		,	{2,4},		{95,5		}},
+{20		,	{4},		{100		}},
 }
 
 
@@ -56,6 +56,9 @@ function p.GenerateMonsterId()
 	nRound = nRound +1;
 	local roundBoundMin = 0;
 	local roundBoundMax = 0;
+	
+	--p.GetProgress();
+	
 	for i,v in pairs(MISSION_TABLE[gMission]["config"]) do
 		roundBoundMax = roundBoundMin + v[1];
 		if nRound <= roundBoundMax  and nRound > roundBoundMin  then
@@ -78,3 +81,44 @@ function p.GenerateMonsterId()
 		
 	end
 end
+
+--获取MISSION进度
+function p.GetProgress()
+	local roundmax = 0;
+	
+	for i,v in pairs(MISSION_TABLE[gMission]["config"]) do
+		roundmax = roundmax + v[1]
+	end
+
+	return nRound/roundmax
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

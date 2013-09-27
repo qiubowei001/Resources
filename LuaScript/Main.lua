@@ -298,7 +298,9 @@ function p.main(nMission)
 				if nbricktype == tbrickType.MONSTER then
 					--产生怪物
 					monsterid = mission.GenerateMonsterId();
-				
+					local progress = mission.GetProgress()
+					MainUI.SetProgress(progress)
+					
 					pbrick = brick.creatMonster(monsterid);
 					table.insert(tNewFallMonster,pbrick)
 					
@@ -503,12 +505,14 @@ function p.main(nMission)
         layerMain:setTouchEnabled(true)
 
 		
-		 BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(brickfallLogic, 0.3, false)	
-
+		 
 		
 		--主界面初始化
 		MainUI.LoadUI()
 		
+		
+		BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(brickfallLogic, 0.3, false)	
+
 		
 		player.Initplayer();		
         return layerMain

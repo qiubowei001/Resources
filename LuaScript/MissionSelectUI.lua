@@ -51,11 +51,16 @@ function p.LoadUI()
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer)
 	
+		
 
+		--[[
 		emitter = CCParticleSystemQuad:new()
 		emitter:autorelease()
 		local filename = "Particle/LavaFlow.plist"
 		emitter:initWithFile(filename)
 		bglayer:addChild(emitter, 10)
-		
+		--]]
 end
+
+
+

@@ -16,7 +16,11 @@ math.randomseed(os.time())
 
 g_sceneGame = CCScene:create();
 CCDirector:sharedDirector():runWithScene(g_sceneGame)
- 
+
+dofile("LuaScript/extern.lua")
+
+dofile("LuaScript/UI/ProgressBar.lua")
+
 dofile("LuaScript/MissionSelectUI.lua")
 
 dofile("LuaScript/UIdefine.lua")

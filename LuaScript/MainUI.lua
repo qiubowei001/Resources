@@ -9,7 +9,10 @@ local g_Tiplabeltag = 4;
 local g_EXPlabeltag = 5;
 local g_LEVlabeltag =6;
 local g_missionlabeltag =7;
+local g_progressbartag = 8;
+
 local bglayer = nil;
+local gprogressbar = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
@@ -66,6 +69,17 @@ function p.LoadUI()
 			missionLabel:setPosition(0, 420)
 			missionLabel:setTag(g_missionlabeltag);
 			
+		--ÏÔÊ¾MISSION½ø¶È
+		gprogressbar = ProgressBar:Create()
+		gprogressbar:setPosition(CCPointMake(80, 320))
+		gprogressbar:SetProgress(0)
+		bglayer:addChild(gprogressbar)
+		gprogressbar:setTag(g_progressbartag);
+			
+		
+		
+		
+			
     bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,3)
@@ -73,6 +87,12 @@ function p.LoadUI()
 	
 	
 	p.SetMainUIMission(mission.GetMissionDesc())
+	
+	p.SetProgress(10)
+end
+
+function p.SetProgress(nProgress)
+	gprogressbar:SetProgress(nProgress)	         
 end
 
 
