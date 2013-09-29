@@ -45,11 +45,15 @@ function Main.GetGameScene()
 	return g_sceneGame;
 end
 
-function Main.destroyBrick(X,Y)
+function Main.destroyBrick(X,Y,ifRemove)
+	
+	
 	if Board[X][Y] ~= nil then
-				
-		layerMain:removeChild(Board[X][Y], true)
+		if ifRemove == nil or ifRemove == true then
+			layerMain:removeChild(Board[X][Y], true)
+		end
 		Board[X][Y] = nil;
+		
 	end
 end
 	

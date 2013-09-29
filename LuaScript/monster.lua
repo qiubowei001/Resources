@@ -195,7 +195,11 @@ function monster.damage( pBrick,nDamage)
 			hplabel:setString(defender.moninfo[monsterInfo.HP] )
 		
 			if defender.moninfo[monsterInfo.HP] <= 0 then
-				Main.destroyBrick(defender.TileX,defender.TileY)
+				
+				--执行死亡动画
+				monster.PlayDeathAnimation(pBrick);
+				Main.destroyBrick(defender.TileX,defender.TileY,false)
+				
 				
 				
 				--玩家獲取經驗
@@ -324,4 +328,51 @@ function monster.GetMonsterIconPath(nMonsterId)
 	
 	return "brick/monster/monster"..nMonsterId..".png";
 end
+
+--普通死亡 变大 淡化
+function monster.PlayDeathAnimation(pBrick)
+	brick.setUnChosed(pBrick)
+	brick.removedeatheff(pBrick)
+
+	local parent = pBrick:getParent()
+	--放置到顶层
+	parent:reorderChild(pBrick, 1000)
+ 	
+	local mainsprite = brick.GetMainSprite(pBrick)
+	pBrick:setOpacity(0)
+
+	local array = CCArray:create()
+	array:addObject(CCScaleBy:create(1, 1.5))
+	array:addObject(CCCallFuncN:create(function(sender)  
+											sender:removeFromParentAndCleanup(true);
+											end ) )
+    local action = CCSequence:create(array)
+
+	local fadeaction  = CCFadeOut:create(1)
+	
+	
+	pBrick:runAction(action)	
+	mainsprite:runAction(fadeaction)	
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -31,6 +31,8 @@ local deathefftag = 3002;
 local Magicefftag = 3000;
 local MainSpritetag = 3003;
 
+local animationtag = 3004;
+
 function brick.setChosed(pbrick)
 	if  pbrick:getChildByTag(choseefftag) ~= nil then
 		return;
@@ -46,12 +48,9 @@ function brick.setChosed(pbrick)
 		spriteeff:setOpacity(250)
 		
 		
-		--local tintblue = CCTintBy:create(1, -255, -255, 0)
-		--local tintblue_back = tintblue:reverse()
-		--local blue = CCRepeatForever:create( CCSequence:createWithTwoActions( tintblue, tintblue_back) )
 		local opacity = CCFadeTo:create(0.4, 115)
 		spriteeff:runAction(opacity)
-		--spriteeff:runAction(tintblue)
+		
 end
 
 
@@ -65,7 +64,34 @@ function brick.setUnChosed(pbrick)
 	pbrick.chosed = false;
 end 
 
-						
+
+function brick.GetMainSprite(pbrick)
+		local mainsprite = pbrick:getChildByTag(MainSpritetag)
+		tolua.cast(mainsprite, "CCSprite")
+		return mainsprite
+end
+
+function brick.playAnimation(pbrick,spriteAnimation)
+		if  pbrick:getChildByTag(animationtag) ~= nil then
+			return;
+		end
+		--[[
+		--Òþ²ØÖ÷SPRITE
+		local mainsprite = pbrick:getChildByTag(MainSpritetag)
+		tolua.cast(mainsprite, "CCSprite")
+		mainsprite:setVisible(false)
+		--]]
+		
+		pbrick:addChild(spriteAnimation)
+		spriteAnimation:setTag(animationtag)
+		spriteAnimation:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+		
+		return pbrick;
+end
+
+
+
+				
 function brick.setdeatheffect(pbrick)
 		local id = pbrick.monsterId
 		if  pbrick:getChildByTag(deathefftag) ~= nil then
