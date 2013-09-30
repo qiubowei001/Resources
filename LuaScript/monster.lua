@@ -355,10 +355,56 @@ function monster.PlayDeathAnimation(pBrick)
 	mainsprite:runAction(fadeaction)	
 end
 
+function monster.PlayCriticalHitAnimation(pBrick)
+	brick.setUnChosed(pBrick)
+	brick.removedeatheff(pBrick)
+	
+	local parent = pBrick:getParent()
+	--放置到顶层
+	parent:reorderChild(pBrick, 1000)
+ 	
+	
+	
+	
+end
 
-
-
-
+--获取飞行路径
+function monster.GetFlyPositionBorder(pBrick)
+	--随机第一碰撞点
+	local boardW = brickInfo.brick_num_X*brickInfo.brickWidth
+	local boardH = brickInfo.brick_num_Y*brickInfo.brickHeight
+	local x = 0
+	local y = 0
+	
+	local originx,originy = (pBrick:getPosition()).x ,(pBrick:getPosition()).y
+	
+	local tPosition = {}
+	local nrandom = math.random(1,4)
+	if nrandom ==1 then
+		--左边界
+		x =  0
+		y =  math.random(1,boardH)
+	elseif nrandom ==2 then
+		--右边
+		x =  boardW
+		y =  math.random(1,boardH)		
+		
+	elseif nrandom ==3 then
+		--上
+		x =  math.random(1,boardW)	
+		y =  boardH	
+		
+	else
+		--下
+		x =  math.random(1,boardW)	
+		y =  boardH		
+	end
+	
+	table.insert(tPosition,{x,y})
+	
+	
+	
+end
 
 
 
