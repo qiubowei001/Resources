@@ -359,7 +359,7 @@ end
 
 function monster.PlayCriticalHitAnimation(pBrick)
 	brick.setUnChosed(pBrick)
-	brick.removedeatheff(pBrick)
+	brick.setdeatheffect(pBrick)
 	
 	local parent = pBrick:getParent()
 	--放置到顶层
@@ -368,6 +368,8 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	--获取飞行路径
 	local tPosition = monster.GetFlyPositionBorder(pBrick)
 	local arr = CCArray:create()
+	local action = CCMoveBy:create(0.5, CCPointMake(0, 50));
+	arr:addObject(action)		
 		
 	local lastx,lasty = 0, 0
 	local velocity = 800;
