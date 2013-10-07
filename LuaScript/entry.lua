@@ -11,7 +11,7 @@ function __G__TRACKBACK__(msg)
 end
 
 		
-math.randomseed(os.time())
+--math.randomseed(os.time())
 
 
 g_sceneGame = CCScene:create();

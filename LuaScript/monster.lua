@@ -197,7 +197,9 @@ function monster.damage( pBrick,nDamage)
 			if defender.moninfo[monsterInfo.HP] <= 0 then
 				
 				--执行死亡动画
-				monster.PlayDeathAnimation(pBrick);
+				--monster.PlayDeathAnimation(pBrick);
+				monster.PlayCriticalHitAnimation(pBrick);
+				
 				Main.destroyBrick(defender.TileX,defender.TileY,false)
 				
 				
@@ -363,10 +365,67 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	--放置到顶层
 	parent:reorderChild(pBrick, 1000)
  	
+	--获取飞行路径
+	local tPosition = monster.GetFlyPositionBorder(pBrick)
+	local arr = CCArray:create()
+		
+	local lastx,lasty = 0, 0
+	local velocity = 800;
 	
+	for i,v in pairs(tPosition) do
+		if i ~=1 then		
+			--计算距离
+			local l = (v[1]-lastx)*(v[1]-lastx) + (v[2]-lasty)*(v[2]-lasty)
+			local t = math.sqrt(l) / velocity;
+			
+			local action = CCMoveTo:create(t, CCPointMake(v[1]+100, v[2]));
+			arr:addObject(action)
+		end
+		lastx = v[1];
+		lasty = v[2];
+	end
+	arr:addObject(CCCallFuncN:create(function(sender)  
+											sender:removeFromParentAndCleanup(true);
+											end ) )
+	local  seq = CCSequence:create(arr)
+	pBrick:runAction(seq)
 	
+	local rotatedir = 0
+	
+	if math.random(1,2) == 1 then
+		rotatedir = 360
+	else
+		rotatedir = -360
+	end
+	
+	local rotate = CCRotateBy:create(0.2, rotatedir)
+    local action = CCRepeatForever:create(rotate)
+	pBrick:runAction(action)
 	
 end
+
+
+local tRusheToFansheFunc = {}
+			--左边界
+		  tRusheToFansheFunc[1] = function(RVec)
+									local FVec = {-RVec[1],RVec[2]};
+									return FVec;
+								end
+			--右边					
+		  tRusheToFansheFunc[2] = function(RVec)
+									local FVec = {-RVec[1],RVec[2]};
+									return FVec;
+								end
+			--上边					
+		  tRusheToFansheFunc[3] = function(RVec)
+									local FVec = {RVec[1],-RVec[2]};
+									return FVec;
+								end								
+			--下边					
+		  tRusheToFansheFunc[4] = function(RVec)
+									local FVec = {RVec[1],-RVec[2]};
+									return FVec;
+								end								
 
 --获取飞行路径
 function monster.GetFlyPositionBorder(pBrick)
@@ -376,34 +435,86 @@ function monster.GetFlyPositionBorder(pBrick)
 	local x = 0
 	local y = 0
 	
-	local originx,originy = (pBrick:getPosition()).x ,(pBrick:getPosition()).y
+	local originx,originy = pBrick:getPosition();
 	
 	local tPosition = {}
-	local nrandom = math.random(1,4)
-	if nrandom ==1 then
+	local nrandomBoard = math.random(1,4)
+	if nrandomBoard ==1 then
 		--左边界
 		x =  0
-		y =  math.random(1,boardH)
-	elseif nrandom ==2 then
+		y =  math.random(1,boardH-1)
+	elseif nrandomBoard ==2 then
 		--右边
 		x =  boardW
-		y =  math.random(1,boardH)		
+		y =  math.random(1,boardH-1)		
 		
-	elseif nrandom ==3 then
+	elseif nrandomBoard ==3 then
 		--上
-		x =  math.random(1,boardW)	
+		x =  math.random(1,boardW-1)	
 		y =  boardH	
 		
 	else
 		--下
-		x =  math.random(1,boardW)	
-		y =  boardH		
+		x =  math.random(1,boardW-1)	
+		y =  0		
 	end
 	
-	table.insert(tPosition,{x,y})
+	table.insert(tPosition,{originx,originy,nil})
+	table.insert(tPosition,{x,y,nrandomBoard})
+			
+	--设置反射点数
+	local nCount = 3
+	for i = 1,nCount do 
+		local nHitBoard = tPosition[i+1][3]--撞击边界
+		--得出入射向量 
+		
+		local tRusheVec = {tPosition[i+1][1] - tPosition[i][1],tPosition[i+1][2] - tPosition[i][2]}	
+		--得出反射向量
+		local tFanSheVec = tRusheToFansheFunc[nHitBoard](tRusheVec)
+		
+		
+		local PositionOri = tPosition[i+1]
+		
+		--根据反射点和反射向量*系数 确定新反射点（系数大于0且最小）
+		--特殊情况：垂直和水平入射
+		--到达左边	
+		K1 = - PositionOri[1]/tFanSheVec[1]
+		--右边
+		K2 = (boardW - PositionOri[1])/tFanSheVec[1]
+		--上
+		K3= (boardH- PositionOri[2])/tFanSheVec[2]		
+		--下
+		
+		K4 = - PositionOri[2]/tFanSheVec[2]
+		local t = {}
+		local K = nil;
+		table.insert(t,K1);
+		table.insert(t,K2);
+		table.insert(t,K3);
+		table.insert(t,K4);
+		
+		
+		for i,KTmp in pairs(t) do
+			if KTmp > 0  then
+				if K == nil or KTmp < K then
+					K = KTmp	
+					nHitBoard = i
+				end
+			end
+		end	
+		
+		--得出下一个碰撞点坐标
+		if i==nCount then
+			K = 1.2*K
+		end
+		
+		xNext = PositionOri[1]+ tFanSheVec[1]*K
+		yNext = PositionOri[2]+ tFanSheVec[2]*K
+		table.insert(tPosition,{xNext,yNext,nHitBoard})
+	end	
 	
 	
-	
+	return tPosition;
 end
 
 
