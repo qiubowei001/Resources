@@ -6,6 +6,10 @@ brickInfo.brickHeight = 100;
 brickInfo.brickSpeed = 5;
 brickInfo.brickRespondArea = 0.7;--砖块相应区域0-1
 
+--这俩个参数可以考虑做到MISSION里面
+brickInfo.WaveDelay = 100;--每波砖块的掉落间隔(1 = 0.1秒)
+brickInfo.WaveCount = 10;--每波砖块的数量
+
 
 --游戏阶段定义
 GameLogicPhase ={

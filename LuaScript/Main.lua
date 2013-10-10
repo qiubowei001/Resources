@@ -41,6 +41,159 @@ local g_LEVlabeltag =6;
 local glayerMenu = nil;
 
 
+
+--生成一波砖块
+local gWaveCount = 0; --掉落砖块剩余数量
+
+function Main.IfBoardFull()
+	for i = 1,brickInfo.brick_num_X do
+		
+		for j = 1,brickInfo.brick_num_Y do
+			
+			if Board[i][j] == nil then
+				return false;
+			end
+		end
+	end
+	
+	return true;
+end
+
+local WaveTick = 0
+function Main.CreatebrickWave()
+	gWaveCount = gWaveCount + brickInfo.WaveCount
+end
+
+function Main.WaveTimer()
+	WaveTick = WaveTick + 1;
+	if WaveTick>= brickInfo.WaveDelay then
+		WaveTick = brickInfo.WaveDelay
+	end
+	
+	MainUI.setWaveTimer(WaveTick*100/brickInfo.WaveDelay);
+	
+	if WaveTick >= brickInfo.WaveDelay then
+		WaveTick = 0
+		Main.CreatebrickWave()
+	end	
+end
+
+--掉落一块砖块
+function Main.brickfallLogic()
+		--砖块计数
+		if gWaveCount <= 0 then
+			return
+		end
+		
+		gWaveCount = gWaveCount - 1
+
+		
+		if Main.IfBoardFull() then
+			--游戏结束
+			return;
+		end
+		
+		local nNum = brickInfo.brick_num_X;
+		--所有方块向下掉落
+		for i=1,nNum do
+			for j = 1, brickInfo.brick_num_Y do
+				local Ytarget,Ysource = p.getBoardEmptyYFromX(i)
+				
+				if( Ytarget and Ysource ) then
+					local pbrick = Board[i][Ysource];
+					Board[i][Ysource] = nil;
+					Board[i][Ytarget] = pbrick;
+					
+					local timetick = Ysource - Ytarget;
+					if timetick >0 then
+						timeinterval = timetick / pbrick.brickSpeed  *0.3;
+					end
+					pbrick.movetoTime = timeinterval;					
+					p.brickMoveTo(pbrick,i,Ytarget);			
+					--加入JUMP特效				
+				else
+					break;
+				end	
+			end
+		end
+
+		local nwidth = brickInfo.brickWidth;
+
+				local tTypeId ={}
+				local j =1;
+				for i,v in pairs(tbrickType)do
+					tTypeId[j] = v
+					j = j+1;
+				end		
+		
+		local tYempty = {}
+		for i=1,nNum do
+			local Yempty = p.getBoardEmptyYFromX(i)
+			tYempty[i] = Yempty;
+		end
+		
+		--寻找最低点释放
+		local tTmp = {}
+					--INDEX VAL
+		tTmp[1] = {100,100}
+		
+		for i,v in pairs(tYempty) do
+			if  v~= false then
+				if v < tTmp[1][2] then
+					tTmp = {}
+					tTmp[1]={}
+					tTmp[1][2] = v
+					tTmp[1][1] = i
+				elseif v == tTmp[1][2] then
+					table.insert(tTmp,{i,v});
+				end
+			end
+		end
+		
+
+		if tTmp[1][1]==100 then
+			return;
+		end
+		
+		local index = math.random(1,#tTmp);
+		local X = tTmp[index][1]
+		local Ymin = tTmp[index][2]
+		
+		local nbricktype = tTypeId[math.random(1,#tTypeId)];
+		local pbrick=nil;
+					
+		if nbricktype == tbrickType.MONSTER then
+			--产生怪物
+			monsterid = mission.GenerateMonsterId();
+			local progress = mission.GetProgress()
+			MainUI.SetProgress(progress)
+			pbrick = brick.creatMonster(monsterid);
+		elseif nbricktype == tbrickType.GOLD then
+			pbrick = brick.creatGoldBrick(nbricktype)
+		else
+			pbrick = brick.creatBrick(nbricktype);
+		end	
+						
+		local timetick = brickInfo.brick_num_Y+1 - Ymin;
+		local timeinterval = 0.3;
+		if timetick >0 then
+			timeinterval = timetick / pbrick.brickSpeed  *0.3;
+		end
+		pbrick.movetoTime = timeinterval;
+		
+		p.brickSetXY(pbrick,X,brickInfo.brick_num_Y+1)				
+		p.brickMoveTo(pbrick,X,Ymin);
+		Board[X][Ymin] = pbrick;
+		
+		if nbricktype == tbrickType.MONSTER then
+			monster.SpellMagic(pbrick,true);
+		end
+		
+		
+
+		
+end
+
 function Main.GetGameScene()
 	return g_sceneGame;
 end
@@ -111,53 +264,10 @@ function p.brickSetXY(pbrick,X,Y)
 			pbrick.TileY = Y;
 		end
 end
-	
---初始化棋盘
-for i = 1,brickInfo.brick_num_X do
-	Board[i]={}
-	for j = 1,brickInfo.brick_num_Y do
-		Board[i][j] = nil;
-	end
-end
 
 
-function p.main(nMission)
-    -- avoid memory leak
-    collectgarbage("setpause", 100)
-    collectgarbage("setstepmul", 5000)
 
-    local cclog = function(...)
-        CCLuaLog(string.format(...))
-    end
-
-	cclog("demo start")
-
-    ---------------
-
-    local winSize = CCDirector:sharedDirector():getWinSize()
-
-	mission.SetMission(nMission);
-	
-	
-	
-	local function IfBoardFull()
-					for i = 1,brickInfo.brick_num_X do
-						
-						for j = 1,brickInfo.brick_num_Y do
-							
-							if Board[i][j] == nil then
-								return false;
-							end
-						end
-					end
-					
-					return true;
-			end
-	
-	
-	
-	--获取BOARD对应X横轴，纵轴Y空位 以及悬空Y位置
-	local function getBoardEmptyYFromX(X)
+function p.getBoardEmptyYFromX(X)
 		local ret = 1;
 		local retXuanKong = false;
 		for i=1,#Board[X]  do
@@ -188,9 +298,9 @@ function p.main(nMission)
 		end
 		
 		return ret,retXuanKong;	
-	end
+end
 	
-	local function brickMoveTo(pbrick,X,Y)
+function p.brickMoveTo(pbrick,X,Y)
 	
 		--清空原位
 		for i,v in pairs(Board)do
@@ -228,112 +338,42 @@ function p.main(nMission)
 			pbrick.TileY = Y;
 			
 		end
-	end
+end
 	
-	--新生怪物列表
-	local tNewFallMonster = {}
-	local function brickfallLogic()
-		if IfBoardFull() then
-			--新生怪物施放技能
-			--
-			for i,v in pairs(tNewFallMonster) do
-				monster.SpellMagic(v,true);
-				
-			end	
-			
-			
-			tNewFallMonster = {}
-			return;--CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(BrickFallTimerId)
-		end
-		
-		--清空新生怪物列表
-		--tNewFallMonster = {}
-		
-		local nNum = brickInfo.brick_num_X;
-		
-		--所有方块向下掉落
-		for i=1,nNum do
-			for j = 1, brickInfo.brick_num_Y do
-				local Ytarget,Ysource = getBoardEmptyYFromX(i)
-				
-				
-				if( Ytarget and Ysource ) then
-					local pbrick = Board[i][Ysource];
-					Board[i][Ysource] = nil;
-					Board[i][Ytarget] = pbrick;
-					
-					local timetick = Ysource - Ytarget;
-					if timetick >0 then
-						timeinterval = timetick / pbrick.brickSpeed  *0.3;
-					end
-					pbrick.movetoTime = timeinterval;					
-					brickMoveTo(pbrick,i,Ytarget);			
-					--加入JUMP特效
-					
-				else
-					break;
-				end	
-			end
-		end
-
-		local nwidth = brickInfo.brickWidth;
-
-				local tTypeId ={}
-				local j =1;
-				for i,v in pairs(tbrickType)do
-					tTypeId[j] = v
-					j = j+1;
-				end		
-		
-		for i=1,nNum do
-			local Yempty = getBoardEmptyYFromX(i)
-			if Yempty ~= false then
-				
-				
-
-				local nbricktype = tTypeId[math.random(1,#tTypeId)];
-				local pbrick=nil;
-				
-				ntest = ntest +1
-					if ntest== 44 then
-						--nbricktype = tbrickType.MONSTER
-					end
-					
-				if nbricktype == tbrickType.MONSTER then
-					--产生怪物
-					monsterid = mission.GenerateMonsterId();
-					local progress = mission.GetProgress()
-					MainUI.SetProgress(progress)
-					
-					pbrick = brick.creatMonster(monsterid);
-					table.insert(tNewFallMonster,pbrick)
-					
-				elseif nbricktype == tbrickType.GOLD then
-					pbrick = brick.creatGoldBrick(nbricktype)
-				else
-					pbrick = brick.creatBrick(nbricktype);
-					
-				end	
-						
-
-				--layerMain:addChild(pbrick);
-				
-				local timetick = brickInfo.brick_num_Y+1 - Yempty;
-				local timeinterval = 0.3;
-		
-				
-				if timetick >0 then
-					timeinterval = timetick / pbrick.brickSpeed  *0.3;
-				end
-				pbrick.movetoTime = timeinterval;
-				
-				
-				p.brickSetXY(pbrick,i,brickInfo.brick_num_Y+1)				
-				brickMoveTo(pbrick,i,Yempty);
-				Board[i][Yempty] = pbrick;
-			end	
-		end	
+	
+	
+	
+--初始化棋盘
+for i = 1,brickInfo.brick_num_X do
+	Board[i]={}
+	for j = 1,brickInfo.brick_num_Y do
+		Board[i][j] = nil;
 	end
+end
+
+
+function p.main(nMission)
+    -- avoid memory leak
+    collectgarbage("setpause", 100)
+    collectgarbage("setstepmul", 5000)
+
+    local cclog = function(...)
+        CCLuaLog(string.format(...))
+    end
+
+	cclog("demo start")
+
+    ---------------
+
+    local winSize = CCDirector:sharedDirector():getWinSize()
+
+	mission.SetMission(nMission);
+	
+
+	
+	--获取BOARD对应X横轴，纵轴Y空位 以及悬空Y位置
+
+
 	
 	
     -- create farm
@@ -514,9 +554,10 @@ function p.main(nMission)
 		--主界面初始化
 		MainUI.LoadUI()
 		
+		Main.CreatebrickWave();
+		BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
 		
-		BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(brickfallLogic, 0.3, false)	
-
+		local TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.1, false)	
 		
 		player.Initplayer();		
         return layerMain

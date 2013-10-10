@@ -10,9 +10,12 @@ local g_EXPlabeltag = 5;
 local g_LEVlabeltag =6;
 local g_missionlabeltag =7;
 local g_progressbartag = 8;
+local g_wavetimertag = 9;
+local g_SpeedBtntag = 10;
 
 local bglayer = nil;
 local gprogressbar = nil;
+local waveCounter = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
@@ -77,6 +80,23 @@ function p.LoadUI()
 		gprogressbar:setTag(g_progressbartag);
 			
 		
+		--º”ÀŸ∞¥≈•
+		-- menu
+		local item1 = CCMenuItemImage:create("UI/Button/SpeedBtn.png", "UI/Button/SpeedBtn.png")
+    	item1:registerScriptTapHandler(p.menuCallbackSpeedBtn)
+		local menu = CCMenu:create()
+		menu:addChild(item1,1,1)	
+		menu:setPosition(CCPointMake(10, 400))
+		item1:setPosition(0,0)
+		item1:setTag(g_SpeedBtntag);
+		bglayer:addChild(menu)
+		
+		waveCounter = CCProgressTimer:create(CCSprite:create("UI/Bar/CircleTimer.png"))
+		waveCounter:setType(kCCProgressTimerTypeRadial)
+		waveCounter:setPosition(CCPointMake(10, 100))
+		waveCounter:setTag(g_wavetimertag);
+		bglayer:addChild(waveCounter)
+		
 		
 		
 			
@@ -90,6 +110,15 @@ function p.LoadUI()
 	
 	p.SetProgress(10)
 end
+
+function p.setWaveTimer(nPersent)
+	waveCounter:setPercentage(nPersent);
+end
+
+function p.menuCallbackSpeedBtn(tag,sender)
+	Main.CreatebrickWave();
+end
+
 
 function p.SetProgress(nProgress)
 	gprogressbar:SetProgress(nProgress)	         
