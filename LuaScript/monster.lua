@@ -101,6 +101,7 @@ local MONSTER_TYPE = {}
 	
 	
 function monster.GetPicIdFromMonsterId(nMonsterId)
+	cclog("GetPicIdFromMonsterId:"..nMonsterId)
 	return MONSTER_TYPE[nMonsterId]["PICID"]	
 end
 	

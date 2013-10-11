@@ -62,7 +62,14 @@ end
 local WaveTick = 0
 function Main.CreatebrickWave()
 	gWaveCount = gWaveCount + brickInfo.WaveCount
+	
+	--WaveTick = brickInfo.WaveDelay
 end
+
+function Main.SpeedUpWave()
+	WaveTick = brickInfo.WaveDelay;
+end
+
 
 function Main.WaveTimer()
 	WaveTick = WaveTick + 1;
@@ -80,21 +87,13 @@ end
 
 --掉落一块砖块
 function Main.brickfallLogic()
-		--砖块计数
-		if gWaveCount <= 0 then
-			return
-		end
-		
-		gWaveCount = gWaveCount - 1
-
-		
 		if Main.IfBoardFull() then
 			--游戏结束
 			return;
 		end
 		
-		local nNum = brickInfo.brick_num_X;
 		--所有方块向下掉落
+		local nNum = brickInfo.brick_num_X;
 		for i=1,nNum do
 			for j = 1, brickInfo.brick_num_Y do
 				local Ytarget,Ysource = p.getBoardEmptyYFromX(i)
@@ -117,6 +116,14 @@ function Main.brickfallLogic()
 			end
 		end
 
+		
+		--砖块计数
+		if gWaveCount <= 0 then
+			return
+		end
+		gWaveCount = gWaveCount - 1
+
+		
 		local nwidth = brickInfo.brickWidth;
 
 				local tTypeId ={}
@@ -310,6 +317,8 @@ function p.brickMoveTo(pbrick,X,Y)
 				end
 			end
 		end
+		
+		pbrick:stopAllActions()
 		
 		local positionx = X*brickInfo.brickWidth+brickInfo.brickWidth/2;
 		local positiony = Y*brickInfo.brickHeight-brickInfo.brickHeight/2;
@@ -557,7 +566,7 @@ function p.main(nMission)
 		Main.CreatebrickWave();
 		BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
 		
-		local TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.1, false)	
+		local TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		
 		player.Initplayer();		
         return layerMain

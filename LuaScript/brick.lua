@@ -39,7 +39,7 @@ function brick.setChosed(pbrick)
 	end	
 	
 		local texturechose = CCTextureCache:sharedTextureCache():addImage("chooseeffect.png")
-        local rect = CCRectMake(0, 0, 100, 100)
+        local rect = CCRectMake(0, 0, brickWidth, brickHeight)
         local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
         local spriteeff = CCSprite:createWithSpriteFrame(frame0)
 		spriteeff:setPosition(brickWidth/2, brickHeight/2);		

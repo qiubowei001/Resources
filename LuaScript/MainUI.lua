@@ -82,18 +82,18 @@ function p.LoadUI()
 		
 		--º”ÀŸ∞¥≈•
 		-- menu
-		local item1 = CCMenuItemImage:create("UI/Button/SpeedBtn.png", "UI/Button/SpeedBtn.png")
+		local item1 = CCMenuItemImage:create("UI/Bar/CircleTimerBg.png", "UI/Bar/CircleTimerBg.png")
     	item1:registerScriptTapHandler(p.menuCallbackSpeedBtn)
 		local menu = CCMenu:create()
 		menu:addChild(item1,1,1)	
-		menu:setPosition(CCPointMake(10, 400))
+		menu:setPosition(CCPointMake(10, 500))
 		item1:setPosition(0,0)
 		item1:setTag(g_SpeedBtntag);
 		bglayer:addChild(menu)
 		
 		waveCounter = CCProgressTimer:create(CCSprite:create("UI/Bar/CircleTimer.png"))
 		waveCounter:setType(kCCProgressTimerTypeRadial)
-		waveCounter:setPosition(CCPointMake(10, 100))
+		waveCounter:setPosition(CCPointMake(10, 500))
 		waveCounter:setTag(g_wavetimertag);
 		bglayer:addChild(waveCounter)
 		
@@ -116,7 +116,7 @@ function p.setWaveTimer(nPersent)
 end
 
 function p.menuCallbackSpeedBtn(tag,sender)
-	Main.CreatebrickWave();
+	Main.SpeedUpWave()
 end
 
 
