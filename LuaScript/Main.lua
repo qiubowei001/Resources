@@ -61,26 +61,30 @@ end
 
 local WaveTick = 0
 function Main.CreatebrickWave()
-	gWaveCount = gWaveCount + brickInfo.WaveCount
 	
-	--WaveTick = brickInfo.WaveDelay
+	gWaveCount = gWaveCount + mission.GetWaveCount()		
 end
 
 function Main.SpeedUpWave()
-	WaveTick = brickInfo.WaveDelay;
+	WaveTick = mission.GetWaveDelay();
 end
 
 
 function Main.WaveTimer()
+		
+	local delay = mission.GetWaveDelay()
+
 	WaveTick = WaveTick + 1;
-	if WaveTick>= brickInfo.WaveDelay then
-		WaveTick = brickInfo.WaveDelay
+	if WaveTick>= delay then
+		WaveTick = delay
 	end
 	
-	MainUI.setWaveTimer(WaveTick*100/brickInfo.WaveDelay);
+	MainUI.setWaveTimer(WaveTick*100/delay);
 	
-	if WaveTick >= brickInfo.WaveDelay then
+	if WaveTick >= delay then
 		WaveTick = 0
+		--回合数加1
+		mission.RoundPlusOne();
 		Main.CreatebrickWave()
 	end	
 end
@@ -168,7 +172,8 @@ function Main.brickfallLogic()
 		
 		local nbricktype = tTypeId[math.random(1,#tTypeId)];
 		local pbrick=nil;
-					
+		
+		
 		if nbricktype == tbrickType.MONSTER then
 			--产生怪物
 			monsterid = mission.GenerateMonsterId();
