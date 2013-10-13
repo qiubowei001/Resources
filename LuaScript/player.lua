@@ -191,7 +191,7 @@ function player.takeGold(nNum)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
 	
 	if player[playerInfo.GOLD] >= 100 then
-		EquipUpGradeUI.LoadUI();
+		--EquipUpGradeUI.LoadUI();
 	end
 	
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])

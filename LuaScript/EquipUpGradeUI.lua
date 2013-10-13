@@ -55,7 +55,7 @@ end
 
 
 
-	tEquipType[5001]={5001   ,	"Lv1",		5,		  0,		0,			0,		0,			95 	,			5001}
+	tEquipType[5001]={5001   ,	"Lv1",		5,		  0,		0,			0,		0,			5 	,			5001}
 	tEquipType[5002]={5002   ,	"Lv2",		5,		  0,		0,			0,		0,			10	,			5001}
 	tEquipType[5003]={5003   ,	"Lv3",		5,		  0,		0,			0,		0,			15	,			5001}
 	tEquipType[5004]={5004   ,	"Lv4",		5,		  0,		0,			0,		0,			20	,			5001}
@@ -79,18 +79,21 @@ function p.GetParent()
 	return layer
 end
 
-function p.LearnEquipCallback(tag,sender)
-	local learningEquipid = 0
-	learningEquipid = g_tNext[tag]
-	player.UpGradeEquip(learningEquipid);
-
+function p.closeUICallback(tag,sender)
 	--πÿ±’ΩÁ√Ê 
 	local layer = p.GetParent()
 	local scene = Main.GetGameScene();
 	scene:removeChild(layer, true)
 	
-	
-	
+	if CCDirector:sharedDirector():isPaused() then
+		CCDirector:sharedDirector():resume()
+    end	   
+end
+
+function p.LearnEquipCallback(tag,sender)
+	local learningEquipid = 0
+	learningEquipid = g_tNext[tag]
+	player.UpGradeEquip(learningEquipid);
 end
 
 
@@ -154,9 +157,17 @@ function p.LoadUI()
 			item:addChild(LvLabel,1,1)
 			
 			menu:addChild(item,1,i)
+			
 			item:setPosition(80*i - 250  ,0)
 		end
 		
+		
+		local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
+			closeBtn:registerScriptTapHandler(p.closeUICallback)
+			closeBtn:setPosition(300,100)
+			
+			
+		menu:addChild(closeBtn)
 		
 		
 		menu:setPosition(CCPointMake(0, 0))

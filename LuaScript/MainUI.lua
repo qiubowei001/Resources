@@ -12,6 +12,7 @@ local g_missionlabeltag =7;
 local g_progressbartag = 8;
 local g_wavetimertag = 9;
 local g_SpeedBtntag = 10;
+local g_UpgradeBtntag = 11;
 
 local bglayer = nil;
 local gprogressbar = nil;
@@ -88,7 +89,7 @@ function p.LoadUI()
 		menu:addChild(item1,1,1)	
 		menu:setPosition(CCPointMake(10, 500))
 		item1:setPosition(0,0)
-		item1:setTag(g_SpeedBtntag);
+		menu:setTag(g_SpeedBtntag);
 		bglayer:addChild(menu)
 		
 		waveCounter = CCProgressTimer:create(CCSprite:create("UI/Bar/CircleTimer.png"))
@@ -97,7 +98,15 @@ function p.LoadUI()
 		waveCounter:setTag(g_wavetimertag);
 		bglayer:addChild(waveCounter)
 		
-		
+		-- 升级按钮
+		local item1 = CCMenuItemImage:create("UI/Bar/CircleTimerBg.png", "UI/Bar/CircleTimerBg.png")
+    	item1:registerScriptTapHandler(p.menuCallbackUpgradeBtn)
+		local menu = CCMenu:create()
+		menu:addChild(item1,1,1)	
+		menu:setPosition(CCPointMake(10, 580))
+		item1:setPosition(0,0)
+		menu:setTag(g_UpgradeBtntag);
+		bglayer:addChild(menu)		
 		
 			
     bglayer:setPosition(CCPointMake(800, 50))
@@ -114,6 +123,17 @@ end
 function p.setWaveTimer(nPersent)
 	waveCounter:setPercentage(nPersent);
 end
+
+function p.menuCallbackUpgradeBtn(tag,sender)
+	--CCDirector:sharedDirector():pause()
+   --     if CCDirector:sharedDirector():isPaused() then
+     --       CCDirector:sharedDirector():resume()
+       -- else
+            CCDirector:sharedDirector():pause()
+     --加载升级界面 
+	 EquipUpGradeUI.LoadUI();
+end
+
 
 function p.menuCallbackSpeedBtn(tag,sender)
 	Main.SpeedUpWave()
