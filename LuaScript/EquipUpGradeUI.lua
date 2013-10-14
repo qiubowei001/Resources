@@ -69,7 +69,7 @@ local tEquipInitialId =
 
 local g_tNext = {}
 
-
+local gMenuTag = 1;
 
 
 function p.GetParent()
@@ -93,7 +93,10 @@ end
 function p.LearnEquipCallback(tag,sender)
 	local learningEquipid = 0
 	learningEquipid = g_tNext[tag]
-	player.UpGradeEquip(learningEquipid);
+	if player.UpGradeEquip(learningEquipid) == true then
+		--刷新显示
+		p.RefreshMenu()	
+	end
 end
 
 
@@ -123,7 +126,25 @@ function p.GetNextEquipId()
 	return tNext
 end
 
-
+--刷新显示
+function p.RefreshMenu()
+	g_tNext = p.GetNextEquipId()
+	local bglayer = p.GetParent()
+	
+	local menu = bglayer:getChildByTag(gMenuTag);
+	local menu = tolua.cast(menu, "CCMenu")
+	
+	
+	local tItem = {}		
+	for i,v in pairs(g_tNext) do
+		
+		local item = menu:getChildByTag(i);    
+		item = tolua.cast(item, "CCMenuItemImage")
+		local LvLabel = item:getChildByTag(9999)
+		LvLabel = tolua.cast(LvLabel, "CCLabelTTF")
+		LvLabel:setString(tEquipType[v][2])
+	end
+end
 
 
 function p.LoadUI()
@@ -144,6 +165,8 @@ function p.LoadUI()
 		
 		local tItem = {}
 		local menu = CCMenu:create()
+		
+		 
 		for i,v in pairs(g_tNext) do
 			
 			local item = CCMenuItemImage:create("Equip/"..tEquipType[v][9]..".png", "Equip/"..tEquipType[v][9]..".png")
@@ -154,12 +177,14 @@ function p.LoadUI()
 			local LvLabel = CCLabelTTF:create(""..tEquipType[v][2], "Arial", 15)
 			LvLabel:setColor(ccc3(0,0,0))
 			LvLabel:setPosition(10, -10)
-			item:addChild(LvLabel,1,1)
+			item:addChild(LvLabel,1,9999)
 			
 			menu:addChild(item,1,i)
 			
 			item:setPosition(80*i - 250  ,0)
 		end
+		
+
 		
 		
 		local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
@@ -171,7 +196,7 @@ function p.LoadUI()
 		
 		
 		menu:setPosition(CCPointMake(0, 0))
-		bglayer:addChild(menu, 2,1)
+		bglayer:addChild(menu, 2,gMenuTag)
 		--]]
 		
 		

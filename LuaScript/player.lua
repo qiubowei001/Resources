@@ -191,7 +191,7 @@ function player.takeGold(nNum)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
 	
 	if player[playerInfo.GOLD] >= 100 then
-		--EquipUpGradeUI.LoadUI();
+		MainUI.ShowUpgradeBtn();
 	end
 	
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
@@ -396,6 +396,10 @@ function player.SkillCoolDown()
 end
 
 function player.UpGradeEquip(nEquipId)
+	if player[playerInfo.GOLD]  - 100 < 0 then
+		return false
+	end
+	
 	local ntype = tEquipType[nEquipId][3]
 	
 	local tTmp = {
@@ -407,20 +411,23 @@ function player.UpGradeEquip(nEquipId)
 	}
 	
 	local index = tTmp[ntype];
-	
 	player[index] = nEquipId;	
+	
+
 	
 	player[playerInfo.GOLD] = player[playerInfo.GOLD]  - 100
 	
 	--刷新金币显示
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
-	
 	--更新实体数据
 	player.UpdateEntityData();
 	
-	if player[playerInfo.GOLD] >= 100 then
-		EquipUpGradeUI.LoadUI();
+	
+	if player[playerInfo.GOLD] < 100 then
+		MainUI.HideUpgradeBtn();
 	end
+	
+	return true;
 end
 
 --更新玩家实体数据

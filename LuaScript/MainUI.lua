@@ -99,15 +99,15 @@ function p.LoadUI()
 		bglayer:addChild(waveCounter)
 		
 		-- 升级按钮
-		local item1 = CCMenuItemImage:create("UI/Bar/CircleTimerBg.png", "UI/Bar/CircleTimerBg.png")
+		local item1 = CCMenuItemImage:create("UI/Button/upgradearrow.png", "UI/Button/upgradearrow.png")
     	item1:registerScriptTapHandler(p.menuCallbackUpgradeBtn)
 		local menu = CCMenu:create()
 		menu:addChild(item1,1,1)	
-		menu:setPosition(CCPointMake(10, 580))
+		menu:setPosition(CCPointMake(100, 100))
 		item1:setPosition(0,0)
 		menu:setTag(g_UpgradeBtntag);
 		bglayer:addChild(menu)		
-		
+		menu:setVisible(false)
 			
     bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
@@ -120,16 +120,27 @@ function p.LoadUI()
 	p.SetProgress(10)
 end
 
+
+--显示升级按钮
+function p.ShowUpgradeBtn()
+	local menu = bglayer:getChildByTag(g_UpgradeBtntag)
+	tolua.cast(menu, "CCMenu")
+	menu:setVisible(true)
+end
+
+--隐藏升级按钮
+function p.HideUpgradeBtn()
+	local menu = bglayer:getChildByTag(g_UpgradeBtntag)
+	tolua.cast(menu, "CCMenu")
+	menu:setVisible(false)
+end
+
 function p.setWaveTimer(nPersent)
 	waveCounter:setPercentage(nPersent);
 end
 
 function p.menuCallbackUpgradeBtn(tag,sender)
-	--CCDirector:sharedDirector():pause()
-   --     if CCDirector:sharedDirector():isPaused() then
-     --       CCDirector:sharedDirector():resume()
-       -- else
-            CCDirector:sharedDirector():pause()
+     CCDirector:sharedDirector():pause()
      --加载升级界面 
 	 EquipUpGradeUI.LoadUI();
 end
