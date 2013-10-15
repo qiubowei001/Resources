@@ -55,8 +55,9 @@ dofile("LuaScript/SpriteConfig.lua")
 
 dofile("LuaScript/SpriteManager.lua")
 
-dofile("LuaScript/MainUI.lua")
+dofile("LuaScript/SpeedUpBuff.lua")
 
+dofile("LuaScript/MainUI.lua")
 
 dofile("LuaScript/Main.lua")
 

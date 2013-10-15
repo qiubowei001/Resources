@@ -189,7 +189,7 @@ end
 
 function player.takeGold(nNum)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
-	
+	player[playerInfo.GOLD] = math.floor(player[playerInfo.GOLD])
 	if player[playerInfo.GOLD] >= 100 then
 		MainUI.ShowUpgradeBtn();
 	end
@@ -201,8 +201,8 @@ function player.takeGold(nNum)
 end
 
 
-function player.GainEXP()
-	player[playerInfo.EXP] = player[playerInfo.EXP] + 1;
+function player.GainEXP(nExp)
+	player[playerInfo.EXP] = player[playerInfo.EXP] + nExp;
 
 	if player[playerInfo.EXP] >= tPlayerExp[player[playerInfo.LEVEL]] then
 		--Éý¼¶

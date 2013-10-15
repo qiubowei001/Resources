@@ -206,7 +206,7 @@ function monster.damage( pBrick,nDamage)
 				
 				
 				--Íæ¼Ò«@È¡½›òž
-				player.GainEXP();
+				player.GainEXP(1);
 			end
 		end	
 end

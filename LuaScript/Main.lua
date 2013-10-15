@@ -67,6 +67,7 @@ end
 
 function Main.SpeedUpWave()
 	WaveTick = mission.GetWaveDelay();
+	SpeedUpBuff.GetPrize(mission.GetWaveCount());
 end
 
 
