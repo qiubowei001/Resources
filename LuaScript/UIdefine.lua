@@ -5,10 +5,8 @@ UIdefine =
 	EquipUpGradeUI		= 10003,
 	MainUI				= 10004,
 	MissionSelectUI		= 10005,
-
-
+	Board				= 10006,
+	SkillBar			= 10007,
 }
-
-
 
 

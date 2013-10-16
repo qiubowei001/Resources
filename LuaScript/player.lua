@@ -163,6 +163,10 @@ end
 	
 --这个是动作
 function p.takedamage(ndamage,pmonster)
+	if  player[playerInfo.HP] <= 0 then
+		return
+	end
+	
 	local tDamageAction = p.InitDamageAction(ndamage,pmonster)
 	for i,func	in pairs(player.DamageAdjFuncT) do
 		func(tDamageAction);
@@ -178,6 +182,13 @@ function p.takedamage(ndamage,pmonster)
 	
 	
 	player[playerInfo.HP] = player[playerInfo.HP] - tDamageAction.damage;
+	
+	if  player[playerInfo.HP] <= 0 then
+		GameOverUI.LoadUI(1)
+		return 
+	end
+	
+	
 	return player[playerInfo.HP];
 end
 

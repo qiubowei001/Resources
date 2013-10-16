@@ -70,5 +70,8 @@ function p.LoadUI()
 	TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerBuffTick, 0.1, false)	
 end
 
+function p.RemoveTimer()
+	CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(TimerId)
+end
 
 

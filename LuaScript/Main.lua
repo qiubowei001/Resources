@@ -27,8 +27,8 @@ Main.gamephase = GameLogicPhase.BEFORE_PLAYER_ACT;
 Main.selectMode = SELECTMODE.NORMAL;
 Main.ChosedMagic = 0;
 
-local BrickFallTimerId = nil;
-
+local gBrickFallTimerId = nil;
+local gWaveTimerId = nil;
 
 
 local g_HPlabeltag =1;
@@ -44,6 +44,14 @@ local glayerMenu = nil;
 
 --Éú³ÉÒ»²¨×©¿é
 local gWaveCount = 0; --µôÂä×©¿éÊ£ÓàÊýÁ¿
+
+
+function Main.CloseAllUI()
+	for i,v in pairs(UIdefine) do 
+		g_sceneGame:removeChildByTag(v, true)
+	end
+end
+
 
 function Main.IfBoardFull()
 	for i = 1,brickInfo.brick_num_X do
@@ -90,10 +98,19 @@ function Main.WaveTimer()
 	end	
 end
 
+function Main.GetWaveTimerId()
+	return gWaveTimerId
+end
+
+function Main.GetBrickFallTimerId()
+	return gBrickFallTimerId
+end
+
 --µôÂäÒ»¿é×©¿é
 function Main.brickfallLogic()
 		if Main.IfBoardFull() then
 			--ÓÎÏ·½áÊø
+			GameOverUI.LoadUI(2)
 			return;
 		end
 		
@@ -359,10 +376,12 @@ end
 	
 	
 --³õÊ¼»¯ÆåÅÌ
-for i = 1,brickInfo.brick_num_X do
-	Board[i]={}
-	for j = 1,brickInfo.brick_num_Y do
-		Board[i][j] = nil;
+function p.InitBoard()
+	for i = 1,brickInfo.brick_num_X do
+		Board[i]={}
+		for j = 1,brickInfo.brick_num_Y do
+			Board[i][j] = nil;
+		end
 	end
 end
 
@@ -394,7 +413,12 @@ function p.main(nMission)
     -- create farm
     local function createlayerMain()
         layerMain = CCLayer:create()
-
+		
+		
+		p.InitBoard()
+		LineFunc.ResetLine();
+		
+		
         -- add in farm background
         local bg = CCSprite:create("map.jpg")
         bg:setPosition(winSize.width / 2 , winSize.height / 2)
@@ -570,9 +594,9 @@ function p.main(nMission)
 		MainUI.LoadUI()
 		
 		Main.CreatebrickWave();
-		BrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
+		gWaveTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
 		
-		local TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
+		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		
 		player.Initplayer();		
         return layerMain
@@ -581,8 +605,8 @@ function p.main(nMission)
    
 
    
-    g_sceneGame:addChild(createlayerMain())
-    g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup))
+    g_sceneGame:addChild(createlayerMain(),1,UIdefine.Board)
+    g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup),1,UIdefine.SkillBar)
 	TimerBuff.LoadUI()
 end
 
