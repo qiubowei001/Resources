@@ -6,9 +6,12 @@ monsterInfo = {
 	BUFFATT = 4,
 	MAGIC = 5,
 	MAGIC_ROUND =6,
+	CD = 7,
+	CDMAX = 8,
 }
 local g_hplabeltag =100;
 local g_attlabeltag = 101;
+local g_CDbar = 102;
 
 local MONSTER_TYPE = {}
 
@@ -109,6 +112,64 @@ function monster.GetScarePicIdFromMonsterId(nMonsterId)
 	return MONSTER_TYPE[nMonsterId]["ScarePICID"]	
 end
 	
+	
+	
+	
+function monster.AttackCDPlusOne(pbrick)
+	pbrick.moninfo[monsterInfo.CD] = pbrick.moninfo[monsterInfo.CD] + 1
+	
+	--设定进度条
+	local nPersent = 100*pbrick.moninfo[monsterInfo.CD]/pbrick.moninfo[monsterInfo.CDMAX]
+	BARbg = pbrick.CDBARBG
+	
+	local BAR = pbrick.CDBAR
+	
+	if nPersent>100 then
+		nPersent = 100
+	end	
+	BAR:setPercentage(nPersent);
+	
+	
+	 
+	 
+	--90%时闪烁
+	if nPersent>= 100 then
+		local sprite = pbrick.attackready 
+		sprite:setVisible(true)
+		BAR:setVisible(false)
+	elseif nPersent>=80 then
+		if pbrick.IfScaled == false then
+			local array = CCArray:create()
+			array:addObject(CCScaleTo:create(0.5, 1.5))
+			array:addObject(CCScaleTo:create(0.5, 1))
+			
+			local action = CCSequence:create(array)
+			BARbg:runAction(action)
+			pbrick.IfScaled = true
+		end
+	
+		local tmp = (pbrick.moninfo[monsterInfo.CD])%2
+		if tmp == 0 then
+			BAR:setVisible(true)
+		else
+			BAR:setVisible(false)
+		end
+		
+	elseif nPersent < 80 then
+		BAR:setVisible(true)
+		
+		local sprite = pbrick.attackready 
+		sprite:setVisible(false)
+		
+		if pbrick.IfScaled == true then
+			pbrick.IfScaled = false
+		end
+	end
+	
+	--]]
+    
+end	
+	
 --初始化怪物数据
 function monster.InitMonster( pBrick,nid)
 		pBrick.monsterId = nid
@@ -118,8 +179,13 @@ function monster.InitMonster( pBrick,nid)
 		[monsterInfo.ATT] = 1,
 		[monsterInfo.BUFFATT] = 0,
 		[monsterInfo.MAGIC] = MONSTER_TYPE[nid]["MAgic"],
-
+		[monsterInfo.CD] = 0,
+		[monsterInfo.CDMAX] = 20,
+		
 		}
+		
+		--攻击CD是否闪烁
+		pBrick.IfScaled  = false;
 
 		if pBrick.moninfo[monsterInfo.MAGIC]~= nil then
 			pBrick.moninfo[monsterInfo.MAGIC_ROUND] = {}
@@ -129,8 +195,30 @@ function monster.InitMonster( pBrick,nid)
 		end
 		
 		
+		--冷却进度条
+		local CDBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
+		CDBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*4/5)
+		pBrick:addChild(CDBarBg)
+		CDBarBg:setTag(g_CDbar);
 		
 		
+		--攻击准备
+		attackready = CCSprite:create("UI/Bar/attackready.png")
+		attackready:setPosition(CCPointMake(30, 7))
+		CDBarBg:addChild(attackready,1,2)
+		attackready:setVisible(false)
+		
+		CDBar = CCProgressTimer:create(CCSprite:create("UI/Bar/attackcdbar.png"))
+		CDBar:setType(kCCProgressTimerTypeBar)
+		CDBar:setMidpoint(CCPointMake(0, 0))
+		CDBar:setBarChangeRate(CCPointMake(1, 0))
+		
+		CDBar:setPosition(CCPointMake(30, 7))
+		--CDBar:setTag(g_CDbar);
+		CDBarBg:addChild(CDBar,1,1)		
+		pBrick.CDBARBG = CDBarBg
+		pBrick.CDBAR = CDBar
+		pBrick.attackready = attackready
 		
 		
 			local hpLabel = CCLabelTTF:create(pBrick.moninfo[monsterInfo.HP], "Arial", 35)
@@ -232,16 +320,19 @@ function monster.attack()
 			if Board[i][j] ~= nil then
 				if Board[i][j].nType == tbrickType.MONSTER then
 					
-					
-					local tAttAction = monster.InitAttAction( player,ndamage,Board[i][j])
-					tAttAction.damage = monster.GetMonsterAtt(Board[i][j])--Board[i][j].moninfo[monsterInfo.ATT];
-					
-					--遍历怪物攻击调整函数
-					for k,func in pairs(Board[i][j].AttAdjFuncT) do
-						func(tAttAction)
+					--攻击是否CD
+					if Board[i][j].moninfo[monsterInfo.CD]  >= Board[i][j].moninfo[monsterInfo.CDMAX] then
+						local tAttAction = monster.InitAttAction( player,ndamage,Board[i][j])
+						tAttAction.damage = monster.GetMonsterAtt(Board[i][j])--Board[i][j].moninfo[monsterInfo.ATT];
+						
+						--遍历怪物攻击调整函数
+						for k,func in pairs(Board[i][j].AttAdjFuncT) do
+							func(tAttAction)
+						end
+						
+						player.takedamage(tAttAction.damage,Board[i][j]);	
+						Board[i][j].moninfo[monsterInfo.CD]	= 0;
 					end
-					
-					player.takedamage(tAttAction.damage,Board[i][j]);
 				end				
 			end
 		end
@@ -261,30 +352,33 @@ function monster.SpellMagic(pmonster,IfBorn)
 	--现在只做了SINGLE_BRICK输入	
 	if pmonster.moninfo[monsterInfo.MAGIC] ~= nil then	
 		for i,nid in pairs(pmonster.moninfo[monsterInfo.MAGIC]) do
-			local spelltime =  pmonster.moninfo[monsterInfo.MAGIC_ROUND][i];
-			
-			if spelltime > 0 then
+		
+			--攻击是否CD
+			if IfBorn ==true or pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
+				local spelltime =  pmonster.moninfo[monsterInfo.MAGIC_ROUND][i];
 				
-				--if pmonster.IsSpelled == false then
-					--本回合还未施放技能
-					local tTargetList,tEffList = magic.SpellMagic(nid,pmonster);
-					pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
-					pmonster.IsSpelled = true;
-					
-					--怪物技能特效是否需要马上触发
-					if magic.GetMagicDoeffAfterSpell(nid) ==true and IfBorn== true then
-						for j,v in pairs(tTargetList) do
-							local effT = tEffList[j];
-							local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
-							local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
-							efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
-
-							--获取怪物EFFTABLE ROUND --
-							effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
+				if spelltime > 0 then
+						--本回合还未施放技能
+						local tTargetList,tEffList = magic.SpellMagic(nid,pmonster);
+						pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
+						pmonster.IsSpelled = true;
+						
+						--怪物技能特效是否需要马上触发
+						if magic.GetMagicDoeffAfterSpell(nid) ==true and IfBorn== true then
+							for j,v in pairs(tTargetList) do
+								local effT = tEffList[j];
+								local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
+								local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
+								efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+        
+								--获取怪物EFFTABLE ROUND --
+								effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
+							end
 						end
-					end
-				--end
+					--end
+				end
 			end
+			
 		end		
 	end
 end

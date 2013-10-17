@@ -15,6 +15,8 @@ function p.LoadUI(ntype)
 		--ÔÝÍ£¼ÆÊ±Æ÷
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetBrickFallTimerId())
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetWaveTimerId())
+		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetMonsterCDTimerId())
+		
 		TimerBuff.RemoveTimer();
 		
 		glayer = CCLayer:create()

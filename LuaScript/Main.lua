@@ -29,7 +29,7 @@ Main.ChosedMagic = 0;
 
 local gBrickFallTimerId = nil;
 local gWaveTimerId = nil;
-
+local gMonsterCdTimerId = nil;
 
 local g_HPlabeltag =1;
 local g_ATlabeltag= 2;
@@ -55,7 +55,6 @@ end
 
 function Main.IfBoardFull()
 	for i = 1,brickInfo.brick_num_X do
-		
 		for j = 1,brickInfo.brick_num_Y do
 			
 			if Board[i][j] == nil then
@@ -63,9 +62,22 @@ function Main.IfBoardFull()
 			end
 		end
 	end
-	
 	return true;
 end
+
+--怪物攻击冷却计时器
+function Main.MonsterAttackTimer()
+	for i = 1,brickInfo.brick_num_X do
+		for j = 1,brickInfo.brick_num_Y do
+			
+			if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then
+				--计数加1
+				monster.AttackCDPlusOne(Board[i][j]);
+			end
+		end
+	end
+end
+
 
 local WaveTick = 0
 function Main.CreatebrickWave()
@@ -98,6 +110,10 @@ function Main.WaveTimer()
 	end	
 end
 
+function Main.GetMonsterCDTimerId()
+	return gMonsterCdTimerId
+end
+
 function Main.GetWaveTimerId()
 	return gWaveTimerId
 end
@@ -105,6 +121,8 @@ end
 function Main.GetBrickFallTimerId()
 	return gBrickFallTimerId
 end
+
+
 
 --掉落一块砖块
 function Main.brickfallLogic()
@@ -597,6 +615,9 @@ function p.main(nMission)
 		gWaveTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
 		
 		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
+		
+		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
+		
 		
 		player.Initplayer();		
         return layerMain
