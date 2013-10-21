@@ -356,7 +356,10 @@ magictable = {}
 	magictable[1008][MAGIC_DEF_TABLE.ID] = 1008
 	magictable[1008][MAGIC_DEF_TABLE.NAME] = "刀变蜘蛛"
 	magictable[1008][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[1008][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1008][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = 	function(pBrickSpell,pbrickTarget)
+															pbrickTarget.pBrickSpellLev = pBrickSpell.moninfo[monsterInfo.LEV]
+															return 
+														end
 	magictable[1008][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
 	magictable[1008][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1008
 	magictable[1008][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
@@ -456,7 +459,7 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		--===对玩家施放技能===-
 		--触发 施放FUNC
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
-			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID]();
+			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle);
 		end
 		--对TARGET增加特效
 		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
@@ -470,7 +473,7 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		cclog("SpellMagic 2")
 	
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
-			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID]();
+			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle);
 		end		
 		cclog("SpellMagic 3")
 	
@@ -532,9 +535,16 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 			cclog("SpellMagic 3")
 			local pbricklist = magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC](pBrickSingle,magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM]);
 			
+	
+		
+		
 			for i,pbrick in pairs(pbricklist) do
 				if pbrick ~= nil then
-					cclog("SpellMagic 4")
+					
+					if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+						magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle,pbrick);
+					end
+					
 					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],pbrick);	
 					table.insert(tTargetList,pbrick)
 					table.insert(tEffList,effT)	

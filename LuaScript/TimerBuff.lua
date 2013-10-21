@@ -51,7 +51,7 @@ function p.TimerBuffTick()
 end
 
 function p.LoadUI()
-	bglayer = CCLayer:create()
+	local bglayer = CCLayer:create()
 		
 	TimeBuffBarLabel = CCLabelTTF:create("", "Arial", 20)
 	bglayer:addChild(TimeBuffBarLabel,2)
@@ -62,8 +62,7 @@ function p.LoadUI()
 	
     bglayer:setPosition(CCPointMake(760, 50))
 	local scene = Main.GetGameScene();
-	scene:addChild(bglayer)
-	bglayer:setTag(UIdefine.TimeBuffBarUI);
+	scene:addChild(bglayer,2,UIdefine.TimeBuffBarUI)
 	
 	
 	--初始化计时器

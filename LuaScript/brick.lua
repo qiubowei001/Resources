@@ -10,13 +10,7 @@ local winSize = CCDirector:sharedDirector():getWinSize()
 local frameWidth = 106
 local frameHeight = 96
 		
-tbrickType = 
-{
-	MONSTER = 	1,
-	SWORD  =	2,
-	BLOOD  =	3,
-	GOLD   =	4,
-}
+
 
 local tbrickTypeInfo = {}
 										--SPRITE ID
@@ -205,7 +199,7 @@ function brick.createParentSprite()
 	return spriteParent;
 end
 
-function brick.creatMonster(monsterid)
+function brick.creatMonster(monsterid,nLev)
 		local spriteParent = brick.createParentSprite();
 		
 		local spriteBrick = SpriteManager.creatBrickSprite(monster.GetPicIdFromMonsterId(monsterid))
@@ -213,7 +207,7 @@ function brick.creatMonster(monsterid)
 		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
    
-		monster.InitMonster(spriteParent,monsterid);
+		monster.InitMonster(spriteParent,monsterid,nLev);
 		brick.init(spriteParent,tbrickType.MONSTER)
         return spriteParent;
 end

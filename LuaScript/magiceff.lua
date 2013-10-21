@@ -59,7 +59,7 @@ function p.eff03(pbrick,Tparam1)
 	local tileX = pbrick.TileX
 	local tileY = pbrick.TileY
 	if nToType == tbrickType.MONSTER then
-		 brickTo = brick.creatMonster(nToType)
+		 brickTo = brick.creatMonster(nToType,pbrick.pBrickSpellLev)
 	else
 		 brickTo = brick.creatBrick(nToType)
 	end

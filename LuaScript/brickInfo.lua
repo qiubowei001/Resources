@@ -26,3 +26,20 @@ SELECTMODE =
 	SINGLE_BRICK = 1,
 	LINE = 2,	
 }
+
+tbrickType = 
+{
+	MONSTER = 	1,
+	SWORD  =	2,
+	BLOOD  =	3,
+	GOLD   =	4,
+}
+
+tBrickTypeRandom = 
+{
+	[tbrickType.MONSTER] 	= 17,
+	[tbrickType.SWORD] 	 	= 17,
+	[tbrickType.BLOOD] 		= 33,
+	[tbrickType.GOLD] 		= 33,
+	
+}

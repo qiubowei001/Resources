@@ -166,12 +166,12 @@ function Main.brickfallLogic()
 		
 		local nwidth = brickInfo.brickWidth;
 
-				local tTypeId ={}
-				local j =1;
-				for i,v in pairs(tbrickType)do
-					tTypeId[j] = v
-					j = j+1;
-				end		
+		local tTypeId ={}
+		local j =1;
+		for i,v in pairs(tbrickType)do
+			tTypeId[j] = v
+			j = j+1;
+		end		
 		
 		local tYempty = {}
 		for i=1,nNum do
@@ -206,16 +206,26 @@ function Main.brickfallLogic()
 		local X = tTmp[index][1]
 		local Ymin = tTmp[index][2]
 		
-		local nbricktype = tTypeId[math.random(1,#tTypeId)];
+		local nbricktype = nil;
+		local nrandom = math.random(1,100)
+		local tmp = 0
+		for i,v in pairs(tBrickTypeRandom)do
+			tmp = tmp + v 
+			if  nrandom <= tmp then
+				nbricktype = i
+				break
+			end
+		end
+		
 		local pbrick=nil;
 		
 		
 		if nbricktype == tbrickType.MONSTER then
 			--²úÉú¹ÖÎï
-			monsterid = mission.GenerateMonsterId();
+			local monsterid,lev = mission.GenerateMonsterId();
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
-			pbrick = brick.creatMonster(monsterid);
+			pbrick = brick.creatMonster(monsterid,lev);
 		elseif nbricktype == tbrickType.GOLD then
 			pbrick = brick.creatGoldBrick(nbricktype)
 		else
@@ -438,7 +448,7 @@ function p.main(nMission)
 		
 		
         -- add in farm background
-        local bg = CCSprite:create("map.jpg")
+        local bg = CCSprite:create("Map.jpg")
         bg:setPosition(winSize.width / 2 , winSize.height / 2)
         --layerMain:setPosition(0 , winSize.height / 2)
 		layerMain:addChild(bg)
@@ -626,7 +636,7 @@ function p.main(nMission)
    
 
    
-    g_sceneGame:addChild(createlayerMain(),1,UIdefine.Board)
+    g_sceneGame:addChild(createlayerMain(),0,UIdefine.Board)
     g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup),1,UIdefine.SkillBar)
 	TimerBuff.LoadUI()
 end

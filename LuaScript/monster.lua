@@ -8,6 +8,8 @@ monsterInfo = {
 	MAGIC_ROUND =6,
 	CD = 7,
 	CDMAX = 8,
+	LEV = 9,
+	HPMAX = 10,
 }
 local g_hplabeltag =100;
 local g_attlabeltag = 101;
@@ -19,7 +21,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"
 	MONSTER_TYPE[1]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[1]["HP"] = 10
+	MONSTER_TYPE[1]["HPGrow"] = 4
 	MONSTER_TYPE[1]["HPadj"] = 3
+	MONSTER_TYPE[1]["ATT"] = 1
+	MONSTER_TYPE[1]["ATTGrow"] = 1
+	MONSTER_TYPE[1]["ATTadj"] = 3
+	MONSTER_TYPE[1]["CD"] = 30
+	MONSTER_TYPE[1]["CDGrow"] = -2
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
 	
@@ -28,7 +36,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
 	MONSTER_TYPE[2]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[2]["HP"] = 10
+	MONSTER_TYPE[2]["HPGrow"] = 4
 	MONSTER_TYPE[2]["HPadj"] = 3
+	MONSTER_TYPE[2]["ATT"] = 1
+	MONSTER_TYPE[2]["ATTGrow"] = 1
+	MONSTER_TYPE[2]["ATTadj"] = 3
+	MONSTER_TYPE[2]["CD"] = 30
+	MONSTER_TYPE[2]["CDGrow"] = -1
 	MONSTER_TYPE[2]["PICID"] = 1
 	MONSTER_TYPE[2]["ScarePICID"] = 8
 	
@@ -36,7 +50,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
 	MONSTER_TYPE[3]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[3]["HP"] = 10
+	MONSTER_TYPE[3]["HPGrow"] = 4
 	MONSTER_TYPE[3]["HPadj"] = 3
+	MONSTER_TYPE[3]["ATT"] = 1
+	MONSTER_TYPE[3]["ATTGrow"] = 1
+	MONSTER_TYPE[3]["ATTadj"] = 3
+	MONSTER_TYPE[3]["CD"] = 30
+	MONSTER_TYPE[3]["CDGrow"] = -1
 	MONSTER_TYPE[3]["PICID"] = 1
 	MONSTER_TYPE[3]["ScarePICID"] = 8
 	
@@ -45,7 +65,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[4]["MAgic"] = {1007} --技能列表
 	MONSTER_TYPE[4]["MAgicRound"] = {1} 
 	MONSTER_TYPE[4]["HP"] = 10
+	MONSTER_TYPE[4]["HPGrow"] = 4
 	MONSTER_TYPE[4]["HPadj"] = 3
+	MONSTER_TYPE[4]["ATT"] = 1
+	MONSTER_TYPE[4]["ATTGrow"] = 1
+	MONSTER_TYPE[4]["ATTadj"] = 3
+	MONSTER_TYPE[4]["CD"] = 30
+	MONSTER_TYPE[4]["CDGrow"] = -1
 	MONSTER_TYPE[4]["PICID"] = 9
 	MONSTER_TYPE[4]["ScarePICID"] = 10
 	
@@ -54,7 +80,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[5]["MAgic"] = {1008} --技能列表
 	MONSTER_TYPE[5]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[5]["HP"] = 10
+	MONSTER_TYPE[5]["HPGrow"] = 4
 	MONSTER_TYPE[5]["HPadj"] = 3
+	MONSTER_TYPE[5]["ATT"] = 1
+	MONSTER_TYPE[5]["ATTGrow"] = 1
+	MONSTER_TYPE[5]["ATTadj"] = 3
+	MONSTER_TYPE[5]["CD"] = 30
+	MONSTER_TYPE[5]["CDGrow"] = -1
 	MONSTER_TYPE[5]["PICID"] = 11
 	MONSTER_TYPE[5]["ScarePICID"] = 12
 	
@@ -62,7 +94,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[6]["name"] = "littleFireSpider"
 	MONSTER_TYPE[6]["MAgic"] = nil
 	MONSTER_TYPE[6]["HP"] = 10
+	MONSTER_TYPE[6]["HPGrow"] = 4
 	MONSTER_TYPE[6]["HPadj"] = 3
+	MONSTER_TYPE[6]["ATT"] = 1
+	MONSTER_TYPE[6]["ATTGrow"] = 1
+	MONSTER_TYPE[6]["ATTadj"] = 3
+	MONSTER_TYPE[6]["CD"] = 30
+	MONSTER_TYPE[6]["CDGrow"] = -1
 	MONSTER_TYPE[6]["PICID"] = 13
 	MONSTER_TYPE[6]["ScarePICID"] = 14
 	
@@ -71,7 +109,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[7]["MAgic"] = {1009} --技能列表
 	MONSTER_TYPE[7]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[7]["HP"] = 10
+	MONSTER_TYPE[7]["HPGrow"] = 4
 	MONSTER_TYPE[7]["HPadj"] = 3
+	MONSTER_TYPE[7]["ATT"] = 1
+	MONSTER_TYPE[7]["ATTGrow"] = 1
+	MONSTER_TYPE[7]["ATTadj"] = 3
+	MONSTER_TYPE[7]["CD"] = 30
+	MONSTER_TYPE[7]["CDGrow"] = -1
 	MONSTER_TYPE[7]["PICID"] = 1
 	MONSTER_TYPE[7]["ScarePICID"] = 8
 	
@@ -80,7 +124,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[8]["MAgic"] = {1010} --技能列表
 	MONSTER_TYPE[8]["MAgicRound"] = {1} --无限
 	MONSTER_TYPE[8]["HP"] = 10
+	MONSTER_TYPE[8]["HPGrow"] = 4
 	MONSTER_TYPE[8]["HPadj"] = 3
+	MONSTER_TYPE[8]["ATT"] = 1
+	MONSTER_TYPE[8]["ATTGrow"] = 1
+	MONSTER_TYPE[8]["ATTadj"] = 3
+	MONSTER_TYPE[8]["CD"] = 30
+	MONSTER_TYPE[8]["CDGrow"] = -1
 	MONSTER_TYPE[8]["PICID"] = 1
 	MONSTER_TYPE[8]["ScarePICID"] = 8
 	
@@ -89,7 +139,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[9]["MAgic"] = {1011} --技能列表
 	MONSTER_TYPE[9]["MAgicRound"] = {1} --无限
 	MONSTER_TYPE[9]["HP"] = 10
+	MONSTER_TYPE[9]["HPGrow"] = 4
 	MONSTER_TYPE[9]["HPadj"] = 3
+	MONSTER_TYPE[9]["ATT"] = 1
+	MONSTER_TYPE[9]["ATTGrow"] = 1
+	MONSTER_TYPE[9]["ATTadj"] = 3
+	MONSTER_TYPE[9]["CD"] = 30
+	MONSTER_TYPE[9]["CDGrow"] = -1
 	MONSTER_TYPE[9]["PICID"] = 15
 	MONSTER_TYPE[9]["ScarePICID"] = 16
 	
@@ -98,7 +154,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["MAgic"] = {1012} --技能列表
 	MONSTER_TYPE[10]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[10]["HP"] = 10
+	MONSTER_TYPE[10]["HPGrow"] = 4
 	MONSTER_TYPE[10]["HPadj"] = 3
+	MONSTER_TYPE[10]["ATT"] = 1
+	MONSTER_TYPE[10]["ATTGrow"] = 1
+	MONSTER_TYPE[10]["ATTadj"] = 3
+	MONSTER_TYPE[10]["CD"] = 30
+	MONSTER_TYPE[10]["CDGrow"] = -1
 	MONSTER_TYPE[10]["PICID"] = 1
 	MONSTER_TYPE[10]["ScarePICID"] = 8
 	
@@ -140,7 +202,7 @@ function monster.AttackCDPlusOne(pbrick)
 	elseif nPersent>=80 then
 		if pbrick.IfScaled == false then
 			local array = CCArray:create()
-			array:addObject(CCScaleTo:create(0.5, 1.5))
+			array:addObject(CCScaleTo:create(0.5, 2.5))
 			array:addObject(CCScaleTo:create(0.5, 1))
 			
 			local action = CCSequence:create(array)
@@ -171,18 +233,47 @@ function monster.AttackCDPlusOne(pbrick)
 end	
 	
 --初始化怪物数据
-function monster.InitMonster( pBrick,nid)
+function monster.InitMonster( pBrick,nid,nLev)
+		if nLev == nil then
+			nLev = 0;
+		end
+		
 		pBrick.monsterId = nid
+		
+		
+		local hp = MONSTER_TYPE[nid]["HP"] + nLev*MONSTER_TYPE[nid]["HPGrow"] + math.random(-MONSTER_TYPE[nid]["HPadj"],MONSTER_TYPE[nid]["HPadj"])
+		local att = MONSTER_TYPE[nid]["ATT"] + nLev*MONSTER_TYPE[nid]["ATTGrow"] + math.random(-MONSTER_TYPE[nid]["ATTadj"],MONSTER_TYPE[nid]["ATTadj"])
+		local CDMAX = MONSTER_TYPE[nid]["CD"] + nLev*MONSTER_TYPE[nid]["CDGrow"]
+		if  hp <= 0 then
+			hp = 1
+		end
+	
+		if  att  <= 0 then
+			att  = 1
+		end
+		
+		if CDMAX < 5 then
+			CDMAX = 5
+		end
+		
 		pBrick.moninfo = 
 		{
-		[monsterInfo.HP] = MONSTER_TYPE[nid]["HP"] + math.random(-MONSTER_TYPE[nid]["HPadj"],MONSTER_TYPE[nid]["HPadj"]),
-		[monsterInfo.ATT] = 1,
+		
+		[monsterInfo.LEV] = nLev,
+		
+		
+		[monsterInfo.HP] = hp,
+		[monsterInfo.HPMAX] = hp,
+		
+		[monsterInfo.ATT] = att,
 		[monsterInfo.BUFFATT] = 0,
 		[monsterInfo.MAGIC] = MONSTER_TYPE[nid]["MAgic"],
 		[monsterInfo.CD] = 0,
-		[monsterInfo.CDMAX] = 20,
+		[monsterInfo.CDMAX] = CDMAX,
 		
 		}
+		
+		
 		
 		--攻击CD是否闪烁
 		pBrick.IfScaled  = false;
@@ -221,33 +312,53 @@ function monster.InitMonster( pBrick,nid)
 		pBrick.attackready = attackready
 		
 		
-			local hpLabel = CCLabelTTF:create(pBrick.moninfo[monsterInfo.HP], "Arial", 35)
-			pBrick:addChild(hpLabel)
-			hpLabel:setColor(ccc3(255,255,0))
-			hpLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth/3)
-			hpLabel:setTag(g_hplabeltag);
+		
+		--血条
+		local HPBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
+		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
+		pBrick:addChild(HPBarBg)
+		HPBarBg:setTag(g_hplabeltag);
+		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/hpbar.png"))
+		HPBar:setType(kCCProgressTimerTypeBar)
+		HPBar:setMidpoint(CCPointMake(0, 0))
+		HPBar:setBarChangeRate(CCPointMake(1, 0))
+		HPBar:setPosition(CCPointMake(30, 7))
+		HPBarBg:addChild(HPBar,1,1)		
+		pBrick.HPBar = HPBar
+		HPBar:setPercentage(100);
 			
-			local AttLabel = CCLabelTTF:create(pBrick.moninfo[monsterInfo.ATT], "Arial", 35)
-			pBrick:addChild(AttLabel)
-			AttLabel:setColor(ccc3(0,0,0))
-			AttLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth*2/3)
-			AttLabel:setTag(g_attlabeltag);
-			
-			
-			pBrick.IsSpelled = false;
-			
-			pBrick.AttAdjFuncT = {};
-			pBrick.DamageAdjFuncT = {};
+		local AttLabel = CCLabelTTF:create(pBrick.moninfo[monsterInfo.ATT], "Arial", 35)
+		pBrick:addChild(AttLabel)
+		AttLabel:setColor(ccc3(0,0,0))
+		AttLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth*2/3)
+		AttLabel:setTag(g_attlabeltag);
+		
+		local LevLabel = CCLabelTTF:create("LV:"..pBrick.moninfo[monsterInfo.LEV], "Arial", 20)
+		pBrick:addChild(LevLabel)
+		LevLabel:setColor(ccc3(0,255,0))
+		LevLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth)
+
+		pBrick.IsSpelled = false;
+		
+		pBrick.AttAdjFuncT = {};
+		pBrick.DamageAdjFuncT = {};
 			
 			
 end
 
+
+
 --修改怪物属性
 function monster.AddHp(pmonster,nRecovery)
 	pmonster.moninfo[monsterInfo.HP]  = pmonster.moninfo[monsterInfo.HP]  + nRecovery
-	local hplabel = pmonster:getChildByTag(g_hplabeltag)
-	tolua.cast(hplabel, "CCLabelTTF")
-	hplabel:setString(pmonster.moninfo[monsterInfo.HP] )
+	
+	if pmonster.moninfo[monsterInfo.HP] >= pmonster.moninfo[monsterInfo.HPMAX] then
+		pmonster.moninfo[monsterInfo.HP] = pmonster.moninfo[monsterInfo.HPMAX] 
+	end
+	
+	local hpbar = pmonster.HPBar
+	local percent = pmonster.moninfo[monsterInfo.HP]/ pmonster.moninfo[monsterInfo.HPMAX]
+	hpbar:setPercentage(100*percent);
 	
 	if pmonster.moninfo[monsterInfo.HP] <= 0 then
 		Main.destroyBrick(pmonster.TileX,pmonster.TileY)
@@ -279,22 +390,22 @@ function monster.damage( pBrick,nDamage)
 		
 		if defender ~= nil then 
 			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage
-			local hplabel = defender:getChildByTag(g_hplabeltag)
-			tolua.cast(hplabel, "CCLabelTTF")
-			hplabel:setString(defender.moninfo[monsterInfo.HP] )
-		
+	
+			local hpbar = defender.HPBar
+			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
+			hpbar:setPercentage(100*percent);
+	
+	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
-				
+				--玩家獲取經驗
+				local nexp =  (defender.moninfo[monsterInfo.LEV])+1
+				player.GainEXP(nexp);
+
 				--执行死亡动画
 				--monster.PlayDeathAnimation(pBrick);
 				monster.PlayCriticalHitAnimation(pBrick);
 				
 				Main.destroyBrick(defender.TileX,defender.TileY,false)
-				
-				
-				
-				--玩家獲取經驗
-				player.GainEXP(1);
 			end
 		end	
 end
