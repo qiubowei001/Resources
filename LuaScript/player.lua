@@ -49,14 +49,14 @@ local tPlayerSkillCDInd =
 --Íæ¼Ò¾­ÑéÅäÖÃ±í
 local tPlayerExp = 
 {
-	[1] = 500,
-	[2] = 5,
-	[3] = 5,
-	[4] = 5,
-	[5] = 20,
-	[6] = 20,
-	[7] = 20,
-	[8] = 20,
+	[1] = 100,
+	[2] = 105,
+	[3] = 105,
+	[4] = 105,
+	[5] = 200,
+	[6] = 200,
+	[7] = 200,
+	[8] = 200,
 }
 
 local magic_effect_beforeplayeract = {}
@@ -72,8 +72,8 @@ function p.Initplayer()
 	magic_effect_afterplayeract = {}
 	magic_effect_aftermonatt = {}
  
-	player[playerInfo.HP] = 120;
-	player[playerInfo.HPMAX] = 110;
+	player[playerInfo.HP] = 100;
+	player[playerInfo.HPMAX] = 100;
 	
 	player[playerInfo.ATT] = 3;
 	player[playerInfo.GOLD] = 0;
@@ -275,19 +275,21 @@ function player.Attack(tAttAction)
 		func(tAttAction)
 	end
 					
-					
+	
+	local bcritical = false
 	--¼ÆËã±©»÷ÉËº¦
 	if tAttAction.criticalchance >= math.random(0,100) then
 		nDamage = nDamage*(tAttAction.criticalrate)
+		bcritical=true
 	end
 	
-	monster.damage(target,nDamage)
+	monster.damage(target,nDamage,bcritical)
 	return tAttAction
 end
 
 function player.InitAttAction(ndamage,pmonster)
 	local tAttAction={
-						damage = ndamage*(TimerBuff.GetRatio()),
+						damage = ndamage,
 						target = pmonster,
 						criticalrate = player.CriticalRate,
 						criticalchance = player[playerInfo.Entity_CRITICALCHANCE],
@@ -307,7 +309,7 @@ function player.AddNewSkill(learningskillid)
 		if player[v] == 0 then
 			player[v] = learningskillid;
 			
-			player[tPlayerSkillInd[i]] = magictable[learningskillid][MAGIC_DEF_TABLE.CDROUND];
+			player[tPlayerSkillCDInd[i]] = magictable[learningskillid][MAGIC_DEF_TABLE.CDROUND];
 			break;
 		end
 	end

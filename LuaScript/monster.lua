@@ -21,13 +21,13 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"
 	MONSTER_TYPE[1]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[1]["HP"] = 10
-	MONSTER_TYPE[1]["HPGrow"] = 4
+	MONSTER_TYPE[1]["HPGrow"] = 3
 	MONSTER_TYPE[1]["HPadj"] = 3
 	MONSTER_TYPE[1]["ATT"] = 1
 	MONSTER_TYPE[1]["ATTGrow"] = 1
 	MONSTER_TYPE[1]["ATTadj"] = 3
-	MONSTER_TYPE[1]["CD"] = 30
-	MONSTER_TYPE[1]["CDGrow"] = -2
+	MONSTER_TYPE[1]["CD"] = 40
+	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
 	
@@ -377,7 +377,7 @@ function monster.InitDamageAction( pTarget,ndamage)
 end
 
 --伤害计算
-function monster.damage( pBrick,nDamage)
+function monster.damage( pBrick,nDamage,bcritical)
 		local tDamageAction = monster.InitDamageAction( pBrick,nDamage);
 		
 		
@@ -402,8 +402,12 @@ function monster.damage( pBrick,nDamage)
 				player.GainEXP(nexp);
 
 				--执行死亡动画
-				--monster.PlayDeathAnimation(pBrick);
-				monster.PlayCriticalHitAnimation(pBrick);
+				if bcritical == nil or bcritical == false then
+					monster.PlayDeathAnimation(pBrick);
+				else
+					monster.PlayCriticalHitAnimation(pBrick);
+				end
+				
 				
 				Main.destroyBrick(defender.TileX,defender.TileY,false)
 			end

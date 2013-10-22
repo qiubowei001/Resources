@@ -97,7 +97,12 @@ function p.eff04(pbrick,tparam1)
 	for X = fromx,tox,1 do
 		for Y = fromy ,toy,1 do
 			if Board[X][Y]~= nil then
-				Main.destroyBrick(X,Y)
+				--如果是怪物则造成伤害
+				if Board[X][Y].nType == tbrickType.MONSTER then
+					monster.damage(Board[X][Y],999)
+				else
+					Main.destroyBrick(X,Y)
+				end
 			end
 		end
 	end	

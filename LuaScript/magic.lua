@@ -145,7 +145,8 @@ magictable = {}
 	magictable[1][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[1][MAGIC_DEF_TABLE.DESCPTION] = "增强玩家攻击力5回合"
 	magictable[1][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-
+	magictable[1][MAGIC_DEF_TABLE.CDROUND] =  5
+	
 
 	magictable[2]={}
 	magictable[2][MAGIC_DEF_TABLE.ID] = 2
@@ -158,6 +159,7 @@ magictable = {}
 	magictable[2][MAGIC_DEF_TABLE.DESCPTION] = "伤害所有怪物"
 	magictable[2][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[2][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[2][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	magictable[3]={}
 	magictable[3][MAGIC_DEF_TABLE.ID] = 3
@@ -170,6 +172,7 @@ magictable = {}
 	magictable[3][MAGIC_DEF_TABLE.DESCPTION] = "毒所有怪物"
 	magictable[3][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[3][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[3][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	
 	magictable[4]={}
@@ -183,6 +186,7 @@ magictable = {}
 	magictable[4][MAGIC_DEF_TABLE.DESCPTION] = "群体怪物变金币"
 	magictable[4][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[4][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[4][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	
 	magictable[5]={}
@@ -196,6 +200,7 @@ magictable = {}
 	magictable[5][MAGIC_DEF_TABLE.DESCPTION] = "群体怪物变血瓶"
 	magictable[5][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[5][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[5][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	
 	--玩家点击后变身炸弹怪物 爆炸N*N个brick
@@ -226,6 +231,7 @@ magictable = {}
 	magictable[7][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
 	magictable[7][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[7][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[7][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 --玩家 眩晕多个敌人
 	magictable[8]={}
@@ -240,6 +246,7 @@ magictable = {}
 	magictable[8][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
 	magictable[8][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[8][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[8][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 	
 --吸血
@@ -255,6 +262,7 @@ magictable = {}
 	--magictable[9][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
 	--magictable[9][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[9][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[9][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 --反弹伤害N回合	
 	magictable[10]={}
@@ -267,7 +275,8 @@ magictable = {}
 	magictable[10][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[10][MAGIC_DEF_TABLE.DESCPTION] = "玩家被攻击时,反击损失50%生命 3回合"
 	magictable[10][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-
+	magictable[10][MAGIC_DEF_TABLE.CDROUND] =  5
+	
 	
 --玩家 闪电链
 	magictable[11]={}
@@ -282,6 +291,7 @@ magictable = {}
 	magictable[11][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[11][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
 	magictable[11][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
+	magictable[11][MAGIC_DEF_TABLE.CDROUND] =  5
 
 
 --玩家 NXN毒
@@ -309,6 +319,7 @@ magictable = {}
 	magictable[13][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 13
 	magictable[13][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[13][MAGIC_DEF_TABLE.DESCPTION] = "提升玩家暴击率100"
+	magictable[13][MAGIC_DEF_TABLE.CDROUND] =  5
 
 
 --闪避概率
