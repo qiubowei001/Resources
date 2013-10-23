@@ -219,7 +219,14 @@ function player.GainEXP(nExp)
 		--Éý¼¶
 		player[playerInfo.EXP] = player[playerInfo.EXP] - tPlayerExp[player[playerInfo.LEVEL]]
 		player[playerInfo.LEVEL] = player[playerInfo.LEVEL]+1
-
+		
+		
+		--»ØÑª
+		player[playerInfo.HP] = player[playerInfo.Entity_HPMAX];
+		MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
+	
+		
+		
 		MainUI.SetMainUILEV(player[playerInfo.LEVEL])
 		
 		SkillUpGradeUI.LoadUI();
