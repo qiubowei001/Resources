@@ -10,6 +10,7 @@ brickInfo.brickRespondArea = 0.7;--砖块相应区域0-1
 brickInfo.WaveDelay = 5;--每波砖块的掉落间隔(1 = 0.1秒)
 brickInfo.WaveCount = 1;--每波砖块的数量
 
+brickInfo.PlayerSkillCount = 4;--玩家主动技能数量
 
 --游戏阶段定义
 GameLogicPhase ={
