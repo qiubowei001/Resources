@@ -32,22 +32,19 @@ playerInfo = {
 }
 
 
-local tPlayerSkillInd = 
-{	playerInfo.SKILLID1,
-	playerInfo.SKILLID2,
-	playerInfo.SKILLID3,
-	playerInfo.SKILLID4
-}
-
-local tPlayerSkillCDInd = 
-{	playerInfo.SKILLCD1,
-	playerInfo.SKILLCD2,
-	playerInfo.SKILLCD3,
-	playerInfo.SKILLCD4
-}
-
 --玩家经验配置表
 local tPlayerExp = 
+{
+	[1] = 10,
+	[2] = 10,
+	[3] = 10,
+	[4] = 10,
+	[5] = 20,
+	[6] = 20,
+	[7] = 200,
+	[8] = 200,
+}
+--[[
 {
 	[1] = 100,
 	[2] = 105,
@@ -57,7 +54,7 @@ local tPlayerExp =
 	[6] = 200,
 	[7] = 200,
 	[8] = 200,
-}
+}--]]
 
 local magic_effect_beforeplayeract = {}
 local magic_effect_afterplayeract = {}
@@ -82,16 +79,6 @@ function p.Initplayer()
 	player[playerInfo.LEVEL] = 1;
 	
 	
-	player[playerInfo.SKILLID1] = 6;
-	player[playerInfo.SKILLID2] = 12;
-	player[playerInfo.SKILLID3] = 0;
-	player[playerInfo.SKILLID4] = 0;
-	
-	player[playerInfo.SKILLCD1] = 0;
-	player[playerInfo.SKILLCD2] = 0;
-	player[playerInfo.SKILLCD3] = 0;
-	player[playerInfo.SKILLCD4] = 0;
-	
 	
 	player[playerInfo.WEAPON] 	= 1001;
 	player[playerInfo.ARMOR] 	= 2001;
@@ -109,6 +96,10 @@ function p.Initplayer()
 	player[playerInfo.Entity_CRITICALCHANCE] 	= 0;
 	player[playerInfo.Entity_DODGECHANCE] 	= 0;
 
+	player.Skill = SkillUpgrade.InitPlayerSkill();
+	player.MagicCD = {}
+	
+	
 	player.AttAdjFuncT = {};
 	player.DamageAdjFuncT = {};
 	
@@ -306,77 +297,40 @@ end
 
 
 
-function player.AddNewSkill(learningskillid)
-	if player[playerInfo.SKILLID1] == 0 then
-		player[playerInfo.SKILLID1] = learningskillid;
-		return;
+function player.AddNewSkill(nRootId,nSkillId)
+	if player.Skill[nRootId] ~= nil then
+		table.insert(player.Skill[nRootId],nSkillId)
+	else
+		player.Skill[nRootId] = {nSkillId}
+	end
+
+	--如果是主动技能 新增CD
+	if SkillUpgrade.IfisActSkill(nSkillId) then
+		local magicId = SkillUpgrade.GetMagicIdBySkillId(nSkillId)
+		player.MagicCD[magicId] = magictable[magicId][MAGIC_DEF_TABLE.CDROUND]
 	end
 	
-	for i,v in pairs(tPlayerSkillInd) do
-		if player[v] == 0 then
-			player[v] = learningskillid;
-			
-			player[tPlayerSkillCDInd[i]] = magictable[learningskillid][MAGIC_DEF_TABLE.CDROUND];
-			break;
-		end
-	end
+	--如果是被动技能
+	
 end
 
 
-function player.GetSkillCDById(nSkillId)
-	local t = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	
-	local t2 = {
-	player[playerInfo.SKILLCD1],
-	player[playerInfo.SKILLCD2],
-	player[playerInfo.SKILLCD3],
-	player[playerInfo.SKILLCD4],
-	}
-
-	for i=1,4 do
-		if t[i] == nSkillId then
-			return t2[i];	
-		end
-	end
+function player.GetMagicCDById(nMagicId)
+	return player.MagicCD[nMagicId]
 end
 
-function player.SetSkillCDById(nSkillId,nCD)
-	local t = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	
-	local t2 = {
-	playerInfo.SKILLCD1,
-	playerInfo.SKILLCD2,
-	playerInfo.SKILLCD3,
-	playerInfo.SKILLCD4,
-	}
-
-	for i=1,4 do
-		if t[i] == nSkillId then
-			player[t2[i]] = nCD
-		end
-	end
-	
+function player.SetMagicCD(magicId,nCD)
+	player.MagicCD[magicId] = nCD
 	SkillBar.refreshSkill()
-	
 end
 
 
 --成功使用技能则返回TRUE 否则FALSE
-function player.UseSKill(nSkillId)
+function player.UseMagic(nMagicId)
 	
-	local cd = player.GetSkillCDById(nSkillId)
-	if cd >= magictable[nSkillId][MAGIC_DEF_TABLE.CDROUND] then
-		player.SetSkillCDById(nSkillId,0)
+	local cd = player.GetMagicCDById(nMagicId)
+	if cd >= magictable[nMagicId][MAGIC_DEF_TABLE.CDROUND] then
+		player.SetMagicCD(nMagicId,0)
 		
 		return true
 	else
@@ -389,27 +343,12 @@ end
 
 function player.SkillCoolDown()
 	
-	local t1 = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	
-	local t2 = {
-	playerInfo.SKILLCD1,
-	playerInfo.SKILLCD2,
-	playerInfo.SKILLCD3,
-	playerInfo.SKILLCD4,
-	}
-
-	for i,v in pairs(t2) do
-		if t1[i] ~= 0 then
-			player[v] = player[v] + 1
-			if player[v] > magictable[t1[i]][MAGIC_DEF_TABLE.CDROUND] then
-				player[v] = magictable[t1[i]][MAGIC_DEF_TABLE.CDROUND]
+	for i,v in pairs(player.MagicCD) do
+			player.MagicCD[i] = player.MagicCD[i] + 1
+			if player.MagicCD[i]  > magictable[i][MAGIC_DEF_TABLE.CDROUND] then
+				player.MagicCD[i] = magictable[i][MAGIC_DEF_TABLE.CDROUND]
 			end
-		end
+		
 	end	
 	
 	SkillBar.refreshSkill()

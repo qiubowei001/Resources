@@ -52,6 +52,7 @@ MAGIC_DEF_TABLE = {
 
 
 
+
 --==AI选取类型FUNC==--
 --随机选取一个刀BRICK
 function p.AIChooseFuncRandomSword(pmonster)
@@ -455,7 +456,7 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 	--玩家使用技能 则重新计算CD
 	if nMagicId <1000 then
 		
-		if player.UseSKill(nMagicId) == false then
+		if player.UseMagic(nMagicId) == false then
 		
 			return;
 		end

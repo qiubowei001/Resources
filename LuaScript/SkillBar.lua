@@ -6,17 +6,15 @@ local glayerMenu = nil;
 
 local  cdlabeltag = 9999;
 
-local tSkillCD = 
-{
-5,
-5,
-5,
-5,
-}
+local g_tMagic = {}
+
 
 
 
 function p.Init(menuCallbackOpenPopup)
+		g_tMagic = {}
+
+
         glayerMenu = CCLayer:create()
 		
 		
@@ -73,63 +71,33 @@ end
 
 
 function p.GetMagicIdFromTag(nTag)
-	local t = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	return t[nTag];
-end
-
-
-function p.GetTagFromId(nSkillId)
-	local t = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	
-	for i,v in pairs() do
-		if v == nSkillId then
-			return i;
-		end
+	if #g_tMagic >= nTag then
+		return g_tMagic[nTag]
 	end
-	
 end
-
 
 function p.refreshSkill()
-	local t = {
-	player[playerInfo.SKILLID1],
-	player[playerInfo.SKILLID2],
-	player[playerInfo.SKILLID3],
-	player[playerInfo.SKILLID4],
-	}
-	
-	local t2 = {
-	player[playerInfo.SKILLCD1],
-	player[playerInfo.SKILLCD2],
-	player[playerInfo.SKILLCD3],
-	player[playerInfo.SKILLCD4],
-	}
-	
+	local tPlayerSkill = player.Skill
+
 	local menu = glayerMenu:getChildByTag(1)
 	tolua.cast(menu, "CCMenu")
 	
 	local tPic = {}
+	g_tMagic = {}
 	
-	for i,v in pairs(t) do
-		if v == 0 then
-			tPic[i] = "skill/skillNone.png"
-		else
-			tPic[i] = "skill/skill"..v..".png"
+	for i,v in pairs(tPlayerSkill) do
+		local skillid = v[#v]
+		local magicid = SkillUpgrade.GetMagicIdBySkillId(skillid)
+		if magicid ~= nil then
+				--tPic[i] = "skill/skill"..v..".png"
+				table.insert(g_tMagic,magicid)
+				table.insert(tPic,"skill/skill"..magicid..".png")
+				--tPic[i] = "skill/skillNone.png"		
 		end
 	end
 	
-	for i=1,4 do
-		local textureSkill = CCTextureCache:sharedTextureCache():addImage(tPic[i])	
+	for i,v in pairs(tPic) do
+		local textureSkill = CCTextureCache:sharedTextureCache():addImage(v)	
 		local rect = CCRectMake(0, 0, 50, 59)
 		local frame0 = CCSpriteFrame:createWithTexture(textureSkill, rect)
 		
@@ -140,9 +108,7 @@ function p.refreshSkill()
 	
 		local label = item:getChildByTag(cdlabeltag)
 		tolua.cast(label, "CCLabelTTF")
-		if t[i] ~= 0 then
-			label:setString("CD:"..t2[i].."/"..magictable[t[i]][MAGIC_DEF_TABLE.CDROUND])			
-		end
+		label:setString("CD:"..player.MagicCD[g_tMagic[i]].."/"..magictable[g_tMagic[i]][MAGIC_DEF_TABLE.CDROUND])			
 	end
 end
 

@@ -37,33 +37,62 @@ p.tSkillTree =
 [6] = {13}
 }
 
+--是否为主动技能
+function p.IfisActSkill(nSkillId)
+	if p.tSkillNode[nSkillId].MAGICID ~= nil then
+		return true
+	else 
+		return false
+	end
+end
+
+function p.GetMagicIdBySkillId(nSkillId)
+	if p.IfisActSkill(nSkillId) then
+		local magicid = p.tSkillNode[nSkillId].MAGICID
+		return magicid
+	else
+		return nil
+	end
+end
+
+
+
+--初始化玩家技能表
+function p.InitPlayerSkill()
+	local tPlayerSkill = {}
+	for i,v in pairs(p.tSkillTree) do
+		tPlayerSkill[i] = nil
+	end
+	return tPlayerSkill
+end
 
 
 function p.GetRandomSkillId()
-
-	local tPlayerSkill = 
+	local tPlayerSkill = player.Skill
+	--[[local tPlayerSkill = 
 	{
 	[1]={1,4,5,6,7},--player[playerInfo.SKILLID1],
 	[2]={2,8,9},--player[playerInfo.SKILLID2],
-	[3]=nil,
-	[4]={11},	--player[playerInfo.SKILLID3],
+	[3]={3},
+	[4]=nil,	--player[playerInfo.SKILLID3],
 				--player[playerInfo.SKILLID4],
 	[5]=nil,
 	[6]=nil,		
 	}
+	--]]
 
-	local tRandom = {}
+	local tRandomAll = {}
 	
 	--遍历技能树，如果玩家没学习枝干的根技能 则插入根技能
 	--如果玩家有学习,则插入属于此枝干的最顶部技能
 	for i,v in pairs(p.tSkillTree) do
 		if tPlayerSkill[i]== nil then
-			tRandom[i] = p.tSkillTree[i][1]
+			table.insert(tRandomAll,{i,p.tSkillTree[i][1]})
 		else
 			--获取最新技能INDEX
 			local nSkillIndex = #tPlayerSkill[i]
 			if nSkillIndex < #v then
-				tRandom[i] = p.tSkillTree[i][nSkillIndex+1]
+				table.insert(tRandomAll,{i,p.tSkillTree[i][nSkillIndex+1]})
 			end
 		end
 	end
@@ -73,39 +102,55 @@ function p.GetRandomSkillId()
 	local nNum = 0
 	for i,v in pairs(tPlayerSkill) do
 		if v ~= nil then
-			print(table.getn(v))
 			if p.tSkillNode[v[1]].MAGICID ~= nil then
 				nNum = nNum +1
 			end
 		end
 	end
 	
-	--如果主角主动技能已满 则去除主动技能
+
+	--如果主角主动技能已满 则去除单一的主动技能
 	if nNum >= 4 then--brickInfo.PlayerSkillCount then
-		for i,v in pairs(tRandom) do
-			if p.tSkillNode[v].MAGICID ~= nil then
-				tRandom[i] = nil
+		for i,v in pairs(tRandomAll) do
+			if p.tSkillNode[v[2]].MAGICID ~= nil and  #(p.tSkillTree[v[1]]) then
+				tRandomAll[i] = nil
 			end		
 		end
 	end
 	
-	
-	--[[print("tRandom:")
-	for i,v in pairs(tRandom) do
-		print("root:"..i.." val:"..v)
-	end
-	--]]
-	
 	--随机取出3个技能节点ID
+	print("tRandomAlln:"..#tRandomAll)
+	for i,v in pairs(tRandomAll) do
+		print("tRandomAll I:"..i)
+		for j,k in pairs(v) do
+			print("v:"..k)
+		end
+	end
+	
+	--无技能升级
+	if #tRandomAll == 0 then
+		return {}
+	end
+	
+	local tRandomRet = {}
+	for i=1,3 do
+		j = math.random(1,#tRandomAll)
+		table.insert(tRandomRet,tRandomAll[j])
+		table.remove(tRandomAll,j);
+	end
+	
+	--print("tRandomRet:"..#tRandomRet)
+	for i,v in pairs(tRandomRet) do
+		--print("tRandomRet I:"..i)
+		for j,k in pairs(v) do
+			--print("v:"..k)
+		end
+	end
+
 	
 	--返回技能枝干ID 和节点ID
-	
+	return tRandomRet
 end
-
-
-p.GetRandomSkillId()
-
-
 
 
 
