@@ -318,7 +318,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
 		pBrick:addChild(HPBarBg)
 		HPBarBg:setTag(g_hplabeltag);
-		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/hpbar.png"))
+		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/monsterhpbar.png"))
 		HPBar:setType(kCCProgressTimerTypeBar)
 		HPBar:setMidpoint(CCPointMake(0, 0))
 		HPBar:setBarChangeRate(CCPointMake(1, 0))

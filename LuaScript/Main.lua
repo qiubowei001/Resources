@@ -486,6 +486,12 @@ function p.main(nMission)
 				--处于普通攻击模式
 				LineFunc.CancelLine();				
 				local X,Y = getTileXY(x,y)
+				
+				
+				if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
+					return true
+				end
+				
 				if Board[X][Y] ~= nil then
 						local pbrick = Board[X][Y];
 						if	pbrick.chosed == false and pbrick.IsAbleLink == true then
@@ -505,6 +511,11 @@ function p.main(nMission)
 				if Main.selectMode == SELECTMODE.NORMAL then			
 					--处于普通攻击模式
                      local X,Y,bIfWrapIn = getTileXY(x,y)
+					 
+						if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
+							return true
+						end
+				
 					 local bifatt = false
 					 if bIfWrapIn == false then
 						return;
@@ -589,6 +600,10 @@ function p.main(nMission)
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
 				--=====================处于释放魔法并选中单体模式========================--
 				local X,Y = getTileXY(x,y)
+				if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
+					return true
+				end
+						
 				if Board[X][Y] ~= nil then
 						local pbrick = Board[X][Y];	
 						magic.SpellMagic(Main.ChosedMagic,pbrick);

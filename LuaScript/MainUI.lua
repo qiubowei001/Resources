@@ -13,19 +13,38 @@ local g_progressbartag = 8;
 local g_wavetimertag = 9;
 local g_SpeedBtntag = 10;
 local g_UpgradeBtntag = 11;
+local g_HPBartag = 12;
 
 local bglayer = nil;
 local gprogressbar = nil;
 local waveCounter = nil;
+local gHPBar = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
-
+		
+		--
+		--血条
+		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/HPbar.png"))
+		HPBar:setType(kCCProgressTimerTypeBar)
+		HPBar:setMidpoint(CCPointMake(0, 0))
+		HPBar:setBarChangeRate(CCPointMake(0, 1))
+		HPBar:setPosition(CCPointMake(130, 130))
+		bglayer:addChild(HPBar,1,g_HPBartag)	
+		gHPBar = HPBar
+		HPBar:setPercentage(100);
+		local HPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
+		HPBarBg:setPosition(130, 130)
+		bglayer:addChild(HPBarBg,2)
+		
+		--
+	
+	
 
 		--显示玩家血量
 		local hpLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(hpLabel)
-			hpLabel:setColor(ccc3(255,0,0))
+			hpLabel:setColor(ccc3(255,255,255))
 			hpLabel:setPosition(0, 220)
 			hpLabel:setTag(g_HPlabeltag);
 		
@@ -166,7 +185,9 @@ end
 function p.SetMainUIHP(nHP,nHPMAX)
 	local label = bglayer:getChildByTag(g_HPlabeltag)
 	tolua.cast(label, "CCLabelTTF")
-	label:setString("HP:"..nHP.."/"..nHPMAX)	         
+	label:setString("HP:"..nHP.."/"..nHPMAX)
+	
+	gHPBar:setPercentage(100*nHP/nHPMAX);
 end
 
 function p.SetMainUIATK(nATK)
