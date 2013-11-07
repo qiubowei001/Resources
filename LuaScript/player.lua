@@ -204,25 +204,27 @@ function player.takeGold(nNum)
 end
 
 
+--获取升级所需经验
+function player.GetExpNeed()
+	local level = player[playerInfo.LEVEL]
+	return tPlayerExp[level]
+end
+
 function player.GainEXP(nExp)
 	player[playerInfo.EXP] = player[playerInfo.EXP] + nExp;
 
-	if player[playerInfo.EXP] >= tPlayerExp[player[playerInfo.LEVEL]] then
+	if player[playerInfo.EXP] >= player.GetExpNeed() then
 		--升级
-		player[playerInfo.EXP] = player[playerInfo.EXP] - tPlayerExp[player[playerInfo.LEVEL]]
+		player[playerInfo.EXP] = player[playerInfo.EXP] - player.GetExpNeed()
 		player[playerInfo.LEVEL] = player[playerInfo.LEVEL]+1
 		
 		
 		--回血
 		player[playerInfo.HP] = player[playerInfo.Entity_HPMAX];
 		MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
-	
-		
-		
+
 		MainUI.SetMainUILEV(player[playerInfo.LEVEL])
-		
 		SkillUpGradeUI.LoadUI();
-		
 	end
 	
 

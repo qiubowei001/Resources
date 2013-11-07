@@ -14,11 +14,15 @@ local g_wavetimertag = 9;
 local g_SpeedBtntag = 10;
 local g_UpgradeBtntag = 11;
 local g_HPBartag = 12;
-
+local g_ExpBartag = 13;
+local g_GoldBartag = 14;
+		
 local bglayer = nil;
 local gprogressbar = nil;
 local waveCounter = nil;
 local gHPBar = nil;
+local gExpBar = nil;
+local gGoldBar = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
@@ -37,7 +41,37 @@ function p.LoadUI()
 		HPBarBg:setPosition(130, 130)
 		bglayer:addChild(HPBarBg,2)
 		
-		--
+		
+
+		--经验条
+		ExpBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Expbar.png"))
+		ExpBar:setType(kCCProgressTimerTypeBar)
+		ExpBar:setMidpoint(CCPointMake(0, 0))
+		ExpBar:setBarChangeRate(CCPointMake(0, 1))
+		ExpBar:setPosition(CCPointMake(100, 130))
+		bglayer:addChild(ExpBar,1,g_ExpBartag)	
+		gExpBar = ExpBar
+		ExpBar:setPercentage(0);
+		local ExpBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
+		ExpBarBg:setPosition(100, 130)
+		bglayer:addChild(ExpBarBg,2)
+		
+		
+
+		--金币条
+		GoldBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Goldbar.png"))
+		GoldBar:setType(kCCProgressTimerTypeBar)
+		GoldBar:setMidpoint(CCPointMake(0, 0))
+		GoldBar:setBarChangeRate(CCPointMake(0, 1))
+		GoldBar:setPosition(CCPointMake(70, 130))
+		bglayer:addChild(GoldBar,1,g_GoldBartag)	
+		gGoldBar = GoldBar
+		GoldBar:setPercentage(0);
+		local GoldBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
+		GoldBarBg:setPosition(70, 130)
+		bglayer:addChild(GoldBarBg,2)
+		
+		
 	
 	
 
@@ -122,11 +156,11 @@ function p.LoadUI()
     	item1:registerScriptTapHandler(p.menuCallbackUpgradeBtn)
 		local menu = CCMenu:create()
 		menu:addChild(item1,1,1)	
-		menu:setPosition(CCPointMake(100, 100))
+		menu:setPosition(CCPointMake(0, 310))
 		item1:setPosition(0,0)
 		menu:setTag(g_UpgradeBtntag);
 		bglayer:addChild(menu)		
-		menu:setVisible(false)
+		menu:setVisible(true)
 			
     bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
@@ -199,13 +233,16 @@ end
 function p.SetMainUIEXP(nEXP)
 	local GOLDlabel = bglayer:getChildByTag(g_EXPlabeltag)
 	tolua.cast(GOLDlabel, "CCLabelTTF")
-	GOLDlabel:setString("exp:"..nEXP)	
+	GOLDlabel:setString("exp:"..nEXP)
+	gExpBar:setPercentage(100*nEXP/player.GetExpNeed());
 end
 
 function p.SetMainUIGOLD(nGOLD)
 	local GOLDlabel = bglayer:getChildByTag(g_goldlabeltag)
 	tolua.cast(GOLDlabel, "CCLabelTTF")
 	GOLDlabel:setString("G:"..nGOLD) 	
+	
+	gGoldBar:setPercentage(nGOLD%100);
 end
 
 function p.SetMainUITip(sTip)
