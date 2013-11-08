@@ -110,7 +110,7 @@ function p.Initplayer()
 	player.Dodgechance = 0;
 	
 	player.UpdateEntityData();
-	
+	player.AddNewSkill(3,3)
 end
 
 --这个是属性操作

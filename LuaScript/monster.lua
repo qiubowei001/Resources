@@ -381,6 +381,7 @@ function monster.damage( pBrick,nDamage,bcritical)
 		local tDamageAction = monster.InitDamageAction( pBrick,nDamage);
 		
 		
+		
 		for i,func in pairs(pBrick.DamageAdjFuncT) do
 			func(tDamageAction)
 		end
@@ -395,6 +396,10 @@ function monster.damage( pBrick,nDamage,bcritical)
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
 			hpbar:setPercentage(100*percent);
 	
+			--怪物扣血 设置透明
+			local mainsprite = brick.GetMainSprite(pBrick)
+			mainsprite:setOpacity(50+200*percent)
+
 	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
 				--玩家獲取經驗
@@ -429,6 +434,7 @@ end
 --怪物攻击
 function monster.attack()
 	local ndamage = 0;
+	local nTurn = 1;
 	for i = 1,brickInfo.brick_num_X do
 	
 		for j = 1,brickInfo.brick_num_Y do
@@ -444,6 +450,17 @@ function monster.attack()
 						for k,func in pairs(Board[i][j].AttAdjFuncT) do
 							func(tAttAction)
 						end
+
+						--怪物攻击跳跃
+						local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
+						local array = CCArray:create()
+						array:addObject(CCDelayTime:create(0.1*nTurn))--每个怪物跳跃动作延迟间隔
+						array:addObject(actionJump)
+						local action = CCSequence:create(array)
+						nTurn = nTurn + 1
+						
+						local mainsprite = brick.GetMainSprite(Board[i][j])
+						mainsprite:runAction(action);
 						
 						player.takedamage(tAttAction.damage,Board[i][j]);	
 						Board[i][j].moninfo[monsterInfo.CD]	= 0;

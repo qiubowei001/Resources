@@ -69,8 +69,12 @@ function p.GetRoundInfoTable()
 	local roundBoundMin = 0;
 	local roundBoundMax = 0;
 	
+	print("GetRoundInfoTable begin")
 	for i,v in pairs(MISSION_TABLE[gMission]["config"]) do
+		print("GetRoundInfoTable i:"..i)
 		roundBoundMax = roundBoundMin + v[1];
+		print("GetRoundInfoTable nRound:roundBoundMax:roundBoundMin:"..nRound.." "..roundBoundMax.." "..roundBoundMin)
+		
 		if nRound <= roundBoundMax  and nRound > roundBoundMin  then
 			return v
 		else 
@@ -78,6 +82,7 @@ function p.GetRoundInfoTable()
 			roundBoundMin = roundBoundMin + v[1];
 		end
 	end
+	cclog("GetRoundInfoTable fail")
 end
 
 

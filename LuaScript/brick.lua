@@ -19,12 +19,11 @@ local tbrickTypeInfo = {}
 	tbrickTypeInfo[tbrickType.BLOOD] =   {7}
 	tbrickTypeInfo[tbrickType.GOLD] = 	 {4,5,6}
 	
-	
+
+local Magicefftag = 4000;	
 local choseefftag = 3001;
 local deathefftag = 3002;
-local Magicefftag = 3000;
 local MainSpritetag = 3003;
-
 local animationtag = 3004;
 
 function brick.setChosed(pbrick)

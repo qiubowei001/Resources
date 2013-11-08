@@ -62,7 +62,7 @@ function p.InitPlayerSkill()
 	local tPlayerSkill = {}
 	for i,v in pairs(p.tSkillTree) do
 		tPlayerSkill[i] = nil
-	end
+	end		
 	return tPlayerSkill
 end
 
@@ -118,15 +118,7 @@ function p.GetRandomSkillId()
 		end
 	end
 	
-	--随机取出3个技能节点ID
-	print("tRandomAlln:"..#tRandomAll)
-	for i,v in pairs(tRandomAll) do
-		print("tRandomAll I:"..i)
-		for j,k in pairs(v) do
-			print("v:"..k)
-		end
-	end
-	
+
 	--无技能升级
 	if #tRandomAll == 0 then
 		return {}
