@@ -8,20 +8,32 @@ local gMission = 1
 local gWaveCount = 0
 local gWaveDelay = 0
 
+--[[
+tbrickType = 
+{
+	MONSTER = 	1,
+	SWORD  =	2,
+	BLOOD  =	3,
+	GOLD   =	4,
+}
+]]
 MISSION_TABLE = {}
 
 MISSION_TABLE[1] = {}
 MISSION_TABLE[1]["name"] = "ChapterI"
 MISSION_TABLE[1]["config"] = 
-{
---回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级}
---[[
-{10		,	{1},		{100}		,30		, 1			,{0}},
-{10		,	{1,1},		{95,5}		,30		, 1			,{1,1}},
-{30		,	{1,1},		{95,5}		,30		, 1			,{2,1}},
-{1000		,{1,1},		{90,10}		,50		, 1			,{3,1}},
---]]
 
+{
+--回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
+--
+{100	,	{1},		{100}		,10		, 1			,{0}	{tbrickType.MONSTER=25,tbrickType.SWORD=25,tbrickType.BLOOD=25,tbrickType.GOLD=25}},
+
+
+}
+
+--
+
+--[[
 {35		,	{1},		{100}		,13		, 1			,{1}},
 {35		,	{1},		{100}		,13		, 1			,{2}},
 {35		,	{1},		{100}		,13		, 1			,{3}},
@@ -40,6 +52,7 @@ MISSION_TABLE[1]["config"] =
 {30		,	{2,4},		{95,5}		,7		, 1			,{1,1}},
 {1000		,{3,5},		{90,10}		,50		, 4			,{1,1}},
 }
+--]]
 
 MISSION_TABLE[2] = {}
 MISSION_TABLE[2]["name"] = "ChapterII"
@@ -49,6 +62,8 @@ MISSION_TABLE[2]["config"] =
 {3		,	{9},		{100}		 },
 {10		,	{2,4},		{95,5		}},
 {20		,	{4},		{100		}},
+
+
 }
 
 MISSION_TABLE[3] = {}
@@ -83,6 +98,7 @@ function p.GetRoundInfoTable()
 		end
 	end
 	cclog("GetRoundInfoTable fail")
+	return nil
 end
 
 
@@ -118,12 +134,40 @@ function p.RoundPlusOne()
 	nRound = nRound +1;
 end
 
+--返回砖块类型
+function p.GenerateBrickType()
+	local roundBoundMin = 0;
+	local roundBoundMax = 0;
+	
+	local v = p.GetRoundInfoTable()
+	if v==nil then
+		return nil
+	end	
+	--[[
+		tbrickType.MONSTER
+		tbrickType.GOLD	
+	]]
+	local nrandom = math.random(1,100)
+	local tmp =0
+	for sType,nRate in pairs(v[7]) do
+		tmp = tmp + nRate
+		if tmp < nrandom then
+			return sType
+			break
+		end
+	end
+end
+
 --返回怪物ID ,等级
 function p.GenerateMonsterId()
 	local roundBoundMin = 0;
 	local roundBoundMax = 0;
 	
 	local v = p.GetRoundInfoTable()
+	if v==nil then
+		return nil
+	end	
+	
 	
 	--在回合内产生怪物
 	local n = math.random(1,100)

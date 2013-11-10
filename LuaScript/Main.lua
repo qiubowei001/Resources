@@ -219,10 +219,12 @@ function Main.brickfallLogic()
 		
 		local pbrick=nil;
 		
+
 		
 		if nbricktype == tbrickType.MONSTER then
 			--²úÉú¹ÖÎï
 			local monsterid,lev = mission.GenerateMonsterId();
+			
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
 			pbrick = brick.creatMonster(monsterid,lev);

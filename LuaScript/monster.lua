@@ -15,6 +15,8 @@ local g_hplabeltag =100;
 local g_attlabeltag = 101;
 local g_CDbar = 102;
 
+
+local gblinkactionTag = 90000;
 local MONSTER_TYPE = {}
 
 	MONSTER_TYPE[1] = {}
@@ -191,14 +193,20 @@ function monster.AttackCDPlusOne(pbrick)
 	end	
 	BAR:setPercentage(nPersent);
 	
-	
-	 
+	local mainsprite = brick.GetMainSprite(pbrick)		
+	mainsprite:stopActionByTag(gblinkactionTag)
+	mainsprite:setVisible(true)
 	 
 	--90%Ê±ÉÁË¸
 	if nPersent>= 100 then
 		local sprite = pbrick.attackready 
 		sprite:setVisible(true)
 		BAR:setVisible(false)
+		local actionBlink = CCBlink:create(1, 10)
+		local action = CCRepeatForever:create(actionBlink)
+		action:setTag(gblinkactionTag)
+		mainsprite:runAction(action)
+		
 	elseif nPersent>=80 then
 		if pbrick.IfScaled == false then
 			local array = CCArray:create()
@@ -210,12 +218,12 @@ function monster.AttackCDPlusOne(pbrick)
 			pbrick.IfScaled = true
 		end
 	
-		local tmp = (pbrick.moninfo[monsterInfo.CD])%2
-		if tmp == 0 then
-			BAR:setVisible(true)
-		else
-			BAR:setVisible(false)
-		end
+		--local tmp = (pbrick.moninfo[monsterInfo.CD])%2
+		--if tmp == 0 then
+		--	BAR:setVisible(true)
+		--else
+		--	BAR:setVisible(false)
+		--end
 		
 	elseif nPersent < 80 then
 		BAR:setVisible(true)
@@ -402,6 +410,10 @@ function monster.damage( pBrick,nDamage,bcritical)
 
 	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
+				--Í£Ö¹ÉÁË¸
+				local mainsprite = brick.GetMainSprite(pBrick)		
+				mainsprite:stopActionByTag(gblinkactionTag)
+	
 				--Íæ¼Ò«@È¡½›òž
 				local nexp =  (defender.moninfo[monsterInfo.LEV])+1
 				player.GainEXP(nexp);
@@ -562,7 +574,9 @@ end
 function monster.PlayDeathAnimation(pBrick)
 	brick.setUnChosed(pBrick)
 	brick.removedeatheff(pBrick)
-
+	
+	
+	
 	local parent = pBrick:getParent()
 	--·ÅÖÃµ½¶¥²ã
 	parent:reorderChild(pBrick, 1000)
