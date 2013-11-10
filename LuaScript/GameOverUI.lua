@@ -9,6 +9,7 @@ local gw = winSize.width
 local tFailTypePic = {} 
 	tFailTypePic[1] = "UI/Bg/fail.png"
 	tFailTypePic[2] = "UI/Bg/fail2.png"
+	tFailTypePic[3] = "UI/Bg/win.png"
 
 
 function p.LoadUI(ntype)
@@ -44,10 +45,7 @@ function p.LoadUI(ntype)
         
         scene:addChild(glayer)
 		
-        CCDirector:sharedDirector():pushScene( scene )
-		
-
-			
+        CCDirector:sharedDirector():pushScene( scene )		
 end
 
 function p.BackToMission(tag,sender)

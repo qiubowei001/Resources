@@ -26,7 +26,8 @@ MISSION_TABLE[1]["config"] =
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
 --
-{100	,	{1},		{100}		,10		, 1			,{0}	{tbrickType.MONSTER=25,tbrickType.SWORD=25,tbrickType.BLOOD=25,tbrickType.GOLD=25}},
+{30	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=50,[tbrickType.SWORD]=10,[tbrickType.BLOOD]=20,[tbrickType.GOLD]=20}},
+{9999,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=30,[tbrickType.BLOOD]=30,[tbrickType.GOLD]=40}},
 
 
 }
@@ -134,7 +135,7 @@ function p.RoundPlusOne()
 	nRound = nRound +1;
 end
 
---返回砖块类型
+--返回砖块类型,是否为结束回合
 function p.GenerateBrickType()
 	local roundBoundMin = 0;
 	local roundBoundMax = 0;
@@ -143,17 +144,19 @@ function p.GenerateBrickType()
 	if v==nil then
 		return nil
 	end	
-	--[[
-		tbrickType.MONSTER
-		tbrickType.GOLD	
-	]]
+	
+	gWaveCount = v[5]
+	gWaveDelay = v[4]
+	local bEnd = false
+	if v[1] == 9999 then
+		bEnd = true
+	end
 	local nrandom = math.random(1,100)
 	local tmp =0
 	for sType,nRate in pairs(v[7]) do
 		tmp = tmp + nRate
-		if tmp < nrandom then
-			return sType
-			break
+		if nrandom <= tmp then
+			return sType,bEnd
 		end
 	end
 end
@@ -182,8 +185,6 @@ function p.GenerateMonsterId()
 	end
 	
 	
-	gWaveCount = v[5]
-	gWaveDelay = v[4]
 	
 	return v[2][index],v[6][index]
 end

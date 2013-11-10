@@ -122,7 +122,19 @@ function Main.GetBrickFallTimerId()
 	return gBrickFallTimerId
 end
 
-
+--是否清除了所有怪物
+function Main.IfMonsterCleared()
+	for i = 1,brickInfo.brick_num_X do
+		for j = 1,brickInfo.brick_num_Y do
+			if Board[i][j] ~= nil then
+				if Board[i][j].nType == tbrickType.MONSTER then
+					return false
+				end
+			end
+		end
+	end	
+	return true
+end
 
 --掉落一块砖块
 function Main.brickfallLogic()
@@ -131,6 +143,8 @@ function Main.brickfallLogic()
 			GameOverUI.LoadUI(2)
 			return;
 		end
+		
+		
 		
 		--所有方块向下掉落
 		local nNum = brickInfo.brick_num_X;
@@ -205,21 +219,18 @@ function Main.brickfallLogic()
 		local index = math.random(1,#tTmp);
 		local X = tTmp[index][1]
 		local Ymin = tTmp[index][2]
-		
-		local nbricktype = nil;
-		local nrandom = math.random(1,100)
-		local tmp = 0
-		for i,v in pairs(tBrickTypeRandom)do
-			tmp = tmp + v 
-			if  nrandom <= tmp then
-				nbricktype = i
-				break
-			end
-		end
-		
+
+		local nbricktype,bEnd = mission.GenerateBrickType();
 		local pbrick=nil;
 		
 
+		--如果9999回合 且无怪物 则胜利
+		if bEnd and  Main.IfMonsterCleared() then
+			--游戏胜利
+			GameOverUI.LoadUI(3)
+			cclog("win!!!")
+			return
+		end
 		
 		if nbricktype == tbrickType.MONSTER then
 			--产生怪物
