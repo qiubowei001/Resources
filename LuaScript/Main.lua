@@ -638,26 +638,26 @@ function p.main(nMission)
         end
 
 		-- 注册触摸事件  
-		--layerMain.__CCTouchDelegate__:registerScriptTouchHandler(cocos2d.CCTOUCHBEGAN, "btnTouchBegin")  
-		
-        layerMain:registerScriptTouchHandler(onTouch)
+		layerMain:registerScriptTouchHandler(onTouch)
         layerMain:setTouchEnabled(true)
 
-		
-		 
-		
 		--主界面初始化
 		MainUI.LoadUI()
 		
+		--被动技能初始化
+		PassiveSkill.Initial()
+		
+		--初始化玩家数据
+		player.Initplayer();	
+
+		--开启定时器
 		Main.CreatebrickWave();
 		gWaveTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
 		
 		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
-		
-		
-		player.Initplayer();		
+				
         return layerMain
     end
 

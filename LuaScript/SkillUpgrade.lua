@@ -20,6 +20,8 @@ p.tSkillNode =
 [12] = {MAGICID = 12,PassiveID = nil},
 [13] = {MAGICID = 13,PassiveID = nil},
 [14] = {MAGICID = 14,PassiveID = nil},
+[15] = {MAGICID = nil,PassiveID = "Radar"},
+
 }
 
 
@@ -34,8 +36,19 @@ p.tSkillTree =
 [3] = {3},
 [4] = {11},
 [5] = {12},
-[6] = {13}
+[6] = {13},
+[7] = {15}
 }
+
+--获取技能图片路径
+function p.GetPicPath(nskillId)
+	local skillnode = p.tSkillNode[nskillId]
+	if  skillnode.MAGICID ~= nil then
+		return "skill/skill"..skillnode.MAGICID..".png"
+	else
+		return "skill/PASS"..skillnode.PassiveID..".png"
+	end
+end
 
 --是否为主动技能
 function p.IfisActSkill(nSkillId)
@@ -55,6 +68,14 @@ function p.GetMagicIdBySkillId(nSkillId)
 	end
 end
 
+function p.GetPassIdBySkillId(nSkillId)
+	if p.IfisActSkill(nSkillId) then
+		return nil
+	else
+		local spassid = p.tSkillNode[nSkillId].PassiveID
+		return spassid
+	end
+end
 
 
 --初始化玩家技能表

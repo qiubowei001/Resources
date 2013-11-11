@@ -150,6 +150,11 @@ function p.LoadUI()
 		waveCounter:setPosition(CCPointMake(10, 500))
 		waveCounter:setTag(g_wavetimertag);
 		bglayer:addChild(waveCounter)
+		if PassiveSkill.Entity.Radar == 0 then
+			p.HideSpeedBtn()
+		else
+			p.ShowSpeedBtn()
+		end
 		
 		-- Éý¼¶°´Å¥
 		local item1 = CCMenuItemImage:create("UI/Button/upgradearrow.png", "UI/Button/upgradearrow.png")
@@ -167,12 +172,26 @@ function p.LoadUI()
 	scene:addChild(bglayer,3)
 	bglayer:setTag(UIdefine.MainUI);
 	
-	
 	p.SetMainUIMission(mission.GetMissionDesc())
 	
 	p.SetProgress(10)
 end
 
+--ÏÔÊ¾SPEED°´Å¥
+function p.ShowSpeedBtn()
+	local menu = bglayer:getChildByTag(g_SpeedBtntag)
+	tolua.cast(menu, "CCMenu")
+	menu:setVisible(true)
+	waveCounter:setVisible(true)
+end
+
+--Òþ²ØSPEED°´Å¥
+function p.HideSpeedBtn()
+	local menu = bglayer:getChildByTag(g_SpeedBtntag)
+	tolua.cast(menu, "CCMenu")
+	menu:setVisible(false)
+	waveCounter:setVisible(false)
+end
 
 --ÏÔÊ¾Éý¼¶°´Å¥
 function p.ShowUpgradeBtn()

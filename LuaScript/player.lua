@@ -34,7 +34,7 @@ playerInfo = {
 
 --玩家经验配置表
 local tPlayerExp = 
---[[
+--
 {
 	[1] = 10,
 	[2] = 10,
@@ -45,7 +45,7 @@ local tPlayerExp =
 	[7] = 200,
 	[8] = 200,
 }--]]
---
+--[[
 {
 	[1] = 100,
 	[2] = 105,
@@ -111,6 +111,7 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	player.AddNewSkill(3,3)
+	
 end
 
 --这个是属性操作
@@ -307,13 +308,19 @@ function player.AddNewSkill(nRootId,nSkillId)
 		player.Skill[nRootId] = {nSkillId}
 	end
 
-	--如果是主动技能 新增CD
+	
 	if SkillUpgrade.IfisActSkill(nSkillId) then
+		--如果是主动技能 新增CD
 		local magicId = SkillUpgrade.GetMagicIdBySkillId(nSkillId)
 		player.MagicCD[magicId] = magictable[magicId][MAGIC_DEF_TABLE.CDROUND]
+	else
+		--如果是被动技能
+		local sPassId = SkillUpgrade.GetPassIdBySkillId(nSkillId)
+		PassiveSkill.LearnSkillCallBack(sPassId)
 	end
 	
-	--如果是被动技能
+	
+
 	
 end
 

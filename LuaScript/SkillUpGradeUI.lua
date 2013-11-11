@@ -39,7 +39,8 @@ function p.LoadUI()
 		local menu = CCMenu:create()
 		
 		for i,v in pairs(g_tRandom) do
-			local item1 = CCMenuItemImage:create("skill/skill"..v[2]..".png", "skill/skill"..v[2]..".png")
+			local picpath = SkillUpgrade.GetPicPath(v[2])
+			local item1 = CCMenuItemImage:create(picpath, picpath)
 			item1:registerScriptTapHandler(p.LearnSkillCallback)
 			menu:addChild(item1,1,i)
 			item1:setPosition(-160+80*i,0)

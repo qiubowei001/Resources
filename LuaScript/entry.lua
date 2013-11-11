@@ -19,6 +19,8 @@ CCDirector:sharedDirector():runWithScene(g_sceneGame)
 
 dofile("LuaScript/extern.lua")
 
+dofile("LuaScript/PassiveSkill.lua")
+
 dofile("LuaScript/UI/ProgressBar.lua")
 
 dofile("LuaScript/MissionSelectUI.lua")

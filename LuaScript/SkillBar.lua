@@ -89,10 +89,9 @@ function p.refreshSkill()
 		local skillid = v[#v]
 		local magicid = SkillUpgrade.GetMagicIdBySkillId(skillid)
 		if magicid ~= nil then
-				--tPic[i] = "skill/skill"..v..".png"
 				table.insert(g_tMagic,magicid)
-				table.insert(tPic,"skill/skill"..magicid..".png")
-				--tPic[i] = "skill/skillNone.png"		
+				local picpath = SkillUpgrade.GetPicPath(skillid)
+				table.insert(tPic,picpath)
 		end
 	end
 	
