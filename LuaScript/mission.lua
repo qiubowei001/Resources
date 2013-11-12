@@ -26,7 +26,7 @@ MISSION_TABLE[1]["config"] =
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
 --
-{30	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=50,[tbrickType.SWORD]=10,[tbrickType.BLOOD]=20,[tbrickType.GOLD]=20}},
+{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=50,[tbrickType.SWORD]=10,[tbrickType.BLOOD]=20,[tbrickType.GOLD]=20}},
 {9999,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=30,[tbrickType.BLOOD]=30,[tbrickType.GOLD]=40}},
 
 

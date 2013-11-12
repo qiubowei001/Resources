@@ -86,6 +86,11 @@ function Main.CreatebrickWave()
 end
 
 function Main.SpeedUpWave()
+	--
+	if PassiveSkill.Entity.RadarBuff ~= 1 then
+		return
+	end
+	
 	WaveTick = mission.GetWaveDelay();
 	SpeedUpBuff.GetPrize(mission.GetWaveCount());
 end

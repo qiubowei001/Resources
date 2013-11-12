@@ -21,6 +21,7 @@ p.tSkillNode =
 [13] = {MAGICID = 13,PassiveID = nil},
 [14] = {MAGICID = 14,PassiveID = nil},
 [15] = {MAGICID = nil,PassiveID = "Radar"},
+[16] = {MAGICID = nil,PassiveID = "RadarBuff"},
 
 }
 
@@ -37,7 +38,7 @@ p.tSkillTree =
 [4] = {11},
 [5] = {12},
 [6] = {13},
-[7] = {15}
+[7] = {15,16}
 }
 
 --获取技能图片路径

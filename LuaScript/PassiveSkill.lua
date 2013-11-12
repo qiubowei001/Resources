@@ -36,7 +36,7 @@ local tPassiveSkillTable = {}
 function p.Initial()
 	p.Entity=
 	{
-		Radar = 1;--默认关闭雷达
+		Radar = 0;--默认关闭雷达
 		RadarBuff = 0;--默认关闭雷达BUFF
 	}
 	
