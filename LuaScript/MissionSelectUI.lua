@@ -53,13 +53,36 @@ function p.LoadUI()
 	
 		
 
-		--[[
+		--
 		emitter = CCParticleSystemQuad:new()
 		emitter:autorelease()
-		local filename = "Particle/LavaFlow.plist"
+		local filename = "Particle/ThunderChain.plist"
 		emitter:initWithFile(filename)
 		bglayer:addChild(emitter, 10)
-		--]]
+		
+		
+		local actionto = CCMoveBy:create(1, ccp(200, 500))
+		local actionto2 =CCMoveBy:create(1, ccp(200, -200))
+		local actionto3 =CCMoveBy:create(1, ccp(200, -200))
+		local actionto4 =CCMoveBy:create(1, ccp(-500, 200))
+		
+		function calltest(sender)
+			sender:removeFromParentAndCleanup(true);
+		end
+		
+		local actionremove = CCCallFuncN:create(calltest)
+		
+		local arr = CCArray:create()		
+		arr:addObject(actionto)
+		arr:addObject(actionto2)
+		arr:addObject(actionto3)
+		arr:addObject(actionto4)
+		arr:addObject(actionremove)
+		
+		local  seq = CCSequence:create(arr)
+		
+		emitter:runAction(seq)		
+		--
 end
 
 

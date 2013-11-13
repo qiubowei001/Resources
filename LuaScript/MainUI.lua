@@ -20,7 +20,7 @@ local g_GoldBartag = 14;
 local bglayer = nil;
 local gprogressbar = nil;
 local waveCounter = nil;
-local gHPBar = nil;
+local gHPBar = nil; 
 local gExpBar = nil;
 local gGoldBar = nil;
 
