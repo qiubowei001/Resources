@@ -17,7 +17,11 @@ end
 g_sceneGame = CCScene:create();
 CCDirector:sharedDirector():runWithScene(g_sceneGame)
 
+dofile("LuaScript/brickInfo.lua")
+
 dofile("LuaScript/extern.lua")
+
+
 
 dofile("LuaScript/PassiveSkill.lua")
 
@@ -27,11 +31,11 @@ dofile("LuaScript/MissionSelectUI.lua")
 
 dofile("LuaScript/UIdefine.lua")
 
-dofile("LuaScript/brickInfo.lua")
-
 dofile("LuaScript/monster.lua")
 
 dofile("LuaScript/brick.lua")
+
+dofile("LuaScript/Particle.lua")
 
 dofile("LuaScript/player.lua")
 

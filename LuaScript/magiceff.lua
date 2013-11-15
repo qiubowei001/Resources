@@ -218,10 +218,25 @@ function p.eff08(pbrick,tparam1)
 	end	
 	
 	---对列表monsterlistSpelled中所有怪物施放闪电
-	local power = 5
-	for i,pmonster in pairs(monsterlistSpelled) do
-		monster.AddHp(pmonster,-(power-i+1)) 
+	local power = 13
+	
+	
+	--撞击函数
+	function gethit(sender)
+		local x,y = sender:getPosition();
+		local X,Y = Main.getTileXY(x,y)
+		local pbrick = Board[X][Y]
+		
+		if pbrick ~= nil then
+			if pbrick.nType == tbrickType.MONSTER then
+				monster.AddHp(pbrick,-(power)-math.random(0,3))
+			end
+		end	
 	end
+	
+
+	--增加粒子效果
+	Particle.AddParticleEffToLine(monsterlistSpelled,"ThunderChain",gethit)
 end
 
 

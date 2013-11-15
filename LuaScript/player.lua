@@ -34,7 +34,7 @@ playerInfo = {
 
 --玩家经验配置表
 local tPlayerExp = 
---
+--[[
 {
 	[1] = 10,
 	[2] = 10,
@@ -45,7 +45,7 @@ local tPlayerExp =
 	[7] = 200,
 	[8] = 200,
 }--]]
---[[
+--
 {
 	[1] = 100,
 	[2] = 105,
@@ -111,6 +111,10 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	player.AddNewSkill(3,3)
+	player.AddNewSkill(7,15)
+	player.AddNewSkill(7,16)
+	player.AddNewSkill(7,16)
+	player.AddNewSkill(4,11)
 	
 end
 

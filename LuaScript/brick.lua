@@ -26,6 +26,14 @@ local deathefftag = 3002;
 local MainSpritetag = 3003;
 local animationtag = 3004;
 
+function brick.GetPosByBrick(brick)
+	local X = brick.TileX
+	local Y = brick.TileY
+	local positionx = X*brickWidth+brickWidth/2;
+	local positiony = Y*brickHeight-brickHeight/2;
+	return positionx,positiony
+end
+
 function brick.setChosed(pbrick)
 	if  pbrick:getChildByTag(choseefftag) ~= nil then
 		return;

@@ -45,7 +45,29 @@ local glayerMenu = nil;
 --生成一波砖块
 local gWaveCount = 0; --掉落砖块剩余数量
 
+	
+function Main.getTileXY(x,y)
+	--brickInfo.brickRespondArea
+	local w = brickInfo.brickWidth;
+	local h = brickInfo.brickHeight;
+	local X =	(x-w/2)/w;
+	local Y = (y+h/2)/h;
+	local bIfWrapIn= false; --是否处于靠近中心点
 
+	if (X%1 < brickInfo.brickRespondArea/2 or X%1 >1- brickInfo.brickRespondArea/2) and( Y%1 < brickInfo.brickRespondArea/2 or Y%1 >1- brickInfo.brickRespondArea/2 ) then							
+		bIfWrapIn = true;	
+	end
+	
+		X = (X*10+5)/10
+		Y = (Y*10+5)/10
+
+		X = math.floor(X)
+		Y = math.floor(Y)
+
+	return X,Y,bIfWrapIn
+end
+		
+		
 function Main.CloseAllUI()
 	for i,v in pairs(UIdefine) do 
 		g_sceneGame:removeChildByTag(v, true)
@@ -97,6 +119,10 @@ end
 
 
 function Main.WaveTimer()
+	--等待光效播放
+	if 	Particle.IfIsPlayingEff() then
+		return
+	end
 		
 	local delay = mission.GetWaveDelay()
 
@@ -143,6 +169,11 @@ end
 
 --掉落一块砖块
 function Main.brickfallLogic()
+		--等待光效播放
+		if 	Particle.IfIsPlayingEff() then
+			return
+		end
+		
 		if Main.IfBoardFull() then
 			--游戏结束
 			GameOverUI.LoadUI(2)
@@ -244,6 +275,9 @@ function Main.brickfallLogic()
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
 			pbrick = brick.creatMonster(monsterid,lev);
+			--Particle.AddParticleEffToBrick(pbrick,"ThunderChain")
+			
+			
 		elseif nbricktype == tbrickType.GOLD then
 			pbrick = brick.creatGoldBrick(nbricktype)
 		else
@@ -473,29 +507,7 @@ function p.main(nMission)
 		cclog("winSize: %0.2f, %0.2f", winSize.width, winSize.height)
        
 		
-		local function getTileXY(x,y)
-			--brickInfo.brickRespondArea
-			local w = brickInfo.brickWidth;
-			local h = brickInfo.brickHeight;
-			local X =	(x-w/2)/w;
-			local Y = (y+h/2)/h;
-			local bIfWrapIn= false; --是否处于靠近中心点
 
-			if (X%1 < brickInfo.brickRespondArea/2 or X%1 >1- brickInfo.brickRespondArea/2) and( Y%1 < brickInfo.brickRespondArea/2 or Y%1 >1- brickInfo.brickRespondArea/2 ) then							
-				bIfWrapIn = true;	
-			end
-			
-				X = (X*10+5)/10
-				Y = (Y*10+5)/10
-		
-				X = math.floor(X)
-				Y = math.floor(Y)
-
-			return X,Y,bIfWrapIn
-
-
-
-		end
 		
 
 				
@@ -503,7 +515,7 @@ function p.main(nMission)
 			if Main.selectMode == SELECTMODE.NORMAL then			
 				--处于普通攻击模式
 				LineFunc.CancelLine();				
-				local X,Y = getTileXY(x,y)
+				local X,Y = Main.getTileXY(x,y)
 				
 				
 				if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
@@ -528,7 +540,7 @@ function p.main(nMission)
         local function onTouchMoved(x, y)
 				if Main.selectMode == SELECTMODE.NORMAL then			
 					--处于普通攻击模式
-                     local X,Y,bIfWrapIn = getTileXY(x,y)
+                     local X,Y,bIfWrapIn = Main.getTileXY(x,y)
 					 
 						if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
 							return true
@@ -617,7 +629,7 @@ function p.main(nMission)
 	
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
 				--=====================处于释放魔法并选中单体模式========================--
-				local X,Y = getTileXY(x,y)
+				local X,Y = Main.getTileXY(x,y)
 				if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
 					return true
 				end
@@ -671,7 +683,11 @@ function p.main(nMission)
    
     g_sceneGame:addChild(createlayerMain(),0,UIdefine.Board)
     g_sceneGame:addChild(SkillBar.Init(Main.menuCallbackOpenPopup),1,UIdefine.SkillBar)
+	
+	Particle.Init()
+	
 	TimerBuff.LoadUI()
+	
 end
 
 
