@@ -7,6 +7,12 @@ local brickHeight = brickInfo.brickHeight;
 
 local gPlayEffNum = 0;
 
+local tParticleType = 
+{
+	poison = 1;
+}
+
+
 --设置
 function p.SetPlayEff(bPlay)
 	if bPlay then
@@ -44,6 +50,16 @@ function p.AddParticleEffToBrick(pBrick,sEffName)
 	emitter:setPosition(brickWidth/2, brickHeight/2);		
 	pBrick:addChild(emitter, 10)
 end
+
+--在BRICK所在世界坐标上增加特效
+function p.AddParticleEffToWorld(pBrick,sEffName)
+	local emitter = p.BuildParticle(sEffName);
+	local posx,posy = brick.GetPosByBrick(pBrick)
+			
+	emitter:setPosition(posx, posy);		
+	layerMain:addChild(emitter, 10)
+end
+
 
 --特效链  输入: 1 brick列表  2 效果名  3 碰撞函数
 function p.AddParticleEffToLine(tBrick,sEffName,func)

@@ -229,7 +229,7 @@ function p.eff08(pbrick,tparam1)
 		
 		if pbrick ~= nil then
 			if pbrick.nType == tbrickType.MONSTER then
-				monster.AddHp(pbrick,-(power)-math.random(0,3))
+				monster.damage(pbrick,power+math.random(0,3),false)
 			end
 		end	
 	end
@@ -378,7 +378,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[3]={}
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.ID] = 3
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.DESCPTION] = "每回合对BRICK造成2点伤害 共5回合"
-	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 3
+	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff02
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5

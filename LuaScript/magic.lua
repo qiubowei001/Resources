@@ -50,6 +50,20 @@ MAGIC_DEF_TABLE = {
 	CDROUND = 31,
 }
 
+-->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>释放时触发函数集合======================================--
+--群体毒
+function magicfunction03()
+	--增加毒光效
+	for i = 1,brickInfo.brick_num_X do
+		for j = 1,brickInfo.brick_num_Y do
+			if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
+				Particle.AddParticleEffToWorld(Board[i][j],"poison")
+			end		
+		end
+	end
+end
+
+--==============================释放时触发函数集合<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<--
 
 
 
@@ -166,7 +180,7 @@ magictable = {}
 	magictable[3][MAGIC_DEF_TABLE.ID] = 3
 	magictable[3][MAGIC_DEF_TABLE.NAME] = "群体毒"
 	magictable[3][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[3][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[3][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = magicfunction03
 	magictable[3][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.ALLMONSTER
 	magictable[3][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 3
 	magictable[3][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_PLAYER_ACT
