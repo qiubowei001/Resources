@@ -113,12 +113,11 @@ function p.Initplayer()
 	player.AddNewSkill(3,3)
 	player.AddNewSkill(7,15)
 	player.AddNewSkill(7,16)
-	player.AddNewSkill(7,16)
+
 	player.AddNewSkill(4,11)
-	player.AddNewSkill(8,6)
-	player.AddNewSkill(8,6)
 	player.AddNewSkill(11,7)
 	
+	player.AddNewSkill(12,8)
 	
 end
 
@@ -342,17 +341,19 @@ function player.SetMagicCD(magicId,nCD)
 	SkillBar.refreshSkill()
 end
 
-
---成功使用技能则返回TRUE 否则FALSE
-function player.UseMagic(nMagicId)
-	
+--判断技能是否CD
+function player.IfCanUseMagic(nMagicId)
 	local cd = player.GetMagicCDById(nMagicId)
 	if cd >= magictable[nMagicId][MAGIC_DEF_TABLE.CDROUND] then
-		player.SetMagicCD(nMagicId,0)
 		return true
 	else
 		return false
 	end	
+end
+
+--成功使用技能则返回TRUE 否则FALSE
+function player.UseMagic(nMagicId)
+		player.SetMagicCD(nMagicId,0)
 end
 
 function player.SkillCoolDown()

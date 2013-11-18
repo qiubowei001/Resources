@@ -10,6 +10,7 @@ local gPlayEffNum = 0;
 local tParticleType = 
 {
 	poison = 1;
+	star = 2;
 }
 
 
@@ -46,7 +47,7 @@ end
 --在BRICK上增加特效
 function p.AddParticleEffToBrick(pBrick,sEffName)
 	local emitter = p.BuildParticle(sEffName);
-	--particleSystem:setPositionType(kCCPositionTypeGrouped)
+	emitter:setPositionType(kCCPositionTypeGrouped)
 	emitter:setPosition(brickWidth/2, brickHeight/2);
 	local id = brick.ParticleTag + tParticleType[sEffName]
 	pBrick:addChild(emitter, 10,id)

@@ -458,24 +458,30 @@ function monster.attack()
 						local tAttAction = monster.InitAttAction( player,ndamage,Board[i][j])
 						tAttAction.damage = monster.GetMonsterAtt(Board[i][j])--Board[i][j].moninfo[monsterInfo.ATT];
 						
+						local bSkip = false
 						--遍历怪物攻击调整函数
 						for k,func in pairs(Board[i][j].AttAdjFuncT) do
-							func(tAttAction)
+							if func(tAttAction) == false then
+								--不攻击
+								bSkip = true
+							end
 						end
-
-						--怪物攻击跳跃
-						local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
-						local array = CCArray:create()
-						array:addObject(CCDelayTime:create(0.1*nTurn))--每个怪物跳跃动作延迟间隔
-						array:addObject(actionJump)
-						local action = CCSequence:create(array)
-						nTurn = nTurn + 1
 						
-						local mainsprite = brick.GetMainSprite(Board[i][j])
-						mainsprite:runAction(action);
-						
-						player.takedamage(tAttAction.damage,Board[i][j]);	
-						Board[i][j].moninfo[monsterInfo.CD]	= 0;
+						if bSkip == false then
+							--怪物攻击跳跃
+							local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
+							local array = CCArray:create()
+							array:addObject(CCDelayTime:create(0.1*nTurn))--每个怪物跳跃动作延迟间隔
+							array:addObject(actionJump)
+							local action = CCSequence:create(array)
+							nTurn = nTurn + 1
+							
+							local mainsprite = brick.GetMainSprite(Board[i][j])
+							mainsprite:runAction(action);
+							
+							player.takedamage(tAttAction.damage,Board[i][j]);	
+							Board[i][j].moninfo[monsterInfo.CD]	= 0;							
+						end
 					end
 				end				
 			end

@@ -158,10 +158,8 @@ function p.eff05(pbrick,tparam1)
 				
 				if Board[X][Y].nType == tbrickType.MONSTER then
 					--π‚–ß
-					Particle.AddParticleEffToBrick(pbrick,"star")
-					
 					monster.AddAttAdjFunc(pbrick,
-											function(nAtt)
+											function(tAttAction)
 												return false;--≤ªπ•ª˜
 											end
 											,5)
@@ -440,17 +438,16 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[7]={}
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.ID] = 7
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.DESCPTION] = "—£‘Œ"
-	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 5
+	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff05
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr05
-	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
 	MAGIC_EFFtable[7][MAGIC_EFF_DEF_TABLE.TPARAM] ={R = 0}
 
 	MAGIC_EFFtable[8]={}
 	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.ID] = 8
 	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.DESCPTION] = "—£‘Œ"
-	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 5
+	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff05
 	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr05
 	MAGIC_EFFtable[8][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3

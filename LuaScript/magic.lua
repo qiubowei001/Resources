@@ -51,17 +51,33 @@ MAGIC_DEF_TABLE = {
 }
 
 -->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>释放时触发函数集合======================================--
+--返回true则表示技能施放成功
 --群体毒
 function magicfunction03()
+	local bcast = false
 	--增加毒光效
 	for i = 1,brickInfo.brick_num_X do
 		for j = 1,brickInfo.brick_num_Y do
 			if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
 				Particle.AddParticleEffToBrick(Board[i][j],"poison")
+				bcast = true
 			end	
 		end
 	end
+	return bcast;
 end
+
+--单体晕
+function magicfunction07(pbrick)
+	
+	if pbrick.nType == tbrickType.MONSTER then								
+		Particle.AddParticleEffToBrick(pbrick,"star")
+		return true;
+	end
+	return false;
+end
+
+
 
 --==============================释放时触发函数集合<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<--
 
@@ -238,7 +254,7 @@ magictable = {}
 	magictable[7][MAGIC_DEF_TABLE.ID] = 7
 	magictable[7][MAGIC_DEF_TABLE.NAME] = "单体眩晕"
 	magictable[7][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[7][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[7][MAGIC_DEF_TABLE.SPELL_FUNC_ID]  = magicfunction07
 	magictable[7][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.SINGLE_BRICK
 	magictable[7][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 7
 	magictable[7][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_PLAYER_ACT
@@ -253,7 +269,7 @@ magictable = {}
 	magictable[8][MAGIC_DEF_TABLE.ID] = 8
 	magictable[8][MAGIC_DEF_TABLE.NAME] = "群体眩晕"
 	magictable[8][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[8][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[8][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = magicfunction07
 	magictable[8][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.SINGLE_BRICK
 	magictable[8][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 8
 	magictable[8][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_PLAYER_ACT
@@ -463,6 +479,9 @@ magictable = {}
 function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 	local tTargetList = {}
 	local tEffList = {}
+	
+	local bCast = false
+	
 	if magictable[nMagicId] == nil then
 		return false;
 	end
@@ -470,8 +489,7 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 	--玩家使用技能 则重新计算CD
 	if nMagicId <1000 then
 		
-		if player.UseMagic(nMagicId) == false then
-		
+		if player.IfCanUseMagic(nMagicId) == false then
 			return;
 		end
 	end
@@ -485,8 +503,11 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		--===对玩家施放技能===-
 		--触发 施放FUNC
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
-			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle);
+			if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle) then
+				bCast = true
+			end
 		end
+		
 		--对TARGET增加特效
 		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
 			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0]);
@@ -496,13 +517,13 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		
 	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.ALLMONSTER then
 		--===对所有MON施放技能===-
-		cclog("SpellMagic 2")
-	
+		
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
-			magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle);
+			if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle) then
+				bCast = true
+			end
 		end		
-		cclog("SpellMagic 3")
-	
+		
 		--对all MON增加特效
 		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
 				for i = 1,brickInfo.brick_num_X do
@@ -517,14 +538,15 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 					end
 				end	
 		end	
-		cclog("SpellMagic 4")
-	
+		
 	elseif magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.SINGLE_BRICK then
 		--对某一个BRICK释放技能	
 		local nR = magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM].R;
 		local tileX = pBrickSingle.TileX
 		local tileY = pBrickSingle.TileY
 		
+
+					
 		function getFromTo(cord,Limit)
 			local from = cord - nR
 			local To = cord + nR
@@ -542,9 +564,17 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		for X = fromx,tox,1 do
 			for Y = fromy ,toy,1 do
 				if Board[X][Y]~= nil then
+
 					
 					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[X][Y],nMagicId);	
 					if effT ~= nil then
+					--effT不为空则施放成功
+							if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+								if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](Board[X][Y]) then
+									bCast = true
+								end
+							end
+												
 							table.insert(tTargetList,Board[X][Y])
 							table.insert(tEffList,effT)
 					end	
@@ -556,19 +586,16 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 		
 	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.AI_MONSTER then
 		--使用AI获取施法对象
-		cclog("SpellMagic 2")
 		if magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] ~= nil then
-			cclog("SpellMagic 3")
 			local pbricklist = magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC](pBrickSingle,magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM]);
 			
-	
-		
-		
 			for i,pbrick in pairs(pbricklist) do
 				if pbrick ~= nil then
 					
 					if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
-						magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle,pbrick);
+						if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle,pbrick) then
+							bCast = true
+						end
 					end
 					
 					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],pbrick);	
@@ -577,6 +604,13 @@ function p.SpellMagic(nMagicId,pBrickSingle,pLine)
 				end
 			end
 		end	
+	end
+	
+	--无特效技能施放则bcast=true 
+	--特效技能技能施放则 tTargetList~=nil
+	--1000内技能则是玩家技能
+	if bCast and tTargetList~= nil and nMagicId <1000 then
+		player.UseMagic(nMagicId)
 	end
 	
 	return tTargetList,tEffList;
