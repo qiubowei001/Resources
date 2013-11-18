@@ -34,7 +34,7 @@ end
 
 
 
---对MON造成伤害
+--对MON造成毒伤害
 function p.eff02(pobj,Tparam1)
 	if pobj == nil then
 		return
@@ -44,6 +44,12 @@ function p.eff02(pobj,Tparam1)
 		monster.damage(pobj,param1)
 	end
 end
+
+function p.effclr02(pobj)
+	--去除特效
+	Particle.RemoveParticleEffFromBrick(pobj,"poison");
+end
+
 
 --brick(p1)转换为brick(p2)
 function p.eff03(pbrick,Tparam1)
@@ -59,11 +65,22 @@ function p.eff03(pbrick,Tparam1)
 	local tileX = pbrick.TileX
 	local tileY = pbrick.TileY
 	if nToType == tbrickType.MONSTER then
-		 brickTo = brick.creatMonster(nToType,pbrick.pBrickSpellLev)
+		Particle.AddParticleEffToWorld(pbrick,"shineSporn")
+		brickTo = brick.creatMonster(nToType,pbrick.pBrickSpellLev)
+	elseif nToType == tbrickType.GOLD then
+		--播放光效
+		Particle.AddParticleEffToWorld(pbrick,"shine")
+		brickTo = brick.creatGoldBrick(nToType)
 	else
-		 brickTo = brick.creatBrick(nToType)
+		--播放光效
+		Particle.AddParticleEffToWorld(pbrick,"shineRed")
+		brickTo = brick.creatBrick(nToType)
 	end
+	
+			
 
+
+	
 	Main.brickSetXY(brickTo,tileX,tileY)
 	--Board[tileX][tileY] = brickTo;
 	pbrick:removeFromParentAndCleanup(true);
@@ -93,10 +110,13 @@ function p.eff04(pbrick,tparam1)
 	local fromx,tox = getFromTo(tileX,brickInfo.brick_num_X)
 	local fromy,toy = getFromTo(tileY,brickInfo.brick_num_Y)
 	
-	
+	--在位置上播放爆炸光效
+	Particle.AddParticleEffToWorld(pbrick,"explode")
+				
 	for X = fromx,tox,1 do
 		for Y = fromy ,toy,1 do
 			if Board[X][Y]~= nil then
+				
 				--如果是怪物则造成伤害
 				if Board[X][Y].nType == tbrickType.MONSTER then
 					monster.damage(Board[X][Y],999)
@@ -137,6 +157,9 @@ function p.eff05(pbrick,tparam1)
 				--Main.destroyBrick(X,Y)
 				
 				if Board[X][Y].nType == tbrickType.MONSTER then
+					--光效
+					Particle.AddParticleEffToBrick(pbrick,"star")
+					
 					monster.AddAttAdjFunc(pbrick,
 											function(nAtt)
 												return false;--不攻击
@@ -150,6 +173,9 @@ end
 
 
 function p.effclr05(pObj)
+	--光效
+	Particle.RemoveParticleEffFromBrick(pObj,"star")
+						
 	monster.RemoveAdjFunc(pObj,5)
 end
 
@@ -380,7 +406,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.DESCPTION] = "每回合对BRICK造成2点伤害 共5回合"
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff02
-	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr02
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
 	MAGIC_EFFtable[3][MAGIC_EFF_DEF_TABLE.TPARAM] = { damage = 2}
 	
@@ -390,7 +416,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff03
 	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
-	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 0
+	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
 	MAGIC_EFFtable[4][MAGIC_EFF_DEF_TABLE.TPARAM] ={ fromType = tbrickType.MONSTER,nToType = tbrickType.GOLD}
 		
 	MAGIC_EFFtable[5]={}
@@ -399,7 +425,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff03
 	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
-	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 0
+	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
 	MAGIC_EFFtable[5][MAGIC_EFF_DEF_TABLE.TPARAM] ={ fromType = tbrickType.MONSTER,nToType =tbrickType.BLOOD} 
 
 	MAGIC_EFFtable[6]={}

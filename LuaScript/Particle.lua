@@ -47,8 +47,18 @@ end
 function p.AddParticleEffToBrick(pBrick,sEffName)
 	local emitter = p.BuildParticle(sEffName);
 	--particleSystem:setPositionType(kCCPositionTypeGrouped)
-	emitter:setPosition(brickWidth/2, brickHeight/2);		
-	pBrick:addChild(emitter, 10)
+	emitter:setPosition(brickWidth/2, brickHeight/2);
+	local id = brick.ParticleTag + tParticleType[sEffName]
+	pBrick:addChild(emitter, 10,id)
+end
+
+--删除Brick上特效
+function p.RemoveParticleEffFromBrick(pBrick,sEffName)
+	local id = brick.ParticleTag + tParticleType[sEffName]
+	local emitter = pBrick:getChildByTag(id);  
+	if emitter ~= nil then
+		emitter:removeFromParentAndCleanup(true);
+	end
 end
 
 --在BRICK所在世界坐标上增加特效
@@ -57,7 +67,7 @@ function p.AddParticleEffToWorld(pBrick,sEffName)
 	local posx,posy = brick.GetPosByBrick(pBrick)
 			
 	emitter:setPosition(posx, posy);		
-	layerMain:addChild(emitter, 10)
+	layerMain:addChild(emitter, 9000)
 end
 
 

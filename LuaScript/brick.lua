@@ -25,6 +25,8 @@ local choseefftag = 3001;
 local deathefftag = 3002;
 local MainSpritetag = 3003;
 local animationtag = 3004;
+brick.ParticleTag = 5000;
+
 
 function brick.GetPosByBrick(brick)
 	local X = brick.TileX

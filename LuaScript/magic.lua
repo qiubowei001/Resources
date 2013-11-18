@@ -57,8 +57,8 @@ function magicfunction03()
 	for i = 1,brickInfo.brick_num_X do
 		for j = 1,brickInfo.brick_num_Y do
 			if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
-				Particle.AddParticleEffToWorld(Board[i][j],"poison")
-			end		
+				Particle.AddParticleEffToBrick(Board[i][j],"poison")
+			end	
 		end
 	end
 end

@@ -115,6 +115,10 @@ function p.Initplayer()
 	player.AddNewSkill(7,16)
 	player.AddNewSkill(7,16)
 	player.AddNewSkill(4,11)
+	player.AddNewSkill(8,6)
+	player.AddNewSkill(8,6)
+	player.AddNewSkill(11,7)
+	
 	
 end
 
@@ -345,14 +349,10 @@ function player.UseMagic(nMagicId)
 	local cd = player.GetMagicCDById(nMagicId)
 	if cd >= magictable[nMagicId][MAGIC_DEF_TABLE.CDROUND] then
 		player.SetMagicCD(nMagicId,0)
-		
 		return true
 	else
 		return false
-	end
-	
-	
-	
+	end	
 end
 
 function player.SkillCoolDown()
