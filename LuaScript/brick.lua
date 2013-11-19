@@ -157,10 +157,10 @@ function brick.setMagiceffect(pbrick,nEffPicid)
 		end
 		
 		local texturechose = CCTextureCache:sharedTextureCache():addImage("brickeffect/brickeff"..nEffPicid..".png")
-        local rect = CCRectMake(0, 0, 106, 96)
+        local rect = CCRectMake(0, 0, brickWidth, brickHeight)
         local frame0 = CCSpriteFrame:createWithTexture(texturechose, rect)
         local spriteeff = CCSprite:createWithSpriteFrame(frame0)
-		spriteeff:setPosition(brickWidth, brickHeight);		
+		spriteeff:setPosition(brickWidth/2, brickHeight/2);
 		pbrick:addChild(spriteeff)
 		spriteeff:setTag(tag)
 		--pbrick.chosed = true;	

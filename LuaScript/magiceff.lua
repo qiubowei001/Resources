@@ -295,11 +295,19 @@ end
 ---===========================所有怪物技能EFFFUNC=================================--
 --增强所有MON攻击力
 function p.eff1005(pobj,Tparam1)
-			pobj.moninfo[monsterInfo.BUFFATT] = Tparam1.addAttack;			
+			--只加一次
+			local test = pobj.moninfo[monsterInfo.BUFFATT]
+			if pobj.moninfo[monsterInfo.BUFFATT] >= Tparam1.addAttack then
+				return
+			end
+			
+			pobj.moninfo[monsterInfo.BUFFATT] = Tparam1.addAttack;
+			
 			local Attlabel = pobj:getChildByTag(101)
 			tolua.cast(Attlabel, "CCLabelTTF")
 			Attlabel:setString(monster.GetMonsterAtt(pobj) )
-
+			--播放光效
+			Particle.AddParticleEffToBrick(pobj,"buff")
 end
 
 function p.effclr1005(pobj)
@@ -325,6 +333,8 @@ function p.eff1006(pbrick,Tparam1)
 	local tileX = pbrick.TileX
 	local tileY = pbrick.TileY
 	 brickTo = brick.creatMonster(nMonsterid)
+	Particle.AddParticleEffToBrick(brickTo,"shineSporn")
+	
 	Main.brickSetXY(brickTo,tileX,tileY)
 	--Board[tileX][tileY] = brickTo;
 	pbrick:removeFromParentAndCleanup(true);
@@ -332,6 +342,10 @@ end
 
 --冰冻brick(p1) 
 function p.eff1007(pbrick,Tparam1)
+	if pbrick.IsAbleLink == false then
+		return
+	end
+	Particle.AddParticleEffToBrick(pbrick,"ice")
 	pbrick.IsAbleLink = false;
 end
 
@@ -343,6 +357,7 @@ end
 
 --火盾
 function p.eff1008(pbrick,Tparam1)
+	Particle.AddParticleEffToBrick(pbrick,"firewall")	
 	monster.AddDamageAdjFunc(pbrick,
 							function(tDamageAction)
 								player.AddHp(-10)
@@ -352,6 +367,7 @@ function p.eff1008(pbrick,Tparam1)
 end
 
 function p.effclr1008(pObj)
+	Particle.RemoveParticleEffFromBrick(pObj,"firewall");
 	monster.RemoveDamageAdjFunc(pObj,1008)
 end
 
@@ -360,8 +376,10 @@ function p.eff1009(pbrick,Tparam1)
 	local rate = Tparam1.rate
 	monster.AddAttAdjFunc(pbrick,
 							function(tAttAction)
+								--增加特效
+								Particle.AddParticleEffToBrick(tAttAction.attacker,"suckblood")									
 								local nRecovery = tAttAction.damage*rate
-								monster.AddHp(pbrick,nRecovery)
+								monster.AddHp(tAttAction.attacker,nRecovery)
 							end
 							,1009)
 end
@@ -372,6 +390,7 @@ end
 
 --加血
 function p.eff1012(pbrick,Tparam1)
+	Particle.AddParticleEffToBrick(pbrick,"recovery")									
 	if pbrick.nType == tbrickType.MONSTER then
 		local nrecovery = Tparam1.recovery;
 		monster.AddHp(pbrick,nrecovery)
@@ -505,7 +524,6 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1005
 	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr1005	
-	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
 	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 6
 	MAGIC_EFFtable[1007][MAGIC_EFF_DEF_TABLE.TPARAM] ={addAttack = 5}
 	
@@ -530,7 +548,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1010]={}
 	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.ID] = 1010
 	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.DESCPTION] = "火盾"
-	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 1
+	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1008	
 	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
 	MAGIC_EFFtable[1010][MAGIC_EFF_DEF_TABLE.TPARAM] =nil--{ fromType = tbrickType.SWORD,nMonsterid = 6} 

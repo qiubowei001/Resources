@@ -11,6 +11,12 @@ local tParticleType =
 {
 	poison = 1;
 	star = 2;
+	buff = 3;
+	ice = 4;
+	firewall = 5;
+	shineSporn = 6;
+	suckblood = 7;
+	recovery = 8;
 }
 
 
@@ -41,15 +47,23 @@ function p.BuildParticle(sEffName)
 	emitter:autorelease()
 	local filename = "Particle/"..sEffName..".plist"
 	emitter:initWithFile(filename)
+	emitter:setAutoRemoveOnFinish(true)
 	return emitter
 end
 
 --在BRICK上增加特效
 function p.AddParticleEffToBrick(pBrick,sEffName)
-	local emitter = p.BuildParticle(sEffName);
+	--如果已经有此特效 返回
+	local id = brick.ParticleTag + tParticleType[sEffName]
+	
+	local emitter = pBrick:getChildByTag(id); 
+	if emitter ~= nil then
+		return
+	end
+	
+	emitter = p.BuildParticle(sEffName);
 	emitter:setPositionType(kCCPositionTypeGrouped)
 	emitter:setPosition(brickWidth/2, brickHeight/2);
-	local id = brick.ParticleTag + tParticleType[sEffName]
 	pBrick:addChild(emitter, 10,id)
 end
 
