@@ -18,10 +18,11 @@ g_sceneGame = CCScene:create();
 CCDirector:sharedDirector():runWithScene(g_sceneGame)
 
 dofile("LuaScript/brickInfo.lua")
-
 dofile("LuaScript/extern.lua")
 
 
+
+dofile("LuaScript/ValueToPic.lua")
 
 dofile("LuaScript/PassiveSkill.lua")
 

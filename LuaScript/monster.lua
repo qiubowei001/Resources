@@ -14,7 +14,7 @@ monsterInfo = {
 local g_hplabeltag =100;
 local g_attlabeltag = 101;
 local g_CDbar = 102;
-
+local g_attspritetag = 103;
 
 local gblinkactionTag = 90000;
 local MONSTER_TYPE = {}
@@ -341,6 +341,12 @@ function monster.InitMonster( pBrick,nid,nLev)
 		AttLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth*2/3)
 		AttLabel:setTag(g_attlabeltag);
 		
+		--攻击力表示
+		local Attsprite = ValueToPic.GetPicByAttack(pBrick.moninfo[monsterInfo.ATT])
+		pBrick:addChild(Attsprite)
+		Attsprite:setTag(g_attspritetag);
+		
+		
 		local LevLabel = CCLabelTTF:create("LV:"..pBrick.moninfo[monsterInfo.LEV], "Arial", 20)
 		pBrick:addChild(LevLabel)
 		LevLabel:setColor(ccc3(0,255,0))
@@ -355,6 +361,20 @@ function monster.InitMonster( pBrick,nid,nLev)
 end
 
 
+function monster.SetAtt(pmonster)
+	local natt = monster.GetMonsterAtt(pmonster)
+	local Attlabel = pmonster:getChildByTag(g_attlabeltag)
+	tolua.cast(Attlabel, "CCLabelTTF")
+	Attlabel:setString(natt)
+	
+	local Attsprite = pmonster:getChildByTag(g_attspritetag)
+	Attsprite:removeFromParentAndCleanup(true);
+	local Attsprite = ValueToPic.GetPicByAttack(natt)
+	pmonster:addChild(Attsprite)
+	Attsprite:setTag(g_attspritetag);
+		
+	
+end
 
 --修改怪物属性
 function monster.AddHp(pmonster,nRecovery)

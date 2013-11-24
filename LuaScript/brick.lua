@@ -212,6 +212,8 @@ function brick.creatMonster(monsterid,nLev)
 		local spriteParent = brick.createParentSprite();
 		
 		local spriteBrick = SpriteManager.creatBrickSprite(monster.GetPicIdFromMonsterId(monsterid))
+		
+		
 		spriteParent:addChild(spriteBrick)
 		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))

@@ -302,10 +302,8 @@ function p.eff1005(pobj,Tparam1)
 			end
 			
 			pobj.moninfo[monsterInfo.BUFFATT] = Tparam1.addAttack;
+			monster.SetAtt(pobj);
 			
-			local Attlabel = pobj:getChildByTag(101)
-			tolua.cast(Attlabel, "CCLabelTTF")
-			Attlabel:setString(monster.GetMonsterAtt(pobj) )
 			--≤•∑≈π‚–ß
 			Particle.AddParticleEffToBrick(pobj,"buff")
 end

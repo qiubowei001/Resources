@@ -50,39 +50,33 @@ function p.LoadUI()
 		bgSprite:setScale(5);
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer)
-	
 		
+		
+		
+		
+		
+		local tAttType = 
+{
+	[1] = ccc3(255,255,255),--白色
+[2] = ccc3(0,255,0),--绿色
+[3] = ccc3(0,0,255),--蓝色
+[4] = ccc3(160,32,240),--紫色
+[5] = ccc3(255,255,0),--橙色
+[6] = ccc3(255,0,0),--红色
 
-		--[[
-		emitter = CCParticleSystemQuad:new()
-		emitter:autorelease()
-		local filename = "Particle/ThunderChain.plist"
-		emitter:initWithFile(filename)
-		bglayer:addChild(emitter, 10)
+[7] = ccc3(0,0,0),--黑色
+--色
+--色
+--色
+}
+		for i,v in pairs(tAttType) do
+		local sprite = CCSprite:create("UI/AttGrade/att.png")
 		
-		
-		local actionto = CCMoveBy:create(0.3, ccp(200, 500))
-		local actionto2 =CCMoveBy:create(0.3, ccp(200, -200))
-		local actionto3 =CCMoveBy:create(1, ccp(200, -200))
-		local actionto4 =CCMoveBy:create(1, ccp(-500, 200))
-		
-		function calltest(sender)
-			sender:removeFromParentAndCleanup(true);
+        sprite:setPosition(CCPointMake(80*i, 220))
+		bglayer:addChild(sprite,5)
+		sprite:setColor(v)			
 		end
-		
-		local actionremove = CCCallFuncN:create(calltest)
-		
-		local arr = CCArray:create()		
-		arr:addObject(actionto)
-		arr:addObject(actionto2)
-		arr:addObject(actionto3)
-		arr:addObject(actionto4)
-		arr:addObject(actionremove)
-		
-		local  seq = CCSequence:create(arr)
-		
-		emitter:runAction(seq)
-		--]]
+	
 end
 
 
