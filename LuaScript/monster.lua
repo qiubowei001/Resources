@@ -321,7 +321,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		
 		
-		--血条
+		--[[血条
 		local HPBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
 		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
 		pBrick:addChild(HPBarBg)
@@ -334,12 +334,15 @@ function monster.InitMonster( pBrick,nid,nLev)
 		HPBarBg:addChild(HPBar,1,1)		
 		pBrick.HPBar = HPBar
 		HPBar:setPercentage(100);
-			
+		--]]
+		
+		--[[
 		local AttLabel = CCLabelTTF:create(pBrick.moninfo[monsterInfo.ATT], "Arial", 35)
 		pBrick:addChild(AttLabel)
 		AttLabel:setColor(ccc3(0,0,0))
 		AttLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth*2/3)
 		AttLabel:setTag(g_attlabeltag);
+		--]]
 		
 		--攻击力表示
 		local Attsprite = ValueToPic.GetPicByAttack(pBrick.moninfo[monsterInfo.ATT])
@@ -347,11 +350,13 @@ function monster.InitMonster( pBrick,nid,nLev)
 		Attsprite:setTag(g_attspritetag);
 		
 		
+		--[[
 		local LevLabel = CCLabelTTF:create("LV:"..pBrick.moninfo[monsterInfo.LEV], "Arial", 20)
 		pBrick:addChild(LevLabel)
 		LevLabel:setColor(ccc3(0,255,0))
 		LevLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth)
-
+		--]]
+		
 		pBrick.IsSpelled = false;
 		
 		pBrick.AttAdjFuncT = {};
@@ -363,9 +368,11 @@ end
 
 function monster.SetAtt(pmonster)
 	local natt = monster.GetMonsterAtt(pmonster)
+	--[[
 	local Attlabel = pmonster:getChildByTag(g_attlabeltag)
 	tolua.cast(Attlabel, "CCLabelTTF")
 	Attlabel:setString(natt)
+	--]]
 	
 	local Attsprite = pmonster:getChildByTag(g_attspritetag)
 	Attsprite:removeFromParentAndCleanup(true);
@@ -384,9 +391,11 @@ function monster.AddHp(pmonster,nRecovery)
 		pmonster.moninfo[monsterInfo.HP] = pmonster.moninfo[monsterInfo.HPMAX] 
 	end
 	
+	--[[
 	local hpbar = pmonster.HPBar
 	local percent = pmonster.moninfo[monsterInfo.HP]/ pmonster.moninfo[monsterInfo.HPMAX]
 	hpbar:setPercentage(100*percent);
+	--]]
 	
 	if pmonster.moninfo[monsterInfo.HP] <= 0 then
 		Main.destroyBrick(pmonster.TileX,pmonster.TileY)
@@ -419,10 +428,11 @@ function monster.damage( pBrick,nDamage,bcritical)
 		
 		if defender ~= nil then 
 			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage
-	
-			local hpbar = defender.HPBar
+			
+			
+			--local hpbar = defender.HPBar
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
-			hpbar:setPercentage(100*percent);
+			--hpbar:setPercentage(100*percent);
 	
 			--怪物扣血 设置透明
 			local mainsprite = brick.GetMainSprite(pBrick)
