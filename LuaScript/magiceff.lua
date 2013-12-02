@@ -291,6 +291,15 @@ function p.effclr14(pObj)
 	player.RemoveDamageAdjFunc(14)
 end
 
+--降低游戏速度
+function p.eff15(pobj,Tparam1)
+	CCDirector:sharedDirector():getScheduler():setTimeScale(0.5);
+end
+
+function p.effclr15()
+	CCDirector:sharedDirector():getScheduler():setTimeScale(1);
+end
+
 
 ---===========================所有怪物技能EFFFUNC=================================--
 --增强所有MON攻击力
@@ -309,10 +318,11 @@ function p.eff1005(pobj,Tparam1)
 end
 
 function p.effclr1005(pobj)
-			pobj.moninfo[monsterInfo.BUFFATT] = 0;			
-			local Attlabel = pobj:getChildByTag(101)
-			tolua.cast(Attlabel, "CCLabelTTF")
-			Attlabel:setString(monster.GetMonsterAtt(pobj) )
+			pobj.moninfo[monsterInfo.BUFFATT] = 0;
+			monster.SetAtt(pobj);			
+			--local Attlabel = pobj:getChildByTag(101)
+			--tolua.cast(Attlabel, "CCLabelTTF")
+			--Attlabel:setString(monster.GetMonsterAtt(pobj) )
 end
 
 
@@ -513,6 +523,14 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.TPARAM] ={rate = 100}
 	
+	MAGIC_EFFtable[15]={}
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.ID] = 15
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.DESCPTION] = "降低游戏速度5回合"
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff15
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr15
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
 	
 	
 	--==怪物技能==--

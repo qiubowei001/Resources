@@ -514,10 +514,11 @@ function p.main(nMission)
         local function onTouchBegan(x, y)
 			if Main.selectMode == SELECTMODE.NORMAL then			
 				--处于普通攻击模式
+				--设置点击光效
+				Particle.SetMainHitEff(x,y)
+				
 				LineFunc.CancelLine();				
 				local X,Y = Main.getTileXY(x,y)
-				
-				
 				if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
 					return true
 				end
@@ -540,7 +541,11 @@ function p.main(nMission)
         local function onTouchMoved(x, y)
 				if Main.selectMode == SELECTMODE.NORMAL then			
 					--处于普通攻击模式
-                     local X,Y,bIfWrapIn = Main.getTileXY(x,y)
+					
+					--设置点击光效
+					Particle.SetMainHitEff(x,y)
+                    
+					local X,Y,bIfWrapIn = Main.getTileXY(x,y)
 					 
 						if X<=0 or Y <=0 or X > brickInfo.brick_num_X or Y> brickInfo.brick_num_Y then
 							return true
@@ -562,6 +567,10 @@ function p.main(nMission)
 			end
 		
         local function onTouchEnded(x, y)
+			--删除点击光效
+			Particle.DelMainHitEff()
+				
+				
 			if Main.selectMode == SELECTMODE.NORMAL then		
 				--====================处于普通攻击模式=======================--
 				--========line结束处理====--

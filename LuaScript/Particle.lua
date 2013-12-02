@@ -6,6 +6,8 @@ local brickWidth = brickInfo.brickWidth ;
 local brickHeight = brickInfo.brickHeight;
 
 local gPlayEffNum = 0;
+local gMainHitEff  = nil;
+local gMainHitGrade = nil;
 
 local tParticleType = 
 {
@@ -40,6 +42,12 @@ end
 
 function p.Init()
 	gPlayEffNum = 0;
+	if gMainHitEff ~= nil then
+		--gMainHitEff:removeFromParentAndCleanup(true);
+		gMainHitEff  = nil;
+	end
+	
+	gMainHitGrade = TimerBuff.GetRatio();
 end
 --制造一个emiter
 function p.BuildParticle(sEffName)
@@ -139,12 +147,60 @@ function p.AddParticleEffToLine(tBrick,sEffName,func)
 	
 end
 
+local tHitEffColor = 
+{
+	[1] = ccc4f( 1, 1, 1,1),
+	[2] = ccc4f( 0, 1, 0,1),
+	[3] = ccc4f( 0, 0, 1,1),
+	[4] = ccc4f( 1, 1, 0,1),
+	
+}
+
+--鼠标点击光效 1~4种光效
+function p.BuildHitParticle(grade)
+	if grade>=1 and grade <= 4 then
+		local eff = p.BuildParticle("HitEff1")
+		eff:setStartColor(tHitEffColor[grade])
+		eff:setEndColor(tHitEffColor[grade])
+		return eff
+	end
+end
+
+function p.setHitEffGrade(grade)
+	
+	if grade>=1 and grade <= 4 then
+		gMainHitEff:setStartColor(tHitEffColor[grade])
+		gMainHitEff:setEndColor(tHitEffColor[grade])
+	end
+end
+
+function p.SetMainHitEff(posx,posy)
+	local effGrade = TimerBuff.GetGrade()
+	--光效不存在
+	if gMainHitEff == nil then
+		local hitEff = Particle.BuildHitParticle(effGrade)
+		hitEff:setPosition(posx, posy);
+		layerMain:addChild(hitEff, 9000)
+		gMainHitGrade = effGrade;
+		gMainHitEff = hitEff;
+		return;
+	end	
+	
+	gMainHitGrade = effGrade;
+	--光效等级相同,则改变位置
+	Particle.setHitEffGrade(effGrade)
+	gMainHitEff:setPosition(posx, posy);
+end
 
 
 
-
-
-
+--删除点击光效
+function p.DelMainHitEff()
+	if gMainHitEff ~= nil then
+		gMainHitEff:setStartColor(ccc4f(0, 0, 0, 0))
+		gMainHitEff:setEndColor(ccc4f(0, 0, 0, 0))
+	end
+end
 
 
 

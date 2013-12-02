@@ -117,7 +117,7 @@ function p.Initplayer()
 	player.AddNewSkill(4,11)
 	player.AddNewSkill(11,7)
 	
-	player.AddNewSkill(12,8)
+	player.AddNewSkill(13,17)
 	
 end
 

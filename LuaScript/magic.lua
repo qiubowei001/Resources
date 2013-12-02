@@ -365,6 +365,18 @@ magictable = {}
 	magictable[14][MAGIC_DEF_TABLE.DESCPTION] = "提升玩家闪避率100"
 	magictable[14][MAGIC_DEF_TABLE.CDROUND] =  5
 	
+--子弹时间
+	magictable[15]={}
+	magictable[15][MAGIC_DEF_TABLE.ID] = 15
+	magictable[15][MAGIC_DEF_TABLE.NAME] = "子弹时间"
+	magictable[15][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[15][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[15][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
+	magictable[15][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 15
+	magictable[15][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
+	magictable[15][MAGIC_DEF_TABLE.DESCPTION] = "降低游戏速度"
+	magictable[15][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[15][MAGIC_DEF_TABLE.CDROUND] =  5
 	
 
 --血比例越小 攻击越强

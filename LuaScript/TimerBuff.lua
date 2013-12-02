@@ -10,18 +10,43 @@ local g_TimerBuff = 0;
 local TimerId = nil;
 
 
+local tGrade = 
+{
+--	  --buff, RATIO
+[1] = {100	,1	},
+[2] = {200	,1.5},
+[3] = {300	,3	},
+[4] = {999	,5	}
+--]]
+--[[
+[1] = {50	,1	},
+[2] = {100	,1.5},
+[3] = {150	,3	},
+[4] = {999	,5	}
+--]]
+
+}
 
 
+local gRatio,gGrade = 1,1
 
+
+--返回 ratio
 function p.GetRatio()
-	if g_TimerBuff <100 then
-		return 1
-	elseif g_TimerBuff <200 then
-		return 1.5
-	elseif g_TimerBuff <300 then
-		return 3
-	else 
-		return 5
+	return gRatio
+end
+
+--返回 gGrade
+function p.GetGrade()
+	return gGrade
+end
+
+--返回 ratio,grade
+function p.doCalculate()
+	for grade,v in pairs(tGrade) do
+		if g_TimerBuff < v[1] then
+			return v[2],grade
+		end
 	end
 end
 
@@ -40,19 +65,22 @@ end
 
 function p.TimerBuffTick()
 	local step = 0;
-	local nRatio = p.GetRatio()
-
-	g_TimerBuff = g_TimerBuff - nRatio
+	g_TimerBuff = g_TimerBuff - gRatio
 	if g_TimerBuff < 0 then
 		g_TimerBuff = 0
 	end
-	
-	TimeBuffBarLabel:setString("Buff:"..math.floor(g_TimerBuff).."Ratio:"..p.GetRatio())			
+	--重新计算
+	gRatio,gGrade = p.doCalculate()
+	TimeBuffBarLabel:setString("Buff:"..math.floor(g_TimerBuff).."Ratio:"..gRatio)			
 end
 
 function p.LoadUI()
 	local bglayer = CCLayer:create()
-		
+	
+	--初始化
+	gRatio,gGrade = 1,1
+
+	
 	TimeBuffBarLabel = CCLabelTTF:create("", "Arial", 20)
 	bglayer:addChild(TimeBuffBarLabel,2)
 	TimeBuffBarLabel:setColor(ccc3(255,0,0))
