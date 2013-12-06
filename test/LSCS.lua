@@ -1,9 +1,18 @@
 --这里注意下随机种子要加个
 math.randomseed(os.time())
 
---平均回合数
 local bIfFirst = true --先手true 后手false
-local g_nRound = 12
+local g_TestTime = 200--测试局数
+local bprintdetail = false; --是否开启打印回合细节
+
+--最小 -- 最大回合数设置
+--local minR = 5
+--local maxR = 15
+
+local minR = 10
+local maxR = 0
+maxR = minR
+
 local g_Skille = 2 --玩家技能耗点
 local g_Att = 0
 local g_Energy = 0
@@ -15,12 +24,18 @@ local tCardGroup = {}
 local tCardRandom = {}
 
 
+--打印每回合细节
+function PRINTRoundDetail(S)
+	if bprintdetail then
+		print(S)
+	end
+end
 
 function InitCardGroup()
-	--卡组模型
-	local tCardGroup = 
+	--[[卡组模型
+	local tCardGroupCopy = 
 	{
-		--[[	--费点 数量
+		--	--费点 数量
 		[1] ={1		,2},
 		[2] ={2		,9},
 		[3] ={3		,5},
@@ -28,38 +43,47 @@ function InitCardGroup()
 		[5] ={5		,4},
 		[6] ={6		,0},
 		[7] ={7		,3},
-		--]]
-		--
-		[1] ={1		,8},
-		[2] ={2		,7},
-		[3] ={3		,5},
-		[4] ={4		,3},
-		[5] ={5		,3},
-		[6] ={6		,3},
-		[7] ={7		,1},
-		--]]	
 	}
+	--]]
+
+
+	
+	local tCardGroupCopy = {}
+	--复制卡组
+	for i,v in pairs(tCardGroup)do
+		local tmp = {}
+		for j,k in pairs(v)do
+			tmp[j] = k
+			
+		end
+		
+		tCardGroupCopy[i] = tmp
+	end
+
+
+	
 	tCardRandom = {}
 	--先去除空档位
-	for i=#tCardGroup ,1,-1  do
-		if tCardGroup[i][2] == 0 then
-			table.remove(tCardGroup,i)
+	for i=#tCardGroupCopy ,1,-1  do
+		if tCardGroupCopy[i][2] == "0" then
+			table.remove(tCardGroupCopy,i)
 		end	
 	end	
-
+	--
 	--打乱顺序
 	for i=30 ,1,-1  do
-		local index = math.random(1,#tCardGroup)
-		local info = tCardGroup[index]
+		local index = math.random(1,#tCardGroupCopy)
+		local info = tCardGroupCopy[index]
 		
 		info[2] = info[2] - 1
 		local e = info[1]
 		table.insert(tCardRandom,e) 
 		
 		if info[2] <= 0 then
-			table.remove(tCardGroup,index)
+			table.remove(tCardGroupCopy,index)
 		end
 	end	
+	g_tcardLeft = {}
 	--[[
 	local s = "本局卡组:"
 	for i,v in pairs(tCardRandom) do
@@ -68,26 +92,103 @@ function InitCardGroup()
 	print(s)--]]
 end
 
-function PlayerSpell()
-	g_Energy = g_Energy - g_Skille
-	g_Att = g_Att + g_Skille
-	print(printAllCard().." 玩家施放技能 耗点:"..g_Skille)
+--用户设置
+function UserSetting()
+	--输入卡组数量
+	for i = 1,7 do
+		while(1)do
+			local cardgrouptmp = ""
+			local cardnum = 0
+			for j,v in pairs(tCardGroup)do
+				cardnum = cardnum + v[2]
+				cardgrouptmp = cardgrouptmp.." "..v[1].."星:"..v[2]
+			end
+			
+			print("   已有卡片数量:"..cardnum.." = ( "..cardgrouptmp.." ) \n输入"..i.."星卡数量:")
+			io.flush()
+			nNum = io.read("*line")
+			tCardGroup[i] = {i,nNum}
+			
+			cardnum = 0
+			for j,v in pairs(tCardGroup)do
+				cardnum = cardnum + v[2]
+			end
+			
+			if cardnum > 30 then
+				print("总数量不能大于30! cardnum:"..cardnum)
+				tCardGroup[i] = {i,0}
+			elseif 	i == 7 and cardnum <30 then
+				print("总数量不能小于30!")
+				tCardGroup[i] = {i,0}
+			elseif cardnum == 30 then
+				return;
+			else
+				break
+			end
+			io.flush()
+		end	
+	end
 end
 
 
---输入 1能量上限 2卡牌表 , 返回所有可能搭配表
-function digui(e,t)
-	local treturn = {}
-	if t ==nil then
-		return nil
+
+function PlayerSpell()
+	g_Energy = g_Energy - g_Skille
+	g_Att = g_Att + g_Skille
+	PRINTRoundDetail(printAllCard().." 玩家施放技能 耗点:"..g_Skille)
+end
+
+
+--Replace 将 t中[1]元素与 tparam1的sum比较,取值大的替换t[1]
+--如果treturn为空则直接插入
+function Replace(t,tparam1)
+	if #t == 0 then
+		t[1] = tparam1
+		return
+	end
+	
+	local sumt1 = 0
+	local sumparam = 0
+	for i,v in pairs(t[1]) do
+		sumt1 = sumt1 + v
+	end	
+
+	for i,v in pairs(tparam1) do
+		sumparam = sumparam + v
 	end
 		
+	if sumt1 < sumparam then
+		t[1] = tparam1
+		return
+	end	
+end					
+						
+--输入 1能量上限 2卡牌表 , 返回1个最接近E的搭配表
+function digui(e,t)
+	local treturn = {}
+	--[[
+	if t == nil then
+		return nil
+	end--]]
+		
+	if e == 0 then
+		return {999}
+	end
+	
+	if e < 0 then
+		return nil
+	end
+	
 	if #t == 0 then	
 		return {999}
 	end
 	
-	if #t == 1 then
+	if #t == 1 and t[1] <= e then
 		return {{t[1]},999}
+	end	
+	
+	if #t == 1 and t[1] > e then
+		return {999}
 	end
 	
 	for i,v in pairs(t) do
@@ -100,26 +201,39 @@ function digui(e,t)
 		for j=i+1,#t do
 			table.insert(tleft,t[j])
 		end
-
-		local tAllPosible = digui(e,tleft)
+		
+		--一张卡就达到E
+		if eplus == e then
+			return {{eplus},999} 
+		end
+		
+		local tAllPosible = digui(e-eplus,tleft)  --{{min1,min2,min3},999}  or {999}
 		if tAllPosible ~= nil then --{}	
-			for i,v in pairs(tAllPosible) do
-				if 999 == v then
-					table.insert(treturn,{eplus})
-				else					
+			for x,v in pairs(tAllPosible) do
+				local summax = eplus;
+				
+				--无法细分时
+				if 999 == v then				
+					Replace(treturn,{eplus})
+				else				
+					--因为递归只返回最多2个元素表 min表 和999 
+					--当发现min表时,不再向tRETURN插入其他元素
+					--所以treturn长度最多也是 min表 和999 					
 					local tmp = v
+					
 					--将eplus重新加入表中
 					table.insert(tmp,eplus)				
-					table.insert(treturn,tmp)
+					Replace(treturn,tmp)
 				end
+				
 			end
 		end
 	end
 	--屁股后面加个999
 	table.insert(treturn,999)
+	
 	return treturn
 end
-
 
 --打印所有持有卡牌
 function printAllCard()
@@ -129,15 +243,16 @@ function printAllCard()
 		return "持有卡牌:无"
 	end
 	for i,v in pairs(g_tcardLeft) do
+
 		s = s.." "..v
 	end
-	return s
+	return s.." 输出能量:"..g_Att
 end
 
 --发牌
 function TakeOneCard()
 	if #tCardRandom <= 0 then
-		print(printAllCard().." 没牌啦!!")
+		PRINTRoundDetail(printAllCard().." 没牌啦!!")
 		return
 	end
 	
@@ -145,7 +260,7 @@ function TakeOneCard()
 	table.insert(g_tcardLeft,ecard);
 	table.remove(tCardRandom,1);
 	
-	print(printAllCard().." 抽到"..ecard.."星卡")
+	PRINTRoundDetail(printAllCard().." 抽到"..ecard.."星卡")
 end
 
 
@@ -167,72 +282,38 @@ function UseCard(tuseCards)
 		end
 	end
 	g_Energy = g_Energy - sum
-	print(printAllCard().." 玩家使用卡牌:"..s)
+	PRINTRoundDetail(printAllCard().." 玩家使用卡牌:"..s)
 end
 
 --用卡策略	输入能量 返回消耗能量和卡片表(以消耗最多能量为准则)
 function Stragy(e)
+	if e <= 0 then
+		return 0,nil
+	end
+	
 	--复制表
 	local tabletmp = {}
 	for i,v in pairs(g_tcardLeft) do
 		table.insert(tabletmp,v)
 	end
 	
-	--一次用掉
-	for i,v in pairs(g_tcardLeft) do
-		if v == e then
-			return e,{e}
-		end
-	end
 	
-	local sum = 0
-	for i,v in pairs(g_tcardLeft) do
-		sum = v + sum
-	end
-	
-	--搭配用
-	local ecardtotal = sum--卡片总需耗能
-	--能量大于全部卡加起来
-	if ecardtotal <= e then
-		return ecardtotal,tabletmp
+	--找出加起来最接近e的解
+	local test = digui(e,g_tcardLeft)
+	--test = { {1,3,4},999}
+	if test[1] == 999 then
+		return 0,nil
 	else
-	
-	
-		--卡片能量总和超越施法能量
-		--找出加起来最接近e的解
-		local test = digui(e,g_tcardLeft)
-		--test = { {1,3,4},{2,2,3}, 999}
-		--对所有表值校验
 		local EmaxSpell = 0
-		local tCards = {}
-		for i=#test ,1,-1 do
-			if test[i] ~= 999 then
-				local sum = 0
-				for j,k in pairs(test[i])do
-					sum = sum + k
-				end
-				if sum == e then
-					return sum,test[i]
-				elseif sum < e then
-					if EmaxSpell == 0 then
-						EmaxSpell = sum
-						tCards = test[i]
-					end
-					
-					if EmaxSpell < sum then
-						EmaxSpell = sum
-						tCards = test[i]
-					end
-				end		
-			end
+		for i,v in pairs(test[1])do
+			EmaxSpell = EmaxSpell + v
 		end			
-	end
-	return EmaxSpell,tCards
-		
+		return EmaxSpell,test[1]
+	end	
 end
 
 
-function mainloop()
+function mainloop(nRound)
 --初始化	
 g_Att = 0
 g_Energy = 0
@@ -247,7 +328,7 @@ local E_Fire = 0
 
 
 
-for round = 1,12 do
+for round = 1,nRound do
 	--****************************************************--
 	--========这里计算的是每回合我可以输出的能量========----
 	--========准则是 尽量输出多能量,以防浪费能量点======----
@@ -260,7 +341,7 @@ for round = 1,12 do
 		eround = 10
 	end
 	g_Energy = eround
-	print(printAllCard().." 第"..round.."回合 ")
+	PRINTRoundDetail(printAllCard().." 第"..round.."回合 ")
 	--抽卡一张
 	TakeOneCard();
 
@@ -294,12 +375,12 @@ for round = 1,12 do
 	elseif EB == nil and EA~= nil then
 		PlayerSpell()
 		UseCard(tcardUseA)	
-		g_Att = g_Att + EA	
+		g_Att = g_Att + EA	-g_Skille
 	--若EA >= EB则 选1 否则选2
 	elseif EA >= EB then
 		PlayerSpell()
 		UseCard(tcardUseA)
-		g_Att = g_Att + EA	
+		g_Att = g_Att + EA	-g_Skille
 	else
 		UseCard(tcardUseB)
 		g_Att = g_Att + EB		
@@ -307,15 +388,33 @@ for round = 1,12 do
 end
 end
 
-for i=1,1 do
-	InitCardGroup()
-	mainloop();
-	print("第"..i.."局共输出能量:"..g_Att)
+
+local wucha = 0
+local minShuchu = 999
+
+while(1)do
+	tCardGroup = {}
+	UserSetting()
+
+	for nRoundSet = minR,maxR do
+		local sum = 0
+		for i=1,g_TestTime do
+			InitCardGroup()
+			mainloop(nRoundSet);
+			--print("第"..i.."局共输出能量:"..g_Att)
+			sum = sum + g_Att
+			
+			if g_Att < minShuchu  then
+				minShuchu = g_Att
+			end
+		end
+		PINGJUN = sum/g_TestTime
+		print("此套卡组在("..nRoundSet.."回合)局中平均输出能量:"..PINGJUN.." 最小输出:"..minShuchu)
+	end	
 end
+--]]5691513
 
---]]
 
---print("本局共输出能量:"..g_Att)
 
 
 
