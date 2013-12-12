@@ -191,12 +191,8 @@ function brick.init(pbrick,nType)
 		pbrick.movetoTime = winSize.height/brickInfo.brickSpeed;
 		pbrick.chosed = false;		
 		
-		pbrick.magic_effect_beforeplayeract = {}
-		pbrick.magic_effect_afterplayeract = {}
-		
-		pbrick.magic_effect_aftermonspell = {}				
-		pbrick.magic_effect_aftermonatt = {}				
-		
+		pbrick.magic_effect_aftermonact = {}
+		pbrick.magic_effect_afterplayeract = {}		
 end
 
 function brick.createParentSprite()
@@ -269,45 +265,33 @@ function brick.creatGoldBrick(nType)
         return spriteParent
 end
 
+--bIfPlayerAct   true:玩家执行触发   false:怪物执行触发
 function brick.AddMagicEff(effinfoT,nPhase,pbrick)
-		local magic_effect_beforeplayeract = pbrick.magic_effect_beforeplayeract
-		local  magic_effect_afterplayeract= pbrick.magic_effect_afterplayeract
-		local magic_effect_aftermonatt= pbrick.magic_effect_aftermonatt
-		local magic_effect_aftermonspell= pbrick.magic_effect_aftermonspell
-		
-		
-	if nPhase == GameLogicPhase.BEFORE_PLAYER_ACT then
-		magic_effect_beforeplayeract[#magic_effect_beforeplayeract+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_PLAYER_ACT then
-		magic_effect_afterplayeract[#magic_effect_beforeplayeract+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_ATT then
-		magic_effect_aftermonatt[#magic_effect_aftermonatt+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_SPELL  then
-		magic_effect_aftermonspell[#magic_effect_aftermonspell+1] = effinfoT;
-	end
+	local magic_effect_aftermonact = pbrick.magic_effect_aftermonact
+	local magic_effect_afterplayeract= pbrick.magic_effect_afterplayeract
 	
+	local bIfPlayerAct = effinfoT[MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT]
+	if bIfPlayerAct then
+		magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
+	else
+		magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
+	end
 		
 	--增加光效
 	if effinfoT[MAGIC_EFF_DEF_TABLE.EFF_PIC] ~= "" then
 		brick.setMagiceffect(pbrick,effinfoT[MAGIC_EFF_DEF_TABLE.EFF_PIC])
 	end
-	
 end
 
-
-function brick.GetMagicEffTable(nPhase,pbrick)
-	if nPhase == GameLogicPhase.BEFORE_PLAYER_ACT then
-		return pbrick.magic_effect_beforeplayeract
-	elseif nPhase == GameLogicPhase.AFTER_PLAYER_ACT then
-		return pbrick.magic_effect_afterplayeract
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_ATT then
-		return pbrick.magic_effect_aftermonatt
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_SPELL  then
-		return pbrick.magic_effect_aftermonspell
-	end
+--获取玩家行为触发技能特效表
+function brick.GetMagicEffTableAfterPlayerAct(pbrick)
+	return pbrick.magic_effect_afterplayeract 	
 end
 
-
+--获取怪物行为触发技能特效表
+function brick.GetMagicEffTableAfterMonsterAct(pbrick)
+	return pbrick.magic_effect_aftermonact 
+end
 
 
 

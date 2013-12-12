@@ -247,27 +247,22 @@ function player.GetAttack()
 end
 
 function player.AddMagicEff(effinfoT,nPhase)
-	if nPhase == GameLogicPhase.BEFORE_PLAYER_ACT then
-		magic_effect_beforeplayeract[#magic_effect_beforeplayeract+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_PLAYER_ACT then
-		magic_effect_afterplayeract[#magic_effect_beforeplayeract+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_ATT then
-		magic_effect_aftermonatt[#magic_effect_aftermonatt+1] = effinfoT;
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_SPELL then
-		magic_effect_aftermonspell[#magic_effect_aftermonspell+1] = effinfoT;
+	local bIfPlayerAct = effinfoT[MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT]
+	if bIfPlayerAct then
+		magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
+	else
+		magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
 	end
 end
 
-function player.GetMagicEffTable(nPhase)
-	if nPhase == GameLogicPhase.BEFORE_PLAYER_ACT then
-		return magic_effect_beforeplayeract
-	elseif nPhase == GameLogicPhase.AFTER_PLAYER_ACT then
-		return magic_effect_afterplayeract
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_ATT then
-		return magic_effect_aftermonatt
-	elseif nPhase == GameLogicPhase.AFTER_MONSTER_SPELL then
-		return magic_effect_aftermonspell
-	end
+--获取玩家行为触发技能特效表
+function player.GetMagicEffTableAfterPlayerAct()
+	return magic_effect_afterplayeract	
+end
+
+--获取怪物行为触发技能特效表
+function brick.GetMagicEffTableAfterMonsterAct()
+	return magic_effect_aftermonact 
 end
 
 

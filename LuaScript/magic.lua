@@ -1,3 +1,5 @@
+--============玩家施放法术功能=============--
+
 magic = {}
 local p = magic;
 
@@ -487,11 +489,152 @@ magictable = {}
 
 
 
---施放技能 失败返回FALSE 成功返回中招对象列表,以及 EFF实例列表
-function p.SpellMagic(nMagicId,pBrickSingle,pLine)
+--玩家施放技能 失败返回FALSE 成功返回中招对象列表,以及 EFF实例列表
+--pBrickSingle:中招对象
+--pLine:预留
+function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 	local tTargetList = {}
 	local tEffList = {}
+
+	local bCast = false
 	
+	if magictable[nMagicId] == nil then
+		return false;
+	end
+
+	--重新计算CD
+	if player.IfCanUseMagic(nMagicId) == false then
+		return;
+	end
+
+	local magicinfo = magictable[nMagicId];
+	
+	if magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.PLAYER then
+		cclog("SpellMagic PLAYER")
+		--===对玩家施放技能===-
+		--触发 施放FUNC
+		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+			if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle) then
+				bCast = true
+			end
+		end
+		
+		--对TARGET增加特效
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
+			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0]);
+		else
+			cclog("增加TARGET特效失败 nMagicId:"..nMagicId);
+		end
+		
+	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.ALLMONSTER then
+		--===对所有MON施放技能===-
+		
+		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+			if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle) then
+				bCast = true
+			end
+		end	
+		
+		--对all MON增加特效
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
+				for i = 1,brickInfo.brick_num_X do
+					for j = 1,brickInfo.brick_num_Y do
+						if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
+							local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[i][j],nMagicId);
+							if effT ~= nil then
+								table.insert(tTargetList,Board[i][j])
+								table.insert(tEffList,effT)	
+							end	
+						end		
+					end
+				end	
+		end	
+		
+	elseif magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.SINGLE_BRICK then
+		--对某一个BRICK释放技能	
+		local nR = magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM].R;
+		local tileX = pBrickSingle.TileX
+		local tileY = pBrickSingle.TileY
+		
+
+					
+		function getFromTo(cord,Limit)
+			local from = cord - nR
+			local To = cord + nR
+			if from <= 1 then
+				from = 1
+			end
+			if To >= Limit then
+				To = Limit
+			end
+			return from,To
+		end
+	
+		local fromx,tox = getFromTo(tileX,brickInfo.brick_num_X)
+		local fromy,toy = getFromTo(tileY,brickInfo.brick_num_Y)
+		for X = fromx,tox,1 do
+			for Y = fromy ,toy,1 do
+				if Board[X][Y]~= nil then
+
+					
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[X][Y],nMagicId);	
+					if effT ~= nil then
+					--effT不为空则施放成功
+							if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+								if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](Board[X][Y]) then
+									bCast = true
+								end
+							end
+												
+							table.insert(tTargetList,Board[X][Y])
+							table.insert(tEffList,effT)
+					end	
+				end
+			end
+		end			
+		
+
+		
+	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.AI_MONSTER then
+		--使用AI获取施法对象
+		if magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] ~= nil then
+			local pbricklist = magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC](pBrickSingle,magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM]);
+			
+			for i,pbrick in pairs(pbricklist) do
+				if pbrick ~= nil then
+					
+					if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
+						if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle,pbrick) then
+							bCast = true
+						end
+					end
+					
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],pbrick);	
+					table.insert(tTargetList,pbrick)
+					table.insert(tEffList,effT)	
+				end
+			end
+		end	
+	end
+	
+	--无特效技能施放则bcast=true 
+	--特效技能技能施放则 tTargetList~=nil
+	--1000内技能则是玩家技能
+	if bCast and tTargetList~= nil and nMagicId <1000 then
+		player.UseMagic(nMagicId)
+	end
+	
+	return tTargetList,tEffList;
+end
+
+
+
+--怪物施放技能 失败返回FALSE 成功返回中招对象列表,以及 EFF实例列表
+--pBrickSingle:施法怪物
+function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
+	local tTargetList = {}
+	local tEffList = {}
+
 	local bCast = false
 	
 	if magictable[nMagicId] == nil then

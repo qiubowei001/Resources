@@ -16,8 +16,8 @@ brickInfo.PlayerSkillCount = 4;--玩家主动技能数量
 GameLogicPhase ={
 	BEFORE_PLAYER_ACT = 0,--玩家执行消除行为前
 	AFTER_PLAYER_ACT = 1,--玩家执行消除行为后
-	AFTER_MONSTER_SPELL = 2,--怪物施放技能
-	AFTER_MONSTER_ATT =3,--怪物攻击后	
+	--AFTER_MONSTER_SPELL = 2,--怪物施放技能
+	--AFTER_MONSTER_ATT =3,--怪物攻击后	
 }
 
 --选择方式

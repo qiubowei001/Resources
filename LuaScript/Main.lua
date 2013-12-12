@@ -19,11 +19,6 @@ tParamEvn.playerAttDamageThisRound = 0
 
 
 
-
-Main.gamephase = GameLogicPhase.BEFORE_PLAYER_ACT;
-
-
-
 Main.selectMode = SELECTMODE.NORMAL;
 Main.ChosedMagic = 0;
 
@@ -338,7 +333,6 @@ end
 
 function Main.menuCallbackOpenPopup(tag,sender)
             --使用技能
-			Main.gamephase = GameLogicPhase.BEFORE_PLAYER_ACT
 			local nMagicId = SkillBar.GetMagicIdFromTag(tag);
 			
 			
@@ -357,13 +351,12 @@ function Main.menuCallbackOpenPopup(tag,sender)
 
 			else
 				--其他情况直接释放
-				magic.SpellMagic(nMagicId);
-				magiceff.DoMagicEff(tParamEvn);					
+				magic.PlayerSpellMagic(nMagicId);	
 			end
 end
 
 
-	
+
 function p.brickSetXY(pbrick,X,Y)
 		--cclog("setPosition: %0.2f, %0.2f", X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight+brickInfo.brickHeight/2)
 		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
@@ -592,44 +585,14 @@ function p.main(nMission)
 				local buff = TimerBuff.GetTimerBuff()
 				TimerBuff.SetTimerBuff(buff+nNum*10)
 				
-				
-				
-				Main.gamephase = GameLogicPhase.AFTER_PLAYER_ACT;
+				--法术效果执行
 				magiceff.DoMagicEff(tParamEvn);
-				
-				--========怪物施放技能========--
-				--回合结束则所有怪物释放技能 --所有怪物重置施放技能标识
-				for i=1,brickInfo.brick_num_X do
-					for j = 1, brickInfo.brick_num_Y do		
-						if Board[i][j] ~= nil then
-							if Board[i][j].nType == tbrickType.MONSTER then
-								monster.SpellMagic(Board[i][j]);
-								 Board[i][j].IsSpelled = false;
-							end
-						end
-					end
-				end
-				--========怪物施放技能========--				
-				Main.gamephase = GameLogicPhase.AFTER_MONSTER_SPELL;			
-				magiceff.DoMagicEff(tParamEvn);
-				
-				--========怪物攻击========--	
-				if nAction  ~= false then
-					monster.attack();
-				end
-				--========怪物攻击========--	
-				
-				Main.gamephase = GameLogicPhase.AFTER_MONSTER_ATT;
-				magiceff.DoMagicEff(tParamEvn);
-				
+
+				--过期法术效果去除
 				magiceff.ClearMagicEff(tParamEvn);	
-				
-				
-				
 				
 				--所有技能冷却+1
 				player.SkillCoolDown();
-				
 				
 				--==显示玩家数据==--
 				MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
@@ -645,8 +608,7 @@ function p.main(nMission)
 						
 				if Board[X][Y] ~= nil then
 						local pbrick = Board[X][Y];	
-						magic.SpellMagic(Main.ChosedMagic,pbrick);
-						magiceff.DoMagicEff(tParamEvn);							
+						magic.PlayerSpellMagic(Main.ChosedMagic,pbrick);						
 				end
 				Main.selectMode = SELECTMODE.NORMAL
 				MainUI.SetMainUITip("Nor")

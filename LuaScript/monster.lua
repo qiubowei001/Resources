@@ -207,6 +207,15 @@ function monster.AttackCDPlusOne(pbrick)
 		action:setTag(gblinkactionTag)
 		mainsprite:runAction(action)
 		
+		--执行释放技能 和攻击
+		monster.SpellMagic(pbrick,false)
+		monster.attack(pbrick);
+		
+		--执行MAGIC特效
+		magiceff.DoMagicEffAfterMonsterAct(pmonster);
+		
+		
+		
 	elseif nPersent>=80 then
 		if pbrick.IfScaled == false then
 			local array = CCArray:create()
@@ -357,7 +366,6 @@ function monster.InitMonster( pBrick,nid,nLev)
 		LevLabel:setPosition(brickInfo.brickWidth/3, brickInfo.brickWidth)
 		--]]
 		
-		pBrick.IsSpelled = false;
 		
 		pBrick.AttAdjFuncT = {};
 		pBrick.DamageAdjFuncT = {};
@@ -474,52 +482,33 @@ function monster.InitAttAction( pTarget,ndamage,pmonster)
 end
 
 --怪物攻击
-function monster.attack()
-	local ndamage = 0;
-	local nTurn = 1;
-	for i = 1,brickInfo.brick_num_X do
-	
-		for j = 1,brickInfo.brick_num_Y do
-			if Board[i][j] ~= nil then
-				if Board[i][j].nType == tbrickType.MONSTER then
-					
-					--攻击是否CD
-					if Board[i][j].moninfo[monsterInfo.CD]  >= Board[i][j].moninfo[monsterInfo.CDMAX] then
-						local tAttAction = monster.InitAttAction( player,ndamage,Board[i][j])
-						tAttAction.damage = monster.GetMonsterAtt(Board[i][j])--Board[i][j].moninfo[monsterInfo.ATT];
-						
-						local bSkip = false
-						--遍历怪物攻击调整函数
-						for k,func in pairs(Board[i][j].AttAdjFuncT) do
-							if func(tAttAction) == false then
-								--不攻击
-								bSkip = true
-							end
-						end
-						
-						if bSkip == false then
-							--怪物攻击跳跃
-							local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
-							local array = CCArray:create()
-							array:addObject(CCDelayTime:create(0.1*nTurn))--每个怪物跳跃动作延迟间隔
-							array:addObject(actionJump)
-							local action = CCSequence:create(array)
-							nTurn = nTurn + 1
-							
-							local mainsprite = brick.GetMainSprite(Board[i][j])
-							mainsprite:runAction(action);
-							
-							player.takedamage(tAttAction.damage,Board[i][j]);	
-							Board[i][j].moninfo[monsterInfo.CD]	= 0;							
-						end
-					end
-				end				
+function monster.attack(pmonster)
+	local ndamage = 0;		
+	--攻击是否CD
+	if pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
+		local tAttAction = monster.InitAttAction( player,ndamage,pmonster)
+		tAttAction.damage = monster.GetMonsterAtt(pmonster)
+		
+		local bSkip = false
+		--遍历怪物攻击调整函数
+		for k,func in pairs(pmonster.AttAdjFuncT) do
+			if func(tAttAction) == false then
+				--不攻击
+				bSkip = true
 			end
 		end
+		
+		if bSkip == false then
+			--怪物攻击跳跃
+			local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
+			local mainsprite = brick.GetMainSprite(pmonster)
+			mainsprite:runAction(actionJump);
+			
+			player.takedamage(tAttAction.damage,pmonster);	
+			pmonster.moninfo[monsterInfo.CD]	= 0;							
+		end
 	end
-	--cclog(" return ndamage:"..ndamage)
 	return ndamage;
-	
 end
 
 
@@ -534,17 +523,17 @@ function monster.SpellMagic(pmonster,IfBorn)
 		for i,nid in pairs(pmonster.moninfo[monsterInfo.MAGIC]) do
 		
 			--攻击是否CD
-			if IfBorn ==true or pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
+			--if IfBorn ==true or pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
+			if   pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
 				local spelltime =  pmonster.moninfo[monsterInfo.MAGIC_ROUND][i];
 				
 				if spelltime > 0 then
 						--本回合还未施放技能
-						local tTargetList,tEffList = magic.SpellMagic(nid,pmonster);
+						local tTargetList,tEffList = magic.monsterSpellMagic(nid,pmonster);
 						pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
-						pmonster.IsSpelled = true;
 						
 						--怪物技能特效是否需要马上触发
-						if magic.GetMagicDoeffAfterSpell(nid) ==true and IfBorn== true then
+						if magic.GetMagicDoeffAfterSpell(nid) ==true then
 							for j,v in pairs(tTargetList) do
 								local effT = tEffList[j];
 								local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
@@ -555,10 +544,8 @@ function monster.SpellMagic(pmonster,IfBorn)
 								effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
 							end
 						end
-					--end
 				end
 			end
-			
 		end		
 	end
 end
