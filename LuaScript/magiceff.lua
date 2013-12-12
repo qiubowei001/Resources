@@ -594,13 +594,13 @@ MAGIC_EFFtable = {}
 
 	
 --为玩家新增技能特效
-function p.AddPlayerMagicEff(efffuncid,nPhase)
+function p.AddPlayerMagicEff(efffuncid)
 	local effinfoT = p.createMagicEff(efffuncid);
-	player.AddMagicEff(effinfoT,nPhase);
+	player.AddMagicEff(effinfoT);
 end
 
 --为brick新增技能特效
-function p.AddBrickMagicEff(efffuncid,nPhase,pbrick,nMagicId)
+function p.AddBrickMagicEff(efffuncid,pbrick,nMagicId)
 	if nMagicId ~= nil then
 		if magictable[nMagicId][MAGIC_DEF_TABLE.SPELL_TYPE] ~= nil and magictable[nMagicId][MAGIC_DEF_TABLE.SPELL_TYPE] ~= pbrick.nType then
 			return nil;
@@ -608,7 +608,7 @@ function p.AddBrickMagicEff(efffuncid,nPhase,pbrick,nMagicId)
 	end
 	
 	local effinfoT = p.createMagicEff(efffuncid);
-	brick.AddMagicEff(effinfoT,nPhase,pbrick);
+	brick.AddMagicEff(effinfoT,pbrick);
 	return effinfoT;
 end
 
@@ -627,6 +627,30 @@ end
 
 
 
+
+--执行怪物行为后魔法特效
+function p.DoMagicEffAfterMonsterAct(pmonster)
+	--玩家技能特效
+	local playereffT = player.GetMagicEffTableAfterMonsterAct()
+	for i,v in pairs(playereffT) do
+		v[MAGIC_EFF_DEF_TABLE.EFF_FUNC](player,v[MAGIC_EFF_DEF_TABLE.TPARAM]  )--MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM1],MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM2])
+		v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
+	end
+	
+	--对所有BRICK执行特效
+	if pmonster ~= nil then	
+		local brickeffT = brick.GetMagicEffTableAfterMonsterAct(pmonster)
+		if #brickeffT > 0 then
+			for k,m in pairs(brickeffT) do
+					if m[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] > 0 then
+						m[MAGIC_EFF_DEF_TABLE.EFF_FUNC](pmonster,m[MAGIC_EFF_DEF_TABLE.TPARAM])
+						m[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = m[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
+					end
+			end				
+		end
+	end
+end
+
 --执行玩家行为后魔法特效
 function p.DoMagicEff(tParam) 
 	--玩家技能特效
@@ -635,35 +659,11 @@ function p.DoMagicEff(tParam)
 		v[MAGIC_EFF_DEF_TABLE.EFF_FUNC](player,v[MAGIC_EFF_DEF_TABLE.TPARAM]  )--MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM1],MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM2])
 		v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
 	end
-	
-	--=====================================================================--
-	--===========      因为对所有BEFOREACT不会round自动-1      ============--
-	--===========      所以回合结束时，即Main.gamephase ==     ============-- 
-	--===========      GameLogicPhase.After_Mon_ACT 时,对所有  ============--
-	--===========	   BEFOREACT LAST ROUND自动减一			   ============--
-	--=====================================================================--
-	if Main.gamephase == GameLogicPhase.AFTER_MONSTER_ATT then
-		local playereffT = player.GetMagicEffTableAfterPlayerAct()
-		for i,v in pairs(playereffT) do
-			--v[MAGIC_EFF_DEF_TABLE.EFF_FUNC](player,v[MAGIC_EFF_DEF_TABLE.TPARAM]  )--MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM1],MAGIC_EFFtable[v[MAGIC_EFF_DEF_TABLE.ID]][MAGIC_EFF_DEF_TABLE.PARAM2])
-			v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
-		end
-	end
-	
-	
+
 	--对所有BRICK执行特效
 	for i = 1,brickInfo.brick_num_X do
 		for j = 1,brickInfo.brick_num_Y do
-			if Board[i][j] ~= nil then	
-			
-				--同上面大片注释
-				if Main.gamephase == GameLogicPhase.AFTER_MONSTER_ATT then
-					local brickeffTBeforeact = brick.GetMagicEffTableAfterPlayerAct(GameLogicPhase.BEFORE_PLAYER_ACT,Board[i][j])
-					for k,v in pairs(brickeffTBeforeact) do
-						v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
-					end						
-				end
-				
+			if Board[i][j] ~= nil then					
 				local brickeffT = brick.GetMagicEffTableAfterPlayerAct(Board[i][j])
 				if #brickeffT > 0 then
 					for k,m in pairs(brickeffT) do

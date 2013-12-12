@@ -57,18 +57,15 @@ local tPlayerExp =
 	[8] = 200,
 }--]]
 
-local magic_effect_beforeplayeract = {}
 local magic_effect_afterplayeract = {}
-local magic_effect_aftermonatt = {}
-local magic_effect_aftermonspell = {}
-
+local magic_effect_aftermonact = {}
 
 
 --初始化玩家数据
 function p.Initplayer()
-	magic_effect_beforeplayeract = {}
+	magic_effect_aftermonact = {}
 	magic_effect_afterplayeract = {}
-	magic_effect_aftermonatt = {}
+
  
 	player[playerInfo.HP] = 100;
 	player[playerInfo.HPMAX] = 100;
@@ -183,12 +180,14 @@ function p.takedamage(ndamage,pmonster)
 	
 	player[playerInfo.HP] = player[playerInfo.HP] - tDamageAction.damage;
 	
+	local test =  player[playerInfo.HP]
 	if  player[playerInfo.HP] <= 0 then
 		GameOverUI.LoadUI(1)
 		return 
 	end
 	
-	
+	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
+				
 	return player[playerInfo.HP];
 end
 
@@ -261,7 +260,7 @@ function player.GetMagicEffTableAfterPlayerAct()
 end
 
 --获取怪物行为触发技能特效表
-function brick.GetMagicEffTableAfterMonsterAct()
+function player.GetMagicEffTableAfterMonsterAct()
 	return magic_effect_aftermonact 
 end
 
@@ -320,10 +319,6 @@ function player.AddNewSkill(nRootId,nSkillId)
 		local sPassId = SkillUpgrade.GetPassIdBySkillId(nSkillId)
 		PassiveSkill.LearnSkillCallBack(sPassId)
 	end
-	
-	
-
-	
 end
 
 

@@ -28,7 +28,7 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["ATT"] = 1
 	MONSTER_TYPE[1]["ATTGrow"] = 1
 	MONSTER_TYPE[1]["ATTadj"] = 3
-	MONSTER_TYPE[1]["CD"] = 40
+	MONSTER_TYPE[1]["CD"] = 10
 	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
@@ -212,7 +212,7 @@ function monster.AttackCDPlusOne(pbrick)
 		monster.attack(pbrick);
 		
 		--Ö´ÐÐMAGICÌØÐ§
-		magiceff.DoMagicEffAfterMonsterAct(pmonster);
+		magiceff.DoMagicEffAfterMonsterAct(pbrick);
 		
 		
 		

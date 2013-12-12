@@ -266,7 +266,7 @@ function brick.creatGoldBrick(nType)
 end
 
 --bIfPlayerAct   true:玩家执行触发   false:怪物执行触发
-function brick.AddMagicEff(effinfoT,nPhase,pbrick)
+function brick.AddMagicEff(effinfoT,pbrick)
 	local magic_effect_aftermonact = pbrick.magic_effect_aftermonact
 	local magic_effect_afterplayeract= pbrick.magic_effect_afterplayeract
 	

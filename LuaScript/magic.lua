@@ -28,7 +28,7 @@ MAGIC_DEF_TABLE = {
 	TARGET_TYPE =7,
 	AFTER_MON_ATTACK_FUNC_ID = 8,
 	TOTARGET_EFFECT_FUNCID_0 = 9,
-	TOTARGET_EFFECT_FUNCPHASE_0 = 10,	
+	TOTARGET_EFFECT_FUNCPHASE_0 = 10,	--已无用
 	TOTARGET_EFFECT_FUNCID_1 = 11,
 	TOTARGET_EFFECT_FUNCPHASE_1 = 12,
 	TOTARGET_EFFECT_FUNCID_2 = 13,
@@ -520,8 +520,8 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 		end
 		
 		--对TARGET增加特效
-		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
-			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0]);
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil then
+			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
 		else
 			cclog("增加TARGET特效失败 nMagicId:"..nMagicId);
 		end
@@ -536,11 +536,11 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 		end	
 		
 		--对all MON增加特效
-		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil  then
 				for i = 1,brickInfo.brick_num_X do
 					for j = 1,brickInfo.brick_num_Y do
 						if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
-							local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[i][j],nMagicId);
+							local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],Board[i][j],nMagicId);
 							if effT ~= nil then
 								table.insert(tTargetList,Board[i][j])
 								table.insert(tEffList,effT)	
@@ -577,7 +577,7 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 				if Board[X][Y]~= nil then
 
 					
-					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[X][Y],nMagicId);	
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],Board[X][Y],nMagicId);	
 					if effT ~= nil then
 					--effT不为空则施放成功
 							if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
@@ -609,7 +609,7 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 						end
 					end
 					
-					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],pbrick);	
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],pbrick);	
 					table.insert(tTargetList,pbrick)
 					table.insert(tEffList,effT)	
 				end
@@ -619,8 +619,7 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 	
 	--无特效技能施放则bcast=true 
 	--特效技能技能施放则 tTargetList~=nil
-	--1000内技能则是玩家技能
-	if bCast and tTargetList~= nil and nMagicId <1000 then
+	if bCast and tTargetList~= nil then
 		player.UseMagic(nMagicId)
 	end
 	
@@ -641,18 +640,8 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 		return false;
 	end
 
-	--玩家使用技能 则重新计算CD
-	if nMagicId <1000 then
-		
-		if player.IfCanUseMagic(nMagicId) == false then
-			return;
-		end
-	end
-	
 	local magicinfo = magictable[nMagicId];
 
-	--NEXT_MAGIC
-	
 	if magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.PLAYER then
 		cclog("SpellMagic PLAYER")
 		--===对玩家施放技能===-
@@ -664,8 +653,8 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 		end
 		
 		--对TARGET增加特效
-		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
-			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0]);
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil  then
+			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
 		else
 			cclog("增加TARGET特效失败 nMagicId:"..nMagicId);
 		end
@@ -680,15 +669,15 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 		end		
 		
 		--对all MON增加特效
-		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil and magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] ~= nil then
+		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil  then
 				for i = 1,brickInfo.brick_num_X do
 					for j = 1,brickInfo.brick_num_Y do
 						if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then						
-							local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[i][j],nMagicId);
+							local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],Board[i][j],nMagicId);
 							if effT ~= nil then
 								table.insert(tTargetList,Board[i][j])
 								table.insert(tEffList,effT)	
-							end	
+							end
 						end		
 					end
 				end	
@@ -699,8 +688,6 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 		local nR = magicinfo[MAGIC_DEF_TABLE.CHOOSE_PARAM].R;
 		local tileX = pBrickSingle.TileX
 		local tileY = pBrickSingle.TileY
-		
-
 					
 		function getFromTo(cord,Limit)
 			local from = cord - nR
@@ -721,7 +708,7 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 				if Board[X][Y]~= nil then
 
 					
-					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],Board[X][Y],nMagicId);	
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],Board[X][Y],nMagicId);	
 					if effT ~= nil then
 					--effT不为空则施放成功
 							if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
@@ -735,10 +722,7 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 					end	
 				end
 			end
-		end			
-		
-
-		
+		end				
 	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.AI_MONSTER then
 		--使用AI获取施法对象
 		if magicinfo[MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] ~= nil then
@@ -753,7 +737,7 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 						end
 					end
 					
-					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0],pbrick);	
+					local effT = magiceff.AddBrickMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0],pbrick);	
 					table.insert(tTargetList,pbrick)
 					table.insert(tEffList,effT)	
 				end
@@ -763,9 +747,8 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 	
 	--无特效技能施放则bcast=true 
 	--特效技能技能施放则 tTargetList~=nil
-	--1000内技能则是玩家技能
-	if bCast and tTargetList~= nil and nMagicId <1000 then
-		player.UseMagic(nMagicId)
+	if bCast and tTargetList~= nil then
+		
 	end
 	
 	return tTargetList,tEffList;
