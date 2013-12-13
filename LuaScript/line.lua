@@ -33,6 +33,17 @@ function p.OnTouchEnd()
 			if LineFunc.GetLineLength() > 2 then
 				local actiontype = false;
 				local nLineNum = #Line;
+				
+				
+				--普通行为消耗能量1 如果没有能量 则返回				
+				if 	player[playerInfo.ENERGY] <1 then				
+					LineFunc.CancelLine();
+					LineFunc.ResetLine()
+					return false;
+				end	
+				
+				
+				
 				if LineFunc.GetLineType() == tbrickType.MONSTER or LineFunc.GetLineType() == tbrickType.SWORD then--SWORD
 					---攻击操作
 					local nDamage = LineFunc.getPlayerAttDamgeFromLine();						
@@ -53,7 +64,7 @@ function p.OnTouchEnd()
 								Line[i] = nil
 							 end
 						end
-					end							
+					end	
 					actiontype = tbrickType.MONSTER;
 					LineFunc.CancelLine();
 					tParamEvn.playerAttDamageThisRound = nDamage;

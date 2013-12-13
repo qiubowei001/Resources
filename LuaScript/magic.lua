@@ -50,6 +50,7 @@ MAGIC_DEF_TABLE = {
 	SPELL_TYPE = 29,
 	NEXT_MAGIC = 30,
 	CDROUND = 31,
+	ENERGYNEED = 32,
 }
 
 -->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>释放时触发函数集合======================================--
@@ -179,8 +180,10 @@ magictable = {}
 	magictable[1][MAGIC_DEF_TABLE.DESCPTION] = "增强玩家攻击力5回合"
 	magictable[1][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[1][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[1][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 	
-
+	
 	magictable[2]={}
 	magictable[2][MAGIC_DEF_TABLE.ID] = 2
 	magictable[2][MAGIC_DEF_TABLE.NAME] = "群体伤害"
@@ -193,7 +196,9 @@ magictable = {}
 	magictable[2][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[2][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[2][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[2][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[2][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	magictable[3]={}
 	magictable[3][MAGIC_DEF_TABLE.ID] = 3
 	magictable[3][MAGIC_DEF_TABLE.NAME] = "群体毒"
@@ -206,7 +211,9 @@ magictable = {}
 	magictable[3][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[3][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[3][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[3][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = false
+	magictable[3][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	
 	magictable[4]={}
 	magictable[4][MAGIC_DEF_TABLE.ID] = 4
@@ -220,7 +227,9 @@ magictable = {}
 	magictable[4][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[4][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[4][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[4][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[4][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	
 	magictable[5]={}
 	magictable[5][MAGIC_DEF_TABLE.ID] = 5
@@ -234,7 +243,9 @@ magictable = {}
 	magictable[5][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[5][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[5][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[5][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[5][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	
 	--玩家点击后变身炸弹怪物 爆炸N*N个brick
 	magictable[6]={}
@@ -250,7 +261,9 @@ magictable = {}
 	magictable[6][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[6][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[6][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[6][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[6][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	--玩家 眩晕单个怪物效果
 	magictable[7]={}
 	magictable[7][MAGIC_DEF_TABLE.ID] = 7
@@ -265,7 +278,9 @@ magictable = {}
 	magictable[7][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[7][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[7][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[7][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[7][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 --玩家 眩晕多个敌人
 	magictable[8]={}
 	magictable[8][MAGIC_DEF_TABLE.ID] = 8
@@ -280,6 +295,8 @@ magictable = {}
 	magictable[8][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[8][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[8][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[8][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[8][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 	
 	
 --吸血
@@ -296,6 +313,9 @@ magictable = {}
 	--magictable[9][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[9][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[9][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[9][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[9][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	
 --反弹伤害N回合	
 	magictable[10]={}
@@ -309,7 +329,9 @@ magictable = {}
 	magictable[10][MAGIC_DEF_TABLE.DESCPTION] = "玩家被攻击时,反击损失50%生命 3回合"
 	magictable[10][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[10][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[10][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[10][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 	
 --玩家 闪电链
 	magictable[11]={}
@@ -325,6 +347,8 @@ magictable = {}
 	magictable[11][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
 	magictable[11][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[11][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[11][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[11][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
 
 --玩家 NXN毒
@@ -341,7 +365,9 @@ magictable = {}
 	magictable[12][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[12][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
 	magictable[12][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[12][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = false
+	magictable[12][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 --暴击概率
 	magictable[13]={}
 	magictable[13][MAGIC_DEF_TABLE.ID] = 13
@@ -353,6 +379,8 @@ magictable = {}
 	magictable[13][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[13][MAGIC_DEF_TABLE.DESCPTION] = "提升玩家暴击率100"
 	magictable[13][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[13][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[13][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
 
 --闪避概率
@@ -366,7 +394,9 @@ magictable = {}
 	magictable[14][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[14][MAGIC_DEF_TABLE.DESCPTION] = "提升玩家闪避率100"
 	magictable[14][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[14][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[14][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 --子弹时间
 	magictable[15]={}
 	magictable[15][MAGIC_DEF_TABLE.ID] = 15
@@ -379,7 +409,9 @@ magictable = {}
 	magictable[15][MAGIC_DEF_TABLE.DESCPTION] = "降低游戏速度"
 	magictable[15][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[15][MAGIC_DEF_TABLE.CDROUND] =  5
-	
+	magictable[15][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[15][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
 
 --血比例越小 攻击越强
 
@@ -496,17 +528,9 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 	local tTargetList = {}
 	local tEffList = {}
 
+	local bTargetIsPlayer = false
 	local bCast = false
 	
-	if magictable[nMagicId] == nil then
-		return false;
-	end
-
-	--重新计算CD
-	if player.IfCanUseMagic(nMagicId) == false then
-		return;
-	end
-
 	local magicinfo = magictable[nMagicId];
 	
 	if magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.PLAYER then
@@ -521,10 +545,11 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 		
 		--对TARGET增加特效
 		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil then
-			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
+			tEffList = magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
 		else
 			cclog("增加TARGET特效失败 nMagicId:"..nMagicId);
-		end
+		end	
+		bTargetIsPlayer = true;
 		
 	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.ALLMONSTER then
 		--===对所有MON施放技能===-
@@ -619,11 +644,15 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 	
 	--无特效技能施放则bcast=true 
 	--特效技能技能施放则 tTargetList~=nil
-	if bCast and tTargetList~= nil then
+	if bCast or tTargetList~= nil then
 		player.UseMagic(nMagicId)
 	end
 	
-	return tTargetList,tEffList;
+	if bTargetIsPlayer then
+		return player,tEffList
+	else
+		return tTargetList,tEffList;	
+	end	
 end
 
 
@@ -747,8 +776,8 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 	
 	--无特效技能施放则bcast=true 
 	--特效技能技能施放则 tTargetList~=nil
-	if bCast and tTargetList~= nil then
-		
+	if bCast or tTargetList~= nil then
+		--怪物施放技能成功
 	end
 	
 	return tTargetList,tEffList;

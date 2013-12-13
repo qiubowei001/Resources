@@ -351,7 +351,7 @@ function Main.menuCallbackOpenPopup(tag,sender)
 
 			else
 				--其他情况直接释放
-				magic.PlayerSpellMagic(nMagicId);	
+				player.SpellMagic(nMagicId);	
 			end
 end
 
@@ -570,15 +570,19 @@ function p.main(nMission)
 				local nAction,nNum = LineFunc.OnTouchEnd()
 				--========line结束处理====--
 				
+
 				if nAction == false then
 					return;
 				end
 				
+				--消耗能量豆
+				player.SpendEnergy(1);
+				
 				--tbrickType.MONSTER
 				if nAction == tbrickType.BLOOD then
-					local hp = player.drinkBlood(nNum);			
+					player.drinkBlood(nNum);			
 				elseif 	nAction == tbrickType.GOLD then
-					local gold = player.takeGold(nNum);	
+					player.takeGold(nNum);	
 				end
 				
 				--倒计时BUFF
@@ -589,14 +593,10 @@ function p.main(nMission)
 				magiceff.DoMagicEff(tParamEvn);
 
 				--过期法术效果去除
-				magiceff.ClearMagicEff(tParamEvn);	
+				magiceff.ClearPlayerTriggerMagicEff(tParamEvn);	
 				
 				--所有技能冷却+1
 				player.SkillCoolDown();
-				
-				--==显示玩家数据==--
-				MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
-				MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 				
 	
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
@@ -608,7 +608,7 @@ function p.main(nMission)
 						
 				if Board[X][Y] ~= nil then
 						local pbrick = Board[X][Y];	
-						magic.PlayerSpellMagic(Main.ChosedMagic,pbrick);						
+						player.SpellMagic(Main.ChosedMagic,pbrick);						
 				end
 				Main.selectMode = SELECTMODE.NORMAL
 				MainUI.SetMainUITip("Nor")

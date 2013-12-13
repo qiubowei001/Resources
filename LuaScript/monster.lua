@@ -28,7 +28,7 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["ATT"] = 1
 	MONSTER_TYPE[1]["ATTGrow"] = 1
 	MONSTER_TYPE[1]["ATTadj"] = 3
-	MONSTER_TYPE[1]["CD"] = 10
+	MONSTER_TYPE[1]["CD"] = 40
 	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
@@ -191,10 +191,13 @@ function monster.AttackCDPlusOne(pbrick)
 	if nPersent>100 then
 		nPersent = 100
 	end	
+	
+	
 	BAR:setPercentage(nPersent);
 	
 	local mainsprite = brick.GetMainSprite(pbrick)		
-	mainsprite:stopActionByTag(gblinkactionTag)
+	
+	--mainsprite:stopActionByTag(gblinkactionTag)
 	mainsprite:setVisible(true)
 	 
 	--90%时闪烁
@@ -202,10 +205,11 @@ function monster.AttackCDPlusOne(pbrick)
 		local sprite = pbrick.attackready 
 		sprite:setVisible(true)
 		BAR:setVisible(false)
-		local actionBlink = CCBlink:create(1, 10)
-		local action = CCRepeatForever:create(actionBlink)
-		action:setTag(gblinkactionTag)
-		mainsprite:runAction(action)
+		
+		--local actionBlink = CCBlink:create(1, 10)
+		--local action = CCRepeatForever:create(actionBlink)
+		--action:setTag(gblinkactionTag)
+		--mainsprite:runAction(action)
 		
 		--执行释放技能 和攻击
 		monster.SpellMagic(pbrick,false)
@@ -214,6 +218,8 @@ function monster.AttackCDPlusOne(pbrick)
 		--执行MAGIC特效
 		magiceff.DoMagicEffAfterMonsterAct(pbrick);
 		
+		--清除过期特效
+		magiceff.ClearMonTriggerMagicEff(pbrick)
 		
 		
 	elseif nPersent>=80 then
@@ -226,14 +232,6 @@ function monster.AttackCDPlusOne(pbrick)
 			BARbg:runAction(action)
 			pbrick.IfScaled = true
 		end
-	
-		--local tmp = (pbrick.moninfo[monsterInfo.CD])%2
-		--if tmp == 0 then
-		--	BAR:setVisible(true)
-		--else
-		--	BAR:setVisible(false)
-		--end
-		
 	elseif nPersent < 80 then
 		BAR:setVisible(true)
 		
@@ -330,7 +328,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		
 		
-		--[[血条
+		--血条
 		local HPBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
 		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
 		pBrick:addChild(HPBarBg)
@@ -387,8 +385,6 @@ function monster.SetAtt(pmonster)
 	local Attsprite = ValueToPic.GetPicByAttack(natt)
 	pmonster:addChild(Attsprite)
 	Attsprite:setTag(g_attspritetag);
-		
-	
 end
 
 --修改怪物属性
@@ -399,7 +395,7 @@ function monster.AddHp(pmonster,nRecovery)
 		pmonster.moninfo[monsterInfo.HP] = pmonster.moninfo[monsterInfo.HPMAX] 
 	end
 	
-	--[[
+	--
 	local hpbar = pmonster.HPBar
 	local percent = pmonster.moninfo[monsterInfo.HP]/ pmonster.moninfo[monsterInfo.HPMAX]
 	hpbar:setPercentage(100*percent);
@@ -438,9 +434,9 @@ function monster.damage( pBrick,nDamage,bcritical)
 			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage
 			
 			
-			--local hpbar = defender.HPBar
+			local hpbar = defender.HPBar
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
-			--hpbar:setPercentage(100*percent);
+			hpbar:setPercentage(100*percent);
 	
 			--怪物扣血 设置透明
 			local mainsprite = brick.GetMainSprite(pBrick)
@@ -528,12 +524,21 @@ function monster.SpellMagic(pmonster,IfBorn)
 				local spelltime =  pmonster.moninfo[monsterInfo.MAGIC_ROUND][i];
 				
 				if spelltime > 0 then
-						--本回合还未施放技能
-						local tTargetList,tEffList = magic.monsterSpellMagic(nid,pmonster);
-						pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
-						
-						--怪物技能特效是否需要马上触发
-						if magic.GetMagicDoeffAfterSpell(nid) ==true then
+					--本回合还未施放技能
+					local tTargetList,tEffList = magic.monsterSpellMagic(nid,pmonster);
+					pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
+
+					--怪物技能特效是否需要马上触发
+					if magic.GetMagicDoeffAfterSpell(nid) ==true then
+						--对玩家施法
+						if tTargetList == player then
+							local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]			
+							local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
+							efffunc(player,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+ 		 					
+							--获取怪物EFFTABLE ROUND --
+							tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1   
+						else
 							for j,v in pairs(tTargetList) do
 								local effT = tEffList[j];
 								local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
@@ -542,8 +547,9 @@ function monster.SpellMagic(pmonster,IfBorn)
         
 								--获取怪物EFFTABLE ROUND --
 								effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
-							end
-						end
+							end														
+						end	
+					end
 				end
 			end
 		end		

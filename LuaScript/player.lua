@@ -29,6 +29,12 @@ playerInfo = {
 	Entity_CRITICALRATE   =24,
 	Entity_CRITICALCHANCE   =25,
 	Entity_DODGECHANCE 	= 26,
+	
+	ENERGY = 27,
+	Entity_ENERGY 		= 28,
+	ENERGYMAX			= 29,
+	Entity_ENERGYMAX 	= 30,
+	
 }
 
 
@@ -57,9 +63,11 @@ local tPlayerExp =
 	[8] = 200,
 }--]]
 
+
 local magic_effect_afterplayeract = {}
 local magic_effect_aftermonact = {}
-
+local gEnergy_Recovery_TimerId = nil;
+local gEnergyRecoveryTime = 5;
 
 --初始化玩家数据
 function p.Initplayer()
@@ -94,9 +102,14 @@ function p.Initplayer()
 	player[playerInfo.Entity_CRITICALCHANCE] 	= 0;
 	player[playerInfo.Entity_DODGECHANCE] 	= 0;
 
+	
+	player[playerInfo.ENERGY] 				= 15;
+	player[playerInfo.Entity_ENERGY] 		= 15;
+	player[playerInfo.ENERGYMAX] 			= 15;
+	player[playerInfo.Entity_ENERGYMAX] 	= 15;
+	
 	player.Skill = SkillUpgrade.InitPlayerSkill();
 	player.MagicCD = {}
-	
 	
 	player.AttAdjFuncT = {};
 	player.DamageAdjFuncT = {};
@@ -106,15 +119,28 @@ function p.Initplayer()
 
 	player.Dodgechance = 0;
 	
+	--能量回复定时器		
+	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerEnergyRecovery, gEnergyRecoveryTime, false)	
+	
 	player.UpdateEntityData();
+	
 	player.AddNewSkill(3,3)
+	
 	player.AddNewSkill(7,15)
 	player.AddNewSkill(7,16)
 
+
+--[[
 	player.AddNewSkill(4,11)
-	player.AddNewSkill(11,7)
-	
+	player.AddNewSkill(11,7)	
 	player.AddNewSkill(13,17)
+	--]]
+	player.AddNewSkill(1,1)
+	player.AddNewSkill(8,6)	
+	player.AddNewSkill(9,4)		
+	
+	
+	
 	
 end
 
@@ -125,6 +151,9 @@ function p.AddHp(nRecovery)
 	if player[playerInfo.HP] >= player[playerInfo.Entity_HPMAX] then
 		player[playerInfo.HP] = player[playerInfo.Entity_HPMAX]
 	end
+	
+	----==显示玩家数据==--
+	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])			
 end
 
 
@@ -203,11 +232,10 @@ function player.takeGold(nNum)
 	if player[playerInfo.GOLD] >= 100 then
 		MainUI.ShowUpgradeBtn();
 	end
-	
+
+	----==显示玩家数据==--
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
 	return player[playerInfo.GOLD];
-	
-	--
 end
 
 
@@ -333,6 +361,13 @@ end
 
 --判断技能是否CD
 function player.IfCanUseMagic(nMagicId)
+	--player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
+	local energy = player[playerInfo.ENERGY]
+	if energy < magictable[nMagicId][MAGIC_DEF_TABLE.ENERGYNEED] then 
+		--能量不足
+		return false
+	end	
+	
 	local cd = player.GetMagicCDById(nMagicId)
 	if cd >= magictable[nMagicId][MAGIC_DEF_TABLE.CDROUND] then
 		return true
@@ -402,6 +437,7 @@ function player.UpdateEntityData()
 	player[playerInfo.Entity_CRITICALCHANCE]   =player.CriticalChance 
 	player[playerInfo.Entity_DODGECHANCE] 	= player.Dodgechance;
 
+	player[playerInfo.Entity_ENERGYMAX] 	= player[playerInfo.ENERGYMAX];
 	
 	
 	--装备数据叠加
@@ -427,12 +463,73 @@ function player.UpdateEntityData()
 	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 	MainUI.SetMainUIATK(player[playerInfo.Entity_ATT])
 
-	
+	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
 	
 	MainUI.SetMainUILEV(player[playerInfo.LEVEL])
 	MainUI.SetMainUIEXP(player[playerInfo.EXP])
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+
 	
+end
+
+function p.TimerEnergyRecovery()
+	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] +1
+	
+	if player[playerInfo.ENERGY] >= player[playerInfo.Entity_ENERGYMAX] then
+		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]
+	end	
+	----==显示玩家数据==--
+	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
+end
+
+function player.SpendEnergy(nEnergy)
+	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
+	----==显示玩家数据==--
+	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
+end
+
+function player.SpellMagic(nMagicId,ptarget,pmonster,IfBorn)
+	--技能ID错误
+	if magictable[nMagicId] == nil then
+		return false;
+	end
+
+	--技能未冷却
+	if player.IfCanUseMagic(nMagicId) == false then
+		return;
+	end
+	
+	--消耗能量豆
+	local nEnergy = magictable[nMagicId][MAGIC_DEF_TABLE.ENERGYNEED]
+	player.SpendEnergy(nEnergy);
+	
+	
+	local tTargetList,tEffList = magic.PlayerSpellMagic(nMagicId,ptarget);
+
+	--怪物技能特效是否需要马上触发
+	if magic.GetMagicDoeffAfterSpell(nMagicId) ==true then
+		--对玩家施法
+		if tTargetList == player then
+			local effid = magictable[nMagicId][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]			
+			local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
+			efffunc(player,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+ 			
+			--获取怪物EFFTABLE ROUND --
+			tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1   
+			
+		else	
+			--对怪物施法
+			for j,v in pairs(tTargetList) do
+				local effT = tEffList[j];
+				local effid = magictable[nMagicId][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
+				local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
+				efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+        
+				--获取怪物EFFTABLE ROUND --
+				effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
+			end			
+		end	
+	end
 end
 
 

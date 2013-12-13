@@ -13,32 +13,49 @@ local g_progressbartag = 8;
 local g_wavetimertag = 9;
 local g_SpeedBtntag = 10;
 local g_UpgradeBtntag = 11;
+
+
 local g_HPBartag = 12;
 local g_ExpBartag = 13;
 local g_GoldBartag = 14;
+local g_EnergyBartag = 15;
 		
 local bglayer = nil;
 local gprogressbar = nil;
 local waveCounter = nil;
+
 local gHPBar = nil; 
 local gExpBar = nil;
 local gGoldBar = nil;
+local gEnergyBar = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
-		
-		--
+
+
+		--能量条
+		gEnergyBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Energybar.png"))
+		gEnergyBar:setType(kCCProgressTimerTypeBar)
+		gEnergyBar:setMidpoint(CCPointMake(0, 0))
+		gEnergyBar:setBarChangeRate(CCPointMake(0, 1))
+		gEnergyBar:setPosition(CCPointMake(50, 130))
+		bglayer:addChild(gEnergyBar,1,g_EnergyBartag)	
+		gEnergyBar:setPercentage(100);
+		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
+		gEnergyBarBg:setPosition(50, 130)
+		bglayer:addChild(gEnergyBarBg,2)
+	
 		--血条
 		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/HPbar.png"))
 		HPBar:setType(kCCProgressTimerTypeBar)
 		HPBar:setMidpoint(CCPointMake(0, 0))
 		HPBar:setBarChangeRate(CCPointMake(0, 1))
-		HPBar:setPosition(CCPointMake(130, 130))
+		HPBar:setPosition(CCPointMake(140, 130))
 		bglayer:addChild(HPBar,1,g_HPBartag)	
 		gHPBar = HPBar
 		HPBar:setPercentage(100);
 		local HPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		HPBarBg:setPosition(130, 130)
+		HPBarBg:setPosition(140, 130)
 		bglayer:addChild(HPBarBg,2)
 		
 		
@@ -48,12 +65,12 @@ function p.LoadUI()
 		ExpBar:setType(kCCProgressTimerTypeBar)
 		ExpBar:setMidpoint(CCPointMake(0, 0))
 		ExpBar:setBarChangeRate(CCPointMake(0, 1))
-		ExpBar:setPosition(CCPointMake(100, 130))
+		ExpBar:setPosition(CCPointMake(110, 130))
 		bglayer:addChild(ExpBar,1,g_ExpBartag)	
 		gExpBar = ExpBar
 		ExpBar:setPercentage(0);
 		local ExpBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		ExpBarBg:setPosition(100, 130)
+		ExpBarBg:setPosition(110, 130)
 		bglayer:addChild(ExpBarBg,2)
 		
 		
@@ -63,12 +80,12 @@ function p.LoadUI()
 		GoldBar:setType(kCCProgressTimerTypeBar)
 		GoldBar:setMidpoint(CCPointMake(0, 0))
 		GoldBar:setBarChangeRate(CCPointMake(0, 1))
-		GoldBar:setPosition(CCPointMake(70, 130))
+		GoldBar:setPosition(CCPointMake(80, 130))
 		bglayer:addChild(GoldBar,1,g_GoldBartag)	
 		gGoldBar = GoldBar
 		GoldBar:setPercentage(0);
 		local GoldBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		GoldBarBg:setPosition(70, 130)
+		GoldBarBg:setPosition(80, 130)
 		bglayer:addChild(GoldBarBg,2)
 		
 		
@@ -79,14 +96,14 @@ function p.LoadUI()
 		local hpLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(hpLabel)
 			hpLabel:setColor(ccc3(255,255,255))
-			hpLabel:setPosition(0, 220)
+			hpLabel:setPosition(-60, 220)
 			hpLabel:setTag(g_HPlabeltag);
 		
 		--显示玩家攻击
 		local ATlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(ATlabel)
 			ATlabel:setColor(ccc3(255,0,0))
-			ATlabel:setPosition(0, 180)
+			ATlabel:setPosition(-60, 180)
 			ATlabel:setTag(g_ATlabeltag);
 					
 			
@@ -94,28 +111,28 @@ function p.LoadUI()
 		local GOLDlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(GOLDlabel)
 			GOLDlabel:setColor(ccc3(255,0,0))
-			GOLDlabel:setPosition(0, 150)
+			GOLDlabel:setPosition(-60, 150)
 			GOLDlabel:setTag(g_goldlabeltag);		
 
 		--显示动作提示
 		local Tiplabel = CCLabelTTF:create("Nor","Arial", 20)
 			bglayer:addChild(Tiplabel)
 			Tiplabel:setColor(ccc3(255,0,0))
-			Tiplabel:setPosition(0, 110)
+			Tiplabel:setPosition(-60, 110)
 			Tiplabel:setTag(g_Tiplabeltag);		--]]
 
 		--显示玩家经验
 		local EXPlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(EXPlabel)
 			EXPlabel:setColor(ccc3(255,0,0))
-			EXPlabel:setPosition(0, 80)
+			EXPlabel:setPosition(-60, 80)
 			EXPlabel:setTag(g_EXPlabeltag);		
 
 		--显示玩家等级
 		local LEVlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(LEVlabel)
 			LEVlabel:setColor(ccc3(255,0,0))
-			LEVlabel:setPosition(0, 270)
+			LEVlabel:setPosition(-60, 270)
 			LEVlabel:setTag(g_LEVlabeltag);		
 	
 	
@@ -123,7 +140,7 @@ function p.LoadUI()
 		local missionLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(missionLabel)
 			missionLabel:setColor(ccc3(255,0,0))
-			missionLabel:setPosition(0, 420)
+			missionLabel:setPosition(-60, 420)
 			missionLabel:setTag(g_missionlabeltag);
 			
 		--显示MISSION进度
@@ -234,6 +251,9 @@ function p.SetMainUILEV(nLEV)
 	label:setString("LEV:"..nLEV)	         
 end
 
+function p.SetMainUIEnergy(energy,energymax)
+	gEnergyBar:setPercentage(100*energy/energymax);
+end
 
 function p.SetMainUIHP(nHP,nHPMAX)
 	local label = bglayer:getChildByTag(g_HPlabeltag)

@@ -90,7 +90,7 @@ function p.AddParticleEffToWorld(pBrick,sEffName)
 	local posx,posy = brick.GetPosByBrick(pBrick)
 			
 	emitter:setPosition(posx, posy);		
-	layerMain:addChild(emitter, 9000)
+	layerMain:addChild(emitter, 9001)
 end
 
 
@@ -138,13 +138,11 @@ function p.AddParticleEffToLine(tBrick,sEffName,func)
 	end
 		
 	local actionremove = CCCallFuncN:create(calltest)
-	arr:addObject(actionremove)		
+	arr:addObject(actionremove)
 	
 	local  seq = CCSequence:create(arr)	
 	emitter:runAction(seq)
 	layerMain:addChild(emitter, 10)
-	
-	
 end
 
 local tHitEffColor = 
