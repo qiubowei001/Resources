@@ -1,8 +1,8 @@
 brickInfo = {};
 brickInfo.brick_num_X = 6;
 brickInfo.brick_num_Y = 6;
-brickInfo.brickWidth = 100;
-brickInfo.brickHeight = 100;
+brickInfo.brickWidth = 90;
+brickInfo.brickHeight = 90;
 brickInfo.brickSpeed = 5;
 brickInfo.brickRespondArea = 0.7;--×©¿éÏàÓ¦ÇøÓò0-1
 

@@ -84,6 +84,7 @@ end
 
 --怪物攻击冷却计时器
 function Main.MonsterAttackTimer()
+	--怪物
 	for i = 1,brickInfo.brick_num_X do
 		for j = 1,brickInfo.brick_num_Y do
 			
@@ -93,6 +94,12 @@ function Main.MonsterAttackTimer()
 			end
 		end
 	end
+	
+	--[[宠物
+	local petlist = pet.GetPetList()
+	for i,pet in pairs(petlist) do
+		monster.AttackCDPlusOne(pet);
+	end]]
 end
 
 
@@ -495,8 +502,8 @@ function p.main(nMission)
         -- add in farm background
         local bg = CCSprite:create("Map.jpg")
         bg:setPosition(winSize.width / 2 , winSize.height / 2)
-        --layerMain:setPosition(0 , winSize.height / 2)
-		layerMain:addChild(bg)
+		--layerMain:addChild(bg)
+		g_sceneGame:addChild(bg)
 		cclog("winSize: %0.2f, %0.2f", winSize.width, winSize.height)
        
 		
@@ -628,7 +635,7 @@ function p.main(nMission)
 		-- 注册触摸事件  
 		layerMain:registerScriptTouchHandler(onTouch)
         layerMain:setTouchEnabled(true)
-
+		layerMain:setPosition(50 ,100)
 		--主界面初始化
 		MainUI.LoadUI()
 		
@@ -658,7 +665,6 @@ function p.main(nMission)
 	Particle.Init()
 	
 	TimerBuff.LoadUI()
-	
 end
 
 

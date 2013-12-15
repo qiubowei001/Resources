@@ -482,7 +482,9 @@ function monster.attack(pmonster)
 	local ndamage = 0;		
 	--¹¥»÷ÊÇ·ñCD
 	if pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
+		
 		local tAttAction = monster.InitAttAction( player,ndamage,pmonster)
+		
 		tAttAction.damage = monster.GetMonsterAtt(pmonster)
 		
 		local bSkip = false
