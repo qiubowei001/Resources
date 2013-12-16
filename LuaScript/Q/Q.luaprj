@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 
-<Project Name="qbwdemo.luaprj" >
+<Project Name="Q.luaprj" >
     <Filter Name="LuaScript" >
         <LuaFile RelativePath=".\..\brick.lua" />
         <LuaFile RelativePath=".\..\brickInfo.lua" />
+        <LuaFile RelativePath=".\..\Combo.lua" />
         <LuaFile RelativePath=".\..\Entry.lua" />
         <LuaFile RelativePath=".\..\EquipUpGradeUI.lua" />
         <LuaFile RelativePath=".\..\extern.lua" />
@@ -19,6 +20,8 @@
         <LuaFile RelativePath=".\..\monster.lua" />
         <LuaFile RelativePath=".\..\Particle.lua" />
         <LuaFile RelativePath=".\..\PassiveSkill.lua" />
+        <LuaFile RelativePath=".\..\Pet.lua" />
+        <LuaFile RelativePath=".\..\PetBar.lua" />
         <LuaFile RelativePath=".\..\player.lua" />
         <LuaFile RelativePath=".\..\SkillBar.lua" />
         <LuaFile RelativePath=".\..\SkillUpgrade.lua" />
@@ -26,10 +29,11 @@
         <LuaFile RelativePath=".\..\SpeedUpBuff.lua" />
         <LuaFile RelativePath=".\..\SpriteConfig.lua" />
         <LuaFile RelativePath=".\..\SpriteManager.lua" />
-        <LuaFile RelativePath=".\..\TimerBuff.lua" />
         <LuaFile RelativePath=".\..\UIdefine.lua" />
-        <Filter Name="qbwdemo" />
+        <LuaFile RelativePath=".\..\ValueToPic.lua" />
+        <Filter Name="Q" />
         <Filter Name="UI" >
+            <LuaFile RelativePath=".\..\UI\NumberToPic.lua" />
             <LuaFile RelativePath=".\..\UI\ProgressBar.lua" />
         </Filter>
     </Filter>

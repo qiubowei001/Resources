@@ -51,9 +51,9 @@ function p.LoadUI()
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer)
 		
-		
-		
-		
+		--local numbersprite = NumberToPic.GetPicByNumBer(1234567890)
+		--numbersprite:setPosition(CCPointMake(200, 120))
+		--scene:addChild(numbersprite,99)
 		
 		local tAttType = 
 {

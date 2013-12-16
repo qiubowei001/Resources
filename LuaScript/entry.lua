@@ -26,6 +26,7 @@ dofile("LuaScript/ValueToPic.lua")
 
 dofile("LuaScript/PassiveSkill.lua")
 
+dofile("LuaScript/UI/NumberToPic.lua")
 dofile("LuaScript/UI/ProgressBar.lua")
 
 dofile("LuaScript/MissionSelectUI.lua")
@@ -56,7 +57,7 @@ dofile("LuaScript/SkillUpGradeUI.lua")
 
 dofile("LuaScript/SkillUpgrade.lua")
 
-dofile("LuaScript/TimerBuff.lua")
+dofile("LuaScript/Combo.lua")
 
 dofile("LuaScript/EquipUpGradeUI.lua")
 

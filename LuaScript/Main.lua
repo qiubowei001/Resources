@@ -593,8 +593,7 @@ function p.main(nMission)
 				end
 				
 				--倒计时BUFF
-				local buff = TimerBuff.GetTimerBuff()
-				TimerBuff.SetTimerBuff(buff+nNum*10)
+				Combo.AddCombo()
 				
 				--法术效果执行
 				magiceff.DoMagicEff(tParamEvn);
@@ -635,7 +634,7 @@ function p.main(nMission)
 		-- 注册触摸事件  
 		layerMain:registerScriptTouchHandler(onTouch)
         layerMain:setTouchEnabled(true)
-		layerMain:setPosition(50 ,100)
+		--layerMain:setPosition(50 ,100)
 		--主界面初始化
 		MainUI.LoadUI()
 		
@@ -664,7 +663,7 @@ function p.main(nMission)
 	
 	Particle.Init()
 	
-	TimerBuff.LoadUI()
+	Combo.LoadUI()
 end
 
 

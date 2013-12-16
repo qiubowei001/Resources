@@ -18,7 +18,7 @@ function p.LoadUI(ntype)
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetWaveTimerId())
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetMonsterCDTimerId())
 		
-		TimerBuff.RemoveTimer();
+		Combo.RemoveTimer();
 		
 		glayer = CCLayer:create()
 

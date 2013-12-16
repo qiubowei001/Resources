@@ -212,7 +212,7 @@ function p.getPlayerAttDamgeFromLine()
 		end
 	end
 	
-	return nDamage*(TimerBuff.GetRatio())
+	return nDamage*(Combo.GetRatio())
 end
 
 

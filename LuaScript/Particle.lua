@@ -47,7 +47,7 @@ function p.Init()
 		gMainHitEff  = nil;
 	end
 	
-	gMainHitGrade = TimerBuff.GetRatio();
+	gMainHitGrade = Combo.GetRatio();
 end
 --制造一个emiter
 function p.BuildParticle(sEffName)
@@ -173,7 +173,7 @@ function p.setHitEffGrade(grade)
 end
 
 function p.SetMainHitEff(posx,posy)
-	local effGrade = TimerBuff.GetGrade()
+	local effGrade = Combo.GetGrade()
 	--光效不存在
 	if gMainHitEff == nil then
 		local hitEff = Particle.BuildHitParticle(effGrade)

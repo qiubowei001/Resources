@@ -221,13 +221,13 @@ function p.takedamage(ndamage,pmonster)
 end
 
 function p.drinkBlood(nNum)
-	local nRecovery = nNum*2*(TimerBuff.GetRatio());
+	local nRecovery = nNum*2*(Combo.GetRatio());
 	p.AddHp(nRecovery)
 	return player[playerInfo.HP];
 end
 
 function player.takeGold(nNum)
-	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(TimerBuff.GetRatio());
+	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(Combo.GetRatio());
 	player[playerInfo.GOLD] = math.floor(player[playerInfo.GOLD])
 	if player[playerInfo.GOLD] >= 100 then
 		MainUI.ShowUpgradeBtn();
