@@ -25,7 +25,7 @@ function p.GetFigure(figure)
 	return sprite;
 end
 
---获取sprite
+--获取sprite,和单个数字spri的表
 function p.GetPicByNumBer(nInput)
 	local number = nInput
 	local t = {}
@@ -42,13 +42,23 @@ function p.GetPicByNumBer(nInput)
 	
 	
 	local spriteMain = CCSprite:create();
+	local tSingle = {}
 	
 	for i,figure in pairs(t) do 
 		local sprite = p.GetFigure(figure)
 		sprite:setPosition(CCPointMake(50*(i-1), 0))
 		spriteMain:addChild(sprite)
+		table.insert(tSingle,sprite)
 	end
-	return spriteMain;
+	
+	
+	spriteMain:setScale(1.5);
+	--尾部加个HIT
+	local HITSprite = CCSprite:create("UI/font/hit.png")
+	HITSprite:setPosition(CCPointMake(50*(#t)+20, 0))
+	spriteMain:addChild(HITSprite)
+	table.insert(tSingle,HITSprite)
+	return spriteMain,tSingle;
 end
 
 

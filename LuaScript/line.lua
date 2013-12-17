@@ -37,6 +37,8 @@ function p.OnTouchEnd()
 				
 				--普通行为消耗能量1 如果没有能量 则返回				
 				if 	player[playerInfo.ENERGY] <1 then				
+					--能量不足 提示
+					Hint.ShowHint(Hint.tHintType.noEnergy)
 					LineFunc.CancelLine();
 					LineFunc.ResetLine()
 					return false;

@@ -20,6 +20,9 @@ local tPrizeRandom =
 --nBrickCount 下次掉落数量
 --val = (平均值 + 波动值)x方块数
 function p.GetPrize(nBrickCount)
+	--COMBO +1
+	Combo.AddCombo()
+	
 	local adj = nBrickCount*2
 	
 	local nrandom = math.random(1,100)

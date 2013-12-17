@@ -67,7 +67,7 @@ local tPlayerExp =
 local magic_effect_afterplayeract = {}
 local magic_effect_aftermonact = {}
 local gEnergy_Recovery_TimerId = nil;
-local gEnergyRecoveryTime = 5;
+local gEnergyRecoveryTime = 4;
 
 --初始化玩家数据
 function p.Initplayer()
@@ -364,7 +364,8 @@ function player.IfCanUseMagic(nMagicId)
 	--player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
 	local energy = player[playerInfo.ENERGY]
 	if energy < magictable[nMagicId][MAGIC_DEF_TABLE.ENERGYNEED] then 
-		--能量不足
+		--能量不足 提示
+		Hint.ShowHint(Hint.tHintType.noEnergy)
 		return false
 	end	
 	
@@ -505,7 +506,9 @@ function player.SpellMagic(nMagicId,ptarget,pmonster,IfBorn)
 	
 	
 	local tTargetList,tEffList = magic.PlayerSpellMagic(nMagicId,ptarget);
-
+	--COMBO +1
+	Combo.AddCombo()
+	
 	--怪物技能特效是否需要马上触发
 	if magic.GetMagicDoeffAfterSpell(nMagicId) ==true then
 		--对玩家施法

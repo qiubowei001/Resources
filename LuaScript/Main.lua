@@ -293,8 +293,11 @@ function Main.brickfallLogic()
 		end
 		pbrick.movetoTime = timeinterval;
 		
-		p.brickSetXY(pbrick,X,brickInfo.brick_num_Y+1)				
-		p.brickMoveTo(pbrick,X,Ymin);
+		--p.brickSetXY(pbrick,X,brickInfo.brick_num_Y+1)				
+		--p.brickMoveTo(pbrick,X,Ymin);
+		p.brickSetXY(pbrick,X,Ymin)	
+		p.brickFlashIn(pbrick);
+		
 		Board[X][Ymin] = pbrick;
 		
 		if nbricktype == tbrickType.MONSTER then
@@ -363,6 +366,19 @@ function Main.menuCallbackOpenPopup(tag,sender)
 end
 
 
+--◊©øÈ…¡œ÷
+function p.brickFlashIn(pbrick)
+	local arr = CCArray:create()
+	
+	local scaleact = CCScaleTo:create(0.1, 1.5)
+	local scaleact2 = CCScaleTo:create(0.2, 1)
+	arr:addObject(scaleact)
+	arr:addObject(scaleact2)
+	
+	local  seq = CCSequence:create(arr)	
+	pbrick:runAction(seq)
+end
+
 
 function p.brickSetXY(pbrick,X,Y)
 		--cclog("setPosition: %0.2f, %0.2f", X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight+brickInfo.brickHeight/2)
@@ -423,6 +439,7 @@ function p.brickMoveTo(pbrick,X,Y)
 		
 		pbrick:stopAllActions()
 		
+		pbrick:setScale(1);
 		local positionx = X*brickInfo.brickWidth+brickInfo.brickWidth/2;
 		local positiony = Y*brickInfo.brickHeight-brickInfo.brickHeight/2;
 		

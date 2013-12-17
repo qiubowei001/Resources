@@ -21,6 +21,7 @@ dofile("LuaScript/brickInfo.lua")
 dofile("LuaScript/extern.lua")
 
 
+dofile("LuaScript/Hint.lua")
 
 dofile("LuaScript/ValueToPic.lua")
 
