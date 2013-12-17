@@ -210,7 +210,7 @@ function p.getPlayerAttDamgeFromLine()
 	local nDamage = player.GetAttack();
 	for i,v in pairs(Line) do
 		if v.nType == tbrickType.SWORD then
-			nDamage = nDamage + player.GetAttack();							
+			nDamage = nDamage + 3;							
 		end
 	end
 	

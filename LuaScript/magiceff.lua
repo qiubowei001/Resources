@@ -42,7 +42,10 @@ function p.eff02(pobj,Tparam1)
 	end
 	local param1 = Tparam1.damage;
 	if pobj.nType == tbrickType.MONSTER then
-		monster.damage(pobj,param1)
+		--Ã¿´Î¿ÛÑª80%
+		local monsterhpmax = pobj.moninfo[monsterInfo.HPMAX]
+		local ndamage = monsterhpmax*0.8
+		monster.damage(pobj,ndamage)
 	end
 end
 

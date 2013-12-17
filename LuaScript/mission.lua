@@ -46,12 +46,12 @@ MISSION_TABLE[1]["config"] =
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 {35		,	{1},		{100}		,10		, 1			,{7},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,20		, 3			,{8},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,20		, 3			,{9},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{35		,	{1},		{100}		,20		, 1			,{8},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{35		,	{1},		{100}		,20		, 1			,{9},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 {35		,	{1},		{100}		,30		, 1			,{10},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 {35		,	{1},		{100}		,10		, 1			,{11},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,10		, 3			,{12},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{10		,	{2,4},		{95,5}		,20		, 3			,{1,1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{35		,	{1},		{100}		,10		, 1			,{12},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{10		,	{2,4},		{95,5}		,20		, 1			,{1,1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 {30		,	{2,4},		{95,5}		,7		, 1			,{1,1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
 }
 --]]
