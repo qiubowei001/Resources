@@ -40,7 +40,7 @@ playerInfo = {
 
 --玩家经验配置表
 local tPlayerExp = 
---[[
+--
 {
 	[1] = 10,
 	[2] = 10,
@@ -48,10 +48,19 @@ local tPlayerExp =
 	[4] = 10,
 	[5] = 20,
 	[6] = 20,
-	[7] = 200,
-	[8] = 200,
+	[7] = 20,
+	[8] = 20,
+	[9] = 20,
+	[10] = 20,
+	[11] = 20,
+	[12] = 20,
+	[13] = 20,
+	[14] = 20,
+	[15] = 20,
+	[16] = 20,
+	
 }--]]
---
+--[[
 {
 	[1] = 100,
 	[2] = 105,
@@ -68,6 +77,11 @@ local magic_effect_afterplayeract = {}
 local magic_effect_aftermonact = {}
 local gEnergy_Recovery_TimerId = nil;
 local gEnergyRecoveryTime = 4;
+
+
+function player.GetEnergyRecoveryTimer()
+	return gEnergy_Recovery_TimerId
+end
 
 --初始化玩家数据
 function p.Initplayer()
@@ -124,21 +138,18 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	
+	--
 	player.AddNewSkill(3,3)
 	
-	player.AddNewSkill(7,15)
-	player.AddNewSkill(7,16)
+	--player.AddNewSkill(7,15)
+	--player.AddNewSkill(7,16)
 
 
---[[
-	player.AddNewSkill(4,11)
-	player.AddNewSkill(11,7)	
-	player.AddNewSkill(13,17)
-	--]]
+
 	player.AddNewSkill(1,1)
 	player.AddNewSkill(8,6)	
 	player.AddNewSkill(9,4)		
-	
+	--]]
 	
 	
 	
@@ -221,7 +232,10 @@ function p.takedamage(ndamage,pmonster)
 end
 
 function p.drinkBlood(nNum)
-	local nRecovery = nNum*2*(Combo.GetRatio());
+	--每个血瓶回复10%
+	local bottleHp = player[playerInfo.Entity_HPMAX]*0.1
+	
+	local nRecovery = nNum*bottleHp*(Combo.GetRatio());
 	p.AddHp(nRecovery)
 	return player[playerInfo.HP];
 end

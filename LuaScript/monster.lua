@@ -23,12 +23,12 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"
 	MONSTER_TYPE[1]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[1]["HP"] = 8
-	MONSTER_TYPE[1]["HPGrow"] = 3
+	MONSTER_TYPE[1]["HPGrow"] = 1
 	MONSTER_TYPE[1]["HPadj"] = 3
 	MONSTER_TYPE[1]["ATT"] = 2
-	MONSTER_TYPE[1]["ATTGrow"] = 1.5
+	MONSTER_TYPE[1]["ATTGrow"] = 1
 	MONSTER_TYPE[1]["ATTadj"] = 3
-	MONSTER_TYPE[1]["CD"] = 20
+	MONSTER_TYPE[1]["CD"] = 30
 	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
@@ -38,12 +38,12 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
 	MONSTER_TYPE[2]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[2]["HP"] = 13
-	MONSTER_TYPE[2]["HPGrow"] = 7
+	MONSTER_TYPE[2]["HPGrow"] = 3
 	MONSTER_TYPE[2]["HPadj"] = 3
 	MONSTER_TYPE[2]["ATT"] = 2
 	MONSTER_TYPE[2]["ATTGrow"] = 0.5
 	MONSTER_TYPE[2]["ATTadj"] = 3
-	MONSTER_TYPE[2]["CD"] = 20
+	MONSTER_TYPE[2]["CD"] = 30
 	MONSTER_TYPE[2]["CDGrow"] = -1
 	MONSTER_TYPE[2]["PICID"] = 2
 	MONSTER_TYPE[2]["ScarePICID"] = 17
@@ -52,10 +52,10 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
 	MONSTER_TYPE[3]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[3]["HP"] = 10
-	MONSTER_TYPE[3]["HPGrow"] = 4
+	MONSTER_TYPE[3]["HPGrow"] = 1
 	MONSTER_TYPE[3]["HPadj"] = 3
 	MONSTER_TYPE[3]["ATT"] = 1
-	MONSTER_TYPE[3]["ATTGrow"] = 0.8
+	MONSTER_TYPE[3]["ATTGrow"] = 0.7
 	MONSTER_TYPE[3]["ATTadj"] = 3
 	MONSTER_TYPE[3]["CD"] = 10
 	MONSTER_TYPE[3]["CDGrow"] = -1.5
@@ -502,6 +502,7 @@ function monster.attack(pmonster)
 			local mainsprite = brick.GetMainSprite(pmonster)
 			mainsprite:runAction(actionJump);
 			
+			cclog("monsterid:"..pmonster.monsterId.."att:"..pmonster.moninfo[monsterInfo.ATT].." player damage:"..tAttAction.damage)
 			player.takedamage(tAttAction.damage,pmonster);	
 			pmonster.moninfo[monsterInfo.CD]	= 0;							
 		end

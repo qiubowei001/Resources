@@ -17,6 +17,7 @@ function p.LoadUI(ntype)
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetBrickFallTimerId())
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetWaveTimerId())
 		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(Main.GetMonsterCDTimerId())
+		CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(player.GetEnergyRecoveryTimer())
 		
 		Combo.RemoveTimer();
 		

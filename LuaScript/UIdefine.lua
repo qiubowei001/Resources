@@ -7,6 +7,7 @@ UIdefine =
 	MissionSelectUI		= 10005,
 	Board				= 10006,
 	SkillBar			= 10007,
+	HitEffect			= 10008,
 }
 
 

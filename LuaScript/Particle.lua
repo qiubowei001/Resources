@@ -178,7 +178,7 @@ function p.SetMainHitEff(posx,posy)
 	if gMainHitEff == nil then
 		local hitEff = Particle.BuildHitParticle(effGrade)
 		hitEff:setPosition(posx, posy);
-		layerMain:addChild(hitEff, 9000)
+		layerMain:addChild(hitEff, 9000,UIdefine.HitEffect)
 		gMainHitGrade = effGrade;
 		gMainHitEff = hitEff;
 		return;
