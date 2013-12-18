@@ -157,10 +157,13 @@ function p.GetRandomSkillId()
 	end
 	
 	local tRandomRet = {}
-	
-	--如果仅剩3个以内 直接返回
-	if #tRandomRet <= 3 then
-		
+	--local test = 
+	----如果仅剩3个以内 直接返回
+	if #tRandomAll <= 3 then
+		for i,v in pairs(tRandomAll) do
+			table.insert(tRandomRet,v)
+		end
+		return tRandomRet
 	end
 			
 	for i=1,3 do

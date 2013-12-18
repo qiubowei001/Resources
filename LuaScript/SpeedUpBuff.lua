@@ -13,8 +13,8 @@ EXP =2,
 local tPrizeRandom = 
 {
 --概率  平均值  波动
-	[tPrizeType.GOLD] = {50, 1, 3},
-	[tPrizeType.EXP]  = {50, 1 ,8},
+	[tPrizeType.GOLD] = {50, 1, 2},
+	[tPrizeType.EXP]  = {50, 2 ,1},
 }
 
 --nBrickCount 下次掉落数量

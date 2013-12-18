@@ -36,11 +36,12 @@ end
 
 --·µ»Ø ratio,grade
 function p.doCalculate()
-	for grade,v in pairs(tGrade) do
-		if g_Combo < v[1] then
-			return v[2],grade
+	for i=1,#tGrade do
+		if g_Combo < tGrade[i][1] then
+			return tGrade[i][2],i
 		end
 	end
+	
 end
 
 local winSize = CCDirector:sharedDirector():getWinSize()

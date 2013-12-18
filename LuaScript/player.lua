@@ -48,16 +48,16 @@ local tPlayerExp =
 	[4] = 10,
 	[5] = 20,
 	[6] = 20,
-	[7] = 20,
-	[8] = 20,
-	[9] = 20,
-	[10] = 20,
-	[11] = 20,
-	[12] = 20,
-	[13] = 20,
-	[14] = 20,
-	[15] = 20,
-	[16] = 20,
+	[7] = 30,
+	[8] = 30,
+	[9] = 30,
+	[10] = 30,
+	[11] = 30,
+	[12] = 40,
+	[13] = 40,
+	[14] = 40,
+	[15] = 40,
+	[16] = 40,
 	
 }--]]
 --[[
@@ -137,13 +137,13 @@ function p.Initplayer()
 	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerEnergyRecovery, gEnergyRecoveryTime, false)	
 	
 	player.UpdateEntityData();
-	
-	--
+	player.AddNewSkill(7,15)
+	player.AddNewSkill(7,16)
+
+	--[[
 	player.AddNewSkill(3,3)
 	
-	--player.AddNewSkill(7,15)
-	--player.AddNewSkill(7,16)
-
+	
 
 
 	player.AddNewSkill(1,1)
