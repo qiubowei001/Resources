@@ -42,22 +42,23 @@ playerInfo = {
 local tPlayerExp = 
 --
 {
-	[1] = 10,
-	[2] = 10,
-	[3] = 10,
-	[4] = 10,
-	[5] = 20,
-	[6] = 20,
-	[7] = 30,
-	[8] = 30,
-	[9] = 30,
-	[10] = 30,
-	[11] = 30,
-	[12] = 40,
-	[13] = 40,
-	[14] = 40,
-	[15] = 40,
-	[16] = 40,
+	[1] = 15,
+	[2] = 15,
+	[3] = 15,
+	[4] = 15,
+	[5] = 25,
+	[6] = 25,
+	[7] = 25,
+	[8] = 25,
+	[9] = 25,
+	[10] = 25,
+	[11] = 25,
+	[12] = 25,
+	[13] = 25,
+	[14] = 25,
+	[15] = 25,
+	[16] = 25,
+	
 	
 }--]]
 --[[
@@ -137,8 +138,8 @@ function p.Initplayer()
 	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerEnergyRecovery, gEnergyRecoveryTime, false)	
 	
 	player.UpdateEntityData();
-	player.AddNewSkill(7,15)
-	player.AddNewSkill(7,16)
+	--player.AddNewSkill(7,15)
+	--player.AddNewSkill(7,16)
 
 	--[[
 	player.AddNewSkill(3,3)
@@ -232,8 +233,8 @@ function p.takedamage(ndamage,pmonster)
 end
 
 function p.drinkBlood(nNum)
-	--每个血瓶回复10%
-	local bottleHp = player[playerInfo.Entity_HPMAX]*0.1
+	--每个血瓶回复5%
+	local bottleHp = player[playerInfo.Entity_HPMAX]*0.5
 	
 	local nRecovery = nNum*bottleHp*(Combo.GetRatio());
 	p.AddHp(nRecovery)
@@ -497,7 +498,26 @@ function p.TimerEnergyRecovery()
 	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
 end
 
+
+local testtime = 3
 function player.SpendEnergy(nEnergy)
+	nEnergy = 0
+	--操作后做个HP太少,energy太少的提示 优先提示HP
+	testtime = testtime -1
+
+	if player[playerInfo.HP] < player[playerInfo.Entity_HPMAX]*0.4 then
+		if testtime < 0 then
+			Hint.ShowHint(Hint.tHintType.LowHp)
+			testtime = 3
+		end
+	elseif player[playerInfo.ENERGY] < player[playerInfo.Entity_ENERGYMAX]*0.4 then
+		if testtime < 0 then
+			Hint.ShowHint(Hint.tHintType.LowEnergy)
+			testtime = 3
+		end		
+	end
+
+	
 	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
 	----==显示玩家数据==--
 	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])

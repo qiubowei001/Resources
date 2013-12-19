@@ -7,6 +7,8 @@ p.tHintType =
 {	
 	--图片路径
 	noEnergy = { "UI/font/noEnergy.png"};		--没有能量
+	LowHp = { "UI/font/LowHp.png"};				--没有血
+	LowEnergy = { "UI/font/lowEnergy.png"};		--能量太低
 }
 
 
@@ -17,7 +19,7 @@ function p.ShowHint(tHintType)
 	local path = tHintType[1]	
 	local sprite = CCSprite:create(path)
 	
-	sprite:setPosition(CCPointMake(winSize.width *0.5 , winSize.height *0.8))
+	sprite:setPosition(CCPointMake(winSize.width *0.5 , winSize.height *0.6))
 	
 	local scene = Main.GetGameScene();
 	scene:addChild(sprite,100)	

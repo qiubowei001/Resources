@@ -5,7 +5,6 @@ local p = mission;
 local nRound = 0;
 local gMission = 1
 
-local gWaveCount = 0
 local gWaveDelay = 0
 
 --[[
@@ -26,12 +25,12 @@ MISSION_TABLE[1]["config"] =
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
 --[[
-{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},
-{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 
 
-{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=30,[tbrickType.BLOOD]=30,[tbrickType.GOLD]=40}},
 
 }
@@ -39,20 +38,23 @@ MISSION_TABLE[1]["config"] =
 --]]
 
 --
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,10		, 1			,{7},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,20		, 1			,{8},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,20		, 1			,{9},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,30		, 1			,{10},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,10		, 1			,{11},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{35		,	{1},		{100}		,10		, 1			,{12},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{10		,	{2,4},		{95,5}		,20		, 1			,{1,1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
-{30		,	{2,4},		{95,5}		,7		, 1			,{1,1},	{[tbrickType.MONSTER]=25,[tbrickType.SWORD]=25,[tbrickType.BLOOD]=25,[tbrickType.GOLD]=25}},
+{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1},		{100}			,10		, 1			,{7},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{35		,	{1},		{100}			,10		, 1			,{8},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1},		{100}			,10		, 1			,{9},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{20		,	{1,2,3},	{33,33,34}		,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{9999	,	{},			{}				,10		, 1			,{},	{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=35,[tbrickType.BLOOD]=35,[tbrickType.GOLD]=30}},
+
 }
 --]]
 
@@ -105,14 +107,6 @@ end
 
 
 
-function p.GetWaveCount()
-	return gWaveCount
-end
-
-function p.GetWaveDelay()
-	return gWaveDelay
-end
-
 --初始化MISSION信息
 function p.SetMission(nMission)
 	gMission = nMission
@@ -120,8 +114,6 @@ function p.SetMission(nMission)
 	nRound = 1;
 	local v = p.GetRoundInfoTable()
 	gWaveDelay = v[4]	
-	gWaveCount = v[5]
-	
 end
 
 function p.GetMission()
@@ -146,11 +138,11 @@ function p.GenerateBrickType()
 		return nil
 	end	
 	
-	gWaveCount = v[5]
 	gWaveDelay = v[4]
 	local bEnd = false
 	if v[1] == 9999 then
 		bEnd = true
+		local v = p.GetRoundInfoTable()
 	end
 	local nrandom = math.random(1,100)
 	local tmp =0
@@ -195,13 +187,22 @@ function p.GetProgress()
 	local roundmax = 0;
 	
 	for i,v in pairs(MISSION_TABLE[gMission]["config"]) do
-		roundmax = roundmax + v[1]
+		if v[1] ~= 9999 then
+			roundmax = roundmax + v[1]
+		end
 	end
 
 	return nRound/roundmax
 end
 
-
+function p.IfFallToFill()
+	local n = nRound%5
+	if 	n == 0 then
+		return true
+	else
+		return false
+	end
+end
 
 
 

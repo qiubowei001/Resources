@@ -23,7 +23,7 @@ function p.GetPrize(nBrickCount)
 	--COMBO +1
 	Combo.AddCombo()
 	
-	local adj = nBrickCount*2
+	local adj = nBrickCount
 	
 	local nrandom = math.random(1,100)
 	local ntmp = 0

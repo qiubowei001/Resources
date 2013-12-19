@@ -36,11 +36,6 @@ local g_LEVlabeltag =6;
 local glayerMenu = nil;
 
 
-
---生成一波砖块
-local gWaveCount = 0; --掉落砖块剩余数量
-
-	
 function Main.getTileXY(x,y)
 	--brickInfo.brickRespondArea
 	local w = brickInfo.brickWidth;
@@ -104,44 +99,6 @@ end
 
 
 local WaveTick = 0
-function Main.CreatebrickWave()
-	
-	gWaveCount = gWaveCount + mission.GetWaveCount()		
-end
-
-function Main.SpeedUpWave()
-	--
-	if PassiveSkill.Entity.RadarBuff ~= 1 then
-		return
-	end
-	
-	WaveTick = mission.GetWaveDelay();
-	SpeedUpBuff.GetPrize(mission.GetWaveCount());
-end
-
-
-function Main.WaveTimer()
-	--等待光效播放
-	if 	Particle.IfIsPlayingEff() then
-		return
-	end
-		
-	local delay = mission.GetWaveDelay()
-
-	WaveTick = WaveTick + 1;
-	if WaveTick>= delay then
-		WaveTick = delay
-	end
-	
-	MainUI.setWaveTimer(WaveTick*100/delay);
-	
-	if WaveTick >= delay then
-		WaveTick = 0
-		--回合数加1
-		mission.RoundPlusOne();
-		Main.CreatebrickWave()
-	end	
-end
 
 function Main.GetMonsterCDTimerId()
 	return gMonsterCdTimerId
@@ -177,13 +134,10 @@ function Main.brickfallLogic()
 		end
 		
 		if Main.IfBoardFull() then
-			--游戏结束
-			GameOverUI.LoadUI(2)
 			return;
 		end
 		
-		
-		
+						
 		--所有方块向下掉落
 		local nNum = brickInfo.brick_num_X;
 		for i=1,nNum do
@@ -207,13 +161,6 @@ function Main.brickfallLogic()
 				end	
 			end
 		end
-
-		
-		--砖块计数
-		if gWaveCount <= 0 then
-			return
-		end
-		gWaveCount = gWaveCount - 1
 
 		
 		local nwidth = brickInfo.brickWidth;
@@ -270,6 +217,10 @@ function Main.brickfallLogic()
 			return
 		end
 		
+		if nbricktype == nil then
+			return
+		end
+		
 		if nbricktype == tbrickType.MONSTER then
 			--产生怪物
 			local monsterid,lev = mission.GenerateMonsterId();
@@ -285,6 +236,9 @@ function Main.brickfallLogic()
 		else
 			pbrick = brick.creatBrick(nbricktype);
 		end	
+		
+		--回合数加1
+		mission.RoundPlusOne();
 						
 		local timetick = brickInfo.brick_num_Y+1 - Ymin;
 		local timeinterval = 0.3;
@@ -292,9 +246,7 @@ function Main.brickfallLogic()
 			timeinterval = timetick / pbrick.brickSpeed  *0.3;
 		end
 		pbrick.movetoTime = timeinterval;
-		
-		--p.brickSetXY(pbrick,X,brickInfo.brick_num_Y+1)				
-		--p.brickMoveTo(pbrick,X,Ymin);
+
 		p.brickSetXY(pbrick,X,Ymin)	
 		p.brickFlashIn(pbrick);
 		
@@ -661,13 +613,12 @@ function p.main(nMission)
 		--初始化玩家数据
 		player.Initplayer();	
 
-		--开启定时器
-		Main.CreatebrickWave();
-		gWaveTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.WaveTimer, 0.1, false)
-		
+			
 		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
+			
+		CCDirector:sharedDirector():getScheduler():setTimeScale(1);
 				
         return layerMain
     end

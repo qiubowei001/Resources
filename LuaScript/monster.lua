@@ -449,7 +449,8 @@ function monster.damage( pBrick,nDamage,bcritical)
 				mainsprite:stopActionByTag(gblinkactionTag)
 	
 				--玩家獲取經驗
-				local nexp =  (defender.moninfo[monsterInfo.LEV])+1
+				--local nexp =  (defender.moninfo[monsterInfo.LEV])+1
+				local nexp =  1
 				player.GainEXP(nexp);
 
 				--执行死亡动画
