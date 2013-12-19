@@ -23,7 +23,6 @@ Main.selectMode = SELECTMODE.NORMAL;
 Main.ChosedMagic = 0;
 
 local gBrickFallTimerId = nil;
-local gWaveTimerId = nil;
 local gMonsterCdTimerId = nil;
 
 local g_HPlabeltag =1;
@@ -104,9 +103,6 @@ function Main.GetMonsterCDTimerId()
 	return gMonsterCdTimerId
 end
 
-function Main.GetWaveTimerId()
-	return gWaveTimerId
-end
 
 function Main.GetBrickFallTimerId()
 	return gBrickFallTimerId

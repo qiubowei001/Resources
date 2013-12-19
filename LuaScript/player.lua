@@ -234,7 +234,7 @@ end
 
 function p.drinkBlood(nNum)
 	--Ã¿¸öÑªÆ¿»Ø¸´5%
-	local bottleHp = player[playerInfo.Entity_HPMAX]*0.5
+	local bottleHp = player[playerInfo.Entity_HPMAX]*0.05
 	
 	local nRecovery = nNum*bottleHp*(Combo.GetRatio());
 	p.AddHp(nRecovery)
