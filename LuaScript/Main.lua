@@ -614,6 +614,7 @@ function p.main(nMission)
 		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
 			
+			
 		CCDirector:sharedDirector():getScheduler():setTimeScale(1);
 				
         return layerMain
@@ -627,6 +628,8 @@ function p.main(nMission)
 	
 	Particle.Init()
 	
+	Hint.Init()
+		
 	Combo.LoadUI()
 end
 

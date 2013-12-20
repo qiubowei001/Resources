@@ -20,10 +20,9 @@ MAGIC_EFF_DEF_TABLE = {
 --增强BRICK攻击力
 function p.eff01(pobj,Tparam1)
 			cclog("add atk to player")
-				--==显示玩家数据==--		
-			player[playerInfo.BUFFATT] = Tparam1.addAttack;		
+				--==显示玩家数据==--
+			player[playerInfo.BUFFATT] =  player[playerInfo.Entity_ATT]*0.3 --Tparam1.addAttack;		
 			player.UpdateEntityData();
-
 end
 
 function p.effclr01()
@@ -31,6 +30,7 @@ function p.effclr01()
 			player[playerInfo.BUFFATT] = 0;
 				--==显示玩家数据==--
 			player.UpdateEntityData();
+			Hint.ShowHint(Hint.tHintType.powerdown)	
 end
 
 
@@ -270,14 +270,16 @@ end
 
 function p.eff13(player,tparam1)
 	local rate = tparam1.rate
-	
+			
 	 player.AddAttAdjFunc(function(tAttAction)
-								tAttAction.criticalchance = tAttAction.criticalchance + rate
+								tAttAction.criticalchance = 3*tAttAction.criticalchance
 						  end
 							,13)
 end
 
 function p.effclr13(pObj)
+	Hint.ShowHint(Hint.tHintType.criticalDown)
+	
 	player.RemoveAdjFunc(13)
 end
 
@@ -286,12 +288,14 @@ function p.eff14(player,tparam1)
 	
 	 player.AddDamageAdjFunc(
 							function(tDamageAction)
-								tDamageAction.dodgechance = 100;
+								tDamageAction.dodgechance = tDamageAction.dodgechance*3;
 							end
 							,14)
 end
 
 function p.effclr14(pObj)
+	Hint.ShowHint(Hint.tHintType.dodgedown)
+	
 	player.RemoveDamageAdjFunc(14)
 end
 
@@ -414,11 +418,11 @@ end
 MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1]={}
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.ID] = 1
-	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.DESCPTION] = "增强BRICK攻击力3回合"
+	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.DESCPTION] = "增强BRICK攻击力%30 6回合"
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff01
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr01
-	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
+	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 6
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
 	MAGIC_EFFtable[1][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
 	
@@ -525,20 +529,20 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[13]={}
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.ID] = 13
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
-	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.DESCPTION] = "提升暴击率100"
+	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.DESCPTION] = "翻倍提升暴击率"
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff13
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr13
-	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
+	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.TPARAM] ={rate = 100}
 	MAGIC_EFFtable[13][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
 	
 	MAGIC_EFFtable[14]={}
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.ID] = 14
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
-	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.DESCPTION] = "提升闪避率100"
+	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.DESCPTION] = "翻倍提升闪避率"
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff14
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr14
-	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
+	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.TPARAM] ={rate = 100}
 	MAGIC_EFFtable[14][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
 		

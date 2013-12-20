@@ -173,13 +173,16 @@ magictable = {}
 	magictable[1][MAGIC_DEF_TABLE.ID] = 1
 	magictable[1][MAGIC_DEF_TABLE.NAME] = "催化剂"
 	magictable[1][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[1][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = function()
+															Hint.ShowHint(Hint.tHintType.powerup)	
+															return 
+														end
 	magictable[1][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
 	magictable[1][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1
 	magictable[1][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
 	magictable[1][MAGIC_DEF_TABLE.DESCPTION] = "增强玩家攻击力5回合"
 	magictable[1][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-	magictable[1][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[1][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[1][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
 	magictable[1][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 	
@@ -226,7 +229,7 @@ magictable = {}
 	magictable[4][MAGIC_DEF_TABLE.DESCPTION] = "群体怪物变金币"
 	magictable[4][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[4][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-	magictable[4][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[4][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[4][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
 	magictable[4][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
@@ -242,7 +245,7 @@ magictable = {}
 	magictable[5][MAGIC_DEF_TABLE.DESCPTION] = "群体怪物变血瓶"
 	magictable[5][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[5][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-	magictable[5][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[5][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[5][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
 	magictable[5][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
@@ -373,7 +376,10 @@ magictable = {}
 	magictable[13][MAGIC_DEF_TABLE.ID] = 13
 	magictable[13][MAGIC_DEF_TABLE.NAME] = "提升玩家暴击率100"
 	magictable[13][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[13][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[13][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = function()
+															Hint.ShowHint(Hint.tHintType.criticalUp)	
+															return 
+														end
 	magictable[13][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
 	magictable[13][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 13
 	magictable[13][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
@@ -388,7 +394,10 @@ magictable = {}
 	magictable[14][MAGIC_DEF_TABLE.ID] = 14
 	magictable[14][MAGIC_DEF_TABLE.NAME] = "提升玩家闪避率100"
 	magictable[14][MAGIC_DEF_TABLE.PICICON] = ""
-	magictable[14][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[14][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = function()
+															Hint.ShowHint(Hint.tHintType.dodgeUp)		
+															return 
+														end
 	magictable[14][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
 	magictable[14][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 14
 	magictable[14][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
@@ -534,7 +543,7 @@ function p.PlayerSpellMagic(nMagicId,pBrickSingle,pLine)
 	local magicinfo = magictable[nMagicId];
 	
 	if magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.PLAYER then
-		cclog("SpellMagic PLAYER")
+		
 		--===对玩家施放技能===-
 		--触发 施放FUNC
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then

@@ -138,7 +138,8 @@ function p.Initplayer()
 	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerEnergyRecovery, gEnergyRecoveryTime, false)	
 	
 	player.UpdateEntityData();
-	--player.AddNewSkill(7,15)
+	
+	player.AddNewSkill(1,1)
 	--player.AddNewSkill(7,16)
 
 	--[[
@@ -284,7 +285,7 @@ end
 
 
 function player.GetAttack()
-	local att = player[playerInfo.Entity_ATT];
+	local att = player[playerInfo.Entity_ATT]+ player[playerInfo.BUFFATT];
 	return  att;
 end
 
@@ -474,13 +475,12 @@ function player.UpdateEntityData()
 		end	
 	end
 	
+	--entity att 指的是玩家穿了装备的攻击力 不包括BUFF
 	--技能BUFF叠加
-	player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + player[playerInfo.BUFFATT]
+	--player[playerInfo.Entity_ATT] = player[playerInfo.Entity_ATT] + player[playerInfo.BUFFATT]
 	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
-	MainUI.SetMainUIATK(player[playerInfo.Entity_ATT])
 
-	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
-	
+	MainUI.SetMainUIATK( player.GetAttack())
 	MainUI.SetMainUILEV(player[playerInfo.LEVEL])
 	MainUI.SetMainUIEXP(player[playerInfo.EXP])
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
@@ -495,7 +495,7 @@ function p.TimerEnergyRecovery()
 		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]
 	end	
 	----==显示玩家数据==--
-	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
+	--MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
 end
 
 
@@ -520,7 +520,7 @@ function player.SpendEnergy(nEnergy)
 	
 	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
 	----==显示玩家数据==--
-	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
+	--MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
 end
 
 function player.SpellMagic(nMagicId,ptarget,pmonster,IfBorn)

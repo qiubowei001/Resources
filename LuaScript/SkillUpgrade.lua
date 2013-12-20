@@ -21,10 +21,10 @@ p.tSkillNode =
 [13] = {MAGICID = 13,PassiveID = nil},
 [14] = {MAGICID = 14,PassiveID = nil},
 
-[15] = {MAGICID = nil,PassiveID = "Radar"},
-[16] = {MAGICID = nil,PassiveID = "RadarBuff"},
+--[15] = {MAGICID = nil,PassiveID = "Radar"},
+--[16] = {MAGICID = nil,PassiveID = "RadarBuff"},
 
-[17] = {MAGICID = 15,PassiveID = nil},
+[15] = {MAGICID = 15,PassiveID = nil},
 
 }
 
@@ -41,13 +41,14 @@ p.tSkillTree =
 [4] = {11},
 [5] = {12},
 [6] = {13},
-[7] = {15,16},
+--[7] = {15,16},
+[7] = {15},
 [8] = {6},
 [9] = {4},
 [10] = {5},
 [11] = {7},
 [12] = {8},
-[13] = {17},
+
 
 }
 

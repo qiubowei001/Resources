@@ -148,15 +148,19 @@ end
 local tHitEffColor = 
 {
 	[1] = ccc4f( 1, 1, 1,1),
-	[2] = ccc4f( 0, 1, 0,1),
-	[3] = ccc4f( 0, 0.5, 1,1),
-	[4] = ccc4f( 1, 1, 0,1),
+	[2] = ccc4f( 1, 1, 1,1),
+	[3] = ccc4f( 1, 1, 1,1),
+	[4] = ccc4f( 0, 1, 0,1),
+	[5] = ccc4f( 0, 1, 0,1),
+	[6] = ccc4f( 0, 0.5, 1,1),
+	[7] = ccc4f( 0, 0.5, 1,1),
+	[8] = ccc4f( 1, 1, 0,1),
 	
 }
 
 --鼠标点击光效 1~4种光效
 function p.BuildHitParticle(grade)
-	if grade>=1 and grade <= 4 then
+	if grade>=1 and grade <= 8 then
 		local eff = p.BuildParticle("HitEff1")
 		eff:setStartColor(tHitEffColor[grade])
 		eff:setEndColor(tHitEffColor[grade])
@@ -166,7 +170,7 @@ end
 
 function p.setHitEffGrade(grade)
 	
-	if grade>=1 and grade <= 4 then
+	if grade>=1 and grade <= 8 then
 		gMainHitEff:setStartColor(tHitEffColor[grade])
 		gMainHitEff:setEndColor(tHitEffColor[grade])
 	end
@@ -194,10 +198,11 @@ end
 
 --删除点击光效
 function p.DelMainHitEff()
+
 	if gMainHitEff ~= nil then
 		gMainHitEff:setStartColor(ccc4f(0, 0, 0, 0))
 		gMainHitEff:setEndColor(ccc4f(0, 0, 0, 0))
-	end
+	end--]]
 end
 
 

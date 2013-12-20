@@ -38,21 +38,27 @@ MISSION_TABLE[1]["config"] =
 --]]
 
 --
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{25		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1},		{100}			,10		, 1			,{7},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{35		,	{1},		{100}			,10		, 1			,{8},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1},		{100}			,10		, 1			,{9},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{10},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{20		,	{1,2,3},	{33,33,34}		,10		, 1			,{10},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
+{30		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
 {9999	,	{},			{}				,10		, 1			,{},	{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=35,[tbrickType.BLOOD]=35,[tbrickType.GOLD]=30}},
 
 }
@@ -126,6 +132,7 @@ end
 
 function p.RoundPlusOne()
 	nRound = nRound +1;
+	cclog("nRound:"..nRound)
 end
 
 --返回砖块类型,是否为结束回合
@@ -177,9 +184,15 @@ function p.GenerateMonsterId()
 		end
 	end
 	
+	local lev = 0;
+	--如果怪物等级NIL则去V[6][1]
+	if v[6][index] == nil then
+		lev = v[6][1]
+	else
+		lev = v[6][index]
+	end
 	
-	
-	return v[2][index],v[6][index]
+	return v[2][index],lev
 end
 
 --获取MISSION进度
