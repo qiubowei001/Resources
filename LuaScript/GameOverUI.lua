@@ -42,19 +42,23 @@ function p.LoadUI(ntype)
 		
 		
 		local scene = CCScene:create()
-        --scene = CCTransitionJumpZoom:create(1, scene)
-		
+        
         scene:addChild(glayer)
-        CCDirector:sharedDirector():pushScene( scene )
+		scene = CCTransitionJumpZoom:create(1, scene)
+		
+        CCDirector:sharedDirector():replaceScene( scene )
 	    --CCDirector:sharedDirector():replaceScene(scene)
+		--scene = Main.GetGameScene();
 end
 
 function p.BackToMission(tag,sender)
 	--CCDirector:sharedDirector():resume()
-	CCDirector:sharedDirector():popScene()
+	--CCDirector:sharedDirector():popScene()
 	
-	Main.CloseAllUI();
-	MissionSelectUI.LoadUI();
+	local scene = Main.GetGameScene();
+	CCDirector:sharedDirector():replaceScene(scene)
+--	Main.CloseAllUI();
+--	MissionSelectUI.LoadUI();
 end
 
 
