@@ -4,49 +4,175 @@
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.fla
-FileModTime:1387273140
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\criticalDown.png
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.png
-FileModTime:1387192674
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\criticalDown.xml
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.xml
-FileModTime:1387192674
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\criticalUp.png
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\hit.png
-FileModTime:1387263731
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\criticalUp.xml
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\hit.xml
-FileModTime:1387263731
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\CriticalX3.png
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\noEnergy.png
-FileModTime:1387272637
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\CriticalX3.xml
+FileModTime:1387592317
 %EndFont
 
 %BeginFont
 Handler:DirectoryHandler
 FontType:Invalid
-OutlineFileName:D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\noEnergy.xml
-FileModTime:1387272637
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\dodgedown.png
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\dodgedown.xml
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\dodgeUp.png
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\dodgeUp.xml
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\DodgeX3.png
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\DodgeX3.xml
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.fla
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.png
+FileModTime:1387289113
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\font.xml
+FileModTime:1387289113
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\hit.png
+FileModTime:1387289114
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\hit.xml
+FileModTime:1387289114
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\LowHp.png
+FileModTime:1387457109
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\LowHp.xml
+FileModTime:1387457109
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\noEnergy.png
+FileModTime:1387457109
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\noEnergy.xml
+FileModTime:1387457109
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\powerdown.png
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\powerdown.xml
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\powerup.png
+FileModTime:1387592317
+%EndFont
+
+%BeginFont
+Handler:DirectoryHandler
+FontType:Invalid
+OutlineFileName:E:\Program Files\cocos2d-2.1rc0-x-2.1.3\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\FLASH\Font\powerup.xml
+FileModTime:1387592317
 %EndFont
 

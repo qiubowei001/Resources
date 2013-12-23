@@ -25,42 +25,42 @@ MISSION_TABLE[1]["config"] =
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
 --[[
-{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},
-{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
+{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
+{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 
 
-{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=30,[tbrickType.BLOOD]=30,[tbrickType.GOLD]=40}},
+{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,     [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=40}},
 
 }
 
 --]]
 
 --
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.MONSTER]=100,[tbrickType.SWORD]=0,[tbrickType.BLOOD]=0,[tbrickType.GOLD]=0}},--BOSS战
-{30		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.MONSTER]=20,[tbrickType.SWORD]=27,[tbrickType.BLOOD]=26,[tbrickType.GOLD]=27}},
-{9999	,	{},			{}				,10		, 1			,{},	{[tbrickType.MONSTER]=0,[tbrickType.SWORD]=35,[tbrickType.BLOOD]=35,[tbrickType.GOLD]=30}},
-
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,	 [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{50		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{30		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{9999	,	{},			{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
+                                                               
 }
 --]]
 

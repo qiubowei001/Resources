@@ -76,6 +76,8 @@ function p.OnTouchEnd()
 						actiontype = tbrickType.BLOOD;
 					elseif 	LineFunc.GetLineType() == tbrickType.GOLD then
 						actiontype = tbrickType.GOLD;
+					elseif	LineFunc.GetLineType() == tbrickType.ENERGY then
+						actiontype = tbrickType.ENERGY;
 					end
 					
 					if actiontype == tbrickType.GOLD then
@@ -89,7 +91,6 @@ function p.OnTouchEnd()
 							Main.destroyBrick(v.TileX,v.TileY)
 						end						
 					end
-					
 					
 				end
 				LineFunc.ResetLine()

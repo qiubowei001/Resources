@@ -213,7 +213,7 @@ magictable = {}
 	magictable[3][MAGIC_DEF_TABLE.DESCPTION] = "¶¾ËùÓÐ¹ÖÎï"
 	magictable[3][MAGIC_DEF_TABLE.SPELL_TYPE] = tbrickType.MONSTER
 	magictable[3][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
-	magictable[3][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[3][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[3][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = false
 	magictable[3][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 

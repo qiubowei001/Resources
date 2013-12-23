@@ -135,3 +135,10 @@ SpriteConfig[19].Width = 80
 SpriteConfig[19].Height = 75
 SpriteConfig[19].FrameNumX = 6
 SpriteConfig[19].FrameNumY = 4
+
+SpriteConfig[20] = {}
+SpriteConfig[20].Name = "energy"
+SpriteConfig[20].Width = 72
+SpriteConfig[20].Height = 72
+SpriteConfig[20].FrameNumX = 1
+SpriteConfig[20].FrameNumY = 1

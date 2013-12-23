@@ -4,8 +4,8 @@ ValueToPic = {}
 local p=ValueToPic;
 
 
-local nStepVal = 2; --量化值
-local nTypeStep = 3; --类型单位数
+local nStepVal = 5; --量化值
+local nTypeStep = 1; --类型单位数
 
 --武器类型
 local tAttType = 

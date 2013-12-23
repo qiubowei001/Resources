@@ -33,7 +33,7 @@ function p.LoadUI()
 	bglayer = CCLayer:create()
 
 
-		--[[能量条
+		--能量条
 		gEnergyBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Energybar.png"))
 		gEnergyBar:setType(kCCProgressTimerTypeBar)
 		gEnergyBar:setMidpoint(CCPointMake(0, 0))
@@ -43,7 +43,7 @@ function p.LoadUI()
 		gEnergyBar:setPercentage(100);
 		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
 		gEnergyBarBg:setPosition(50, 130)
-		bglayer:addChild(gEnergyBarBg,2)]]
+		bglayer:addChild(gEnergyBarBg,2)
 	
 		--血条
 		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/HPbar.png"))
@@ -251,7 +251,7 @@ function p.SetMainUILEV(nLEV)
 	label:setString("LEV:"..nLEV)	         
 end
 
---[[
+--
 function p.SetMainUIEnergy(energy,energymax)
 	gEnergyBar:setPercentage(100*energy/energymax);
 end--]]

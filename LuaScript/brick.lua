@@ -14,10 +14,11 @@ local frameHeight = 96
 
 local tbrickTypeInfo = {}
 										--SPRITE ID
-	tbrickTypeInfo[tbrickType.MONSTER] = {1}
-	tbrickTypeInfo[tbrickType.SWORD] =   {3}
-	tbrickTypeInfo[tbrickType.BLOOD] =   {7}
-	tbrickTypeInfo[tbrickType.GOLD] = 	 {4,5,6}
+	tbrickTypeInfo[tbrickType.MONSTER] 	= {1}
+	tbrickTypeInfo[tbrickType.SWORD] 	=  {3}
+	tbrickTypeInfo[tbrickType.BLOOD] 	=  {7}
+	tbrickTypeInfo[tbrickType.GOLD] 	=  {4,5,6}
+	tbrickTypeInfo[tbrickType.ENERGY] 	=  {20}
 	
 
 local Magicefftag = 4000;	

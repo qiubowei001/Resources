@@ -547,15 +547,18 @@ function p.main(nMission)
 					return;
 				end
 				
-				--消耗能量豆
-				player.SpendEnergy(1);
 				
 				--tbrickType.MONSTER
 				if nAction == tbrickType.BLOOD then
 					player.drinkBlood(nNum);			
 				elseif 	nAction == tbrickType.GOLD then
-					player.takeGold(nNum);	
+					player.takeGold(nNum);
+				elseif	nAction == tbrickType.ENERGY then
+					player.EnergyRecovery(nNum);
 				end
+				
+				--消耗能量豆
+				player.SpendEnergy(1);
 				
 				--倒计时BUFF
 				Combo.AddCombo()

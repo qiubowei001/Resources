@@ -135,7 +135,7 @@ function p.Initplayer()
 	player.Dodgechance = 0;
 	
 	--能量回复定时器		
-	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.TimerEnergyRecovery, gEnergyRecoveryTime, false)	
+	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.EnergyRecoveryAuto, gEnergyRecoveryTime, false)	
 	
 	player.UpdateEntityData();
 	
@@ -488,39 +488,35 @@ function player.UpdateEntityData()
 	
 end
 
-function p.TimerEnergyRecovery()
-	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] +1
+--自动回复能量
+function p.EnergyRecoveryAuto()
+	p.EnergyRecovery(1)
+end
+
+function p.EnergyRecovery(nNum)
+	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*0.7
 	
 	if player[playerInfo.ENERGY] >= player[playerInfo.Entity_ENERGYMAX] then
 		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]
 	end	
 	----==显示玩家数据==--
-	--MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
+	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
 end
 
 
-local testtime = 3
 function player.SpendEnergy(nEnergy)
-	nEnergy = 0
 	--操作后做个HP太少,energy太少的提示 优先提示HP
-	testtime = testtime -1
-
 	if player[playerInfo.HP] < player[playerInfo.Entity_HPMAX]*0.4 then
-		if testtime < 0 then
-			Hint.ShowHint(Hint.tHintType.LowHp)
-			testtime = 3
-		end
-	elseif player[playerInfo.ENERGY] < player[playerInfo.Entity_ENERGYMAX]*0.4 then
-		if testtime < 0 then
-			Hint.ShowHint(Hint.tHintType.LowEnergy)
-			testtime = 3
-		end		
+		Hint.ShowHint(Hint.tHintType.LowHp)
+	end
+	if player[playerInfo.ENERGY] < player[playerInfo.Entity_ENERGYMAX]*0.3 then
+		Hint.ShowHint(Hint.tHintType.LowEnergy)	
 	end
 
 	
 	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] - nEnergy
 	----==显示玩家数据==--
-	--MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
+	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])
 end
 
 function player.SpellMagic(nMagicId,ptarget,pmonster,IfBorn)
