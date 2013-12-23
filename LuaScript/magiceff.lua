@@ -158,12 +158,12 @@ function p.eff05(pbrick,tparam1)
 	for X = fromx,tox,1 do
 		for Y = fromy ,toy,1 do
 			if Board[X][Y]~= nil then
-				--Main.destroyBrick(X,Y)
 				
 				if Board[X][Y].nType == tbrickType.MONSTER then
 					--光效
+					pbrick.IfBeStunned = true;
 					monster.AddAttAdjFunc(pbrick,
-											function(tAttAction)
+										function(tAttAction)
 												return false;--不攻击
 											end
 											,5)
@@ -177,7 +177,7 @@ end
 function p.effclr05(pObj)
 	--光效
 	Particle.RemoveParticleEffFromBrick(pObj,"star")
-						
+	pObj.IfBeStunned = true;										
 	monster.RemoveAdjFunc(pObj,5)
 end
 
@@ -246,7 +246,6 @@ function p.eff08(pbrick,tparam1)
 	end	
 	
 	---对列表monsterlistSpelled中所有怪物施放闪电
-	local power = 13
 	
 	
 	--撞击函数
@@ -257,7 +256,7 @@ function p.eff08(pbrick,tparam1)
 		
 		if pbrick ~= nil then
 			if pbrick.nType == tbrickType.MONSTER then
-				monster.damage(pbrick,power+math.random(0,3),false)
+				monster.damage(pbrick,math.random(5,100),false)
 			end
 		end	
 	end
@@ -523,7 +522,7 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff08
 	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
 	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
-	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.TPARAM] ={LinkNum = 3}
+	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.TPARAM] ={LinkNum = 5}
 	MAGIC_EFFtable[11][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
 	
 	MAGIC_EFFtable[13]={}

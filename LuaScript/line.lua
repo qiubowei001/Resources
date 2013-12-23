@@ -83,13 +83,17 @@ function p.OnTouchEnd()
 					if actiontype == tbrickType.GOLD then
 						nLineNum = 0;
 						for i,v in pairs(Line) do
-							nLineNum = nLineNum + v.GOLD;
-							Main.destroyBrick(v.TileX,v.TileY)
+							nLineNum = nLineNum + v.GOLD;							
+							Main.BrickMoveToBar(v,1);							
 						end
-					else
+					elseif actiontype == tbrickType.BLOOD then
 						for i,v in pairs(Line) do
-							Main.destroyBrick(v.TileX,v.TileY)
+							Main.BrickMoveToBar(v,2);
 						end						
+					elseif actiontype == tbrickType.ENERGY then	
+						for i,v in pairs(Line) do
+							Main.BrickMoveToBar(v,3);		
+						end			
 					end
 					
 				end

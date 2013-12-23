@@ -142,3 +142,10 @@ SpriteConfig[20].Width = 72
 SpriteConfig[20].Height = 72
 SpriteConfig[20].FrameNumX = 1
 SpriteConfig[20].FrameNumY = 1
+
+SpriteConfig[21] = {}
+SpriteConfig[21].Name = "brickbg"
+SpriteConfig[21].Width = 65
+SpriteConfig[21].Height = 64
+SpriteConfig[21].FrameNumX = 1
+SpriteConfig[21].FrameNumY = 1

@@ -184,7 +184,7 @@ function p.LoadUI()
 		bglayer:addChild(menu)		
 		menu:setVisible(true)
 			
-    bglayer:setPosition(CCPointMake(800, 50))
+   -- bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,3)
 	bglayer:setTag(UIdefine.MainUI);
@@ -192,6 +192,12 @@ function p.LoadUI()
 	p.SetMainUIMission(mission.GetMissionDesc())
 	
 	p.SetProgress(10)
+	
+	--∆Æ»Î
+	local winSize = CCDirector:sharedDirector():getWinSize()
+	bglayer:setPosition(CCPointMake(800, 50+winSize.height))
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	bglayer:runAction(moveby)	
 end
 
 --œ‘ æSPEED∞¥≈•

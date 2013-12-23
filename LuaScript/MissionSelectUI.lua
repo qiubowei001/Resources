@@ -22,7 +22,23 @@ local tMissionPortalInfo =
 
 function p.PortalOnClick(tag,sender)
 	Main.main(tag);
-	bglayer:removeFromParentAndCleanup(true);
+	local winSize = CCDirector:sharedDirector():getWinSize()
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	
+	--½¥½¥Òþ²Ø É¾³ý
+	function delete(sender)
+		sender:removeFromParentAndCleanup(true);
+	end
+		
+	local actionremove = CCCallFuncN:create(delete)
+	local arr = CCArray:create()
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+	--bglayer:removeFromParentAndCleanup(true);
+	
 end
 
 

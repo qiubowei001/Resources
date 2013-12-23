@@ -269,7 +269,6 @@ function Main.destroyBrick(X,Y,ifRemove)
 			layerMain:removeChild(Board[X][Y], true)
 		end
 		Board[X][Y] = nil;
-		
 	end
 end
 	
@@ -327,11 +326,13 @@ function p.brickFlashIn(pbrick)
 	pbrick:runAction(seq)
 end
 
-
-function p.brickSetXY(pbrick,X,Y)
-		--cclog("setPosition: %0.2f, %0.2f", X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight+brickInfo.brickHeight/2)
+function p.brickSetBGXY(pbrick,X,Y)
 		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
-		layerMain:addChild(pbrick);
+		layerMain:addChild(pbrick,1);
+end	
+function p.brickSetXY(pbrick,X,Y)
+		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
+		layerMain:addChild(pbrick,2);
 		if X>=1 and X <=brickInfo.brick_num_X and Y>=1 and Y<=brickInfo.brick_num_Y then
 			Board[X][Y] = pbrick;
 			pbrick.TileX = X;
@@ -373,7 +374,42 @@ function p.getBoardEmptyYFromX(X)
 		
 		return ret,retXuanKong;	
 end
+
+local tBarPositionX = 
+{
+	[1] 	= 860, --金币条
+	[2] 	= 900, --血条
+	[3] 	= 850, --能量条
+}
+--nType定义如上
+function p.BrickMoveToBar(pbrick,nType)
+	brick.setUnChosed(pbrick)
 	
+	local posx= tBarPositionX[nType]
+	local X,Y = pbrick.TileX,pbrick.TileY
+	Board[X][Y] = nil;
+	
+	--缩小
+	pbrick:setScale(0.5);
+	
+	--飘入
+	local actionto = CCMoveTo:create(0.8, ccp(posx, 260))
+	
+	--删除
+	function delete(sender)
+		sender:removeFromParentAndCleanup(true);
+	end
+		
+	local actionremove = CCCallFuncN:create(delete)
+	
+	local arr = CCArray:create()		
+	arr:addObject(actionto)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)
+	pbrick:runAction(seq)	
+end
+
 function p.brickMoveTo(pbrick,X,Y)
 	
 		--清空原位
@@ -426,8 +462,15 @@ function p.InitBoard()
 		Board[i]={}
 		for j = 1,brickInfo.brick_num_Y do
 			Board[i][j] = nil;
+			--初始化背景
+			local pbrickbg =SpriteManager.creatBrickSprite(21)
+			
+			p.brickSetBGXY(pbrickbg,i,j)
 		end
 	end
+	
+
+	
 end
 
 
@@ -466,8 +509,7 @@ function p.main(nMission)
 		
         -- add in farm background
         local bg = CCSprite:create("Map.jpg")
-        bg:setPosition(winSize.width / 2 , winSize.height / 2)
-		--layerMain:addChild(bg)
+      --layerMain:addChild(bg)
 		g_sceneGame:addChild(bg)
 		cclog("winSize: %0.2f, %0.2f", winSize.width, winSize.height)
        
@@ -619,7 +661,18 @@ function p.main(nMission)
 			
 			
 		CCDirector:sharedDirector():getScheduler():setTimeScale(1);
-				
+		
+		
+		--移动动画  bg:setPosition(winSize.width / 2 , winSize.height / 2)
+		
+		bg:setPosition(winSize.width / 2 , winSize.height*3/2)
+		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+		bg:runAction(moveby)	
+		
+		layerMain:setPosition(0 , winSize.height)
+		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+		layerMain:runAction(moveby)
+		
         return layerMain
     end
 

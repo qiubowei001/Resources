@@ -37,16 +37,16 @@ function p.LoadUI(ntype)
 		BackBtn:registerScriptTapHandler(p.BackToMission)
     	local menu = CCMenu:create()
 		menu:addChild(BackBtn,1,1)
-		--menu:setPosition(CCPointMake(30, 0))
-		--BackBtn:setPosition(0,240)
+		
 		glayer:addChild(menu,99,2)
 		
 		
 		local scene = CCScene:create()
-        
-        scene:addChild(glayer)
+        --scene = CCTransitionJumpZoom:create(1, scene)
 		
-        CCDirector:sharedDirector():pushScene( scene )		
+        scene:addChild(glayer)
+        CCDirector:sharedDirector():pushScene( scene )
+	    --CCDirector:sharedDirector():replaceScene(scene)
 end
 
 function p.BackToMission(tag,sender)

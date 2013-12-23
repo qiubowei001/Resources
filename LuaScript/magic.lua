@@ -231,7 +231,7 @@ magictable = {}
 	magictable[4][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[4][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[4][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
-	magictable[4][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+	magictable[4][MAGIC_DEF_TABLE.ENERGYNEED] = 3
 
 	
 	magictable[5]={}
@@ -247,7 +247,7 @@ magictable = {}
 	magictable[5][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[5][MAGIC_DEF_TABLE.CDROUND] =  7
 	magictable[5][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
-	magictable[5][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+	magictable[5][MAGIC_DEF_TABLE.ENERGYNEED] = 3
 
 	
 	--玩家点击后变身炸弹怪物 爆炸N*N个brick

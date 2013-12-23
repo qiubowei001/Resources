@@ -25,10 +25,11 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["HP"] = 8
 	MONSTER_TYPE[1]["HPGrow"] = 1
 	MONSTER_TYPE[1]["HPadj"] = 3
-	MONSTER_TYPE[1]["ATT"] = 2
+	--MONSTER_TYPE[1]["ATT"] = 2
+	MONSTER_TYPE[1]["ATT"] = 60
 	MONSTER_TYPE[1]["ATTGrow"] = 1
 	MONSTER_TYPE[1]["ATTadj"] = 3
-	MONSTER_TYPE[1]["CD"] = 40
+	MONSTER_TYPE[1]["CD"] = 30
 	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
@@ -38,12 +39,12 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
 	MONSTER_TYPE[2]["MAgic"] = nil--{7} --技能列表
 	MONSTER_TYPE[2]["HP"] = 13
-	MONSTER_TYPE[2]["HPGrow"] = 3
+	MONSTER_TYPE[2]["HPGrow"] = 2
 	MONSTER_TYPE[2]["HPadj"] = 3
 	MONSTER_TYPE[2]["ATT"] = 2
 	MONSTER_TYPE[2]["ATTGrow"] = 0.5
 	MONSTER_TYPE[2]["ATTadj"] = 3
-	MONSTER_TYPE[2]["CD"] = 40
+	MONSTER_TYPE[2]["CD"] = 30
 	MONSTER_TYPE[2]["CDGrow"] = -1
 	MONSTER_TYPE[2]["PICID"] = 2
 	MONSTER_TYPE[2]["ScarePICID"] = 17
@@ -57,7 +58,7 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[3]["ATT"] = 1
 	MONSTER_TYPE[3]["ATTGrow"] = 0.7
 	MONSTER_TYPE[3]["ATTadj"] = 3
-	MONSTER_TYPE[3]["CD"] = 30
+	MONSTER_TYPE[3]["CD"] = 20
 	MONSTER_TYPE[3]["CDGrow"] = -1.5
 	MONSTER_TYPE[3]["PICID"] = 18
 	MONSTER_TYPE[3]["ScarePICID"] = 19
@@ -67,7 +68,7 @@ local MONSTER_TYPE = {}
 	MONSTER_TYPE[4]["MAgic"] = {1007} --技能列表
 	MONSTER_TYPE[4]["MAgicRound"] = {1} 
 	MONSTER_TYPE[4]["HP"] = 10
-	MONSTER_TYPE[4]["HPGrow"] = 3
+	MONSTER_TYPE[4]["HPGrow"] = 2
 	MONSTER_TYPE[4]["HPadj"] = 3
 	MONSTER_TYPE[4]["ATT"] = 1
 	MONSTER_TYPE[4]["ATTGrow"] = 1
@@ -206,13 +207,11 @@ function monster.AttackCDPlusOne(pbrick)
 		sprite:setVisible(true)
 		BAR:setVisible(false)
 		
-		--local actionBlink = CCBlink:create(1, 10)
-		--local action = CCRepeatForever:create(actionBlink)
-		--action:setTag(gblinkactionTag)
-		--mainsprite:runAction(action)
-		
+
 		--执行释放技能 和攻击
-		monster.SpellMagic(pbrick,false)
+		if pbrick.IfBeStunned == false then
+			monster.SpellMagic(pbrick,false)	
+		end
 		monster.attack(pbrick);
 		
 		--执行MAGIC特效
@@ -292,7 +291,11 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		--攻击CD是否闪烁
 		pBrick.IfScaled  = false;
-
+		
+		
+		--眩晕
+		pBrick.IfBeStunned =false;
+		
 		if pBrick.moninfo[monsterInfo.MAGIC]~= nil then
 			pBrick.moninfo[monsterInfo.MAGIC_ROUND] = {}
 			for i,v in pairs(MONSTER_TYPE[nid]["MAgicRound"])do
