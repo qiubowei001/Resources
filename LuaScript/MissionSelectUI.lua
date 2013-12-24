@@ -41,8 +41,16 @@ function p.PortalOnClick(tag,sender)
 	
 end
 
+function p.RunScene()
+	CCDirector:sharedDirector():runWithScene(g_sceneGame)
+end
+
 
 function p.LoadUI()
+		g_sceneGame = CCScene:create();
+		
+		
+		
 		bglayer = CCLayer:create()
 
 		local menu = CCMenu:create()
@@ -64,7 +72,7 @@ function p.LoadUI()
 	    bglayer:addChild(bgSprite,1)
 		bgSprite:setPosition(CCPointMake(480, 320))
 		bgSprite:setScale(5);
-		local scene = Main.GetGameScene();
+		local scene = g_sceneGame;
 		scene:addChild(bglayer)
 		
 		--local numbersprite = NumberToPic.GetPicByNumBer(1234567890)
@@ -92,7 +100,8 @@ function p.LoadUI()
 		bglayer:addChild(sprite,5)
 		sprite:setColor(v)			
 		end
-	
+
+	return g_sceneGame
 end
 
 

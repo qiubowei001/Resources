@@ -490,17 +490,19 @@ end
 
 --自动回复能量
 function p.EnergyRecoveryAuto()
-	p.EnergyRecovery(1)
+	--p.EnergyRecovery(1)
 end
 
 function p.EnergyRecovery(nNum)
-	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*0.7
+	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*15--nNum*0.7
 	
 	if player[playerInfo.ENERGY] >= player[playerInfo.Entity_ENERGYMAX] then
 		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]
 	end	
+	
 	----==显示玩家数据==--
 	MainUI.SetMainUIEnergy(player[playerInfo.ENERGY],player[playerInfo.Entity_ENERGYMAX])	
+	
 end
 
 

@@ -38,24 +38,27 @@ function p.LoadUI()
 		gEnergyBar:setType(kCCProgressTimerTypeBar)
 		gEnergyBar:setMidpoint(CCPointMake(0, 0))
 		gEnergyBar:setBarChangeRate(CCPointMake(0, 1))
-		gEnergyBar:setPosition(CCPointMake(50, 130))
+		gEnergyBar:setPosition(CCPointMake(20, 10))
 		bglayer:addChild(gEnergyBar,1,g_EnergyBartag)	
-		gEnergyBar:setPercentage(100);
-		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		gEnergyBarBg:setPosition(50, 130)
+		--gEnergyBar:setPercentage(100);
+		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
+		gEnergyBarBg:setPosition(20, 10)
 		bglayer:addChild(gEnergyBarBg,2)
-	
+		local to2 = CCProgressTo:create(1, 100)
+		gEnergyBar:runAction(to2)
+		
+		
 		--血条
 		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/HPbar.png"))
 		HPBar:setType(kCCProgressTimerTypeBar)
 		HPBar:setMidpoint(CCPointMake(0, 0))
 		HPBar:setBarChangeRate(CCPointMake(0, 1))
-		HPBar:setPosition(CCPointMake(140, 130))
+		HPBar:setPosition(CCPointMake(-700, 10))
 		bglayer:addChild(HPBar,1,g_HPBartag)	
 		gHPBar = HPBar
 		HPBar:setPercentage(100);
-		local HPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		HPBarBg:setPosition(140, 130)
+		local HPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
+		HPBarBg:setPosition(-700, 10)
 		bglayer:addChild(HPBarBg,2)
 		
 		
@@ -64,13 +67,13 @@ function p.LoadUI()
 		ExpBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Expbar.png"))
 		ExpBar:setType(kCCProgressTimerTypeBar)
 		ExpBar:setMidpoint(CCPointMake(0, 0))
-		ExpBar:setBarChangeRate(CCPointMake(0, 1))
-		ExpBar:setPosition(CCPointMake(110, 130))
+		ExpBar:setBarChangeRate(CCPointMake(1, 0))
+		ExpBar:setPosition(CCPointMake(-320, 570))
 		bglayer:addChild(ExpBar,1,g_ExpBartag)	
 		gExpBar = ExpBar
 		ExpBar:setPercentage(0);
-		local ExpBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		ExpBarBg:setPosition(110, 130)
+		local ExpBarBg = CCMenuItemImage:create("UI/Bar/goldbarbg.png", "UI/Bar/goldbarbg.png")
+		ExpBarBg:setPosition(-320, 570)
 		bglayer:addChild(ExpBarBg,2)
 		
 		
@@ -79,13 +82,13 @@ function p.LoadUI()
 		GoldBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Goldbar.png"))
 		GoldBar:setType(kCCProgressTimerTypeBar)
 		GoldBar:setMidpoint(CCPointMake(0, 0))
-		GoldBar:setBarChangeRate(CCPointMake(0, 1))
-		GoldBar:setPosition(CCPointMake(80, 130))
+		GoldBar:setBarChangeRate(CCPointMake(1, 0))
+		GoldBar:setPosition(CCPointMake(-320, 540))
 		bglayer:addChild(GoldBar,1,g_GoldBartag)	
 		gGoldBar = GoldBar
 		GoldBar:setPercentage(0);
-		local GoldBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
-		GoldBarBg:setPosition(80, 130)
+		local GoldBarBg = CCMenuItemImage:create("UI/Bar/goldbarbg.png", "UI/Bar/goldbarbg.png")
+		GoldBarBg:setPosition(-320, 540)
 		bglayer:addChild(GoldBarBg,2)
 		
 		
@@ -96,14 +99,14 @@ function p.LoadUI()
 		local hpLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(hpLabel)
 			hpLabel:setColor(ccc3(255,255,255))
-			hpLabel:setPosition(-60, 220)
+			hpLabel:setPosition(-20, 220)
 			hpLabel:setTag(g_HPlabeltag);
 		
 		--显示玩家攻击
 		local ATlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(ATlabel)
 			ATlabel:setColor(ccc3(255,0,0))
-			ATlabel:setPosition(-60, 180)
+			ATlabel:setPosition(-20, 180)
 			ATlabel:setTag(g_ATlabeltag);
 					
 			
@@ -111,28 +114,28 @@ function p.LoadUI()
 		local GOLDlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(GOLDlabel)
 			GOLDlabel:setColor(ccc3(255,0,0))
-			GOLDlabel:setPosition(-60, 150)
+			GOLDlabel:setPosition(-20, 150)
 			GOLDlabel:setTag(g_goldlabeltag);		
 
 		--显示动作提示
 		local Tiplabel = CCLabelTTF:create("Nor","Arial", 20)
 			bglayer:addChild(Tiplabel)
 			Tiplabel:setColor(ccc3(255,0,0))
-			Tiplabel:setPosition(-60, 110)
+			Tiplabel:setPosition(-20, 110)
 			Tiplabel:setTag(g_Tiplabeltag);		--]]
 
 		--显示玩家经验
 		local EXPlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(EXPlabel)
 			EXPlabel:setColor(ccc3(255,0,0))
-			EXPlabel:setPosition(-60, 80)
+			EXPlabel:setPosition(-20, 80)
 			EXPlabel:setTag(g_EXPlabeltag);		
 
 		--显示玩家等级
 		local LEVlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(LEVlabel)
 			LEVlabel:setColor(ccc3(255,0,0))
-			LEVlabel:setPosition(-60, 270)
+			LEVlabel:setPosition(-20, 270)
 			LEVlabel:setTag(g_LEVlabeltag);		
 	
 	
@@ -140,12 +143,12 @@ function p.LoadUI()
 		local missionLabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(missionLabel)
 			missionLabel:setColor(ccc3(255,0,0))
-			missionLabel:setPosition(-60, 420)
+			missionLabel:setPosition(-20, 420)
 			missionLabel:setTag(g_missionlabeltag);
 			
 		--显示MISSION进度
 		gprogressbar = ProgressBar:Create()
-		gprogressbar:setPosition(CCPointMake(80, 320))
+		gprogressbar:setPosition(CCPointMake(85, 320))
 		gprogressbar:SetProgress(0)
 		bglayer:addChild(gprogressbar)
 		gprogressbar:setTag(g_progressbartag);
@@ -156,7 +159,7 @@ function p.LoadUI()
 		local item1 = CCMenuItemImage:create("UI/Bar/CircleTimerBg.png", "UI/Bar/CircleTimerBg.png")
     	item1:registerScriptTapHandler(p.menuCallbackSpeedBtn)
 		local menu = CCMenu:create()
-		menu:addChild(item1,1,1)	
+		menu:addChild(item1,1,1)
 		menu:setPosition(CCPointMake(10, 500))
 		item1:setPosition(0,0)
 		menu:setTag(g_SpeedBtntag);
@@ -259,7 +262,20 @@ end
 
 --
 function p.SetMainUIEnergy(energy,energymax)
-	gEnergyBar:setPercentage(100*energy/energymax);
+	--gEnergyBar:setPercentage(100*energy/energymax);
+	local  nPersent = 100*energy/energymax
+	--[[
+	if nPersent == 100 then
+		nPersent = 99
+	end	
+
+	if gEnergyBar:getPercentage() == nPersent then
+		return
+	end	
+		--]]
+	gEnergyBar:stopAllActions() 
+	local to2 = CCProgressFromTo:create(1, gEnergyBar:getPercentage(),nPersent)
+	gEnergyBar:runAction(to2)
 end--]]
 
 function p.SetMainUIHP(nHP,nHPMAX)
@@ -267,7 +283,14 @@ function p.SetMainUIHP(nHP,nHPMAX)
 	tolua.cast(label, "CCLabelTTF")
 	label:setString("HP:"..nHP.."/"..nHPMAX)
 	
-	gHPBar:setPercentage(100*nHP/nHPMAX);
+	--gHPBar:setPercentage(100*nHP/nHPMAX);
+	
+	local  nPersent = 100*nHP/nHPMAX
+	
+	gHPBar:stopAllActions() 
+	--local to2 = CCProgressTo:create(1, nPersent)
+	local to2 = CCProgressFromTo:create(1, gHPBar:getPercentage(),nPersent)
+	gHPBar:runAction(to2)
 end
 
 function p.SetMainUIATK(nATK)
@@ -280,7 +303,17 @@ function p.SetMainUIEXP(nEXP)
 	local GOLDlabel = bglayer:getChildByTag(g_EXPlabeltag)
 	tolua.cast(GOLDlabel, "CCLabelTTF")
 	GOLDlabel:setString("exp:"..nEXP)
-	gExpBar:setPercentage(100*nEXP/player.GetExpNeed());
+	
+	local  nPersent = 100*nEXP/player.GetExpNeed()
+	
+	gExpBar:stopAllActions() 
+	if nPersent <= 0 then
+		gExpBar:setPercentage(0)
+	else
+		local to2 = CCProgressTo:create(1, nPersent)
+		gExpBar:runAction(to2)
+	end
+
 end
 
 function p.SetMainUIGOLD(nGOLD)
@@ -288,7 +321,16 @@ function p.SetMainUIGOLD(nGOLD)
 	tolua.cast(GOLDlabel, "CCLabelTTF")
 	GOLDlabel:setString("G:"..nGOLD) 	
 	
-	gGoldBar:setPercentage(nGOLD%100);
+	--gGoldBar:setPercentage(nGOLD%100);
+	
+	gGoldBar:stopAllActions() 
+	if nGOLD >= 100 then
+		gGoldBar:setPercentage(0);	
+	end
+	
+	local  nPersent = nGOLD%100	
+	local to2 = CCProgressTo:create(1, nPersent)
+	gGoldBar:runAction(to2)	
 end
 
 function p.SetMainUITip(sTip)

@@ -20,6 +20,7 @@ MISSION_TABLE = {}
 
 MISSION_TABLE[1] = {}
 MISSION_TABLE[1]["name"] = "ChapterI"
+MISSION_TABLE[1]["BgId"] = 1 --±³¾°
 MISSION_TABLE[1]["config"] = 
 
 {

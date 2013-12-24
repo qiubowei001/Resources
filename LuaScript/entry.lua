@@ -13,13 +13,14 @@ end
 		
 --math.randomseed(os.time())
 
-
-g_sceneGame = CCScene:create();
-CCDirector:sharedDirector():runWithScene(g_sceneGame)
+g_sceneGame = nil
+--g_sceneGame = CCScene:create();
+--CCDirector:sharedDirector():runWithScene(g_sceneGame)
 
 dofile("LuaScript/brickInfo.lua")
 dofile("LuaScript/extern.lua")
 
+dofile("LuaScript/GameBg.lua")
 
 dofile("LuaScript/Hint.lua")
 
@@ -76,3 +77,4 @@ dofile("LuaScript/Main.lua")
 
 --xpcall(Main.main, __G__TRACKBACK__)
 xpcall(MissionSelectUI.LoadUI, __G__TRACKBACK__)
+xpcall(MissionSelectUI.RunScene, __G__TRACKBACK__)

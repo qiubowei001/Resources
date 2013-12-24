@@ -133,7 +133,7 @@ function Main.brickfallLogic()
 			return;
 		end
 		
-						
+		
 		--所有方块向下掉落
 		local nNum = brickInfo.brick_num_X;
 		for i=1,nNum do
@@ -218,14 +218,16 @@ function Main.brickfallLogic()
 		end
 		
 		if nbricktype == tbrickType.MONSTER then
+			return
 			--产生怪物
+			--[[
 			local monsterid,lev = mission.GenerateMonsterId();
 			
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
 			pbrick = brick.creatMonster(monsterid,lev);
 			--Particle.AddParticleEffToBrick(pbrick,"ThunderChain")
-			
+			--]]
 			
 		elseif nbricktype == tbrickType.GOLD then
 			pbrick = brick.creatGoldBrick(nbricktype)
@@ -375,17 +377,19 @@ function p.getBoardEmptyYFromX(X)
 		return ret,retXuanKong;	
 end
 
-local tBarPositionX = 
+local tBarPosition = 
 {
-	[1] 	= 860, --金币条
-	[2] 	= 900, --血条
-	[3] 	= 850, --能量条
+	[1] 	= {400,555}, --金币条
+	[2] 	= {15,55}, --血条
+	[3] 	= {700,55}, --能量条
 }
 --nType定义如上
 function p.BrickMoveToBar(pbrick,nType)
 	brick.setUnChosed(pbrick)
 	
-	local posx= tBarPositionX[nType]
+	local posx= tBarPosition[nType][1]
+	local posy= tBarPosition[nType][2]
+	
 	local X,Y = pbrick.TileX,pbrick.TileY
 	Board[X][Y] = nil;
 	
@@ -393,7 +397,7 @@ function p.BrickMoveToBar(pbrick,nType)
 	pbrick:setScale(0.5);
 	
 	--飘入
-	local actionto = CCMoveTo:create(0.8, ccp(posx, 260))
+	local actionto = CCMoveTo:create(0.8, ccp(posx, posy))
 	
 	--删除
 	function delete(sender)
@@ -508,8 +512,11 @@ function p.main(nMission)
 		
 		
         -- add in farm background
-        local bg = CCSprite:create("Map.jpg")
-      --layerMain:addChild(bg)
+        --local bg = CCSprite:create("Map.png")
+		local nmission = mission.GetMission()
+		local bg =  GameBg.GetBgLayer(MISSION_TABLE[nmission]["BgId"]) 
+		
+		--layerMain:addChild(bg)
 		g_sceneGame:addChild(bg)
 		cclog("winSize: %0.2f, %0.2f", winSize.width, winSize.height)
        
@@ -589,7 +596,8 @@ function p.main(nMission)
 					return;
 				end
 				
-				
+				--消耗能量豆
+				player.SpendEnergy(1);				
 				--tbrickType.MONSTER
 				if nAction == tbrickType.BLOOD then
 					player.drinkBlood(nNum);			
@@ -599,8 +607,7 @@ function p.main(nMission)
 					player.EnergyRecovery(nNum);
 				end
 				
-				--消耗能量豆
-				player.SpendEnergy(1);
+
 				
 				--倒计时BUFF
 				Combo.AddCombo()
@@ -632,6 +639,7 @@ function p.main(nMission)
         end
 
         local function onTouch(eventType, x, y)
+			x = x - brickInfo.layerMainAdjX
             if eventType == "began" then   
                 return onTouchBegan(x, y)
             elseif eventType == "moved" then
@@ -644,7 +652,7 @@ function p.main(nMission)
 		-- 注册触摸事件  
 		layerMain:registerScriptTouchHandler(onTouch)
         layerMain:setTouchEnabled(true)
-		--layerMain:setPosition(50 ,100)
+		--layerMain:setPosition(300 ,0)
 		--主界面初始化
 		MainUI.LoadUI()
 		
@@ -669,7 +677,7 @@ function p.main(nMission)
 		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 		bg:runAction(moveby)	
 		
-		layerMain:setPosition(0 , winSize.height)
+		layerMain:setPosition(brickInfo.layerMainAdjX , winSize.height)
 		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 		layerMain:runAction(moveby)
 		
