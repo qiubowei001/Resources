@@ -218,16 +218,14 @@ function Main.brickfallLogic()
 		end
 		
 		if nbricktype == tbrickType.MONSTER then
-			return
 			--²úÉú¹ÖÎï
-			--[[
 			local monsterid,lev = mission.GenerateMonsterId();
 			
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
 			pbrick = brick.creatMonster(monsterid,lev);
 			--Particle.AddParticleEffToBrick(pbrick,"ThunderChain")
-			--]]
+			--
 			
 		elseif nbricktype == tbrickType.GOLD then
 			pbrick = brick.creatGoldBrick(nbricktype)
