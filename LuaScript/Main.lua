@@ -224,6 +224,10 @@ function Main.brickfallLogic()
 			local progress = mission.GetProgress()
 			MainUI.SetProgress(progress)
 			pbrick = brick.creatMonster(monsterid,lev);
+			
+			--ÏÔÊ¾Í¼¼ø
+			MonsterHandBook.ShowMonsterHandBook(monsterid)
+			
 			--Particle.AddParticleEffToBrick(pbrick,"ThunderChain")
 			--
 			
@@ -691,7 +695,8 @@ function p.main(nMission)
 	Particle.Init()
 	
 	Hint.Init()
-		
+	
+	MonsterHandBook.Init()
 	Combo.LoadUI()
 end
 

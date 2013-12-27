@@ -17,7 +17,9 @@ local g_CDbar = 102;
 local g_attspritetag = 103;
 
 local gblinkactionTag = 90000;
-local MONSTER_TYPE = {}
+
+--È«¾Ö
+MONSTER_TYPE = {}
 
 	MONSTER_TYPE[1] = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"

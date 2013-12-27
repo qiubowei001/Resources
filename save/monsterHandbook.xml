@@ -1,0 +1,15 @@
+<!--Framework Engine Xml database -www.framework-studios.com-->
+<fwedata I="S" V="T">
+    <n1.000000 I="N" V="T">
+        <IFSHOWN I="S" V="B">true</IFSHOWN>
+        <MONID I="S" V="N">1.000000</MONID>
+    </n1.000000>
+    <n2.000000 I="N" V="T">
+        <IFSHOWN I="S" V="B">true</IFSHOWN>
+        <MONID I="S" V="N">2.000000</MONID>
+    </n2.000000>
+    <n3.000000 I="N" V="T">
+        <IFSHOWN I="S" V="B">true</IFSHOWN>
+        <MONID I="S" V="N">3.000000</MONID>
+    </n3.000000>
+</fwedata>

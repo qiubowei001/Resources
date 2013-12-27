@@ -14,11 +14,11 @@ end
 --math.randomseed(os.time())
 
 g_sceneGame = nil
---g_sceneGame = CCScene:create();
---CCDirector:sharedDirector():runWithScene(g_sceneGame)
 
 dofile("LuaScript/brickInfo.lua")
 dofile("LuaScript/extern.lua")
+
+dofile("LuaScript/MonsterHandBook.lua")
 
 dofile("LuaScript/GameBg.lua")
 

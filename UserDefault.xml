@@ -1,0 +1,9 @@
+<?1.0?>
+<userDefaultRoot>
+    <string>value1</string>
+    <integer>10</integer>
+    <float>2.300000</float>
+    <double>2.400000</double>
+    <bool>true</bool>
+    <QBW>true</QBW>
+</userDefaultRoot>

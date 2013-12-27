@@ -8,6 +8,7 @@ UIdefine =
 	Board				= 10006,
 	SkillBar			= 10007,
 	HitEffect			= 10008,
+	MONSTER_HANDBOOK_UI	= 10009,
 }
 
 
