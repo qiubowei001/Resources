@@ -91,10 +91,8 @@ function p.ShowMonsterHandBook(nMonsterType)
 	end
 	
 	
-	local nAttIndicator,nHPIndicator,nSpeedIndicator  = p.GetHandBookInfo(nMonsterType)
 	--显示
-	
-	p.LoadUI()
+	p.LoadUI(nMonsterType)
 	
 	
 	if tmoninfo == nil then
@@ -109,7 +107,7 @@ function p.ShowMonsterHandBook(nMonsterType)
 	
 	
 	--重新写入
-	data(tHandBookInfoCache, savepath)
+	--data(tHandBookInfoCache, savepath)
 end
 
 
@@ -136,8 +134,20 @@ function p.closeUICallback(tag,sender)
     end	  --]] 
 end
 
+--各属性坐标
+local tPositionAttribute = {}
+							--position起点
+	tPositionAttribute[1] = {{-100,-180},"UI/Handbook/sword.png"}
+	tPositionAttribute[2] = {{-100,-290},"UI/Handbook/heart.png"}
+	tPositionAttribute[3] = {{-100,-400},"UI/Handbook/shoe.png"}
+
+	
+local tJiangeStep = 100 --每个图标间隔距离
+
 --显示界面
-function p.LoadUI()
+function p.LoadUI(nMonsterType)
+	local nAttIndicator,nHPIndicator,nSpeedIndicator  = p.GetHandBookInfo(nMonsterType)
+	
 	--暂停游戏
 
 	bglayer = CCLayer:create()
@@ -147,26 +157,47 @@ function p.LoadUI()
 
 	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
 		closeBtn:registerScriptTapHandler(p.closeUICallback)
-		closeBtn:setPosition(300,100)
-
+		closeBtn:setPosition(300,400)
+		
 	menu:addChild(closeBtn)
 	menu:setPosition(CCPointMake(0, 0))
 	bglayer:addChild(menu, 2,99)
 
 
 	bglayer:setTag(UIdefine.MONSTER_HANDBOOK_UI);
-	bglayer:setPosition(CCPointMake(0, 0))
 	
+	local t = {nAttIndicator,nHPIndicator,nSpeedIndicator}
 	
-	--增加背景
-	local bgSprite = CCSprite:create("UI/Bg/BG1.png")
-	bgSprite:setScale(1.5);
+	for i,indicator in pairs(t) do
+		local tPosInfo = tPositionAttribute[i]
+	
+		for j=1,indicator do
+			local tpos = tPosInfo[1]
+			local posx = tpos[1] + tJiangeStep*(j-1)
+			local posy = tpos[2]
+			local pICON = CCSprite:create(tPosInfo[2])
+			pICON:setPosition(CCPointMake(posx,posy))
+			bglayer:addChild(pICON, 2)
+		end
+	end		
+	
+	--增加背景 
+	local bgSprite = CCSprite:create("UI/Handbook/monsterhandbook.png")
+	--bgSprite:setScale(1.5);
     bglayer:addChild(bgSprite,1)
-	bglayer:setPosition(CCPointMake(230, 200))
+	bglayer:setPosition(CCPointMake(340, 220))
+	bglayer:setScale(0.65);
+	
+	
+	--怪物sprite
+	local pmon =  SpriteManager.creatBrickSprite(monster.GetPicIdFromMonsterId(nMonsterType))
+	pmon:setScale(4);
+	pmon:setPosition(CCPointMake(0, 220))
+	bglayer:addChild(pmon,2)	
 	
 	
 	local scene = Main.GetGameScene();
-	scene:addChild(bglayer)	
+	scene:addChild(bglayer,4)	
 	
 	CCDirector:sharedDirector():pause()
 	
