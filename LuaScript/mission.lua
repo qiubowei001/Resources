@@ -6,22 +6,44 @@ local nRound = 0;
 local gMission = 1
 
 local gWaveDelay = 0
+--这是第一关 做一些引导
+--如何连接消除   ============怪,剑,血
+--消剑杀怪
+--怪物攻击CD介绍
+--怪物攻击后去血,血球介绍
+--消血回血
+--介绍每次行为消耗能量
+--接下来开始出蓝瓶 并介绍 消蓝回复能量 ============蓝,剑,血,怪
+--消金币 ============金,蓝,剑,血,怪
+--（当可以升级装备时 ）如何升级装备	
+--给玩家1个buff技能   --第一关只解锁2个技能
+-- 如何使用BUFF
+--再次升级 给玩家一个点杀技能
+-- 如何使用点杀技能
 
---[[
-tbrickType = 
-{
-	MONSTER = 	1,
-	SWORD  =	2,
-	BLOOD  =	3,
-	GOLD   =	4,
-}
-]]
 MISSION_TABLE = {}
-
 MISSION_TABLE[1] = {}
-MISSION_TABLE[1]["name"] = "ChapterI"
+MISSION_TABLE[1]["name"] = "ChapterI MISSION1"
 MISSION_TABLE[1]["BgId"] = 1 --背景
 MISSION_TABLE[1]["config"] = 
+{
+{1000		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+}
+
+MISSION_TABLE[2] = {}
+MISSION_TABLE[2]["name"] = "ChapterIII"
+MISSION_TABLE[2]["config"] = 
+{
+--回合数 --{怪物ID,怪物概率}
+{10		,	{9},		{100}		 },
+{20		,	{2,4},		{95,5		}},
+{20		,	{4},		{100		}},
+}
+
+MISSION_TABLE[3] = {}
+MISSION_TABLE[3]["name"] = "ChapterI MISSION3"
+MISSION_TABLE[3]["BgId"] = 1 --背景
+MISSION_TABLE[3]["config"] = 
 
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
@@ -37,8 +59,6 @@ MISSION_TABLE[1]["config"] =
 }
 
 --]]
-
---
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
@@ -65,27 +85,7 @@ MISSION_TABLE[1]["config"] =
 }
 --]]
 
-MISSION_TABLE[2] = {}
-MISSION_TABLE[2]["name"] = "ChapterII"
-MISSION_TABLE[2]["config"] = 
-{
---回合数 --{怪物ID,怪物概率}
-{3		,	{9},		{100}		 },
-{10		,	{2,4},		{95,5		}},
-{20		,	{4},		{100		}},
 
-
-}
-
-MISSION_TABLE[3] = {}
-MISSION_TABLE[3]["name"] = "ChapterIII"
-MISSION_TABLE[3]["config"] = 
-{
---回合数 --{怪物ID,怪物概率}
-{10		,	{9},		{100}		 },
-{20		,	{2,4},		{95,5		}},
-{20		,	{4},		{100		}},
-}
 
 
 

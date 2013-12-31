@@ -310,7 +310,7 @@ function p.SetMainUIEXP(nEXP)
 	if nPersent <= 0 then
 		gExpBar:setPercentage(0)
 	else
-		local to2 = CCProgressTo:create(1, nPersent)
+		local to2 = CCProgressFromTo:create(1, gExpBar:getPercentage(), nPersent)
 		gExpBar:runAction(to2)
 	end
 
@@ -329,7 +329,7 @@ function p.SetMainUIGOLD(nGOLD)
 	end
 	
 	local  nPersent = nGOLD%100	
-	local to2 = CCProgressTo:create(1, nPersent)
+	local to2 = CCProgressFromTo:create(1, gGoldBar:getPercentage(), nPersent)
 	gGoldBar:runAction(to2)	
 end
 
