@@ -496,8 +496,10 @@ function p.main(nMission)
     local winSize = CCDirector:sharedDirector():getWinSize()
 
 	mission.SetMission(nMission);
-	
 
+	if nMission == 1 then
+		lesson.Init()
+	end
 	
 	--获取BOARD对应X横轴，纵轴Y空位 以及悬空Y位置
 

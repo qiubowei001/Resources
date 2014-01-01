@@ -15,8 +15,12 @@ end
 
 g_sceneGame = nil
 
-dofile("LuaScript/brickInfo.lua")
-dofile("LuaScript/extern.lua")
+--游戏初始化工作
+dofile("LuaScript/brickInfo.lua")--宏定义
+dofile("LuaScript/extern.lua")--继承类定义
+dofile("LuaScript/dataInit.lua")--数据初始化
+
+dofile("LuaScript/lesson.lua")
 
 dofile("LuaScript/MonsterHandBook.lua")
 
