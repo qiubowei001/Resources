@@ -1,3 +1,5 @@
+教程前一个lesson完成了 才会触发下一个lessOn 可以考虑增加一个标志位,当你做过以后置位,检测时 多检查:上个LESSON的标志位 完成后跳个"WELL DONE!" 未完成可以继续跳同一个LESSON
+
 完善第一關數據
 MISSION入口 做成類似戰鬥之心
 

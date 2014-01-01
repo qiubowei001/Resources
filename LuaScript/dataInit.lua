@@ -4,7 +4,7 @@ dataInit = {}
 local  p = dataInit;
 
 
-local savepath = "save\\plaer1.xml"
+local savepath = "save\\player1.xml"
 
 
 --第一次进入游戏初始化玩家数据

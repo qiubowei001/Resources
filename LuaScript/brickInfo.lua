@@ -47,3 +47,8 @@ tBrickTypeRandom =
 	[tbrickType.GOLD] 		= 33,
 	
 }
+
+GLOBAL_EVENT = 
+{
+	LINK_SUCC = 1,--执行一次链接操作
+}

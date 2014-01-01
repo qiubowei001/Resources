@@ -5,15 +5,17 @@ local  p = lesson;
 
 local winSize = CCDirector:sharedDirector():getWinSize()
 
-local savepath = "save\\plaer1.xml"
+local savepath = "save\\player1.xml"
 local g_Lesson_Process = 1; --教程进度
 local gTimerId = nil;--定时检测
 
 local tLesson = {}
 	tLesson[1]={}
 	tLesson[1].desc = "How To link"
-	tLesson[1].condition_func = nil
-	
+	tLesson[1].condition_func = nil		
+	tLesson[1].finish_func	   = function()   --完成条件
+									
+								 end
 	
 	tLesson[2]={}
 	tLesson[2].desc = "Kill Mon With Sword"
@@ -192,6 +194,10 @@ function p.CheckLesson()
 	end
 	
 	
+--	GlobalEvent.OnEvent(GLOBAL_EVENT.LINK_SUCC,function)--链接后置位
+
+								
+								
 	if tLesson[g_Lesson_Process].condition_func == nil then  --无需触发则直接显示
 		--显示界面
 		p.LoadUI(g_Lesson_Process)

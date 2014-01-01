@@ -27,7 +27,11 @@ MISSION_TABLE[1]["name"] = "ChapterI MISSION1"
 MISSION_TABLE[1]["BgId"] = 1 --±³¾°
 MISSION_TABLE[1]["config"] = 
 {
-{1000		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{100		,	{1},		{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=0, [tbrickType.MONSTER]=10,     [tbrickType.SWORD]=45,     [tbrickType.BLOOD]=45,     [tbrickType.GOLD]=0}},
+{100		,	{1},		{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=30, [tbrickType.MONSTER]=10,     [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=0}},
+{100		,	{1},		{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=22, [tbrickType.MONSTER]=10,     [tbrickType.SWORD]=22,     [tbrickType.BLOOD]=23,     [tbrickType.GOLD]=23}},
+{9999		,	{},			{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
+ 
 }
 
 MISSION_TABLE[2] = {}
