@@ -157,7 +157,12 @@ end
 function p.LearnEquipCallback(tag,sender)
 	local learningEquipid = 0
 	learningEquipid = g_tNext[tag]
+	
+			
 	if player.UpGradeEquip(learningEquipid) == true then
+		--全局事件
+		GlobalEvent.OnEvent(GLOBAL_EVENT.UPGRADE_EQUIP)
+			
 		--刷新显示
 		p.RefreshMenu()	
 	end

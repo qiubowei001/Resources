@@ -1,0 +1,6 @@
+<!--Framework Engine Xml database -www.framework-studios.com-->
+<fwedata I="S" V="T">
+    <music I="S" V="B">true</music>
+    <lesson I="S" V="B">false</lesson>
+    <sound I="S" V="B">true</sound>
+</fwedata>

@@ -2,8 +2,9 @@
 SkillUpgrade = {};
 local p = SkillUpgrade;
 
+local savepath = "save\\SkillLock.xml"	--存储技能锁数据
 
---技能树节点 MAGICID:主动技能id  PassiveID:被动技能ID
+--技能树节点 MAGICID:主动技能id  PassiveID:被动技能ID  
 p.tSkillNode = 
 {
 [1] = {MAGICID = 1,PassiveID = nil},
@@ -20,10 +21,6 @@ p.tSkillNode =
 [12] = {MAGICID = 12,PassiveID = nil},
 [13] = {MAGICID = 13,PassiveID = nil},
 [14] = {MAGICID = 14,PassiveID = nil},
-
---[15] = {MAGICID = nil,PassiveID = "Radar"},
---[16] = {MAGICID = nil,PassiveID = "RadarBuff"},
-
 [15] = {MAGICID = 15,PassiveID = nil},
 
 }
@@ -51,6 +48,31 @@ p.tSkillTree =
 
 
 }
+
+
+local tSkillLockSave = {} --技能解锁数据
+
+--tSkillLockSave[NODE_ID] = true --解锁
+--tSkillLockSave[NODE_ID] = false --未解锁
+
+function p.UnlockSkill(nodeid)
+	tSkillLockSave[nodeid] = true
+	data(tSkillLockSave,savepath)
+end	
+
+function p.Init()
+	tSkillLockSave = {}
+	data(savepath, tSkillLockSave)
+	
+	if #tSkillLockSave == 0 then
+		--第一次运行则初始化
+		for nNodeid,v in pairs(p.tSkillNode)do
+			tSkillLockSave[nNodeid] = false
+		end
+		SkillUpgrade.UnlockSkill(1)--解锁BUFF技能
+		data(tSkillLockSave,savepath)
+	end
+end	
 
 --获取技能图片路径
 function p.GetPicPath(nskillId)
@@ -102,30 +124,26 @@ end
 
 function p.GetRandomSkillId()
 	local tPlayerSkill = player.Skill
-	--[[local tPlayerSkill = 
-	{
-	[1]={1,4,5,6,7},--player[playerInfo.SKILLID1],
-	[2]={2,8,9},--player[playerInfo.SKILLID2],
-	[3]={3},
-	[4]=nil,	--player[playerInfo.SKILLID3],
-				--player[playerInfo.SKILLID4],
-	[5]=nil,
-	[6]=nil,		
-	}
-	--]]
 
 	local tRandomAll = {}
 	
 	--遍历技能树，如果玩家没学习枝干的根技能 则插入根技能
 	--如果玩家有学习,则插入属于此枝干的最顶部技能
+	--tSkillLockSave[i] = true --解锁
 	for i,v in pairs(p.tSkillTree) do
 		if tPlayerSkill[i]== nil then
-			table.insert(tRandomAll,{i,p.tSkillTree[i][1]})
+			local nodeid  = p.tSkillTree[i][1]
+			if tSkillLockSave[nodeid] then
+				table.insert(tRandomAll,{i,p.tSkillTree[i][1]})
+			end	
 		else
 			--获取最新技能INDEX
 			local nSkillIndex = #tPlayerSkill[i]
 			if nSkillIndex < #v then
-				table.insert(tRandomAll,{i,p.tSkillTree[i][nSkillIndex+1]})
+				local nodeid  = p.tSkillTree[i][nSkillIndex+1]
+				if tSkillLockSave[nodeid] then
+				table.insert(tRandomAll,{i,nodeid})
+				end
 			end
 		end
 	end

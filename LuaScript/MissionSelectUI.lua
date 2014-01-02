@@ -51,8 +51,11 @@ function p.LoadUI()
 		g_sceneGame = CCScene:create();
 		
 		
+		-->>>>>>>>>>游戏数据初始化 --这个到时候要放到主界面
 		dataInit.InitPlayerSave()
-		
+		SkillUpgrade.Init()
+		GlobalEvent.InitEventTable();
+		---<<<<<<<<<<
 		
 		bglayer = CCLayer:create()
 

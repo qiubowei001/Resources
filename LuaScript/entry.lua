@@ -19,6 +19,9 @@ g_sceneGame = nil
 dofile("LuaScript/brickInfo.lua")--宏定义
 dofile("LuaScript/extern.lua")--继承类定义
 dofile("LuaScript/dataInit.lua")--数据初始化
+dofile("LuaScript/GlobalEvent.lua")--全局事件触发
+
+
 
 dofile("LuaScript/lesson.lua")
 

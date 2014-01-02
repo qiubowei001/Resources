@@ -139,7 +139,7 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	
-	player.AddNewSkill(1,1)
+	--player.AddNewSkill(1,1)
 	--player.AddNewSkill(7,16)
 
 	--[[
@@ -239,6 +239,9 @@ function p.drinkBlood(nNum)
 	
 	local nRecovery = nNum*bottleHp*(Combo.GetRatio());
 	p.AddHp(nRecovery)
+	--全局事件
+	GlobalEvent.OnEvent(GLOBAL_EVENT.TAKE_BLOOD)
+			
 	return player[playerInfo.HP];
 end
 
@@ -251,6 +254,10 @@ function player.takeGold(nNum)
 
 	----==显示玩家数据==--
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+
+	--全局事件
+	GlobalEvent.OnEvent(GLOBAL_EVENT.TAKE_GOLD)
+	
 	return player[playerInfo.GOLD];
 end
 
@@ -262,6 +269,9 @@ function player.GetExpNeed()
 end
 
 function player.GainEXP(nExp)
+	--全局事件
+	GlobalEvent.OnEvent(GLOBAL_EVENT.KILL_MONSTER)
+
 	player[playerInfo.EXP] = player[playerInfo.EXP] + nExp;
 
 	if player[playerInfo.EXP] >= player.GetExpNeed() then
@@ -496,6 +506,9 @@ end
 function p.EnergyRecovery(nNum)
 	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*0.7
 	
+	--全局事件
+	GlobalEvent.OnEvent(GLOBAL_EVENT.TAKE_ENERGY)
+	
 	if player[playerInfo.ENERGY] >= player[playerInfo.Entity_ENERGYMAX] then
 		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]
 	end	
@@ -536,8 +549,17 @@ function player.SpellMagic(nMagicId,ptarget,pmonster,IfBorn)
 	local nEnergy = magictable[nMagicId][MAGIC_DEF_TABLE.ENERGYNEED]
 	player.SpendEnergy(nEnergy);
 	
-	
+			
 	local tTargetList,tEffList = magic.PlayerSpellMagic(nMagicId,ptarget);
+	
+	
+	--全局事件
+	if tTargetList == player then
+		GlobalEvent.OnEvent(GLOBAL_EVENT.USE_BUFF_SKILL)	--BUFF
+	else
+		GlobalEvent.OnEvent(GLOBAL_EVENT.USE_ACTIVE_SKILL) --点杀技能
+	end
+
 	--COMBO +1
 	Combo.AddCombo()
 	

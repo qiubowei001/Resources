@@ -18,8 +18,7 @@ p.tHintType =
 	powerup = { "UI/font/powerup.png"};				--攻击增加
 	powerdown = {"UI/font/powerdown.png"};			--攻击减少
 	
-
-	
+	jobdone = {"UI/font/welldone.png"};				--完成课程
 }
 
 

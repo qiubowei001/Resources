@@ -50,5 +50,12 @@ tBrickTypeRandom =
 
 GLOBAL_EVENT = 
 {
-	LINK_SUCC = 1,--执行一次链接操作
+	LINK_SUCC 		= 1,--执行一次链接操作
+	TAKE_GOLD 		= 2,--吃金币
+	TAKE_BLOOD 		= 3,--吃血
+	KILL_MONSTER 	= 4,--杀怪
+	UPGRADE_EQUIP 	= 5,--升级装备
+	USE_BUFF_SKILL 	= 6,--使用buff技能
+	USE_ACTIVE_SKILL = 7,--使用点杀技能
+	TAKE_ENERGY		= 8,--喝蓝
 }

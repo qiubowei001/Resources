@@ -602,6 +602,7 @@ function p.main(nMission)
 				
 				--全局事件
 				GlobalEvent.OnEvent(GLOBAL_EVENT.LINK_SUCC)
+		
 			
 				--消耗能量豆
 				player.SpendEnergy(1);				

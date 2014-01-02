@@ -9,16 +9,28 @@ local savepath = "save\\player1.xml"
 local g_Lesson_Process = 1; --教程进度
 local gTimerId = nil;--定时检测
 
+
+
+local tQuestCache = {}
+
 local tLesson = {}
 	tLesson[1]={}
-	tLesson[1].desc = "How To link"
+	tLesson[1].desc = "please link 3 times"
 	tLesson[1].condition_func = nil		
-	tLesson[1].finish_func	   = function()   --完成条件
-									
+	tLesson[1].AcceptQuestFunc = function()   --接受任务	
+									function lesson1()
+										tQuestCache[1] = tQuestCache[1] + 1
+										if tQuestCache[1] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.LINK_SUCC,lesson1) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											Hint.ShowHint(Hint.tHintType.jobdone)
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.LINK_SUCC,lesson1)	--链接+1
 								 end
 	
 	tLesson[2]={}
-	tLesson[2].desc = "Kill Mon With Sword"
+	tLesson[2].desc = "Kill Mon With Sword X3"
 	tLesson[2].condition_func = function()	--触发条件
 									local count = 0
 									--棋盘上有1只怪物就可以触发
@@ -36,12 +48,26 @@ local tLesson = {}
 										return false
 									end
 								end
-
+								
+								
+	tLesson[2].AcceptQuestFunc = function()   --接受任务								
+									function lesson2()		
+										tQuestCache[2] = tQuestCache[2] + 1
+										if tQuestCache[2] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.KILL_MONSTER,lesson2) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											Hint.ShowHint(Hint.tHintType.jobdone)
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.KILL_MONSTER,lesson2)	--链接+1
+								 end
+								
+								
 	tLesson[3]={}
 	tLesson[3].desc = "Monster will attack if the green bar is CD"
 	tLesson[3].condition_func = function()	--触发条件
 									local count = 0
-									--棋盘上有5只怪物就可以触发
+									--棋盘上有4只怪物就可以触发
 									for i = 1,brickInfo.brick_num_X do
 										for j = 1,brickInfo.brick_num_Y do
 											if Board[i][j] ~= nil and Board[i][j].nType == tbrickType.MONSTER then
@@ -50,13 +76,19 @@ local tLesson = {}
 											end
 										end
 									end
-									if count >= 5 then
+									if count >= 4 then
 										return true
 									else
 										return false
 									end
 								end
-
+	tLesson[3].AcceptQuestFunc = function()
+									g_Lesson_Process = g_Lesson_Process + 1
+								end
+								
+		
+		
+		
 	tLesson[4]={}
 	tLesson[4].desc = "the red ball is your life"
 	tLesson[4].condition_func = function()	--触发条件	
@@ -69,19 +101,34 @@ local tLesson = {}
 									end
 								end
 
-
+	tLesson[4].AcceptQuestFunc = function()
+									g_Lesson_Process = g_Lesson_Process + 1
+								end
+								
+								
 	tLesson[5]={}
-	tLesson[5].desc = "link the red bottle to recover life"
+	tLesson[5].desc = "link the red bottle to recover life X3"
 	tLesson[5].condition_func = function()	--触发条件
-									--玩家生命值减少至50%		
+									--玩家生命值减少至80%		
 									local percent =100*player[playerInfo.HP]/player[playerInfo.Entity_HPMAX]
-									if percent <= 50 then
+									if percent <= 80 then
 										return true
 									else
 										return false
 									end
 								end
-								
+	tLesson[5].AcceptQuestFunc = function()   --接受任务								
+									function lesson5()
+										tQuestCache[5] = tQuestCache[5] + 1
+										if tQuestCache[5] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.TAKE_BLOOD,lesson5) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											Hint.ShowHint(Hint.tHintType.jobdone)
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.TAKE_BLOOD,lesson5)	--链接+1
+								 end
+														
 	tLesson[6]={}
 	tLesson[6].desc = "the blue ball is your energy,your will spend energy everytime you link or use skill"
 	tLesson[6].condition_func = function()	--触发条件
@@ -93,21 +140,36 @@ local tLesson = {}
 										return false
 									end
 								end								
-
+	tLesson[6].AcceptQuestFunc = function()
+									g_Lesson_Process = g_Lesson_Process + 1
+								end
+								
+								
 	tLesson[7]={}
 	tLesson[7].desc = "link the blue bottle to recover energy"
 	tLesson[7].condition_func = function()	--触发条件
 									--玩家能量值减少至10%		
 									local percent =100*player[playerInfo.ENERGY]/player[playerInfo.Entity_ENERGYMAX]
-									if percent <= 10 then
+									if percent <= 40 then
 										return true
 									else
 										return false
 									end
 								end	
+	tLesson[7].AcceptQuestFunc = function()   --接受任务								
+									function lesson7()
+										tQuestCache[7] = tQuestCache[7] + 1
+										if tQuestCache[7] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.TAKE_ENERGY,lesson7) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											Hint.ShowHint(Hint.tHintType.jobdone)
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.TAKE_ENERGY,lesson7)	--链接+1
+								 end							
 
 	tLesson[8]={}
-	tLesson[8].desc = "link the coin to gain them"
+	tLesson[8].desc = "link the coin to gain them X3"
 	tLesson[8].condition_func = function()	--触发条件
 									--棋盘上有5个金币就可以触发
 									local count = 0
@@ -125,7 +187,17 @@ local tLesson = {}
 										return false
 									end
 								end					
-														
+	tLesson[8].AcceptQuestFunc = function()   --接受任务								
+									function lesson8()
+										tQuestCache[8] = tQuestCache[8] + 1
+										if tQuestCache[8] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.TAKE_GOLD,lesson8) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.TAKE_GOLD,lesson8)	--链接+1
+								 end
+																						
 	tLesson[9]={}
 	tLesson[9].desc = "how to upgrade equipment	"
 	tLesson[9].condition_func = function()	--触发条件
@@ -135,21 +207,41 @@ local tLesson = {}
 									else
 										return false
 									end
-								end
-
+								end									
+	tLesson[9].AcceptQuestFunc = function()   --接受任务								
+									function lesson9()
+										tQuestCache[9] = tQuestCache[9] + 1
+										if tQuestCache[9] >= 3 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.UPGRADE_EQUIP,lesson9) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.UPGRADE_EQUIP,lesson9)	--链接+1
+								 end
+								
 	tLesson[10]={}
 	tLesson[10].desc = "how to use buff skill"
 	tLesson[10].condition_func = function()	--触发条件
 									--玩家有buff技能
 									for magicId,v in pairs(player.MagicCD) do
-										--player.MagicCD[magicId] = magictable[magicId][MAGIC_DEF_TABLE.CDROUND]
+										
 										if 	magictable[magicId][MAGIC_DEF_TABLE.TARGET_TYPE] == TARGET_TYPE.PLAYER then --BUFF技能
 											return true
 										end
 									end
 									return false
 								end
-
+	tLesson[10].AcceptQuestFunc = function()   --接受任务					
+									function lesson10()		--玩家使用1次技能 则解锁新技能
+										tQuestCache[10] = tQuestCache[10] + 1
+										if tQuestCache[10] >= 1 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.USE_BUFF_SKILL,lesson10) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											SkillUpgrade.UnlockSkill(7)--解锁一个点杀技能 眩晕
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.USE_BUFF_SKILL,lesson10)	--链接+1
+								 end
 
 	tLesson[11]={}
 	tLesson[11].desc = "how to use active skill"
@@ -162,15 +254,32 @@ local tLesson = {}
 									end
 									return false
 								end
-
-
+	tLesson[11].AcceptQuestFunc = function()   --接受任务					
+									function lesson11()		--玩家使用1次技能 则解锁新技能
+										tQuestCache[11] = tQuestCache[11] + 1
+										if tQuestCache[11] >= 1 then
+											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.USE_ACTIVE_SKILL,lesson11) --完成课程
+											g_Lesson_Process = g_Lesson_Process + 1
+											--SkillUpgrade.UnlockSkill(7)--解锁一个点杀技能 眩晕
+										end
+									end
+									GlobalEvent.RegisterEvent(GLOBAL_EVENT.USE_ACTIVE_SKILL,lesson11)	--链接+1
+								 end
+								
 function p.Init()
 	--检测是否已经结束教程
 	--读取怪物图鉴信息
 	local tPlayersave = {}
+	tQuestCache	= {}
+	
 	data(savepath, tPlayersave)
 	
 	if tPlayersave.lesson== false then
+		--初始化任务数据
+		for i,v in pairs(tLesson) do
+			tQuestCache[i] = nil
+		end
+		
 		--开启检测定时器
 		gTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.CheckLesson, 3, false)
 		g_Lesson_Process = 1;		
@@ -193,20 +302,14 @@ function p.CheckLesson()
 		return
 	end
 	
-	
---	GlobalEvent.OnEvent(GLOBAL_EVENT.LINK_SUCC,function)--链接后置位
-
-								
-								
-	if tLesson[g_Lesson_Process].condition_func == nil then  --无需触发则直接显示
-		--显示界面
-		p.LoadUI(g_Lesson_Process)
-		g_Lesson_Process = g_Lesson_Process + 1
-	elseif tLesson[g_Lesson_Process].condition_func() then	--达成条件则显示
-		p.LoadUI(g_Lesson_Process)
-		g_Lesson_Process = g_Lesson_Process + 1
-	end
-	
+	if tQuestCache[g_Lesson_Process] == nil then	--未接受任务
+		if tLesson[g_Lesson_Process].condition_func == nil or tLesson[g_Lesson_Process].condition_func() then--接受课程
+			--显示界面
+			p.LoadUI(g_Lesson_Process)
+			tQuestCache[g_Lesson_Process] = 0
+			tLesson[g_Lesson_Process].AcceptQuestFunc();		
+		end	
+	end	
 end	
 
 function p.closeUICallback(tag,sender)
