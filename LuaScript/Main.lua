@@ -613,6 +613,8 @@ function p.main(nMission)
 					player.takeGold(nNum);
 				elseif	nAction == tbrickType.ENERGY then
 					player.EnergyRecovery(nNum);
+					--全局事件
+					GlobalEvent.OnEvent(GLOBAL_EVENT.TAKE_ENERGY)
 				end
 				
 

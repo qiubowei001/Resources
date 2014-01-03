@@ -12,8 +12,14 @@ function p.InitPlayerSave()
 	--读取怪物图鉴信息
 	local tPlayersave = {}
 	data(savepath, tPlayersave)
+	local bIfNil = true	--是否是空文件
 	
-	if #tPlayersave == 0 then
+	for i,v in pairs(tPlayersave)do
+		bIfNil = false --非空
+		break;
+	end
+		
+	if bIfNil  then
 		tPlayersave.lesson = false;--玩家教程
 		tPlayersave.music = true;--音乐
 		tPlayersave.sound = true;--音效

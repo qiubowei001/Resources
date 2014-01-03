@@ -506,8 +506,7 @@ end
 function p.EnergyRecovery(nNum)
 	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*0.7
 	
-	--全局事件
-	GlobalEvent.OnEvent(GLOBAL_EVENT.TAKE_ENERGY)
+
 	
 	if player[playerInfo.ENERGY] >= player[playerInfo.Entity_ENERGYMAX] then
 		player[playerInfo.ENERGY] = player[playerInfo.Entity_ENERGYMAX]

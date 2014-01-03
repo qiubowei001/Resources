@@ -6,7 +6,8 @@ local  p = lesson;
 local winSize = CCDirector:sharedDirector():getWinSize()
 
 local savepath = "save\\player1.xml"
-local g_Lesson_Process = 1; --教程进度
+local tSequence = {1,2,3,4,5,10,6,7,8,9,11}--课程顺序
+local g_Lesson_Process = 1; --教程进度 即tSequence索引
 local gTimerId = nil;--定时检测
 
 
@@ -24,6 +25,7 @@ local tLesson = {}
 											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.LINK_SUCC,lesson1) --完成课程
 											g_Lesson_Process = g_Lesson_Process + 1
 											Hint.ShowHint(Hint.tHintType.jobdone)
+											
 										end
 									end
 									GlobalEvent.RegisterEvent(GLOBAL_EVENT.LINK_SUCC,lesson1)	--链接+1
@@ -102,6 +104,9 @@ local tLesson = {}
 								end
 
 	tLesson[4].AcceptQuestFunc = function()
+									
+									player.EnergyRecovery(5)--给玩家一些能量
+									
 									g_Lesson_Process = g_Lesson_Process + 1
 								end
 								
@@ -109,9 +114,9 @@ local tLesson = {}
 	tLesson[5]={}
 	tLesson[5].desc = "link the red bottle to recover life X3"
 	tLesson[5].condition_func = function()	--触发条件
-									--玩家生命值减少至80%		
+									--玩家生命值减少至90%		
 									local percent =100*player[playerInfo.HP]/player[playerInfo.Entity_HPMAX]
-									if percent <= 80 then
+									if percent <= 90 then
 										return true
 									else
 										return false
@@ -126,9 +131,14 @@ local tLesson = {}
 											Hint.ShowHint(Hint.tHintType.jobdone)
 										end
 									end
+									player.EnergyRecovery(5)--给玩家一些能量
 									GlobalEvent.RegisterEvent(GLOBAL_EVENT.TAKE_BLOOD,lesson5)	--链接+1
 								 end
-														
+
+
+
+
+
 	tLesson[6]={}
 	tLesson[6].desc = "the blue ball is your energy,your will spend energy everytime you link or use skill"
 	tLesson[6].condition_func = function()	--触发条件
@@ -171,7 +181,7 @@ local tLesson = {}
 	tLesson[8]={}
 	tLesson[8].desc = "link the coin to gain them X3"
 	tLesson[8].condition_func = function()	--触发条件
-									--棋盘上有5个金币就可以触发
+									--棋盘上有1个金币就可以触发
 									local count = 0
 									for i = 1,brickInfo.brick_num_X do
 										for j = 1,brickInfo.brick_num_Y do
@@ -181,7 +191,7 @@ local tLesson = {}
 											end
 										end
 									end
-									if count >= 5 then
+									if count >= 1 then
 										return true
 									else
 										return false
@@ -190,11 +200,15 @@ local tLesson = {}
 	tLesson[8].AcceptQuestFunc = function()   --接受任务								
 									function lesson8()
 										tQuestCache[8] = tQuestCache[8] + 1
-										if tQuestCache[8] >= 3 then
+										if tQuestCache[8] >= 2 then
 											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.TAKE_GOLD,lesson8) --完成课程
 											g_Lesson_Process = g_Lesson_Process + 1
+											Hint.ShowHint(Hint.tHintType.jobdone)
 										end
 									end
+									
+									SkillUpgrade.UnlockSkill(7)--解锁一个点杀技能 眩晕
+
 									GlobalEvent.RegisterEvent(GLOBAL_EVENT.TAKE_GOLD,lesson8)	--链接+1
 								 end
 																						
@@ -211,7 +225,7 @@ local tLesson = {}
 	tLesson[9].AcceptQuestFunc = function()   --接受任务								
 									function lesson9()
 										tQuestCache[9] = tQuestCache[9] + 1
-										if tQuestCache[9] >= 3 then
+										if tQuestCache[9] >= 1 then
 											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.UPGRADE_EQUIP,lesson9) --完成课程
 											g_Lesson_Process = g_Lesson_Process + 1
 										end
@@ -232,15 +246,20 @@ local tLesson = {}
 									return false
 								end
 	tLesson[10].AcceptQuestFunc = function()   --接受任务					
+									--[[
 									function lesson10()		--玩家使用1次技能 则解锁新技能
+										
 										tQuestCache[10] = tQuestCache[10] + 1
 										if tQuestCache[10] >= 1 then
 											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.USE_BUFF_SKILL,lesson10) --完成课程
 											g_Lesson_Process = g_Lesson_Process + 1
-											SkillUpgrade.UnlockSkill(7)--解锁一个点杀技能 眩晕
+											
 										end
 									end
 									GlobalEvent.RegisterEvent(GLOBAL_EVENT.USE_BUFF_SKILL,lesson10)	--链接+1
+									--]]
+									
+									g_Lesson_Process = g_Lesson_Process + 1
 								 end
 
 	tLesson[11]={}
@@ -254,18 +273,24 @@ local tLesson = {}
 									end
 									return false
 								end
-	tLesson[11].AcceptQuestFunc = function()   --接受任务					
+	tLesson[11].AcceptQuestFunc = function()   --接受任务
+									--[[
 									function lesson11()		--玩家使用1次技能 则解锁新技能
 										tQuestCache[11] = tQuestCache[11] + 1
 										if tQuestCache[11] >= 1 then
 											GlobalEvent.unRegisterEvent(GLOBAL_EVENT.USE_ACTIVE_SKILL,lesson11) --完成课程
 											g_Lesson_Process = g_Lesson_Process + 1
-											--SkillUpgrade.UnlockSkill(7)--解锁一个点杀技能 眩晕
+											--
 										end
 									end
 									GlobalEvent.RegisterEvent(GLOBAL_EVENT.USE_ACTIVE_SKILL,lesson11)	--链接+1
+									--]]
+									
+									g_Lesson_Process = g_Lesson_Process + 1
 								 end
-								
+
+
+
 function p.Init()
 	--检测是否已经结束教程
 	--读取怪物图鉴信息
@@ -290,7 +315,7 @@ end
 function p.CheckLesson()
 	
 	--教程结束
-	if g_Lesson_Process > #tLesson then
+	if g_Lesson_Process > #tSequence then
 		if gTimerId ~= nil then
 			CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(gTimerId)
 			gTimerId = nil
@@ -302,12 +327,14 @@ function p.CheckLesson()
 		return
 	end
 	
-	if tQuestCache[g_Lesson_Process] == nil then	--未接受任务
-		if tLesson[g_Lesson_Process].condition_func == nil or tLesson[g_Lesson_Process].condition_func() then--接受课程
+	
+	local  lessonid = tSequence[g_Lesson_Process]
+	if tQuestCache[lessonid] == nil then	--未接受任务
+		if tLesson[lessonid].condition_func == nil or tLesson[lessonid].condition_func() then--接受课程
 			--显示界面
-			p.LoadUI(g_Lesson_Process)
-			tQuestCache[g_Lesson_Process] = 0
-			tLesson[g_Lesson_Process].AcceptQuestFunc();		
+			p.LoadUI(lessonid)
+			tQuestCache[lessonid] = 0
+			tLesson[lessonid].AcceptQuestFunc();		
 		end	
 	end	
 end	
@@ -334,7 +361,7 @@ end
 
 
 --显示界面
-function p.LoadUI(g_Lesson_Process)
+function p.LoadUI(lessonid)
 	
 			
 			
@@ -354,7 +381,7 @@ function p.LoadUI(g_Lesson_Process)
 
 	
 	--显示描述
-	local sdesc = tLesson[g_Lesson_Process].desc
+	local sdesc = tLesson[lessonid].desc
 	
 	local desclabel = CCLabelTTF:create(sdesc, "Arial", 25)
 			bglayer:addChild(desclabel,2)
