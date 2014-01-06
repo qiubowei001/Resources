@@ -59,3 +59,5 @@ GLOBAL_EVENT =
 	USE_ACTIVE_SKILL = 7,--使用点杀技能
 	TAKE_ENERGY		= 8,--喝蓝
 }
+
+winSize = CCDirector:sharedDirector():getWinSize()

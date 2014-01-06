@@ -216,8 +216,12 @@ function p.RefreshMenu()
 end
 
 
+
 function p.LoadUI()
-	
+	if CCDirector:sharedDirector():isPaused() then
+		CCDirector:sharedDirector():resume()
+    end	   
+		
 		local tPlayerEquip = {
 			player[playerInfo.WEAPON] 	,
 			player[playerInfo.ARMOR] 	,
@@ -270,19 +274,38 @@ function p.LoadUI()
 		
 		
 		bglayer:setTag(UIdefine.EquipUpGradeUI);
-		bglayer:setPosition(CCPointMake(0, 0))
-		
 		
 		--增加背景
 		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
 		bgSprite:setScale(1.5);
         bglayer:addChild(bgSprite,1)
-		bglayer:setPosition(CCPointMake(230, 200))
+		--bglayer:setPosition(CCPointMake(230, 200))
 		
 		
 		local scene = Main.GetGameScene();
 		
-		scene:addChild(bglayer)	
+		scene:addChild(bglayer,5)	
+	
+	
+	-->>>>>>>>>>>>>>>动画效果	
+	function pause()
+		Main.EnableTouch(true)--打开触摸
+		CCDirector:sharedDirector():pause()
+	end	
+	--向下飘入
+	local arr = CCArray:create()	
+	bglayer:setPosition(230 , winSize.height+200)
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	
+	local actionremove = CCCallFuncN:create(pause)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--
 end
 
 

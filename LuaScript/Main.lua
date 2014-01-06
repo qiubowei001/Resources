@@ -33,7 +33,7 @@ local g_EXPlabeltag = 5;
 local g_LEVlabeltag =6;
 
 local glayerMenu = nil;
-
+local g_TouchEnable = true;
 
 function Main.getTileXY(x,y)
 	--brickInfo.brickRespondArea
@@ -63,6 +63,10 @@ function Main.CloseAllUI()
 	end
 end
 
+--开启触摸还是关闭
+function Main.EnableTouch(bOpen)
+	g_TouchEnable = bOpen;
+end
 
 function Main.IfBoardFull()
 	for i = 1,brickInfo.brick_num_X do
@@ -508,6 +512,7 @@ function p.main(nMission)
 	
     -- create farm
     local function createlayerMain()
+		Main.EnableTouch(true);
         layerMain = CCLayer:create()
 		
 		
@@ -571,7 +576,7 @@ function p.main(nMission)
 				
 					 local bifatt = false
 					 if bIfWrapIn == false then
-						return;
+						return true;
 					 end
 					 
 						if Board[X][Y] ~= nil then
@@ -582,6 +587,7 @@ function p.main(nMission)
 					--处于选中单体模式
 				
 				end
+				return true;
 			end
 		
         local function onTouchEnded(x, y)
@@ -597,7 +603,7 @@ function p.main(nMission)
 				
 
 				if nAction == false then
-					return;
+					return true;
 				end
 				
 				--全局事件
@@ -631,7 +637,7 @@ function p.main(nMission)
 				--所有技能冷却+1
 				player.SkillCoolDown();
 				
-	
+				
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
 				--=====================处于释放魔法并选中单体模式========================--
 				local X,Y = Main.getTileXY(x,y)
@@ -646,9 +652,14 @@ function p.main(nMission)
 				Main.selectMode = SELECTMODE.NORMAL
 				MainUI.SetMainUITip("Nor")
 			end
+			return true;
         end
 
         local function onTouch(eventType, x, y)
+			if g_TouchEnable == false then
+				return true
+			end
+				
 			x = x - brickInfo.layerMainAdjX
             if eventType == "began" then   
                 return onTouchBegan(x, y)
@@ -657,6 +668,7 @@ function p.main(nMission)
             else
                 return onTouchEnded(x, y)
             end
+			return true;
         end
 
 		-- 注册触摸事件  

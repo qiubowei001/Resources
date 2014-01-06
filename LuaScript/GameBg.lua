@@ -53,6 +53,9 @@ end
 local tBgInfo = {}
 	tBgInfo[1] = {}
 	tBgInfo[1]["InitFunc"] = p.InitFuncmap1
+	
+	tBgInfo[2] = {}
+	tBgInfo[2]["InitFunc"] = p.InitFuncmap1
 
 --根据bgid获取背景层
 function p.GetBgLayer(nBgId)

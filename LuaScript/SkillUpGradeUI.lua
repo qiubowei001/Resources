@@ -24,6 +24,11 @@ function p.LearnSkillCallback(tag,sender)
 	
 	--显示技能
 	SkillBar.refreshSkill()
+	
+	--恢复
+	if CCDirector:sharedDirector():isPaused() then
+		CCDirector:sharedDirector():resume()
+    end	  --]] 
 end
 
 
@@ -55,13 +60,32 @@ function p.LoadUI()
 		
 		--增加背景
 		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
-		--bgSprite:setPosition(CCPointMake(230, 200))
-        bglayer:addChild(bgSprite,1)
-		bglayer:setPosition(CCPointMake(230, 200))
+		bglayer:addChild(bgSprite,1)
 		
 		
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer)	
+		
+	
+	-->>>>>>>>>>>>>>>动画效果	
+	function pause()
+		Main.EnableTouch(true)--打开触摸
+		CCDirector:sharedDirector():pause()
+	end	
+	--向下飘入
+	local arr = CCArray:create()	
+	bglayer:setPosition(330 , winSize.height+300)
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	
+	local actionremove = CCCallFuncN:create(pause)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--
 end
 
 

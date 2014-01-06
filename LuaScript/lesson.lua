@@ -3,7 +3,7 @@
 lesson = {}
 local  p = lesson;
 
-local winSize = CCDirector:sharedDirector():getWinSize()
+
 
 local savepath = "save\\player1.xml"
 local tSequence = {1,2,3,4,5,10,6,7,8,9,11}--课程顺序
@@ -331,6 +331,8 @@ function p.CheckLesson()
 	local  lessonid = tSequence[g_Lesson_Process]
 	if tQuestCache[lessonid] == nil then	--未接受任务
 		if tLesson[lessonid].condition_func == nil or tLesson[lessonid].condition_func() then--接受课程
+			
+			
 			--显示界面
 			p.LoadUI(lessonid)
 			tQuestCache[lessonid] = 0
@@ -344,7 +346,7 @@ function p.closeUICallback(tag,sender)
 	local layer = p.GetParent()
 	local scene = Main.GetGameScene();
 	scene:removeChild(layer, true)
-	
+	Main.EnableTouch(true)--打开触摸
 	--
 	if CCDirector:sharedDirector():isPaused() then
 		CCDirector:sharedDirector():resume()
@@ -360,16 +362,20 @@ function p.GetParent()
 end
 
 
+function p.pause()
+	Main.EnableTouch(true)--打开触摸
+	CCDirector:sharedDirector():pause()
+end
+
 --显示界面
 function p.LoadUI(lessonid)
+	--取消棋盘选中
+	LineFunc.OnTouchEnd()
 	
-			
-			
 	bglayer = CCLayer:create()
 	bglayer:setTag(UIdefine.LESSON);
 	
 	local menu = CCMenu:create()
-
 
 	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
 		closeBtn:registerScriptTapHandler(p.closeUICallback)
@@ -391,9 +397,7 @@ function p.LoadUI(lessonid)
 	
 	--增加背景 
 	local bgSprite = CCSprite:create("UI/lesson/lesson.png")
-	--bgSprite:setScale(1.5);
-    bglayer:addChild(bgSprite,1)
-	bglayer:setPosition(CCPointMake(340, 220))
+	bglayer:addChild(bgSprite,1)
 	bglayer:setScale(0.65);
 	
 	
@@ -401,6 +405,49 @@ function p.LoadUI(lessonid)
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,4)	
 	
-	CCDirector:sharedDirector():pause()
+	--向下飘入
+	local arr = CCArray:create()	
+	bglayer:setPosition(340 , winSize.height+220)
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	
+	local actionremove = CCCallFuncN:create(p.pause)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+
+	Main.EnableTouch(false)--阻断触摸
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
