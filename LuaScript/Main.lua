@@ -522,11 +522,12 @@ function p.main(nMission)
 		
         -- add in farm background
         --local bg = CCSprite:create("Map.png")
-		local nmission = mission.GetMission()
-		local bg =  GameBg.GetBgLayer(MISSION_TABLE[nmission]["BgId"]) 
+--		local nmission = mission.GetMission()
+--		local bg =  GameBg.GetBgLayer(MISSION_TABLE[nmission]["BgId"]) 
 		
 		--layerMain:addChild(bg)
-		g_sceneGame:addChild(bg)
+		--g_sceneGame:addChild(bg)
+		
 		cclog("winSize: %0.2f, %0.2f", winSize.width, winSize.height)
        
 		
@@ -688,16 +689,16 @@ function p.main(nMission)
 		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
-			
+		
 			
 		CCDirector:sharedDirector():getScheduler():setTimeScale(1);
 		
 		
 		--ÒÆ¶¯¶¯»­  bg:setPosition(winSize.width / 2 , winSize.height / 2)
 		
-		bg:setPosition(winSize.width / 2 , winSize.height*3/2)
-		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-		bg:runAction(moveby)	
+		--bg:setPosition(winSize.width / 2 , winSize.height*3/2)
+		--local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+		--bg:runAction(moveby)	
 		
 		layerMain:setPosition(brickInfo.layerMainAdjX , winSize.height)
 		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))

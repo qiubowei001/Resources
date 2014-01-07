@@ -74,6 +74,11 @@ function p.Init()
 	end
 end	
 
+--技能是否解锁
+function p.IfUnLocked(nNodeid)
+	return tSkillLockSave[nNodeid]
+end	
+
 --获取技能图片路径
 function p.GetPicPath(nskillId)
 	local skillnode = p.tSkillNode[nskillId]

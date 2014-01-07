@@ -23,6 +23,8 @@ dofile("LuaScript/GlobalEvent.lua")--全局事件触发
 
 
 
+dofile("LuaScript/SkillLockUI.lua")
+
 dofile("LuaScript/lesson.lua")
 
 dofile("LuaScript/MonsterHandBook.lua")

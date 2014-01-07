@@ -62,8 +62,8 @@ function p.GetBgLayer(nBgId)
 	local resoursepath = "scene/map"..nBgId.."/"
 	local  bglayer = CCSprite:create(resoursepath.."map.png")
 	
-	if tBgInfo[1]["InitFunc"] ~= nil then
-		tBgInfo[1]["InitFunc"](resoursepath,bglayer)
+	if tBgInfo[nBgId]["InitFunc"] ~= nil then
+		tBgInfo[nBgId]["InitFunc"](resoursepath,bglayer)
 	end
 	
 	return bglayer

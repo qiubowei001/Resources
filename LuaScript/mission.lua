@@ -231,10 +231,19 @@ end
 
 
 
-
-
-
-
+--ÕÂ½ÚÊý¾Ý
+CHAPTER_TABLE = {}
+	CHAPTER_TABLE[1] = {}
+	CHAPTER_TABLE[1].tMission = {1,2,3}
+	CHAPTER_TABLE[1].BgId = 1
+	
+	CHAPTER_TABLE[2] = {}
+	CHAPTER_TABLE[2].tMission = {3}
+	CHAPTER_TABLE[2].BgId = 1
+	
+function p.GeCHAPTER_TABLEMission(nChapter)
+	return CHAPTER_TABLE[nChapter].tMission
+end
 
 
 

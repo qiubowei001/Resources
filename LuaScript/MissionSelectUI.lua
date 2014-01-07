@@ -6,7 +6,8 @@
 MissionSelectUI = {}
 local p = MissionSelectUI;
 
-local bglayer=nil;
+local g_bglayer=nil;
+local g_Chapter = 1;
 
 local tMissionPortalInfo = 
 {
@@ -18,7 +19,8 @@ local tMissionPortalInfo =
 }
 
 
-
+local NextChapterBtn = nil;
+local LastChapterBtn = nil;
 function p.PortalOnClick(tag,sender)
 	
 			
@@ -37,7 +39,7 @@ function p.PortalOnClick(tag,sender)
 	arr:addObject(actionremove)
 	
 	local  seq = CCSequence:create(arr)	
-	bglayer:runAction(seq)	
+	g_bglayer:runAction(seq)	
 	--bglayer:removeFromParentAndCleanup(true);
 	--]]
 end
@@ -56,35 +58,42 @@ function p.LoadUI()
 		SkillUpgrade.Init()
 		GlobalEvent.InitEventTable();
 		---<<<<<<<<<<
-		
-		bglayer = CCLayer:create()
 
-		local menu = CCMenu:create()
-		menu:setPosition(CCPointMake(0, 0))
-
-		for nMission,v in pairs(tMissionPortalInfo) do
-			local Portal = CCMenuItemImage:create("UI/MissionSelect/portal.png","UI/MissionSelect/portal.png")
-			Portal:registerScriptTapHandler(p.PortalOnClick)
-			menu:addChild(Portal,1,nMission)
-			Portal:setPosition(v.POSITION[1],v.POSITION[2])
-		end
+		g_bglayer = p.GetChapterUI(g_Chapter)
 		
-		
-		bglayer:addChild(menu, 2,1)
-		bglayer:setTag(UIdefine.MissionSelectUI);
-			
-		--增加背景
-		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
-	    bglayer:addChild(bgSprite,1)
-		bgSprite:setPosition(CCPointMake(480, 320))
-		bgSprite:setScale(5);
 		local scene = g_sceneGame;
-		scene:addChild(bglayer)
+		scene:addChild(g_bglayer)
+
+
+		local menuMain = CCMenu:create()
+		--menuMain:setPosition(CCPointMake(300, 300))
+		g_sceneGame:addChild(menuMain,3)
+		--技能解锁界面入口
+		local SkilllockBtn = CCMenuItemImage:create("UI/MissionSelect/SkilllockBtn.png","UI/MissionSelect/SkilllockBtn.png")
+		SkilllockBtn:registerScriptTapHandler(SkillLockUI.LoadUI)
+		menuMain:addChild(SkilllockBtn)
+		SkilllockBtn:setPosition(350,200)
+		--]]
+				
+		--上一章节				
+		LastChapterBtn = CCMenuItemImage:create("UI/MissionSelect/LastChapterBtn.png","UI/MissionSelect/LastChapterBtn.png")
+		LastChapterBtn:registerScriptTapHandler(p.LastChapterBtn)
+		menuMain:addChild(LastChapterBtn)
+		LastChapterBtn:setPosition(-350,0)
 		
-		--local numbersprite = NumberToPic.GetPicByNumBer(1234567890)
-		--numbersprite:setPosition(CCPointMake(200, 120))
-		--scene:addChild(numbersprite,99)
+		--下一章节
+		NextChapterBtn = CCMenuItemImage:create("UI/MissionSelect/NextChapterBtn.png","UI/MissionSelect/NextChapterBtn.png")
+		NextChapterBtn:registerScriptTapHandler(p.NextChapterBtn)
+		menuMain:addChild(NextChapterBtn)
+		NextChapterBtn:setPosition(350,0)
 		
+
+		
+		--刷新翻页按钮
+		p.RefreshBtn();
+
+	
+--[[
 		local tAttType = 
 {
 	[1] = ccc3(255,255,255),--白色
@@ -99,6 +108,12 @@ function p.LoadUI()
 --色
 --色
 }
+
+		--local numbersprite = NumberToPic.GetPicByNumBer(1234567890)
+		--numbersprite:setPosition(CCPointMake(200, 120))
+		--scene:addChild(numbersprite,99)
+		
+		
 		for i,v in pairs(tAttType) do
 		local sprite = CCSprite:create("UI/AttGrade/att.png")
 		
@@ -106,9 +121,155 @@ function p.LoadUI()
 		bglayer:addChild(sprite,5)
 		sprite:setColor(v)			
 		end
-
+--]]
 	return g_sceneGame
 end
+
+--上一章节
+function p.LastChapterBtn()
+	g_Chapter = g_Chapter - 1;
+	
+	--动画表现时 隐藏按钮
+	p.HideBtn()
+	
+	local lastlayer = p.GetChapterUI(g_Chapter);
+	lastlayer:setPosition(-winSize.width , 0)
+	
+	-->>>>>>>>>>>>>>>动画效果
+	--原背景 从右移动到左,然后删除
+	function removeLast(sender)
+		sender:removeFromParentAndCleanup(true);
+	end	
+
+	
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(1, ccp(winSize.width,0))
+	local actionremove = CCCallFuncN:create(removeLast)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	local  seq = CCSequence:create(arr)	
+	g_bglayer:runAction(seq)	
+	
+	
+	--新背景 从右移动到左,然后设置为g_bglayer
+	function resetGlayer(sender)
+		g_bglayer = sender;	
+		p.RefreshBtn()
+	end
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(1, ccp(winSize.width,0))
+	local actionreset = CCCallFuncN:create(resetGlayer)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	local  seq = CCSequence:create(arr)	
+	lastlayer:runAction(seq)
+	
+	g_sceneGame:addChild(lastlayer)
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--		
+end
+
+--下一章节
+function p.NextChapterBtn()
+	g_Chapter = g_Chapter + 1;
+	
+	--动画表现时 隐藏按钮
+	p.HideBtn()
+	
+	local nextlayer = p.GetChapterUI(g_Chapter);
+	nextlayer:setPosition(winSize.width , 0)
+	
+	-->>>>>>>>>>>>>>>动画效果
+	--原背景 从右移动到左,然后删除
+	function removeLast(sender)
+		sender:removeFromParentAndCleanup(true);
+	end	
+	
+	--从右移动到左
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(1, ccp(-winSize.width,0))
+	
+	local actionremove = CCCallFuncN:create(removeLast)
+	arr:addObject(moveby)
+	arr:addObject(actionremove)
+	local  seq = CCSequence:create(arr)	
+	g_bglayer:runAction(seq)	
+
+
+
+
+
+	g_sceneGame:addChild(nextlayer)
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--		
+end
+
+--显示章节背景和关卡入口
+function p.GetChapterUI(nChapter)
+	local tmission = mission.GeCHAPTER_TABLEMission(nChapter)
+		
+	local bg = GameBg.GetBgLayer(CHAPTER_TABLE[nChapter].BgId)
+	bg:setPosition(winSize.width / 2 , winSize.height/2)
+	
+	--加入portal
+	nextlayer = CCLayer:create()
+
+	local menu = CCMenu:create()
+	menu:setPosition(CCPointMake(0, 0))
+
+	for i,missionid in pairs(tmission) do
+		local Portal = CCMenuItemImage:create("UI/MissionSelect/portal.png","UI/MissionSelect/portal.png")
+		Portal:registerScriptTapHandler(p.PortalOnClick)
+		menu:addChild(Portal,1,missionid)
+		tpos = tMissionPortalInfo[i].POSITION
+		Portal:setPosition(tpos[1],tpos[2])
+	end
+	nextlayer:addChild(menu, 2,1)
+	nextlayer:addChild(bg)
+	
+	return nextlayer
+end
+
+
+
+--刷新翻页按钮
+function p.RefreshBtn()
+	if g_Chapter <= 1 then
+		LastChapterBtn:setVisible(false)
+	else
+		LastChapterBtn:setVisible(true)	
+	end
+	
+	--是最大章节隐藏按钮
+	if g_Chapter >= #CHAPTER_TABLE then
+		NextChapterBtn:setVisible(false)
+	else
+		NextChapterBtn:setVisible(true)
+	end			
+end
+
+function p.HideBtn()
+	LastChapterBtn:setVisible(false)
+	NextChapterBtn:setVisible(false)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

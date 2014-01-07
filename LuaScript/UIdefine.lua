@@ -10,6 +10,7 @@ UIdefine =
 	HitEffect			= 10008,
 	MONSTER_HANDBOOK_UI	= 10009,
 	LESSON				= 10010,
+	SkillLockUI			= 10011,
 }
 
 
