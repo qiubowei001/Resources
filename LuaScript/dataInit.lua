@@ -18,7 +18,7 @@ function p.InitPlayerSave()
 		bIfNil = false --非空
 		break;
 	end
-		
+
 	if bIfNil  then
 		tPlayersave.lesson = false;--玩家教程
 		tPlayersave.music = true;--音乐

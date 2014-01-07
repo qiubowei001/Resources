@@ -6,8 +6,9 @@
 MissionSelectUI = {}
 local p = MissionSelectUI;
 
-local g_bglayer=nil;
-local g_Chapter = 1;
+local g_bglayer=nil;--背景层
+local g_MissionUI = nil;--UI层
+
 
 local tMissionPortalInfo = 
 {
@@ -18,6 +19,7 @@ local tMissionPortalInfo =
 	[5] = {POSITION={450,500}},
 }
 
+local g_Chapter = 1;--当前章节
 
 local NextChapterBtn = nil;
 local LastChapterBtn = nil;
@@ -26,6 +28,12 @@ function p.PortalOnClick(tag,sender)
 			
 	Main.main(tag);
 	local winSize = CCDirector:sharedDirector():getWinSize()
+	
+	
+	--删除MISSION select UI
+	g_MissionUI:removeFromParentAndCleanup(true);
+	
+	--[[
 	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 	
 	--渐渐隐藏 删除
@@ -39,9 +47,7 @@ function p.PortalOnClick(tag,sender)
 	arr:addObject(actionremove)
 	
 	local  seq = CCSequence:create(arr)	
-	g_bglayer:runAction(seq)	
-	--bglayer:removeFromParentAndCleanup(true);
-	--]]
+	g_bglayer:runAction(seq)--]]
 end
 
 function p.RunScene()
@@ -51,7 +57,7 @@ end
 
 function p.LoadUI()
 		g_sceneGame = CCScene:create();
-		
+		local scene = g_sceneGame;
 		
 		-->>>>>>>>>>游戏数据初始化 --这个到时候要放到主界面
 		dataInit.InitPlayerSave()
@@ -59,15 +65,18 @@ function p.LoadUI()
 		GlobalEvent.InitEventTable();
 		---<<<<<<<<<<
 
+		--背景层  --和UI层是分开的
 		g_bglayer = p.GetChapterUI(g_Chapter)
-		
-		local scene = g_sceneGame;
-		scene:addChild(g_bglayer)
+		scene:addChild(g_bglayer,UIdefine.BG_LAYER)
 
+		
+		--加载UI层
+		g_MissionUI = CCLayer:create()
+		scene:addChild(g_MissionUI,UIdefine.MissionSelectUI)
 
 		local menuMain = CCMenu:create()
 		--menuMain:setPosition(CCPointMake(300, 300))
-		g_sceneGame:addChild(menuMain,3)
+		g_MissionUI:addChild(menuMain,3)
 		--技能解锁界面入口
 		local SkilllockBtn = CCMenuItemImage:create("UI/MissionSelect/SkilllockBtn.png","UI/MissionSelect/SkilllockBtn.png")
 		SkilllockBtn:registerScriptTapHandler(SkillLockUI.LoadUI)
@@ -160,14 +169,12 @@ function p.LastChapterBtn()
 	local moveby = CCMoveBy:create(1, ccp(winSize.width,0))
 	local actionreset = CCCallFuncN:create(resetGlayer)
 	arr:addObject(moveby)
-	arr:addObject(actionremove)
+	arr:addObject(actionreset)
 	local  seq = CCSequence:create(arr)	
 	lastlayer:runAction(seq)
 	
 	g_sceneGame:addChild(lastlayer)
-
-	Main.EnableTouch(false)--阻断触摸
-	--<<<<<<<<<<<<<<<--		
+	--<<<<<<<<<<<<<<<--
 end
 
 --下一章节
@@ -196,13 +203,22 @@ function p.NextChapterBtn()
 	local  seq = CCSequence:create(arr)	
 	g_bglayer:runAction(seq)	
 
-
-
+	
+	--新背景 从右移动到左,然后设置为g_bglayer
+	function resetGlayer(sender)
+		g_bglayer = sender;	
+		p.RefreshBtn()
+	end
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(1, ccp(-winSize.width,0))
+	local actionreset = CCCallFuncN:create(resetGlayer)
+	arr:addObject(moveby)
+	arr:addObject(actionreset)
+	local  seq = CCSequence:create(arr)	
+	nextlayer:runAction(seq)
 
 
 	g_sceneGame:addChild(nextlayer)
-
-	Main.EnableTouch(false)--阻断触摸
 	--<<<<<<<<<<<<<<<--		
 end
 

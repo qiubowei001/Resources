@@ -698,11 +698,14 @@ function p.main(nMission)
 		
 		--bg:setPosition(winSize.width / 2 , winSize.height*3/2)
 		--local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-		--bg:runAction(moveby)	
+		--bg:runAction(moveby)
 		
-		layerMain:setPosition(brickInfo.layerMainAdjX , winSize.height)
+		--Ω•Ω•œ‘ æ
+		--[[layerMain:setPosition(brickInfo.layerMainAdjX , winSize.height)
 		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 		layerMain:runAction(moveby)
+		--]]
+		layerMain:setPosition(brickInfo.layerMainAdjX , 0)
 		
         return layerMain
     end
