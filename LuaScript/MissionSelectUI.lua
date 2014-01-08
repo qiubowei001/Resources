@@ -8,46 +8,52 @@ local p = MissionSelectUI;
 
 local g_bglayer=nil;--背景层
 local g_MissionUI = nil;--UI层
+local g_menuMain = nil;
 
 
 local tMissionPortalInfo = 
 {
-	[1] = {POSITION={50, 500}},
-	[2] = {POSITION={150,500}},
-	[3] = {POSITION={250,500}},
-	[4] = {POSITION={350,500}},
-	[5] = {POSITION={450,500}},
+	[1] = {POSITION={50, 100}},
+	[2] = {POSITION={150,100}},
+	[3] = {POSITION={250,100}},
+	[4] = {POSITION={350,100}},
+	[5] = {POSITION={450,100}},
 }
 
 local g_Chapter = 1;--当前章节
+local g_Mission = nil;--当前关卡
+
+local gTagLock = 1000
+local gTagUnLock = 2000
+		
+local  portalmenutag = 1;
 
 local NextChapterBtn = nil;
 local LastChapterBtn = nil;
 function p.PortalOnClick(tag,sender)
+	g_Mission = tag
 	
-			
+	--未解锁关卡
+	local  chapterRecord ,missionRecord= dataInit.GetPlayerProccessRecord();
+	if g_Mission >	missionRecord+1  then
+		
+		return
+	end
+	
 	Main.main(tag);
 	local winSize = CCDirector:sharedDirector():getWinSize()
 	
 	
-	--删除MISSION select UI
-	g_MissionUI:removeFromParentAndCleanup(true);
+	--隐藏MISSION select UI
+	local opacity = CCFadeOut:create(1)
+	g_menuMain:runAction(opacity)
 	
-	--[[
-	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 	
-	--渐渐隐藏 删除
-	function delete(sender)
-		sender:removeFromParentAndCleanup(true);
-	end
-		
-	local actionremove = CCCallFuncN:create(delete)
-	local arr = CCArray:create()
-	arr:addObject(moveby)
-	arr:addObject(actionremove)
-	
-	local  seq = CCSequence:create(arr)	
-	g_bglayer:runAction(seq)--]]
+	--隐藏portal的menu
+	local menu = g_bglayer:getChildByTag(portalmenutag);
+	menu = tolua.cast(menu, "CCMenu")
+	local opacity = CCFadeOut:create(1)
+	menu:runAction(opacity)
 end
 
 function p.RunScene()
@@ -55,7 +61,12 @@ function p.RunScene()
 end
 
 
+
+
 function p.LoadUI()
+		--读取玩家游戏进度
+		g_Chapter ,g_Mission = dataInit.GetPlayerProccessRecord();
+
 		g_sceneGame = CCScene:create();
 		local scene = g_sceneGame;
 		
@@ -67,33 +78,33 @@ function p.LoadUI()
 
 		--背景层  --和UI层是分开的
 		g_bglayer = p.GetChapterUI(g_Chapter)
-		scene:addChild(g_bglayer,UIdefine.BG_LAYER)
+		scene:addChild(g_bglayer,-1,UIdefine.BG_LAYER)
 
 		
 		--加载UI层
 		g_MissionUI = CCLayer:create()
-		scene:addChild(g_MissionUI,UIdefine.MissionSelectUI)
+		scene:addChild(g_MissionUI,3,UIdefine.MissionSelectUI)
 
-		local menuMain = CCMenu:create()
-		--menuMain:setPosition(CCPointMake(300, 300))
-		g_MissionUI:addChild(menuMain,3)
+		g_menuMain = CCMenu:create()
+		--g_menuMain:setPosition(CCPointMake(300, 300))
+		g_MissionUI:addChild(g_menuMain,3)
 		--技能解锁界面入口
 		local SkilllockBtn = CCMenuItemImage:create("UI/MissionSelect/SkilllockBtn.png","UI/MissionSelect/SkilllockBtn.png")
 		SkilllockBtn:registerScriptTapHandler(SkillLockUI.LoadUI)
-		menuMain:addChild(SkilllockBtn)
+		g_menuMain:addChild(SkilllockBtn)
 		SkilllockBtn:setPosition(350,200)
 		--]]
 				
 		--上一章节				
 		LastChapterBtn = CCMenuItemImage:create("UI/MissionSelect/LastChapterBtn.png","UI/MissionSelect/LastChapterBtn.png")
 		LastChapterBtn:registerScriptTapHandler(p.LastChapterBtn)
-		menuMain:addChild(LastChapterBtn)
+		g_menuMain:addChild(LastChapterBtn)
 		LastChapterBtn:setPosition(-350,0)
 		
 		--下一章节
 		NextChapterBtn = CCMenuItemImage:create("UI/MissionSelect/NextChapterBtn.png","UI/MissionSelect/NextChapterBtn.png")
 		NextChapterBtn:registerScriptTapHandler(p.NextChapterBtn)
-		menuMain:addChild(NextChapterBtn)
+		g_menuMain:addChild(NextChapterBtn)
 		NextChapterBtn:setPosition(350,0)
 		
 
@@ -224,8 +235,9 @@ end
 
 --显示章节背景和关卡入口
 function p.GetChapterUI(nChapter)
+	
 	local tmission = mission.GeCHAPTER_TABLEMission(nChapter)
-		
+
 	local bg = GameBg.GetBgLayer(CHAPTER_TABLE[nChapter].BgId)
 	bg:setPosition(winSize.width / 2 , winSize.height/2)
 	
@@ -235,14 +247,38 @@ function p.GetChapterUI(nChapter)
 	local menu = CCMenu:create()
 	menu:setPosition(CCPointMake(0, 0))
 
+	--g_Chapter ,g_Mission
+	
 	for i,missionid in pairs(tmission) do
 		local Portal = CCMenuItemImage:create("UI/MissionSelect/portal.png","UI/MissionSelect/portal.png")
 		Portal:registerScriptTapHandler(p.PortalOnClick)
 		menu:addChild(Portal,1,missionid)
 		tpos = tMissionPortalInfo[i].POSITION
 		Portal:setPosition(tpos[1],tpos[2])
+		
+		--增加个关卡标记
+		local MissionLabel = CCLabelTTF:create(""..missionid, "Arial", 20)
+			Portal:addChild(MissionLabel)
+			MissionLabel:setColor(ccc3(255,255,255))
+			MissionLabel:setPosition(0, 0)
+		
+		
+		if missionid > g_Mission + 1 then
+			--未解锁关卡加个标志
+			local lockedSprite = CCMenuItemImage:create("UI/MissionSelect/portalLock.png", "UI/MissionSelect/portalLock.png")
+			lockedSprite:setPosition(tpos[1],tpos[2])
+			menu:addChild(lockedSprite,gTagLock + i)			
+			
+		elseif missionid <= g_Mission then
+			--已解锁关卡加个标志
+			local UnlockedSprite = CCMenuItemImage:create("UI/MissionSelect/portalPassed.png", "UI/MissionSelect/portalPassed.png")
+			UnlockedSprite:setPosition(tpos[1],tpos[2])
+			menu:addChild(UnlockedSprite,gTagUnLock + i)
+		end
+		
+		
 	end
-	nextlayer:addChild(menu, 2,1)
+	nextlayer:addChild(menu, 2,portalmenutag)
 	nextlayer:addChild(bg)
 	
 	return nextlayer
@@ -252,6 +288,7 @@ end
 
 --刷新翻页按钮
 function p.RefreshBtn()
+	--第一章节隐藏按钮
 	if g_Chapter <= 1 then
 		LastChapterBtn:setVisible(false)
 	else
@@ -263,7 +300,17 @@ function p.RefreshBtn()
 		NextChapterBtn:setVisible(false)
 	else
 		NextChapterBtn:setVisible(true)
-	end			
+	end
+	
+	--进度解锁
+	local  chapterRecord ,missionRecord= dataInit.GetPlayerProccessRecord();
+	
+	local tmission = mission.GeCHAPTER_TABLEMission(g_Chapter)
+	local lastMissionId = tmission[#tmission]--当前章节最后MISSIONID
+	
+	if  missionRecord 	< lastMissionId then
+		NextChapterBtn:setVisible(false)
+	end
 end
 
 function p.HideBtn()
@@ -272,7 +319,10 @@ function p.HideBtn()
 end
 
 
-
+--通关后储存数据
+function p.PassMission()
+	dataInit.SetPlayerProccessRecord(g_Chapter,g_Mission)
+end
 
 
 

@@ -76,9 +76,10 @@ function p.LoadUI()
 	local arr = CCArray:create()	
 	bglayer:setPosition(330 , winSize.height+300)
 	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	local actiontoease =  CCEaseBounceOut:create(moveby)	
 	
 	local actionremove = CCCallFuncN:create(pause)
-	arr:addObject(moveby)
+	arr:addObject(actiontoease)
 	arr:addObject(actionremove)
 	
 	local  seq = CCSequence:create(arr)	

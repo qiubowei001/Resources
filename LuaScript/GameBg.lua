@@ -50,12 +50,22 @@ function p.InitFuncmap1(resoursepath,bglayer)
 end	
 
 
+function p.InitFuncmap2(resoursepath,bglayer)
+	--加几个蝙蝠
+	for i=1,5 do
+		local batspr = SpriteManager.creatBrickSprite(monster.GetPicIdFromMonsterId(9))
+		batspr:setPosition( 300 ,200)
+		bglayer:addChild(batspr)
+	end		
+end	
+
+
 local tBgInfo = {}
 	tBgInfo[1] = {}
 	tBgInfo[1]["InitFunc"] = p.InitFuncmap1
 	
 	tBgInfo[2] = {}
-	tBgInfo[2]["InitFunc"] = p.InitFuncmap1
+	tBgInfo[2]["InitFunc"] = p.InitFuncmap2
 
 --根据bgid获取背景层
 function p.GetBgLayer(nBgId)

@@ -9,26 +9,6 @@ local winSize = CCDirector:sharedDirector():getWinSize()
 local tHandBookInfo = {}
 
 local tHandBookInfoCache = {} --存放信息 --游戏结束后储存回文件中
---[[
-	--read
-	local  MyTable = {}
-	data("1.xml", MyTable)
-	cclog("finish")
-	
-	
-	--write
-	local	Anim = {1,3,5,6,7,8}--{}
-			Anim[1] = {}
-			Anim[1].Texture = "data\\Anim3.png"
-			Anim[1].Time = 1
-			Anim[2] = {}
-			Anim[2].Texture = "data\\Anim4.png"
-			Anim[2].Time = 2
-			Anim.Mode = "aLOOP"
-			Anim.AutoStart = true
-			data(Anim, "1.xml")	
-	--]]
-
 local savepath = "save\\monsterHandbook.xml"
 --初始化
 function p.Init()
@@ -185,7 +165,6 @@ function p.LoadUI(nMonsterType)
 	local bgSprite = CCSprite:create("UI/Handbook/monsterhandbook.png")
 	--bgSprite:setScale(1.5);
     bglayer:addChild(bgSprite,1)
-	bglayer:setPosition(CCPointMake(340, 220))
 	bglayer:setScale(0.65);
 	
 	
@@ -199,8 +178,27 @@ function p.LoadUI(nMonsterType)
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,4)	
 	
-	CCDirector:sharedDirector():pause()
 	
+	-->>>>>>>>>>>>>>>动画效果	
+	function pause()
+		Main.EnableTouch(true)--打开触摸
+		CCDirector:sharedDirector():pause()
+	end	
+	--向下飘入
+	local arr = CCArray:create()	
+	bglayer:setPosition(340 , winSize.height+220)
+	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+	local actiontoease =  CCEaseBounceOut:create(moveby)	
+	
+	local actionremove = CCCallFuncN:create(pause)
+	arr:addObject(actiontoease)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--	
 end
 
 

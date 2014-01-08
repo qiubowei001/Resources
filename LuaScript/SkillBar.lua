@@ -65,6 +65,11 @@ function p.Init(menuCallbackOpenPopup)
 		p.refreshSkill();
 		glayerMenu:setPosition(10, 230)
 		
+		
+		--µ≠»Î
+		local fadein = CCFadeIn:create(1)
+		glayerMenu:runAction(fadein)
+		
         return glayerMenu
 end
 

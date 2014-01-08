@@ -24,6 +24,7 @@ Main.ChosedMagic = 0;
 
 local gBrickFallTimerId = nil;
 local gMonsterCdTimerId = nil;
+local gDelayTimerId		= nil;
 
 local g_HPlabeltag =1;
 local g_ATlabeltag= 2;
@@ -446,7 +447,7 @@ function p.brickMoveTo(pbrick,X,Y)
 		local actionto3 = CCMoveTo:create(randomtime*2, ccp(positionx, positiony))
 		local actiontoease =  CCEaseBounceOut:create(actionto3)
 		local arr = CCArray:create()		
-		arr:addObject(actionto)
+			arr:addObject(actionto)
 			arr:addObject(actionto2)
 		
 		   arr:addObject(actiontoease)
@@ -474,6 +475,9 @@ function p.InitBoard()
 			Board[i][j] = nil;
 			--初始化背景
 			local pbrickbg =SpriteManager.creatBrickSprite(21)
+			--淡入
+			local fadein = CCFadeIn:create(1)
+			pbrickbg:runAction(fadein)
 			
 			p.brickSetBGXY(pbrickbg,i,j)
 		end
@@ -685,8 +689,13 @@ function p.main(nMission)
 		--初始化玩家数据
 		player.Initplayer();	
 
-			
-		gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
+		function DELAY()
+			CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(gDelayTimerId)			
+			gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)
+		end
+		--等动画播完	
+		--gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
+		gDelayTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(DELAY, 2, false)	
 		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
 		
@@ -694,18 +703,9 @@ function p.main(nMission)
 		CCDirector:sharedDirector():getScheduler():setTimeScale(1);
 		
 		
-		--移动动画  bg:setPosition(winSize.width / 2 , winSize.height / 2)
-		
-		--bg:setPosition(winSize.width / 2 , winSize.height*3/2)
-		--local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-		--bg:runAction(moveby)
-		
-		--渐渐显示
-		--[[layerMain:setPosition(brickInfo.layerMainAdjX , winSize.height)
-		local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-		layerMain:runAction(moveby)
-		--]]
 		layerMain:setPosition(brickInfo.layerMainAdjX , 0)
+		
+		
 		
         return layerMain
     end

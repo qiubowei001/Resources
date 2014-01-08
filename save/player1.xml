@@ -1,6 +1,8 @@
 <!--Framework Engine Xml database -www.framework-studios.com-->
 <fwedata I="S" V="T">
+    <ChapterRecord I="S" V="N">2.000000</ChapterRecord>
+    <MissionRecord I="S" V="N">9.000000</MissionRecord>
     <music I="S" V="B">true</music>
-    <lesson I="S" V="B">false</lesson>
     <sound I="S" V="B">true</sound>
+    <lesson I="S" V="B">false</lesson>
 </fwedata>

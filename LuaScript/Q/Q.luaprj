@@ -36,5 +36,10 @@
             <LuaFile RelativePath=".\..\UI\NumberToPic.lua" />
             <LuaFile RelativePath=".\..\UI\ProgressBar.lua" />
         </Filter>
+        <LuaFile RelativePath=".\..\lesson.lua" />
+        <LuaFile RelativePath=".\..\dataInit.lua" />
+        <LuaFile RelativePath=".\..\SkillLockUI.lua" />
+        <LuaFile RelativePath=".\..\MonsterHandBook.lua" />
+        <LuaFile RelativePath=".\..\GameBg.lua" />
     </Filter>
 </Project>

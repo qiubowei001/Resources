@@ -23,6 +23,35 @@ function p.InitPlayerSave()
 		tPlayersave.lesson = false;--玩家教程
 		tPlayersave.music = true;--音乐
 		tPlayersave.sound = true;--音效
+		tPlayersave.ChapterRecord = 1;		--章节记录
+		tPlayersave.MissionRecord = 2;		--关卡记录
 		data(tPlayersave,savepath)
 	end
 end
+
+
+--获取玩家进度  返回:章节,关卡
+function p.GetPlayerProccessRecord()
+	local tPlayersave = {}
+	data(savepath, tPlayersave)
+	return 	tPlayersave.ChapterRecord ,tPlayersave.MissionRecord
+end
+
+--设置玩家进度  章节,关卡
+function p.SetPlayerProccessRecord(nChapter,nMission)
+	local tPlayersave = {}
+	data(savepath, tPlayersave)
+	tPlayersave.ChapterRecord =nChapter;		--章节记录
+	tPlayersave.MissionRecord =nMission;		--关卡记录	
+	data(tPlayersave,savepath)
+end
+
+
+
+
+
+
+
+
+
+

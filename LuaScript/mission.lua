@@ -27,6 +27,8 @@ MISSION_TABLE[1]["name"] = "ChapterI MISSION1"
 MISSION_TABLE[1]["BgId"] = 1 --背景
 MISSION_TABLE[1]["config"] = 
 {
+
+--
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=0, [tbrickType.MONSTER]=10,     [tbrickType.SWORD]=45,     [tbrickType.BLOOD]=45,     [tbrickType.GOLD]=0}},--lesson1~2 如何链接,杀3个怪
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=0, [tbrickType.MONSTER]=40,     [tbrickType.SWORD]=45,     [tbrickType.BLOOD]=15,     [tbrickType.GOLD]=0}},--lesson3 怪物3只时,介绍怪物CD;4,玩家99%HP,介绍血球
 {45		,	{1},			{100}			,10		, 1			,{2},	{[tbrickType.ENERGY]=15, [tbrickType.MONSTER]=40,     [tbrickType.SWORD]=20,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=0}},--5 如何回血 怪物突然多起来
@@ -34,8 +36,8 @@ MISSION_TABLE[1]["config"] =
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=30, [tbrickType.MONSTER]=20,     [tbrickType.SWORD]=20,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=0}},--6 介绍篮球 7回蓝
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=20, [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=20,     [tbrickType.BLOOD]=20,     [tbrickType.GOLD]=40}},--8 吃金币 --升级装备
 {200	,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},--9升级技能 使用技能
-
-{9999		,	{},			{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
+--]]
+{9999	,	{},				{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
  
 }
 
@@ -234,12 +236,12 @@ end
 --章节数据
 CHAPTER_TABLE = {}
 	CHAPTER_TABLE[1] = {}
-	CHAPTER_TABLE[1].tMission = {1,2,3}
+	CHAPTER_TABLE[1].tMission = {1,2,3,4,5}
 	CHAPTER_TABLE[1].BgId = 1
 	
 	CHAPTER_TABLE[2] = {}
-	CHAPTER_TABLE[2].tMission = {3}
-	CHAPTER_TABLE[2].BgId = 1
+	CHAPTER_TABLE[2].tMission = {6,7,8,9}
+	CHAPTER_TABLE[2].BgId = 2
 	
 function p.GeCHAPTER_TABLEMission(nChapter)
 	return CHAPTER_TABLE[nChapter].tMission

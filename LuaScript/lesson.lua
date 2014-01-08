@@ -313,7 +313,11 @@ end
 
 --检测条件触发教程
 function p.CheckLesson()
-	
+	--如果图鉴界面显示 教程不显示
+	local test1 = MonsterHandBook.GetParent()
+	if MonsterHandBook.GetParent() ~= nil then
+		return;
+	end
 	--教程结束
 	if g_Lesson_Process > #tSequence then
 		if gTimerId ~= nil then
@@ -409,15 +413,21 @@ function p.LoadUI(lessonid)
 	local arr = CCArray:create()	
 	bglayer:setPosition(340 , winSize.height+220)
 	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
+
+	local actiontoease =  CCEaseBounceOut:create(moveby)	
 	
 	local actionremove = CCCallFuncN:create(p.pause)
-	arr:addObject(moveby)
+
+	arr:addObject(actiontoease)
 	arr:addObject(actionremove)
 	
 	local  seq = CCSequence:create(arr)	
 	bglayer:runAction(seq)	
 
 	Main.EnableTouch(false)--阻断触摸
+	
+	
+	
 end
 
 

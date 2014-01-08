@@ -25,6 +25,11 @@ function p.LoadUI(ntype)
 
 		cclog(" gh"..gh.." gw "..gw)
 		
+		--通关处理
+		if ntype == 3 then
+			MissionSelectUI.PassMission()
+		end
+		
 		--增加背景
 		local path = tFailTypePic[ntype]
 		local bgSprite = CCSprite:create(path)
@@ -52,13 +57,9 @@ function p.LoadUI(ntype)
 end
 
 function p.BackToMission(tag,sender)
-	--CCDirector:sharedDirector():resume()
-	--CCDirector:sharedDirector():popScene()
 	local gamescene = MissionSelectUI.LoadUI();
 	gamescene =CCTransitionFlipY:create(1, gamescene, kCCTransitionOrientationUpOver)
 	CCDirector:sharedDirector():replaceScene(gamescene)
---	Main.CloseAllUI();
---	MissionSelectUI.LoadUI();
 end
 
 

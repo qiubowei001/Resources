@@ -31,8 +31,8 @@ local gEnergyBar = nil;
 
 function p.LoadUI()
 	bglayer = CCLayer:create()
-
-
+	
+	
 		--能量条
 		gEnergyBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Energybar.png"))
 		gEnergyBar:setType(kCCProgressTimerTypeBar)
@@ -91,9 +91,9 @@ function p.LoadUI()
 		GoldBarBg:setPosition(-320, 540)
 		bglayer:addChild(GoldBarBg,2)
 		
-		
+			
 	
-	
+
 
 		--显示玩家血量
 		local hpLabel = CCLabelTTF:create("", "Arial", 20)
@@ -179,13 +179,13 @@ function p.LoadUI()
 		-- 升级按钮
 		local item1 = CCMenuItemImage:create("UI/Button/upgradearrow.png", "UI/Button/upgradearrow.png")
     	item1:registerScriptTapHandler(p.menuCallbackUpgradeBtn)
-		local menu = CCMenu:create()
-		menu:addChild(item1,1,1)	
-		menu:setPosition(CCPointMake(0, 310))
+		local menuUpGrade = CCMenu:create()
+		menuUpGrade:addChild(item1,1,1)	
+		menuUpGrade:setPosition(CCPointMake(0, 310))
 		item1:setPosition(0,0)
-		menu:setTag(g_UpgradeBtntag);
-		bglayer:addChild(menu)		
-		menu:setVisible(true)
+		menuUpGrade:setTag(g_UpgradeBtntag);
+		bglayer:addChild(menuUpGrade)		
+		menuUpGrade:setVisible(true)
 			
    -- bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
@@ -196,11 +196,37 @@ function p.LoadUI()
 	
 	p.SetProgress(10)
 	
-	--飘入
+	--[[飘入
 	local winSize = CCDirector:sharedDirector():getWinSize()
 	bglayer:setPosition(CCPointMake(800, 50+winSize.height))
 	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-	bglayer:runAction(moveby)	
+	bglayer:runAction(moveby)	--]]
+	
+	bglayer:setPosition(CCPointMake(800, 50))
+
+	--所有控件加入淡入效果
+	local tUIAll = {}
+table.insert(tUIAll,gEnergyBar)
+table.insert(tUIAll,HPBar)
+table.insert(tUIAll,ExpBar)
+table.insert(tUIAll,GoldBar)
+table.insert(tUIAll,HPBarBg)
+table.insert(tUIAll,ExpBarBg)
+table.insert(tUIAll,GoldBarBg)
+table.insert(tUIAll,hpLabel)
+table.insert(tUIAll,ATlabel)
+table.insert(tUIAll,GOLDlabel)
+table.insert(tUIAll,Tiplabel)
+table.insert(tUIAll,EXPlabel)
+table.insert(tUIAll,LEVlabel)
+table.insert(tUIAll,missionLabel)
+table.insert(tUIAll,gprogressbar)
+table.insert(tUIAll,menuUpGrade)
+	for i,pUI in pairs(tUIAll)do
+		local fadein = CCFadeIn:create(1)
+		pUI:runAction(fadein)
+	end
+	
 end
 
 --显示SPEED按钮
