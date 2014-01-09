@@ -236,11 +236,11 @@ end
 --ÕÂ½ÚÊý¾Ý
 CHAPTER_TABLE = {}
 	CHAPTER_TABLE[1] = {}
-	CHAPTER_TABLE[1].tMission = {1,2,3,4,5}
+	CHAPTER_TABLE[1].tMission = {1,2}
 	CHAPTER_TABLE[1].BgId = 1
 	
 	CHAPTER_TABLE[2] = {}
-	CHAPTER_TABLE[2].tMission = {6,7,8,9}
+	CHAPTER_TABLE[2].tMission = {3,4,5,6,7}
 	CHAPTER_TABLE[2].BgId = 2
 	
 function p.GeCHAPTER_TABLEMission(nChapter)
