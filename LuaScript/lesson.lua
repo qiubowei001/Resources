@@ -393,9 +393,9 @@ function p.LoadUI(lessonid)
 	--œ‘ æ√Ë ˆ
 	local sdesc = tLesson[lessonid].desc
 	
-	local desclabel = CCLabelTTF:create(sdesc, "Arial", 25)
+	local desclabel = CCLabelTTF:create(sdesc, "Arial", 40)
 			bglayer:addChild(desclabel,2)
-			desclabel:setColor(ccc3(255,0,0))
+			desclabel:setColor(ccc3(255,255,255))
 			desclabel:setPosition(0, 150)
 
 	
