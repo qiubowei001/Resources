@@ -35,7 +35,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[1]["CDGrow"] = -1
 	MONSTER_TYPE[1]["PICID"] = 1
 	MONSTER_TYPE[1]["ScarePICID"] = 8
-	
+	MONSTER_TYPE[1]["desc"]	= ""
 	
 	MONSTER_TYPE[2] = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
@@ -50,6 +50,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[2]["CDGrow"] = -1
 	MONSTER_TYPE[2]["PICID"] = 2
 	MONSTER_TYPE[2]["ScarePICID"] = 17
+	MONSTER_TYPE[2]["desc"]	= ""
 	
 	MONSTER_TYPE[3] = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
@@ -64,6 +65,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[3]["CDGrow"] = -1.5
 	MONSTER_TYPE[3]["PICID"] = 18
 	MONSTER_TYPE[3]["ScarePICID"] = 19
+	MONSTER_TYPE[3]["desc"]	= ""
 	
 	MONSTER_TYPE[4] = {}
 	MONSTER_TYPE[4]["name"] = "SlimeKing"
@@ -79,6 +81,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[4]["CDGrow"] = -1
 	MONSTER_TYPE[4]["PICID"] = 9
 	MONSTER_TYPE[4]["ScarePICID"] = 10
+	MONSTER_TYPE[4]["desc"]	= ""
 	
 	MONSTER_TYPE[5] = {}
 	MONSTER_TYPE[5]["name"] = "FireSpider"
@@ -94,6 +97,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[5]["CDGrow"] = -1
 	MONSTER_TYPE[5]["PICID"] = 11
 	MONSTER_TYPE[5]["ScarePICID"] = 12
+	MONSTER_TYPE[5]["desc"]	= ""
 	
 	MONSTER_TYPE[6] = {}
 	MONSTER_TYPE[6]["name"] = "littleFireSpider"
@@ -108,6 +112,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[6]["CDGrow"] = -1
 	MONSTER_TYPE[6]["PICID"] = 13
 	MONSTER_TYPE[6]["ScarePICID"] = 14
+	MONSTER_TYPE[6]["desc"]	= ""
 	
 	MONSTER_TYPE[7] = {}
 	MONSTER_TYPE[7]["name"] = "FrozenEye"
@@ -123,6 +128,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[7]["CDGrow"] = -1
 	MONSTER_TYPE[7]["PICID"] = 1
 	MONSTER_TYPE[7]["ScarePICID"] = 8
+	MONSTER_TYPE[7]["desc"]	= ""
 	
 	MONSTER_TYPE[8] = {}
 	MONSTER_TYPE[8]["name"] = "FireEye"
@@ -138,6 +144,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[8]["CDGrow"] = -1
 	MONSTER_TYPE[8]["PICID"] = 1
 	MONSTER_TYPE[8]["ScarePICID"] = 8
+	MONSTER_TYPE[8]["desc"]	= ""
+	
 	
 	MONSTER_TYPE[9] = {}
 	MONSTER_TYPE[9]["name"] = "Bat"
@@ -153,6 +161,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[9]["CDGrow"] = -1
 	MONSTER_TYPE[9]["PICID"] = 15
 	MONSTER_TYPE[9]["ScarePICID"] = 16
+	MONSTER_TYPE[9]["desc"]	= ""
 	
 	MONSTER_TYPE[10] = {}
 	MONSTER_TYPE[10]["name"] = "wizard"
@@ -168,11 +177,46 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["CDGrow"] = -1
 	MONSTER_TYPE[10]["PICID"] = 1
 	MONSTER_TYPE[10]["ScarePICID"] = 8
+	MONSTER_TYPE[10]["desc"]	= ""
 	
-	
+	--屁股星人
+	MONSTER_TYPE[11] = {}
+	MONSTER_TYPE[11]["name"] = "Octopus"
+	MONSTER_TYPE[11]["MAgic"] = {1013} --技能列表
+	MONSTER_TYPE[11]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[11]["HP"] = 10
+	MONSTER_TYPE[11]["HPGrow"] = 4
+	MONSTER_TYPE[11]["HPadj"] = 3
+	MONSTER_TYPE[11]["ATT"] = 1
+	MONSTER_TYPE[11]["ATTGrow"] = 1
+	MONSTER_TYPE[11]["ATTadj"] = 3
+	MONSTER_TYPE[11]["CD"] = 20
+	MONSTER_TYPE[11]["CDGrow"] = -1
+	MONSTER_TYPE[11]["PICID"] = 22
+	MONSTER_TYPE[11]["ScarePICID"] = 23
+	MONSTER_TYPE[11]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
+
+	--嘲諷兵
+	MONSTER_TYPE[12] = {}
+	MONSTER_TYPE[12]["name"] = "shield"
+	MONSTER_TYPE[12]["MAgic"] = {1014} --技能列表
+	MONSTER_TYPE[12]["MAgicRound"] = {1} --无限
+	MONSTER_TYPE[12]["HP"] = 50
+	MONSTER_TYPE[12]["HPGrow"] = 4
+	MONSTER_TYPE[12]["HPadj"] = 3
+	MONSTER_TYPE[12]["ATT"] = 1
+	MONSTER_TYPE[12]["ATTGrow"] = 1
+	MONSTER_TYPE[12]["ATTadj"] = 3
+	MONSTER_TYPE[12]["CD"] = 20
+	MONSTER_TYPE[12]["CDGrow"] = -1
+	MONSTER_TYPE[12]["PICID"] = 22
+	MONSTER_TYPE[12]["ScarePICID"] = 23
+	MONSTER_TYPE[12]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
+
+
 function monster.GetPicIdFromMonsterId(nMonsterId)
 	cclog("GetPicIdFromMonsterId:"..nMonsterId)
-	return MONSTER_TYPE[nMonsterId]["PICID"]	
+	return MONSTER_TYPE[nMonsterId]["PICID"]
 end
 	
 function monster.GetScarePicIdFromMonsterId(nMonsterId)
@@ -372,6 +416,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		pBrick.AttAdjFuncT = {};
 		pBrick.DamageAdjFuncT = {};
+		pBrick.DeathActionFuncT = {};
 			
 			
 end
@@ -449,6 +494,12 @@ function monster.damage( pBrick,nDamage,bcritical)
 
 	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
+				--執行死亡ACTION
+				local tDeathAction = monster.InitDeathAction(defender);
+				for i,func in pairs(defender.DeathActionFuncT) do
+					func(tDeathAction)
+				end
+				
 				--停止闪烁
 				local mainsprite = brick.GetMainSprite(pBrick)		
 				mainsprite:stopActionByTag(gblinkactionTag)
@@ -471,6 +522,14 @@ function monster.damage( pBrick,nDamage,bcritical)
 		end	
 end
 
+
+--怪物死亡行為初始化
+function monster.InitDeathAction(dyingMon)
+	local tDeathAction = {	
+							dyingMon = dyingMon,
+						 }
+	return tDeathAction
+end
 
 
 --怪物攻击ACTION初始化
@@ -543,7 +602,7 @@ function monster.SpellMagic(pmonster,IfBorn)
 						if tTargetList == player then
 							local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]			
 							local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
-							efffunc(player,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+							efffunc(player,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM],pmonster)
  		 					
 							--获取怪物EFFTABLE ROUND --
 							tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1   
@@ -592,7 +651,7 @@ function monster.RemoveAdjFunc(pmonster,id)
     pmonster.AttAdjFuncT[id] = nil
 end
 	
-	
+
 function monster.AddDamageAdjFunc(pmonster,fDamageAdjFunc,id)
 	pmonster.DamageAdjFuncT[id] = fDamageAdjFunc
 end
@@ -600,7 +659,14 @@ end
 function monster.RemoveDamageAdjFunc(pmonster,id)
     pmonster.DamageAdjFuncT[id] = nil
 end	
-	
+
+--怪物死亡後會發生的行為
+function monster.AddDeathFunc(pmonster,fDeathFunc,id)
+	pmonster.DeathActionFuncT[id] = fDeathFunc
+end
+
+
+
 
 --获取怪物图标路径
 function monster.GetMonsterIconPath(nMonsterId)

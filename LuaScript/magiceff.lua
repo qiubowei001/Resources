@@ -413,6 +413,21 @@ function p.eff1012(pbrick,Tparam1)
 end
 
 
+--嘲諷
+function p.eff1014(player,tParam,self)
+	if self == nil then
+		return 
+	end	
+	
+	player.TauntedByMon = self  --改變玩家嘲諷對象
+	
+	
+	function removeTaunedMon()
+		player.TauntedByMon = nil;
+	end
+	monster.AddDeathFunc(self,removeTaunedMon,1014) --怪物死亡後清除玩家嘲諷對象
+end	
+
 --技能特效配置表
 MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1]={}
@@ -614,6 +629,14 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1012][MAGIC_EFF_DEF_TABLE.TPARAM] ={ recovery = 5} 
 	MAGIC_EFFtable[1012][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
 
+	MAGIC_EFFtable[1014]={}
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.ID] = 1014
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.DESCPTION] = "讓玩家強行攻擊你"
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1014
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 9999
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
 	
 --合体 A B C D类型同时出现在屏幕则合成为一个怪物	
 	

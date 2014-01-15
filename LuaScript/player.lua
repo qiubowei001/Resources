@@ -89,7 +89,7 @@ function p.Initplayer()
 	magic_effect_aftermonact = {}
 	magic_effect_afterplayeract = {}
 
- 
+	
 	player[playerInfo.HP] = 100;
 	player[playerInfo.HPMAX] = 100;
 	
@@ -133,6 +133,8 @@ function p.Initplayer()
 	player.CriticalRate = 2    --暴击比率
 
 	player.Dodgechance = 0;
+	
+	player.TauntedByMon = nil;--被誰嘲諷
 	
 	--能量回复定时器		
 	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.EnergyRecoveryAuto, gEnergyRecoveryTime, false)	
@@ -324,6 +326,13 @@ end
 function player.Attack(tAttAction)
 	local nDamage = tAttAction.damage
 	local target = tAttAction.target
+	
+	--如果有嘲諷怪 且存活則改變對象
+	if player.TauntedByMon ~= nil then
+		target = player.TauntedByMon
+	else
+		player.TauntedByMon = nil
+	end
 	
 	--local tAttAction = player.InitAttAction(nDamage,target)
 					

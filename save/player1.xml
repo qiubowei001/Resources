@@ -4,5 +4,5 @@
     <MissionRecord I="S" V="N">2.000000</MissionRecord>
     <music I="S" V="B">true</music>
     <sound I="S" V="B">true</sound>
-    <lesson I="S" V="B">false</lesson>
+    <lesson I="S" V="B">true</lesson>
 </fwedata>

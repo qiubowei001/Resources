@@ -526,6 +526,73 @@ magictable = {}
 	magictable[1012][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[1012][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
 
+--吐出墨水
+	magictable[1013]={}
+	magictable[1013][MAGIC_DEF_TABLE.ID] = 1013
+	magictable[1013][MAGIC_DEF_TABLE.NAME] = "便便"
+	magictable[1013][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1013][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = function(pBrickSpell)
+															--噴射一塊便便
+															
+															
+															local  poop = CCSprite:create("brick/SHIT.png")
+															layerMain:addChild(poop,888,500);
+															poop:setScale(0.5);
+																
+															--亂飛
+															local Xr = math.random(2,brickInfo.brick_num_X-1)
+															local Yr = math.random(2,brickInfo.brick_num_Y-1)
+															CCMoveTo:create(1, ccp(Xr*brickInfo.brickWidth+brickInfo.brickWidth/2+math.random(-100,100), Yr*brickInfo.brickHeight-brickInfo.brickHeight/2+math.random(-100,100)))
+															
+															local moveby = CCMoveBy:create(1, ccp(math.random(-100,100),math.random(-100,100)))
+															local delay = CCDelayTime:create(3)
+															local scale = CCScaleTo:create(1, 2)
+															local X = pBrickSpell.TileX
+															local Y = pBrickSpell.TileY
+															poop:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
+															
+															poop:runAction(scale)
+														
+															
+															function delete(sender)
+																sender:removeFromParentAndCleanup(true);
+															end
+															local actiondelete = CCCallFuncN:create(delete)
+															local arr = CCArray:create()
+															arr:addObject(moveby)
+															arr:addObject(delay)
+															arr:addObject(actiondelete)
+															local  seq = CCSequence:create(arr)	
+															poop:runAction(seq)													
+															return
+														end
+	magictable[1013][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
+	magictable[1013][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = nil
+	magictable[1013][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1013][MAGIC_DEF_TABLE.DESCPTION] = "向屏幕噴便便"
+	magictable[1013][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1013][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = false
+	magictable[1013][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1013][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
+
+
+--为周围怪物吸收傷害
+--給玩家增加一個EFF 攻擊時判定是否有嘲諷怪
+	magictable[1014]={}
+	magictable[1014][MAGIC_DEF_TABLE.ID] = 1014
+	magictable[1014][MAGIC_DEF_TABLE.NAME] = "嘲諷"
+	magictable[1014][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1014][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1014][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
+	magictable[1014][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1014
+	magictable[1014][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1014][MAGIC_DEF_TABLE.DESCPTION] = "嘲諷"
+	magictable[1014][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1014][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1014][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1014][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
+
+	
 --相同怪物组合成新怪物
 
 
@@ -687,16 +754,21 @@ function p.monsterSpellMagic(nMagicId,pBrickSingle,pLine)
 		if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID] ~= nil then
 			if magicinfo[MAGIC_DEF_TABLE.SPELL_FUNC_ID](pBrickSingle) then
 				bCast = true
+				
 			end
 		end
 		
 		--对TARGET增加特效
 		if magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] ~= nil  then
-			magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
+			local  effT = magiceff.AddPlayerMagicEff(magicinfo[MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]);
+			if effT ~= nil then
+				tEffList = effT
+			end	
 		else
 			cclog("增加TARGET特效失败 nMagicId:"..nMagicId);
 		end
 		
+		tTargetList = player
 	elseif 	magicinfo[MAGIC_DEF_TABLE.TARGET_TYPE] ==  TARGET_TYPE.ALLMONSTER then
 		--===对所有MON施放技能===-
 		

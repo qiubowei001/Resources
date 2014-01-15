@@ -10,10 +10,21 @@ local tHandBookInfo = {}
 
 local tHandBookInfoCache = {} --存放信息 --游戏结束后储存回文件中
 local savepath = "save\\monsterHandbook.xml"
+
+local gTimerId = nil;--定时检测
+local tShowUIArray = {}
+local g_bIfshowUI = false;--是否正在顯示UI
+
 --初始化
 function p.Init()
+	g_bIfshowUI = false;
+	tShowUIArray = {}
+	--开启检测定时器
+	gTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.LoadUI, 1, false)	
+	
 	--tHandBookInfoCache[1] = {MONID = XX IFSHOWN = true}
-	tHandBookInfoCache = {}
+	tHandBookInfoCache = {}	
+	
 	--读取怪物图鉴信息
 	data(savepath, tHandBookInfoCache)
 end	
@@ -57,8 +68,8 @@ function p.GetHandBookInfo(nMonsterType)
 	local nHPIndicator = p.GetHPIndicator(MONSTER_TYPE[nMonsterType]["HPGrow"])
 	local nSpeedIndicator = p.GetSpeedIndicator(MONSTER_TYPE[nMonsterType]["CDGrow"])
 		
-	--local sDesc = MONSTER_TYPE[nMonsterType]["desc"]
-	return nAttIndicator,nHPIndicator,nSpeedIndicator--,sDesc
+	local sDesc = MONSTER_TYPE[nMonsterType]["desc"]
+	return nAttIndicator,nHPIndicator,nSpeedIndicator,sDesc
 end
 
 --根据怪物类型显示怪物图鉴
@@ -71,9 +82,9 @@ function p.ShowMonsterHandBook(nMonsterType)
 	end
 	
 	
-	--显示
-	p.LoadUI(nMonsterType)
-	
+	--显示 插入隊列中
+	--p.LoadUI(nMonsterType)
+	p.InsertArrayShow(nMonsterType)
 	
 	if tmoninfo == nil then
 		--无值则插入
@@ -103,15 +114,18 @@ function p.SearchBookInfoT(nMonsterType)
 end	
 
 function p.closeUICallback(tag,sender)
+	
 	--关闭界面 
 	local layer = p.GetParent()
 	local scene = Main.GetGameScene();
 	scene:removeChild(layer, true)
 	
-	--
+	g_bIfshowUI = false;
+	
 	if CCDirector:sharedDirector():isPaused() then
 		CCDirector:sharedDirector():resume()
     end	  --]] 
+	
 end
 
 --各属性坐标
@@ -123,10 +137,30 @@ local tPositionAttribute = {}
 
 	
 local tJiangeStep = 100 --每个图标间隔距离
-
+local test = true
 --显示界面
-function p.LoadUI(nMonsterType)
-	local nAttIndicator,nHPIndicator,nSpeedIndicator  = p.GetHandBookInfo(nMonsterType)
+function p.LoadUI()
+	--測試
+	if test then
+		return
+	end	
+		
+	--隊列為空返回
+	if #tShowUIArray <= 0 then
+		return
+	end
+	
+	--正在顯示 返回
+	if g_bIfshowUI then
+		return 
+	end
+	
+	--取出第一個TYPE來顯示 然後刪除
+	local nMonsterType = tShowUIArray[1]
+	table.remove(tShowUIArray,1);
+	g_bIfshowUI = true;
+	
+	local nAttIndicator,nHPIndicator,nSpeedIndicator,sDesc  = p.GetHandBookInfo(nMonsterType)
 	
 	--暂停游戏
 
@@ -142,6 +176,7 @@ function p.LoadUI(nMonsterType)
 	menu:addChild(closeBtn)
 	menu:setPosition(CCPointMake(0, 0))
 	bglayer:addChild(menu, 2,99)
+
 
 
 	bglayer:setTag(UIdefine.MONSTER_HANDBOOK_UI);
@@ -175,6 +210,12 @@ function p.LoadUI(nMonsterType)
 	bglayer:addChild(pmon,2)	
 	
 	
+	--怪物描述
+	local descLabel = CCLabelTTF:create(sDesc, "Arial", 35)
+	bglayer:addChild(descLabel,5)
+	descLabel:setColor(ccc3(255,255,255))
+	descLabel:setPosition(CCPointMake(10, -40))
+		
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,4)	
 	
@@ -208,4 +249,27 @@ function p.GetParent()
 	local layer = tolua.cast(layer, "CCLayer")
 	return layer
 end
+
+
+--插入顯示隊列
+function p.InsertArrayShow(nMonsterType)
+	table.insert(tShowUIArray,nMonsterType)	
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
