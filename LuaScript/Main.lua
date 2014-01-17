@@ -339,6 +339,8 @@ function p.brickSetBGXY(pbrick,X,Y)
 		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
 		layerMain:addChild(pbrick,1);
 end	
+
+
 function p.brickSetXY(pbrick,X,Y)
 		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
 		layerMain:addChild(pbrick,2);
@@ -478,7 +480,6 @@ function p.InitBoard()
 			--µ≠»Î
 			local fadein = CCFadeIn:create(1)
 			pbrickbg:runAction(fadein)
-			
 			p.brickSetBGXY(pbrickbg,i,j)
 		end
 	end

@@ -163,3 +163,19 @@ SpriteConfig[23].Width = 79
 SpriteConfig[23].Height = 57
 SpriteConfig[23].FrameNumX = 10
 SpriteConfig[23].FrameNumY = 3
+
+SpriteConfig[24] = {}
+SpriteConfig[24].Name = "monster/11"
+SpriteConfig[24].Width = 79
+SpriteConfig[24].Height = 78
+SpriteConfig[24].FrameNumX = 10
+SpriteConfig[24].FrameNumY = 3
+
+SpriteConfig[25] = {}
+SpriteConfig[25].Name = "monster/11scare"
+SpriteConfig[25].Width = 79
+SpriteConfig[25].Height = 78
+SpriteConfig[25].FrameNumX = 10
+SpriteConfig[25].FrameNumY = 3
+
+

@@ -54,8 +54,6 @@ function p.LoadUI()
 		menu:setPosition(CCPointMake(0, 0))
 		bglayer:addChild(menu, 2,1)
 		--]]
-		bglayer:setTag(UIdefine.SkillUpGradeUI);
-		bglayer:setPosition(CCPointMake(0, 0))
 		
 		
 		--增加背景
@@ -64,7 +62,12 @@ function p.LoadUI()
 		
 		
 		local scene = Main.GetGameScene();
-		scene:addChild(bglayer)	
+		scene:addChild(bglayer,999,UIdefine.SkillUpGradeUI)	
+		
+		--增加標題
+		local titleSprite = CCSprite:create("UI/font/chooseSkill.png")
+		titleSprite:setPosition(CCPointMake(5, 210))
+		bglayer:addChild(titleSprite,2)
 		
 	
 	-->>>>>>>>>>>>>>>动画效果	
@@ -74,7 +77,7 @@ function p.LoadUI()
 	end	
 	--向下飘入
 	local arr = CCArray:create()	
-	bglayer:setPosition(330 , winSize.height+300)
+	bglayer:setPosition(480 , winSize.height+300)
 	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
 	local actiontoease =  CCEaseBounceOut:create(moveby)	
 	

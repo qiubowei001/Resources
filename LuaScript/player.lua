@@ -229,7 +229,8 @@ function p.takedamage(ndamage,pmonster)
 		GameOverUI.LoadUI(1)
 		return 
 	end
-	
+		
+	MainUI.SetPlayDamageEff(tDamageAction.damage)		
 	MainUI.SetMainUIHP(player[playerInfo.HP],player[playerInfo.Entity_HPMAX])
 				
 	return player[playerInfo.HP];
@@ -470,7 +471,7 @@ function player.UpdateEntityData()
 	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]
 	player[playerInfo.Entity_ATT] = player[playerInfo.ATT]
 	player[playerInfo.Entity_CRITICALRATE]   =	player.CriticalRate
-	player[playerInfo.Entity_CRITICALCHANCE]   =player.CriticalChance 
+	player[playerInfo.Entity_CRITICALCHANCE]   =	player.CriticalChance 
 	player[playerInfo.Entity_DODGECHANCE] 	= player.Dodgechance;
 
 	player[playerInfo.Entity_ENERGYMAX] 	= player[playerInfo.ENERGYMAX];

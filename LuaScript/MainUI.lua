@@ -29,6 +29,7 @@ local gExpBar = nil;
 local gGoldBar = nil;
 local gEnergyBar = nil;
 
+local gHPBarBg = nil;
 function p.LoadUI()
 	bglayer = CCLayer:create()
 	
@@ -57,9 +58,9 @@ function p.LoadUI()
 		bglayer:addChild(HPBar,1,g_HPBartag)	
 		gHPBar = HPBar
 		HPBar:setPercentage(100);
-		local HPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
-		HPBarBg:setPosition(-700, 10)
-		bglayer:addChild(HPBarBg,2)
+		gHPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
+		gHPBarBg:setPosition(-700, 10)
+		bglayer:addChild(gHPBarBg,2)
 		
 		
 
@@ -210,7 +211,7 @@ table.insert(tUIAll,gEnergyBar)
 table.insert(tUIAll,HPBar)
 table.insert(tUIAll,ExpBar)
 table.insert(tUIAll,GoldBar)
-table.insert(tUIAll,HPBarBg)
+table.insert(tUIAll,gHPBarBg)
 table.insert(tUIAll,ExpBarBg)
 table.insert(tUIAll,GoldBarBg)
 table.insert(tUIAll,hpLabel)
@@ -369,4 +370,47 @@ function p.SetMainUIMission(sMission)
 	local tiplabel = bglayer:getChildByTag(g_missionlabeltag)
 	tolua.cast(tiplabel, "CCLabelTTF")
 	tiplabel:setString(sMission.."") 
+end
+
+function p.SetPlayDamageEff(nDamage)
+	local damageSpri =  CCSprite:create("UI/damage.png")
+	
+	nDamage = math.ceil(nDamage)
+	damageSpri:setPosition(110+math.random(-35,35), 80+math.random(-35,35));
+	local arr = CCArray:create()
+	local ZOrder = 100
+	gHPBarBg:addChild(damageSpri,ZOrder)
+
+	--文字
+	local Label = CCLabelTTF:create("- "..nDamage, "Arial", 65)
+	Label:setPosition(110,80)
+	damageSpri:addChild(Label)
+	Label:setColor(ccc3(255,255,255))
+	
+		
+	--從小到大出現
+	damageSpri:setScale(0.2)
+	local scaleact = CCScaleTo:create(0.15, 0.8)
+	
+	
+	--漸漸隱藏
+	local fadeoutac  = CCFadeOut:create(1) 
+	--删除
+	function delete(sender)
+		sender:removeFromParentAndCleanup(true);
+	end
+	local actionremove = CCCallFuncN:create(delete)	
+	
+	arr:addObject(scaleact)
+	arr:addObject(fadeoutac)	
+	arr:addObject(actionremove)	
+	local  seq = CCSequence:create(arr)		
+	damageSpri:runAction(seq)
+	
+	
+	local fadeoutac2  = CCFadeOut:create(1) 
+	Label:runAction(fadeoutac2)
+	
+	--給個隨機角度
+	damageSpri:setRotation(math.random(-25,25))			
 end

@@ -209,8 +209,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[12]["ATTadj"] = 3
 	MONSTER_TYPE[12]["CD"] = 20
 	MONSTER_TYPE[12]["CDGrow"] = -1
-	MONSTER_TYPE[12]["PICID"] = 22
-	MONSTER_TYPE[12]["ScarePICID"] = 23
+	MONSTER_TYPE[12]["PICID"] = 24
+	MONSTER_TYPE[12]["ScarePICID"] = 25
 	MONSTER_TYPE[12]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
 
 
@@ -471,7 +471,10 @@ end
 function monster.damage( pBrick,nDamage,bcritical)
 		local tDamageAction = monster.InitDamageAction( pBrick,nDamage);
 		
-		
+		--在怪物位置播放去血sprite
+		if bcritical then
+			monster.playDamageEff(pBrick,nDamage)
+		end			
 		
 		for i,func in pairs(pBrick.DamageAdjFuncT) do
 			func(tDamageAction)
@@ -481,9 +484,7 @@ function monster.damage( pBrick,nDamage,bcritical)
 		local defender = tDamageAction.defender
 		
 		if defender ~= nil then 
-			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage
-			
-			
+			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage	
 			local hpbar = defender.HPBar
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
 			hpbar:setPercentage(100*percent);
@@ -683,7 +684,7 @@ function monster.PlayDeathAnimation(pBrick)
 	
 	local parent = pBrick:getParent()
 	--放置到顶层
-	parent:reorderChild(pBrick, 1000)
+	parent:reorderChild(pBrick, 50)
  	
 	local mainsprite = brick.GetMainSprite(pBrick)
 	pBrick:setOpacity(0)
@@ -707,8 +708,8 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	brick.setdeatheffect(pBrick)
 	
 	local parent = pBrick:getParent()
-	--放置到顶层
-	parent:reorderChild(pBrick, 1000)
+	--放置到高層
+	parent:reorderChild(pBrick, 50)
  	
 	--获取飞行路径
 	local tPosition = monster.GetFlyPositionBorder(pBrick)
@@ -867,7 +868,49 @@ end
 
 
 
+function monster.playDamageEff(pBrick,nDamage)
+	local damageSpri =  CCSprite:create("UI/damage.png")
+	local posx,posy = brick.GetPosByBrick(pBrick)
+	
+	nDamage = math.ceil(nDamage)
+	damageSpri:setPosition(posx+math.random(-35,35), posy+math.random(-35,35));
+	local arr = CCArray:create()
+	local ZOrder = 100
+	layerMain:addChild(damageSpri,ZOrder)
 
+	--文字
+	local Label = CCLabelTTF:create("- "..nDamage, "Arial", 65)
+	Label:setPosition(110,80)
+	damageSpri:addChild(Label)
+	Label:setColor(ccc3(255,255,255))
+	
+		
+	--從小到大出現
+	damageSpri:setScale(0.2)
+	local scaleact = CCScaleTo:create(0.15, 0.8)
+	
+	
+	--漸漸隱藏
+	local fadeoutac  = CCFadeOut:create(1) 
+	--删除
+	function delete(sender)
+		sender:removeFromParentAndCleanup(true);
+	end
+	local actionremove = CCCallFuncN:create(delete)	
+	
+	arr:addObject(scaleact)
+	arr:addObject(fadeoutac)	
+	arr:addObject(actionremove)	
+	local  seq = CCSequence:create(arr)		
+	damageSpri:runAction(seq)
+	
+	
+	local fadeoutac2  = CCFadeOut:create(1) 
+	Label:runAction(fadeoutac2)
+	
+	--給個隨機角度
+	damageSpri:setRotation(math.random(-25,25))		
+end
 
 
 
