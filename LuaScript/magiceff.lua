@@ -308,6 +308,37 @@ function p.effclr15()
 end
 
 
+
+
+--单排杀
+function p.eff16(pobj)
+	--对整排brick执行消除
+	local Y = pobj.TileY
+	for i=1,brickInfo.brick_num_X do
+		--(Board[i][Y]):removeFromParentAndCleanup(true);
+		Main.destroyBrick(i,Y,true)
+	end
+end
+
+--十字杀
+function p.eff17(pobj)
+	--对整排brick执行消除
+	local Y = pobj.TileY
+	local X = pobj.TileX
+	for i=1,brickInfo.brick_num_X do
+		--(Board[i][Y]):removeFromParentAndCleanup(true);
+		Main.destroyBrick(i,Y,true)
+	end
+	
+	for i=1,brickInfo.brick_num_Y do
+		--(Board[i][Y]):removeFromParentAndCleanup(true);
+		if i ~= Y then
+			Main.destroyBrick(X,i,true)
+		end
+	end	
+	
+end
+
 ---===========================所有怪物技能EFFFUNC=================================--
 --增强所有MON攻击力
 function p.eff1005(pobj,Tparam1)
@@ -427,6 +458,41 @@ function p.eff1014(player,tParam,self)
 	end
 	monster.AddDeathFunc(self,removeTaunedMon,1014) --怪物死亡後清除玩家嘲諷對象
 end	
+
+--愤怒
+function p.eff1016(self)
+	if self==nil then
+		return
+	end
+	
+	local typeid = self.monsterId;
+	local level = self.moninfo[monsterInfo.LEV];
+	
+	local brickWidth = brickInfo.brickWidth ;
+	local brickHeight = brickInfo.brickHeight;
+	local MainSpritetag = 3003;
+	self:removeChildByTag(MainSpritetag, true)
+	local spriteBrick = nil;
+				
+	if self.moninfo[monsterInfo.HP] >= self.moninfo[monsterInfo.HPMAX] then
+		--回复原状
+		local CDMAX = MONSTER_TYPE[typeid]["CD"] + level*MONSTER_TYPE[typeid]["CDGrow"]
+		self.moninfo[monsterInfo.CDMAX] = CDMAX
+		spriteBrick = SpriteManager.creatBrickSprite(28)
+	else
+		--发狂
+		local CDMAX =  MONSTER_TYPE[typeid]["CD"] + level*MONSTER_TYPE[typeid]["CDGrow"]
+		CDMAX = CDMAX/3
+		self.moninfo[monsterInfo.CDMAX] = CDMAX
+		spriteBrick = SpriteManager.creatBrickSprite(29)
+	end
+	
+	self:addChild(spriteBrick)
+	spriteBrick:setTag(MainSpritetag)
+	spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+
+	
+end
 
 --技能特效配置表
 MAGIC_EFFtable = {}
@@ -570,6 +636,32 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
 	MAGIC_EFFtable[15][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
 	
+	MAGIC_EFFtable[16]={}
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.ID] = 16
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.DESCPTION] = "单排杀"
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff16
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr16
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
+	MAGIC_EFFtable[16][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
+	
+	MAGIC_EFFtable[17]={}
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.ID] = 17
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.DESCPTION] = "十字杀"
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff17
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr17
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
+	MAGIC_EFFtable[17][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
+	
+	
+	
+	
+	
+	
+	
 	
 	--==怪物技能==--
 	MAGIC_EFFtable[1007]={}
@@ -637,6 +729,16 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 9999
 	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
 	MAGIC_EFFtable[1014][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1016]={}
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.ID] = 1016
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.DESCPTION] = "损血则变强"
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1016
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 9999
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+	
 	
 --合体 A B C D类型同时出现在屏幕则合成为一个怪物	
 	

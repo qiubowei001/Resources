@@ -422,8 +422,41 @@ magictable = {}
 	magictable[15][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
 
---血比例越小 攻击越强
+--单排杀
+	magictable[16]={}
+	magictable[16][MAGIC_DEF_TABLE.ID] = 16
+	magictable[16][MAGIC_DEF_TABLE.NAME] = "单排杀"
+	magictable[16][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[16][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[16][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.SINGLE_BRICK
+	magictable[16][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 16
+	magictable[16][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
+	magictable[16][MAGIC_DEF_TABLE.DESCPTION] = "消除单排"
+	magictable[16][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[16][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
+	magictable[16][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[16][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[16][MAGIC_DEF_TABLE.ENERGYNEED] = 1
 
+--十字杀
+	magictable[17]={}
+	magictable[17][MAGIC_DEF_TABLE.ID] = 17
+	magictable[17][MAGIC_DEF_TABLE.NAME] = "十字杀"
+	magictable[17][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[17][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[17][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.SINGLE_BRICK
+	magictable[17][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 17
+	magictable[17][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.BEFORE_PLAYER_ACT
+	magictable[17][MAGIC_DEF_TABLE.DESCPTION] = "消除十字"
+	magictable[17][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[17][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
+	magictable[17][MAGIC_DEF_TABLE.CDROUND] =  5
+	magictable[17][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[17][MAGIC_DEF_TABLE.ENERGYNEED] = 1
+
+
+--血比例越小 攻击越强
+	
 
 
 
@@ -592,7 +625,69 @@ magictable = {}
 	magictable[1014][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[1014][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
 
-	
+	--偷金幣
+	magictable[1015]={}
+	magictable[1015][MAGIC_DEF_TABLE.ID] = 1015
+	magictable[1015][MAGIC_DEF_TABLE.NAME] = "偷金幣"
+	magictable[1015][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1015][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = function(self)
+															--玩家扣掉金币
+															player.LoseGold(1)
+															
+															--金币飞入怪物动画
+															local spriteBrick = SpriteManager.creatBrickSprite(4)
+															local posx,posy = 400,555
+															spriteBrick:setPosition(posx,posy);		
+															--poop:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
+																									
+															local X,Y = self.TileX,self.TileY
+															
+															--缩小
+															spriteBrick:setScale(0.5);
+															--飘入
+															local actionto = CCMoveTo:create(0.8, ccp(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2))
+															
+															--删除
+															function delete(sender)
+																sender:removeFromParentAndCleanup(true);
+															end
+															
+															local actionremove = CCCallFuncN:create(delete)
+															
+															local arr = CCArray:create()		
+															arr:addObject(actionto)
+															arr:addObject(actionremove)
+															
+															local  seq = CCSequence:create(arr)
+															spriteBrick:runAction(seq)	
+															layerMain:addChild(spriteBrick,60)
+														end
+	magictable[1015][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.PLAYER
+	magictable[1015][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = nil
+	magictable[1015][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1015][MAGIC_DEF_TABLE.DESCPTION] = "偷金币1个"
+	magictable[1015][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1015][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = false
+	magictable[1015][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1015][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 1}
+
+
+
+	--如果没满血 则攻击变猛
+	magictable[1016]={}
+	magictable[1016][MAGIC_DEF_TABLE.ID] = 1016
+	magictable[1016][MAGIC_DEF_TABLE.NAME] = "愤怒"
+	magictable[1016][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1016][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1016][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
+	magictable[1016][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1016
+	magictable[1016][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1016][MAGIC_DEF_TABLE.DESCPTION] = "愤怒"
+	magictable[1016][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1016][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1016][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1016][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
+		
 --相同怪物组合成新怪物
 
 

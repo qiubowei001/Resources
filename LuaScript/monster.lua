@@ -175,8 +175,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["ATTadj"] = 3
 	MONSTER_TYPE[10]["CD"] = 20
 	MONSTER_TYPE[10]["CDGrow"] = -1
-	MONSTER_TYPE[10]["PICID"] = 1
-	MONSTER_TYPE[10]["ScarePICID"] = 8
+	MONSTER_TYPE[10]["PICID"] = 26
+	MONSTER_TYPE[10]["ScarePICID"] = 26
 	MONSTER_TYPE[10]["desc"]	= ""
 	
 	--屁股星人
@@ -213,6 +213,39 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[12]["ScarePICID"] = 25
 	MONSTER_TYPE[12]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
 
+	--小偷
+	MONSTER_TYPE[13] = {}
+	MONSTER_TYPE[13]["name"] = "thief"
+	MONSTER_TYPE[13]["MAgic"] = {1015} --技能列表
+	MONSTER_TYPE[13]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[13]["HP"] = 50
+	MONSTER_TYPE[13]["HPGrow"] = 4
+	MONSTER_TYPE[13]["HPadj"] = 3
+	MONSTER_TYPE[13]["ATT"] = 1
+	MONSTER_TYPE[13]["ATTGrow"] = 0.1
+	MONSTER_TYPE[13]["ATTadj"] = 1
+	MONSTER_TYPE[13]["CD"] = 20
+	MONSTER_TYPE[13]["CDGrow"] = -1
+	MONSTER_TYPE[13]["PICID"] = 27
+	MONSTER_TYPE[13]["ScarePICID"] = 27
+	MONSTER_TYPE[13]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
+
+	--愤怒者
+	MONSTER_TYPE[14] = {}
+	MONSTER_TYPE[14]["name"] = "angry"
+	MONSTER_TYPE[14]["MAgic"] = {1016} --技能列表
+	MONSTER_TYPE[14]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[14]["HP"] = 50
+	MONSTER_TYPE[14]["HPGrow"] = 4
+	MONSTER_TYPE[14]["HPadj"] = 3
+	MONSTER_TYPE[14]["ATT"] = 1
+	MONSTER_TYPE[14]["ATTGrow"] = 0.1
+	MONSTER_TYPE[14]["ATTadj"] = 1
+	MONSTER_TYPE[14]["CD"] = 30
+	MONSTER_TYPE[14]["CDGrow"] = -1
+	MONSTER_TYPE[14]["PICID"] = 28
+	MONSTER_TYPE[14]["ScarePICID"] = 28
+	MONSTER_TYPE[14]["desc"]	= "Don't..piss ..me .. off"
 
 function monster.GetPicIdFromMonsterId(nMonsterId)
 	cclog("GetPicIdFromMonsterId:"..nMonsterId)
@@ -566,8 +599,8 @@ function monster.attack(pmonster)
 			--怪物攻击跳跃
 			local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
 			local mainsprite = brick.GetMainSprite(pmonster)
-			mainsprite:runAction(actionJump);
-			
+			--mainsprite:runAction(actionJump);
+			pmonster:runAction(actionJump);
 			cclog("monsterid:"..pmonster.monsterId.."att:"..pmonster.moninfo[monsterInfo.ATT].." player damage:"..tAttAction.damage)
 			player.takedamage(tAttAction.damage,pmonster);	
 			pmonster.moninfo[monsterInfo.CD]	= 0;							

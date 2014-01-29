@@ -141,7 +141,7 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	
-	--player.AddNewSkill(1,1)
+	player.AddNewSkill(14,17)
 	--player.AddNewSkill(7,16)
 
 	--[[
@@ -264,7 +264,24 @@ function player.takeGold(nNum)
 	return player[playerInfo.GOLD];
 end
 
-
+--玩家损失金币
+function player.LoseGold(nGold)
+	player[playerInfo.GOLD] = player[playerInfo.GOLD] - nGold
+	
+	if player[playerInfo.GOLD] < 0 then
+		player[playerInfo.GOLD] = 0
+	end
+		
+	if player[playerInfo.GOLD] >= 100 then
+		MainUI.ShowUpgradeBtn();
+	else
+		MainUI.HideUpgradeBtn();
+	end
+	----==显示玩家数据==--
+	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
+end	
+	
+	
 --获取升级所需经验
 function player.GetExpNeed()
 	local level = player[playerInfo.LEVEL]

@@ -27,17 +27,18 @@ MISSION_TABLE[1]["name"] = "ChapterI MISSION1"
 MISSION_TABLE[1]["BgId"] = 1 --±³¾°
 MISSION_TABLE[1]["config"] = 
 {
---
+--[[
+{1		,	{14},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
+{1		,	{13},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
 {1		,	{12},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
-{1000	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+--]]
+{1000	,	{11},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
 {10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 
 
 {300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,     [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=40}},
-
-
 
 --]]
 --[[
