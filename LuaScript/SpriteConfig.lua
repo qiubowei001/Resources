@@ -160,7 +160,7 @@ SpriteConfig[22].FrameNumY = 3
 SpriteConfig[23] = {}
 SpriteConfig[23].Name = "monster/10scare"
 SpriteConfig[23].Width = 79
-SpriteConfig[23].Height = 57
+SpriteConfig[23].Height = 80
 SpriteConfig[23].FrameNumX = 10
 SpriteConfig[23].FrameNumY = 3
 
