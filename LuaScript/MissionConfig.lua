@@ -46,8 +46,13 @@ function p.LoadUI()
 	local test = dragBar:Create()
 	bglayer:addChild(test,3)
 	test:setPosition(CCPointMake(20, -200))
-		
+	test:AddPointer(1)
+	test:DelPointer(1)
 	
+	local test2 = dragBar:Create()
+	bglayer:addChild(test2,3)
+	test2:setPosition(CCPointMake(20, -150))
+			
 	-->>>>>>>>>>>>>>>动画效果	
 	--向下飘入
 	local arr = CCArray:create()	
