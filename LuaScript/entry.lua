@@ -22,6 +22,7 @@ dofile("LuaScript/dataInit.lua")--数据初始化
 dofile("LuaScript/GlobalEvent.lua")--全局事件触发
 
 
+dofile("LuaScript/MissionConfig.lua")
 
 dofile("LuaScript/SkillLockUI.lua")
 
@@ -39,6 +40,7 @@ dofile("LuaScript/PassiveSkill.lua")
 
 dofile("LuaScript/UI/NumberToPic.lua")
 dofile("LuaScript/UI/ProgressBar.lua")
+dofile("LuaScript/UI/dragBar.lua")
 
 dofile("LuaScript/MissionSelectUI.lua")
 

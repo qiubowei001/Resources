@@ -36,7 +36,6 @@ function p.PortalOnClick(tag,sender)
 	--未解锁关卡
 	local  chapterRecord ,missionRecord= dataInit.GetPlayerProccessRecord();
 	if g_Mission >	missionRecord+1  then
-		
 		return
 	end
 	
@@ -88,13 +87,22 @@ function p.LoadUI()
 		g_menuMain = CCMenu:create()
 		--g_menuMain:setPosition(CCPointMake(300, 300))
 		g_MissionUI:addChild(g_menuMain,3)
+		
+		
 		--技能解锁界面入口
 		local SkilllockBtn = CCMenuItemImage:create("UI/MissionSelect/SkilllockBtn.png","UI/MissionSelect/SkilllockBtn.png")
 		SkilllockBtn:registerScriptTapHandler(SkillLockUI.LoadUI)
 		g_menuMain:addChild(SkilllockBtn)
 		SkilllockBtn:setPosition(350,200)
 		--]]
-				
+		
+			
+		--配置关卡入口
+		local testBtn = CCMenuItemImage:create("UI/MissionSelect/testBtn.png","UI/MissionSelect/testBtn.png")
+		testBtn:registerScriptTapHandler(MissionConfig.LoadUI)
+		g_menuMain:addChild(testBtn)
+		testBtn:setPosition(350,150)
+			
 		--上一章节				
 		LastChapterBtn = CCMenuItemImage:create("UI/MissionSelect/LastChapterBtn.png","UI/MissionSelect/LastChapterBtn.png")
 		LastChapterBtn:registerScriptTapHandler(p.LastChapterBtn)

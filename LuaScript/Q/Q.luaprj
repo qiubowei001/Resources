@@ -41,5 +41,6 @@
         <LuaFile RelativePath=".\..\SkillLockUI.lua" />
         <LuaFile RelativePath=".\..\MonsterHandBook.lua" />
         <LuaFile RelativePath=".\..\GameBg.lua" />
+        <LuaFile RelativePath=".\..\MissionConfig.lua" />
     </Filter>
 </Project>

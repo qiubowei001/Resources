@@ -12,6 +12,7 @@ UIdefine =
 	LESSON				= 10010,
 	SkillLockUI			= 10011,
 	BG_LAYER			= 10012,
+	MissionConfig		= 10013,
 }
 
 
