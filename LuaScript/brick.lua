@@ -229,7 +229,7 @@ function brick.creatBrick(nType)
 		spriteParent:addChild(spriteBrick)
 		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
-   
+		
 		brick.init(spriteParent,nType)
 	    return spriteParent
 end

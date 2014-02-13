@@ -51,7 +51,7 @@ MISSION_TABLE[1]["config"] =
 {200	,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},--9升级技能 使用技能
 --]]
 {9999	,	{},				{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
- 
+
 }
 
 MISSION_TABLE[2] = {}

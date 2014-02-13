@@ -26,51 +26,63 @@ function dragBar:Create()
 	bar:setPosition(CCPointMake(0, barheight/2))
 	
 	--创建BAR指针
-	local pointer = CCSprite:create("UI/Bar/dragpointer.png")
-	pointer:setPosition(CCPointMake(0,0))
+	--local pointer = CCSprite:create("UI/Bar/dragpointer.png")
+	--pointer:setPosition(CCPointMake(0,0))
 	
 	dragBar:addChild(bar,1,bartag)
-	dragBar:addChild(pointer,1,pointertag)
+	--dragBar:addChild(pointer,1,pointertag)
 	
 	dragBar:registerScriptTouchHandler(onTouch)
     dragBar:setTouchEnabled(true)	
 
-	--坐标
-	cordLabel = CCLabelTTF:create("", "Arial", 25)
-	dragBar:addChild(cordLabel)
-	cordLabel:setColor(ccc3(0,0,0))
-	cordLabel:setPosition(300, 100)
-	
-	
-	cordLabel:setString("?,?  barpos:")
 
-	--将指针加入到列表
-	table.insert(tPointerList,pointer);
-	
 	--将指针加入私有列表
-	dragBar.PointerList = {}
-	table.insert(dragBar.PointerList,pointer);
-	
+	dragBar.PointerList = {}	
 	return dragBar;
 end
 
 --新增指针
-function dragBar:AddPointer(nMontype)
+function dragBar:AddPointer(nParam,nrate,sprite)
+
 	--创建BAR指针
-	local pointer = CCSprite:create("UI/Bar/dragpointer.png")
-	pointer:setPosition(CCPointMake(30,0))
-	self:addChild(pointer,1,pointertag)
-	pointer.nMontype = nMontype
+	local pointer  = nil
+	if sprite == nil then
+		pointer = CCSprite:create("UI/Bar/dragpointer.png")
+	else
+		pointer = sprite
+	end
+	
+	self:addChild(pointer,99)
+	pointer.nParam = nParam
+	
+	local tdataPercent = self:getData()
+	local nTotalPercent = 0
+	for i,v in pairs(tdataPercent)do
+		nTotalPercent = nTotalPercent + v
+	end
+	
+	--如果没有输入概率 则默认为剩下所有概率
+	if nrate == nil then
+		nrate = 100 - nTotalPercent
+	end	
+	
+	--根据概率设置位置
+	local posx = (nTotalPercent+nrate)/100*barwidth - barwidth/2
+	pointer:setPosition(CCPointMake(posx,0))
+	
 	--将指针加入到列表
 	table.insert(tPointerList,pointer);
 	table.insert(self.PointerList,pointer);
+	
+
+
 end
 
 --删除指针
-function dragBar:DelPointer(nMontype)
+function dragBar:DelPointer(nParam)
 	local tmp = nil
 	for i,pointer in pairs(self.PointerList)do
-		if pointer.nMontype == nMontype then
+		if pointer.nParam == nParam then
 			tmp = pointer
 		end
 	end
@@ -92,9 +104,47 @@ function dragBar:DelPointer(nMontype)
 end
 
 --读取指针数据 返回表
+function dragBar:getData()
+	local tret = {}
+	local lastpercent = 0
+	for i,pointer in pairs(self.PointerList)do
+		local x,y = pointer:getPosition();
+		--cordLabel:setString("x:"..x)
+		local percent = x + barwidth/2
+		percent = percent/barwidth
+		percent = math.ceil(percent*100)
+		
+		percent  = percent - lastpercent
+		lastpercent = lastpercent + percent
+		table.insert(tret,percent)
+	end
+	
+	return tret
+end	
 
---
+--根据索引切换显示拉条SPRITE
+function dragBar:switchBtnSprite(Sprite,index)
+	self:addChild(Sprite,1)
+	
+	local pointer = self.PointerList[index]
+	local posx,posy = pointer:getPosition();
+	
+	Sprite:setPosition(CCPointMake(posx,posy))
 
+	--替换掉原来的
+	self.PointerList[index] = Sprite
+	
+	--替换掉原来的
+	for i,v in pairs(tPointerList)do
+		if v == pointer then
+			tPointerList[i] = Sprite;
+			break
+		end
+	end
+	
+	--删除原来的
+	pointer:removeFromParentAndCleanup(true);
+end
 
 
 function onTouch(eventType, x, y)
@@ -120,7 +170,12 @@ function onTouch(eventType, x, y)
 				break
 			end
 		end
-			
+		
+		if choosedPointer == nil then
+			bLock = false
+			return true
+		end
+		
 		g_choosedPointer = choosedPointer
         return onTouchBegan(nx, ny)
     elseif eventType == "moved" then
@@ -155,22 +210,64 @@ function onTouchMoved(x,y)
 	if g_choosedPointer == nil  then
 		return true;
 	end
-		
+	
+	local bar = g_choosedPointer:getParent()
+	
+	--获取移动限制
+	local Lastpointer = nil 
+	local nextpointer = nil
+	local index = 0
+	local pointerlist = bar.PointerList
+	
+	for i,pointer in pairs(pointerlist)do
+		if pointer == g_choosedPointer then
+			index = i
+			break
+		end
+	end
+	
+	if index  > 1 then
+		Lastpointer = pointerlist[index-1]
+	end
+	
+	if index < #pointerlist then
+		nextpointer = pointerlist[index+1]
+	end
+	
+	local xmin = - barwidth/2;
+	local xmax =   barwidth/2;
+	
+	if Lastpointer ~= nil then
+		xmin = Lastpointer:getPosition();
+	end
+	
+	if nextpointer ~= nil then
+		xmax = nextpointer:getPosition();
+	end	
+	
 	p1 = g_choosedPointer:convertToNodeSpaceAR(ccp(x, y))
 	
-	--位移
+	--鼠标位移
 	local adjx = p1.x - recordx
-	--local adjy = p1.y - recordy
 	local orix,oriy = g_choosedPointer:getPosition();
 	
-	g_choosedPointer:setPosition(CCPointMake(orix+adjx, oriy))
+	local posx = orix+adjx
+	if posx > xmax then
+		posx = xmax		
+	end
+
+	if posx < xmin then
+		posx = xmin	
+	end
 	
-	cordLabel:setString(p1.x..","..p1.y)
+	g_choosedPointer:setPosition(CCPointMake(posx, oriy))
+	
 	bLock = false
 	return true;
 end
 		
 function onTouchEnded()
+	
 	bLock = false
 	return true;
 end
