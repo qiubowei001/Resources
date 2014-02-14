@@ -42,5 +42,6 @@
         <LuaFile RelativePath=".\..\MonsterHandBook.lua" />
         <LuaFile RelativePath=".\..\GameBg.lua" />
         <LuaFile RelativePath=".\..\MissionConfig.lua" />
+        <LuaFile RelativePath=".\..\UI\dragBar.lua" />
     </Filter>
 </Project>

@@ -78,11 +78,14 @@ local tMissionData =
 
 local taglabel = 9999
 
-local nTagAddMonType = 9997
 local nTaground = 9998
+local nTagAddMonType = 9997
+local nTagLev	= 9996
+
 local nTagMonType = 10000--10000以上为怪物类型
 local nTagMonRate = 20000--20000以上为怪物概率
 local nTagMenu = 1000
+
 
 function p.ShowTable()
 	local bglayer = p.GetParent()
@@ -181,10 +184,28 @@ function p.ShowTable()
 			BrickDragbar:AddPointer(1,tbrickRate[i],pointerbg)		
 		end			
 		
+		
+		--等级输入框
+		local Levlabel = CCTextFieldTTF:textFieldWithPlaceHolder("level", "Arial", 20)
+		Levlabel:setPosition(CCPointMake(25, 20))
+		Levlabel:setColor(ccc3(0,0,0))
+		Levlabel:setString(v[6][1])
+		local itemLev = CCMenuItemImage:create("UI/missionConfig/itemSpriteSmall.png", "UI/missionConfig/itemSpriteSmall.png")
+		itemLev:registerScriptTapHandler(p.clickText)
+		itemLev:setPosition(500,0)
+		itemLev:addChild(Levlabel,2,taglabel)
+		menu:addChild(itemLev,2,nTagLev)
 				
+		
+		--插入行按钮
+		local itemInsert = CCMenuItemImage:create("UI/missionConfig/itemSpriteInsert.png", "UI/missionConfig/itemSpriteInsert.png")
+		itemInsert:registerScriptTapHandler(p.InsertLine)
+		itemInsert:setPosition(50,-20)
+		menu:addChild(itemInsert,2,nTagInsertLine)			
 	end
 end
 
+	
 --删除怪物类型
 function p.RemoveMontype(tag,sender)
 	local Monbtn = sender.monbtn
@@ -228,10 +249,7 @@ function p.RemoveMontype(tag,sender)
 	local tMontype = tMissionData[Dataindex][2]
 	local tMonrate = tMissionData[Dataindex][3]	
 	table.remove(tMontype,index)
-	table.remove(tMonrate,index)
-	
-
-			
+	table.remove(tMonrate,index)		
 end
 	
 --通过menu获取INDEX
@@ -242,6 +260,16 @@ function p.GetIndexByMenu(menu)
 		end
 	end
 end	
+
+
+--插入一条数据
+function p.InsertLine(tag,sender)
+	local menu = sender:getParent()
+	menu = tolua.cast(menu, "CCMenu")
+	local nindex = p.GetIndexByMenu(menu)
+	
+	--集体下移1个step
+end
 
 	
 --增加怪物类型
@@ -300,8 +328,8 @@ end
 function p.clickText(tag,sender)
 	if tag == nTaground then--回合数
 		p.clickTextRound(sender)
-	elseif tag >= nTagMonRate  then --怪物类型
-		p.clickTextRound(sender)
+	elseif tag == nTagLev then	--怪物等级
+		p.clickTextRound(sender)	
 	end
 end
 
@@ -320,6 +348,8 @@ function p.SaveData()
 		local tdata = MonrateBar:getData() 
 		v[3] = tdata
 		
+		local nLev = p.GetLabelData(menu,nTagLev);
+		v[6][1] = nLev
 		
 		local brickrateBar = menu.BrickRateBar	
 		local tdata = brickrateBar:getData() 
@@ -433,7 +463,7 @@ end
 function p.clickTextRound(sender)
 	local testlabel = sender:getChildByTag(taglabel);
 	testlabel = tolua.cast(testlabel, "CCTextFieldTTF")
-	testlabel:attachWithIME()	
+	testlabel:attachWithIME()
 end
 
 --获取lable数据	

@@ -11,8 +11,8 @@ local cordLabel = nil
 local bartag = 99;
 local pointertag = 98;
 
-local barheight = 13;
-local barwidth = 209;
+local barheight = 7;
+local barwidth = 161;
 
 local tPointerList = {}
 local g_choosedPointer =nil
