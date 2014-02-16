@@ -18,6 +18,136 @@ local tPointerList = {}
 local g_choosedPointer =nil
 
 local bLock = false
+
+
+
+local recordx,recordy = 0,0
+
+local function onTouchBegan(x,y)	
+	--选定bar
+	
+	--将触摸转换为拉条本地坐标 
+	p1 = g_choosedPointer:convertToNodeSpaceAR(ccp(x, y))
+	recordx,recordy = p1.x,p1.y
+
+	bLock = false
+	return true;
+end
+
+
+local function onTouchMoved(x,y)
+	if g_choosedPointer == nil  then
+		return true;
+	end
+	
+	local bar = g_choosedPointer:getParent()
+	
+	--获取移动限制
+	local Lastpointer = nil 
+	local nextpointer = nil
+	local index = 0
+	local pointerlist = bar.PointerList
+	
+	for i,pointer in pairs(pointerlist)do
+		if pointer == g_choosedPointer then
+			index = i
+			break
+		end
+	end
+	
+	if index  > 1 then
+		Lastpointer = pointerlist[index-1]
+	end
+	
+	if index < #pointerlist then
+		nextpointer = pointerlist[index+1]
+	end
+	
+	local xmin = - barwidth/2;
+	local xmax =   barwidth/2;
+	
+	if Lastpointer ~= nil then
+		xmin = Lastpointer:getPosition();
+	end
+	
+	if nextpointer ~= nil then
+		xmax = nextpointer:getPosition();
+	end	
+	
+	p1 = g_choosedPointer:convertToNodeSpaceAR(ccp(x, y))
+	
+	--鼠标位移
+	local adjx = p1.x - recordx
+	local orix,oriy = g_choosedPointer:getPosition();
+	
+	local posx = orix+adjx
+	if posx > xmax then
+		posx = xmax		
+	end
+
+	if posx < xmin then
+		posx = xmin	
+	end
+	
+	g_choosedPointer:setPosition(CCPointMake(posx, oriy))
+	
+	bLock = false
+	return true;
+end
+		
+local function onTouchEnded()
+	
+	bLock = false
+	return true;
+end
+
+
+
+local function onTouch(eventType, x, y)
+	if bLock == false then
+		bLock = true
+	else
+		return true
+	end
+	
+	local nx = math.ceil(x)
+	local ny = math.ceil(y)
+
+
+		
+    if eventType == "began" then   
+		--遍历指针列表 选定指针
+		local choosedPointer = nil
+	
+		for i,pointer in pairs (tPointerList) do 
+			local p1 = pointer:convertToNodeSpaceAR(ccp(x, y))
+			if p1.x >= -10 and p1.x <= 10 and p1.y >= -10 and p1.y <= 10 then
+				choosedPointer =  pointer
+				break
+			end
+		end
+		
+		if choosedPointer == nil then
+			bLock = false
+			return true
+		end
+		
+		g_choosedPointer = choosedPointer
+        return onTouchBegan(nx, ny)
+    elseif eventType == "moved" then
+		if g_choosedPointer ~= nil then
+			return onTouchMoved(nx, ny)
+		end
+    else
+		if g_choosedPointer ~= nil then
+			return onTouchEnded(nx, ny)
+		end	
+    end
+	bLock = false
+	return true;
+end
+
+
 function dragBar:Create()
 	local dragBar = dragBar.new()
 
@@ -43,7 +173,6 @@ end
 
 --新增指针
 function dragBar:AddPointer(nParam,nrate,sprite)
-
 	--创建BAR指针
 	local pointer  = nil
 	if sprite == nil then
@@ -73,9 +202,6 @@ function dragBar:AddPointer(nParam,nrate,sprite)
 	--将指针加入到列表
 	table.insert(tPointerList,pointer);
 	table.insert(self.PointerList,pointer);
-	
-
-
 end
 
 --删除指针
@@ -147,130 +273,7 @@ function dragBar:switchBtnSprite(Sprite,index)
 end
 
 
-function onTouch(eventType, x, y)
-	if bLock == false then
-		bLock = true
-	else
-		return true
-	end
-	
-	local nx = math.ceil(x)
-	local ny = math.ceil(y)
 
-
-		
-    if eventType == "began" then   
-		--遍历指针列表 选定指针
-		local choosedPointer = nil
-	
-		for i,pointer in pairs (tPointerList) do 
-			local p1 = pointer:convertToNodeSpaceAR(ccp(x, y))
-			if p1.x >= -10 and p1.x <= 10 and p1.y >= -10 and p1.y <= 10 then
-				choosedPointer =  pointer
-				break
-			end
-		end
-		
-		if choosedPointer == nil then
-			bLock = false
-			return true
-		end
-		
-		g_choosedPointer = choosedPointer
-        return onTouchBegan(nx, ny)
-    elseif eventType == "moved" then
-		if g_choosedPointer ~= nil then
-			return onTouchMoved(nx, ny)
-		end
-    else
-		if g_choosedPointer ~= nil then
-			return onTouchEnded(nx, ny)
-		end	
-    end
-	bLock = false
-	return true;
-end
-
-
-local recordx,recordy = 0,0
-
-function onTouchBegan(x,y)	
-	--选定bar
-	
-	--将触摸转换为拉条本地坐标 
-	p1 = g_choosedPointer:convertToNodeSpaceAR(ccp(x, y))
-	recordx,recordy = p1.x,p1.y
-
-	bLock = false
-	return true;
-end
-
-
-function onTouchMoved(x,y)
-	if g_choosedPointer == nil  then
-		return true;
-	end
-	
-	local bar = g_choosedPointer:getParent()
-	
-	--获取移动限制
-	local Lastpointer = nil 
-	local nextpointer = nil
-	local index = 0
-	local pointerlist = bar.PointerList
-	
-	for i,pointer in pairs(pointerlist)do
-		if pointer == g_choosedPointer then
-			index = i
-			break
-		end
-	end
-	
-	if index  > 1 then
-		Lastpointer = pointerlist[index-1]
-	end
-	
-	if index < #pointerlist then
-		nextpointer = pointerlist[index+1]
-	end
-	
-	local xmin = - barwidth/2;
-	local xmax =   barwidth/2;
-	
-	if Lastpointer ~= nil then
-		xmin = Lastpointer:getPosition();
-	end
-	
-	if nextpointer ~= nil then
-		xmax = nextpointer:getPosition();
-	end	
-	
-	p1 = g_choosedPointer:convertToNodeSpaceAR(ccp(x, y))
-	
-	--鼠标位移
-	local adjx = p1.x - recordx
-	local orix,oriy = g_choosedPointer:getPosition();
-	
-	local posx = orix+adjx
-	if posx > xmax then
-		posx = xmax		
-	end
-
-	if posx < xmin then
-		posx = xmin	
-	end
-	
-	g_choosedPointer:setPosition(CCPointMake(posx, oriy))
-	
-	bLock = false
-	return true;
-end
-		
-function onTouchEnded()
-	
-	bLock = false
-	return true;
-end
 
 
 

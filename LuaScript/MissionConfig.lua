@@ -26,8 +26,46 @@ end
 
 
 
+local recordx,recordy = 0,0
+local function onTouchBegan(x,y)
+	recordx,recordy = x,y
+	return true
+end
+
+local function onTouchMoved(x,y)
+	local bglayer = p.GetParent()
+	--鼠标位移
+	local orix,oriy = bglayer:getPosition();
+	local adjy = y - recordy
+	
+	bglayer:setPosition(orix,oriy+adjy);
+	return true;
+end	
+
+--上下拉动功能
+local function onTouch(eventType, x, y)
+	
+	local nx = math.ceil(x)
+	local ny = math.ceil(y)
+	
+    if eventType == "began" then   
+        return onTouchBegan(nx, ny)
+    elseif eventType == "moved" then
+		return onTouchMoved(nx, ny)
+    else
+		--return onTouchEnded(nx, ny)	
+    end
+	
+	return true;
+end
+
 function p.LoadUI()
 		local bglayer = CCLayer:create()
+		
+		bglayer:setPosition(0,0);
+		bglayer:registerScriptTouchHandler(onTouch)
+		bglayer:setTouchEnabled(true)
+		
 		--增加背景
 		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
 		bgSprite:setScale(1.5);
@@ -49,9 +87,16 @@ function p.LoadUI()
 		--SavaBtn:setPosition(350,200)	
 		
 	p.ShowTable()
-		
-			
-	-->>>>>>>>>>>>>>>动画效果	
+	
+	
+	--显示增行按钮 增加在第一行
+	local InsertBtn = CCMenuItemImage:create("UI/missionConfig/itemSpriteInsert.png","UI/missionConfig/itemSpriteInsert.png")
+		InsertBtn:registerScriptTapHandler(p.InsertFirstLine)
+		menu:addChild(InsertBtn)
+		InsertBtn:setPosition(-800,40)
+	
+	bglayer:setPosition(480 , 300)	
+	--[[>>>>>>>>>>>>>>>动画效果	
 	--向下飘入
 	local arr = CCArray:create()	
 	bglayer:setPosition(480 , winSize.height+300)
@@ -62,16 +107,16 @@ function p.LoadUI()
 	
 	local  seq = CCSequence:create(arr)	
 	bglayer:runAction(seq)
-
+--]]
 end
 
 
 --测试数据
 local tMissionData = 
 {
-{1000	,	{11,1,3},	{50,25,25}	,10		, 1			,{0}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} },
---{1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,    [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
---{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1000	,	{11,1,3},	{50,25,25}	,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} },
+{1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,    [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
+{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 --{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 --{9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,      [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=40}},
 }
@@ -81,6 +126,8 @@ local taglabel = 9999
 local nTaground = 9998
 local nTagAddMonType = 9997
 local nTagLev	= 9996
+local nTagInsertLine = 9995
+local nTagRemoveLine = 9994
 
 local nTagMonType = 10000--10000以上为怪物类型
 local nTagMonRate = 20000--20000以上为怪物概率
@@ -90,6 +137,71 @@ local nTagMenu = 1000
 function p.ShowTable()
 	local bglayer = p.GetParent()
 	for i,v in pairs(tMissionData)do
+		p.ShowMenuLine(i)
+	end
+end
+
+	
+--删除怪物类型
+function p.RemoveMontype(tag,sender)
+	local Monbtn = sender.monbtn
+	local menu = sender:getParent()	
+	local ratebar = menu.MonRateBar
+	local tMontypebtnList =	 menu.MontypebtnList
+	local tRemoveBtnList = menu.RemoveBtnList
+	
+	local index = 0
+	for i,v in pairs(tMontypebtnList)do
+		if Monbtn == v then
+			Monbtn:removeFromParentAndCleanup(true);
+			index = i
+			break
+		end
+	end
+	
+	table.remove(tMontypebtnList,index)
+	
+	--删除移出按钮
+	table.remove(tRemoveBtnList,index)
+	sender:removeFromParentAndCleanup(true);
+	
+	
+	
+	--缩进
+	for i,v in pairs(tMontypebtnList)do
+		v:setPosition(120+40*(i-1),0)
+	end
+
+	for i,v in pairs(tRemoveBtnList)do
+		v:setPosition(120+40*(i-1),-40)
+	end
+	
+	--删除数据
+	local Dataindex = p.GetIndexByMenu(menu)
+	
+	--删除BAR
+	ratebar:DelPointer(tMissionData[Dataindex][2][index])
+		
+	local tMontype = tMissionData[Dataindex][2]
+	local tMonrate = tMissionData[Dataindex][3]	
+	table.remove(tMontype,index)
+	table.remove(tMonrate,index)		
+end
+	
+--通过menu获取INDEX
+function p.GetIndexByMenu(menu)
+	for i,v in pairs(tMissionData)do
+		if menu == v.MENU then
+			return i
+		end
+	end
+end	
+
+
+--显示一条Menu
+function p.ShowMenuLine(i)
+		local bglayer = p.GetParent()
+		local v = tMissionData[i]
 		local itembgSprite = CCSprite:create("UI/missionConfig/itembgSprite.png")
 		itembgSprite:setPosition(CCPointMake(5, 360-i*100))
 		
@@ -200,75 +312,71 @@ function p.ShowTable()
 		--插入行按钮
 		local itemInsert = CCMenuItemImage:create("UI/missionConfig/itemSpriteInsert.png", "UI/missionConfig/itemSpriteInsert.png")
 		itemInsert:registerScriptTapHandler(p.InsertLine)
-		itemInsert:setPosition(50,-20)
-		menu:addChild(itemInsert,2,nTagInsertLine)			
-	end
-end
-
-	
---删除怪物类型
-function p.RemoveMontype(tag,sender)
-	local Monbtn = sender.monbtn
-	local menu = sender:getParent()	
-	local ratebar = menu.MonRateBar
-	local tMontypebtnList =	 menu.MontypebtnList
-	local tRemoveBtnList = menu.RemoveBtnList
-	
-	local index = 0
-	for i,v in pairs(tMontypebtnList)do
-		if Monbtn == v then
-			Monbtn:removeFromParentAndCleanup(true);
-			index = i
-			break
-		end
-	end
-	
-	table.remove(tMontypebtnList,index)
-	
-	--删除移出按钮
-	table.remove(tRemoveBtnList,index)
-	sender:removeFromParentAndCleanup(true);
-	
-	
-	
-	--缩进
-	for i,v in pairs(tMontypebtnList)do
-		v:setPosition(120+40*(i-1),0)
-	end
-
-	for i,v in pairs(tRemoveBtnList)do
-		v:setPosition(120+40*(i-1),-40)
-	end
-	
-	--删除数据
-	local Dataindex = p.GetIndexByMenu(menu)
-	
-	--删除BAR
-	ratebar:DelPointer(tMissionData[Dataindex][2][index])
+		itemInsert:setPosition(30,-35)
+		menu:addChild(itemInsert,2,nTagInsertLine)		
 		
-	local tMontype = tMissionData[Dataindex][2]
-	local tMonrate = tMissionData[Dataindex][3]	
-	table.remove(tMontype,index)
-	table.remove(tMonrate,index)		
-end
-	
---通过menu获取INDEX
-function p.GetIndexByMenu(menu)
-	for i,v in pairs(tMissionData)do
-		if menu == v.MENU then
-			return i
-		end
-	end
+		--删除行按钮
+		local itemRemove = CCMenuItemImage:create("UI/missionConfig/itemSpriteRemove.png", "UI/missionConfig/itemSpriteRemove.png")
+		itemRemove:registerScriptTapHandler(p.RemoveLine)
+		itemRemove:setPosition(70,-35)
+		menu:addChild(itemRemove,2,nTagRemoveLine)		
+				
 end	
 
+--插入到第一条数据
+function p.InsertFirstLine(tag,sender)
+	local nindex = 1
+	local new = {1000	,	{1,1,1},	{50,25,25}	,10		, 1			,{0}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
+	
+	table.insert(tMissionData,nindex,new)
+	p.ShowMenuLine(nindex)
+	
+	--集体下移1个step
+	for i = nindex + 1,#tMissionData do
+		local menu = tMissionData[i].MENU
+		local bgsprite = menu:getParent()
+		bgsprite:setPosition(CCPointMake(5, 360-i*100))
+	end
+	
+end	
 
 --插入一条数据
 function p.InsertLine(tag,sender)
 	local menu = sender:getParent()
 	menu = tolua.cast(menu, "CCMenu")
 	local nindex = p.GetIndexByMenu(menu)
+	local new = {1000	,	{1,1,1},	{50,25,25}	,10		, 1			,{0}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
+	
+	table.insert(tMissionData,nindex+1,new)
+	p.ShowMenuLine(nindex+1)
 	
 	--集体下移1个step
+	for i = nindex + 2,#tMissionData do
+		local menu = tMissionData[i].MENU
+		local bgsprite = menu:getParent()
+		bgsprite:setPosition(CCPointMake(5, 360-i*100))
+	end
+	
+end
+
+--删除一条数据
+function p.RemoveLine(tag,sender)
+	local menu = sender:getParent()
+	menu = tolua.cast(menu, "CCMenu")
+	local nindex = p.GetIndexByMenu(menu)
+	
+	--删除BGsprite
+	local bgsprite = menu:getParent()
+	bgsprite:removeFromParentAndCleanup(true);
+	table.remove(tMissionData,nindex)
+	
+	--集体上移1个step
+	for i = nindex,#tMissionData do
+		local menu = tMissionData[i].MENU
+		local bgsprite = menu:getParent()
+		bgsprite:setPosition(CCPointMake(5, 360-i*100))
+	end
+
 end
 
 	
@@ -479,7 +587,4 @@ function p.GetLabelData(menu,tag)
 end
 	
 
---拖拉控件
-
-	
 
