@@ -13,6 +13,9 @@ UIdefine =
 	SkillLockUI			= 10011,
 	BG_LAYER			= 10012,
 	MissionConfig		= 10013,
+	ChooseMonTypeUI		= 10014,
+	LoadDataUI			= 10015,
+	SaveTipUI			= 10016,
 }
 
 

@@ -20,6 +20,17 @@ local g_choosedPointer =nil
 local bLock = false
 
 
+function DragBarInit()
+	tPointerList = {}
+	bLock = false
+	g_choosedPointer =nil
+end	
+
+function GetDragBarLock()
+	return bLock
+end	
+
+
 
 local recordx,recordy = 0,0
 
@@ -42,11 +53,13 @@ local function onTouchMoved(x,y)
 	
 	local bar = g_choosedPointer:getParent()
 	
+	
 	--获取移动限制
 	local Lastpointer = nil 
 	local nextpointer = nil
 	local index = 0
 	local pointerlist = bar.PointerList
+	
 	
 	for i,pointer in pairs(pointerlist)do
 		if pointer == g_choosedPointer then
@@ -96,6 +109,10 @@ local function onTouchMoved(x,y)
 end
 		
 local function onTouchEnded()
+	--如果修改了 则设置为未储存
+	if g_choosedPointer ~= nil then
+		MissionConfig.SetSaved(false) 
+	end
 	
 	bLock = false
 	return true;
@@ -208,6 +225,7 @@ end
 function dragBar:DelPointer(nParam)
 	local tmp = nil
 	for i,pointer in pairs(self.PointerList)do
+		local test = pointer.nParam
 		if pointer.nParam == nParam then
 			tmp = pointer
 		end
@@ -249,14 +267,18 @@ function dragBar:getData()
 end	
 
 --根据索引切换显示拉条SPRITE
-function dragBar:switchBtnSprite(Sprite,index)
+function dragBar:switchBtnSprite(Sprite,index,param)
+	if param == nil then
+		param = 0 
+	end
+	
 	self:addChild(Sprite,1)
 	
 	local pointer = self.PointerList[index]
 	local posx,posy = pointer:getPosition();
 	
 	Sprite:setPosition(CCPointMake(posx,posy))
-
+	Sprite.nParam = param
 	--替换掉原来的
 	self.PointerList[index] = Sprite
 	

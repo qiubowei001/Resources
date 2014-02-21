@@ -25,10 +25,27 @@ function p.InitPlayerSave()
 		tPlayersave.sound = true;--音效
 		tPlayersave.ChapterRecord = 1;		--章节记录
 		tPlayersave.MissionRecord = 2;		--关卡记录
+		
+		tPlayersave.MissionConfigFileId = 0;	--关卡配置工具文件记录
 		data(tPlayersave,savepath)
 	end
 end
 
+--测试用 获取关卡配置工具文件记录
+function p.GetMissionConfigFileId()
+	local tPlayersave = {}
+	data(savepath, tPlayersave)
+	return 	tPlayersave.MissionConfigFileId
+end
+
+
+--测试用 存储关卡配置工具文件记录
+function p.SetMissionConfigFileId(nId)
+	local tPlayersave = {}
+	data(savepath, tPlayersave)
+	tPlayersave.MissionConfigFileId =nId;
+	data(tPlayersave,savepath)
+end
 
 --获取玩家进度  返回:章节,关卡
 function p.GetPlayerProccessRecord()

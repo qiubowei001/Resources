@@ -1,3 +1,8 @@
+local g_b_UseLocalData  = false --true :使用本地数据 false ：使用文件数据
+
+
+
+
 --关卡配置编辑器
 MissionConfig = {}
 
@@ -6,7 +11,7 @@ local p = MissionConfig;
 local g_tRandom = {}
 local grandomskill1,grandomskill2,grandomskill3 = 0,0,0;
 
-local savepath = "data\\missionConfig\\mission1.xml"
+local savepath = "data\\missionConfig\\mission.xml"
 
 local tbrickTypeInfo = {}
 										--SPRITE ID
@@ -15,111 +20,238 @@ local tbrickTypeInfo = {}
 	tbrickTypeInfo[tbrickType.BLOOD] 	=  7
 	tbrickTypeInfo[tbrickType.GOLD] 	=  4
 	tbrickTypeInfo[tbrickType.ENERGY] 	=  20
-	
-	
+
+local nTagTransparentLayer = 999
+
+local g_bIfSaved = true;
+
+local gTipSprite = nil;
+
+
+--测试数据
+local tMissionData = {}
+
+if g_b_UseLocalData then
+
+tMissionData =
+{
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{2},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{3},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{4},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,	 [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{50		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{5},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{5},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{35		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
+{30		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
+{9999	,	{1},		{1}				,10		, 1			,{1},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
+  
+}
+
+end
+
+
+
+--获取触摸layer	
 function p.GetParent()
 	local scene = Main.GetGameScene();
 	local layer = scene:getChildByTag(UIdefine.MissionConfig);
 	local layer = tolua.cast(layer, "CCLayer")
-	return layer
+	
+	local  TransparentLayer = layer:getChildByTag(nTagTransparentLayer);
+	return TransparentLayer
 end
 
 
 
 local recordx,recordy = 0,0
+local orix,oriy = 0,0
 local function onTouchBegan(x,y)
 	recordx,recordy = x,y
+	
+	local bglayer = p.GetParent()
+	orix,oriy = bglayer:getPosition();
 	return true
 end
 
 local function onTouchMoved(x,y)
+
+	
 	local bglayer = p.GetParent()
 	--鼠标位移
-	local orix,oriy = bglayer:getPosition();
 	local adjy = y - recordy
+	local finaly = oriy + adjy
 	
-	bglayer:setPosition(orix,oriy+adjy);
+	cclog("finaly:"..finaly)
+	if  finaly < 0 then
+		finaly = 0
+	end
+	bglayer:setPosition(orix,finaly);
 	return true;
 end	
 
 --上下拉动功能
 local function onTouch(eventType, x, y)
+	--cclog("x:"..x)
+	if x < 900 then
+		return true
+	end
 	
-	local nx = math.ceil(x)
-	local ny = math.ceil(y)
+	local nx = x--math.ceil(x)
+	local ny = y--math.ceil(y)
+	
+	
 	
     if eventType == "began" then   
-        return onTouchBegan(nx, ny)
+		
+	    return onTouchBegan(nx, ny)
     elseif eventType == "moved" then
 		return onTouchMoved(nx, ny)
-    else
-		--return onTouchEnded(nx, ny)	
     end
 	
 	return true;
 end
 
+
+
+
+
+function p.Init()
+	if #tMissionData == 0 then
+		return
+	end
+		
+	--清空条目UI
+	local bglayer = p.GetParent()
+		
+	for i,v in pairs(tMissionData)do
+		---local itembgSprite = 
+		bglayer:removeChildByTag(i, true)
+	end
+	
+	--清空DRAGBAR 数据
+	
+	
+	tMissionData = {}		--清空数据	
+end
+	
+	
 function p.LoadUI()
+		
+		--读取上次打开文件ID	
+		local nLastFileId =  dataInit.GetMissionConfigFileId()
+	
+		--使用本地脚本数据
+		if g_b_UseLocalData == false then
+			tMissionData = {}
+			--初始化
+			p.Init()
+			
+			savepath = "data\\missionConfig\\mission"..nLastFileId..".xml"
+			--读取数据
+			data(savepath, tMissionData)			
+			
+		end
+		
+	
+		
 		local bglayer = CCLayer:create()
 		
-		bglayer:setPosition(0,0);
-		bglayer:registerScriptTouchHandler(onTouch)
-		bglayer:setTouchEnabled(true)
+		--初始化拉条数据
+		DragBarInit()
 		
 		--增加背景
 		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
 		bgSprite:setScale(1.5);
-		bglayer:addChild(bgSprite,1)
+		bglayer:addChild(bgSprite,1)		
 		
 		
 		local scene = Main.GetGameScene();
 		scene:addChild(bglayer,999,UIdefine.MissionConfig)	
+		
+		--触摸透明层
+		local TransparentLayer = CCLayer:create()
+		TransparentLayer:registerScriptTouchHandler(onTouch)
+		TransparentLayer:setTouchEnabled(true)
+		TransparentLayer:setPosition(0 , 0)	
+		bglayer:addChild(TransparentLayer,1,nTagTransparentLayer)	
 	
 	
 		local menu = CCMenu:create()
-		menu:setPosition(CCPointMake(370, 270))
+		menu:setPosition(CCPointMake(370, 300))
 		
 		--存储按钮
 		local SavaBtn = CCMenuItemImage:create("UI/missionConfig/SavaBtn.png","UI/missionConfig/SavaBtn.png")
 		SavaBtn:registerScriptTapHandler(p.SaveData)
 		menu:addChild(SavaBtn)
 		bglayer:addChild(menu,3)
-		--SavaBtn:setPosition(350,200)	
+		SavaBtn:setPosition(-35,10)	
+		--增加一个标记
+		gTipSprite = CCSprite:create("UI/missionConfig/NotSaveTip.png")		
+		SavaBtn:addChild(gTipSprite,1)	
+		gTipSprite:setPosition(80,20)		
+		gTipSprite:setVisible(false)
 		
-	p.ShowTable()
+		--读取按钮
+		local LoadBtn = CCMenuItemImage:create("UI/missionConfig/LoadBtn.png","UI/missionConfig/LoadBtn.png")
+		LoadBtn:registerScriptTapHandler(p.LoadLoadingUI)
+		menu:addChild(LoadBtn)
+		LoadBtn:setPosition(-120,10)	
+		
+
 	
 	
 	--显示增行按钮 增加在第一行
 	local InsertBtn = CCMenuItemImage:create("UI/missionConfig/itemSpriteInsert.png","UI/missionConfig/itemSpriteInsert.png")
 		InsertBtn:registerScriptTapHandler(p.InsertFirstLine)
 		menu:addChild(InsertBtn)
-		InsertBtn:setPosition(-800,40)
+		InsertBtn:setPosition(-800,5)
 	
-	bglayer:setPosition(480 , 300)	
-	--[[>>>>>>>>>>>>>>>动画效果	
-	--向下飘入
-	local arr = CCArray:create()	
-	bglayer:setPosition(480 , winSize.height+300)
-	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-	local actiontoease =  CCEaseBounceOut:create(moveby)	
+	--表头
+	local TipSprite = CCSprite:create("UI/missionConfig/tip.png")
+	TipSprite:setPosition(-100,310)
+	bglayer:addChild(TipSprite,2)
+
+
+	--关闭按钮
+	function close()
+		--如果未储存跳提示
+		if g_bIfSaved == false then
+			p.LoadNotSaveUI()
+			return
+		end
+		
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.MissionConfig);		
+		layer:removeFromParentAndCleanup(true);
+	end	
+	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
+	closeBtn:setScale(0.5)
+	closeBtn:registerScriptTapHandler(close)
+	closeBtn:setPosition(CCPointMake(60, 0))
+	menu:addChild(closeBtn)		
 	
-	arr:addObject(actiontoease)
+	bglayer:setPosition(480 , 300)
 	
-	local  seq = CCSequence:create(arr)	
-	bglayer:runAction(seq)
---]]
+	p.SetSaved(true)
+		
+	--根据读取的数据生成条目
+	p.ShowTable()
 end
 
 
---测试数据
-local tMissionData = 
-{
-{1000	,	{11,1,3},	{50,25,25}	,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} },
-{1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,    [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
-{10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
---{300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
---{9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,      [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=40}},
-}
 
 local taglabel = 9999
 
@@ -135,7 +267,7 @@ local nTagMenu = 1000
 
 
 function p.ShowTable()
-	local bglayer = p.GetParent()
+	--local bglayer = p.GetParent()
 	for i,v in pairs(tMissionData)do
 		p.ShowMenuLine(i)
 	end
@@ -326,8 +458,7 @@ end
 --插入到第一条数据
 function p.InsertFirstLine(tag,sender)
 	local nindex = 1
-	local new = {1000	,	{1,1,1},	{50,25,25}	,10		, 1			,{0}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
-	
+	local new = {10	,	{1},	{100}	,10		, 1			,{1}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
 	table.insert(tMissionData,nindex,new)
 	p.ShowMenuLine(nindex)
 	
@@ -338,6 +469,7 @@ function p.InsertFirstLine(tag,sender)
 		bgsprite:setPosition(CCPointMake(5, 360-i*100))
 	end
 	
+	p.SetSaved(false)
 end	
 
 --插入一条数据
@@ -345,7 +477,10 @@ function p.InsertLine(tag,sender)
 	local menu = sender:getParent()
 	menu = tolua.cast(menu, "CCMenu")
 	local nindex = p.GetIndexByMenu(menu)
-	local new = {1000	,	{1,1,1},	{50,25,25}	,10		, 1			,{0}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
+
+	--智能补全数据
+	--local levlast = tMissionData[nindex][6][1]
+	local new = {10	,	{1},	{100}	,10		, 1			,{1}	,{ 	[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21,[tbrickType.ENERGY]=21} }
 	
 	table.insert(tMissionData,nindex+1,new)
 	p.ShowMenuLine(nindex+1)
@@ -356,7 +491,7 @@ function p.InsertLine(tag,sender)
 		local bgsprite = menu:getParent()
 		bgsprite:setPosition(CCPointMake(5, 360-i*100))
 	end
-	
+	p.SetSaved(false)
 end
 
 --删除一条数据
@@ -434,6 +569,8 @@ function p.AddMonType(tag,sender)
 end		
 
 function p.clickText(tag,sender)
+	p.SetSaved(false)
+
 	if tag == nTaground then--回合数
 		p.clickTextRound(sender)
 	elseif tag == nTagLev then	--怪物等级
@@ -441,6 +578,39 @@ function p.clickText(tag,sender)
 	end
 end
 
+
+--读取数据
+function p.LoadData(tag,sender)
+	--清屏
+	p.Init()
+	--初始化拉条数据
+	DragBarInit()
+	
+	local label = sender.Label
+	label = tolua.cast(label, "CCTextFieldTTF")
+	local inputFileid =  label:getString();
+	
+	inputFileid = tonumber(inputFileid)
+	if inputFileid>0 and inputFileid < 9999 then
+		savepath = "data\\missionConfig\\mission"..inputFileid..".xml"
+		--读取数据
+		data(savepath, tMissionData)		
+		
+		--设置上次打开文件ID
+		dataInit.SetMissionConfigFileId(inputFileid)
+
+		--根据读取的数据生成条目
+		p.ShowTable()
+		
+		--关闭界面
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.LoadDataUI);		
+		layer:removeFromParentAndCleanup(true);		
+		
+		p.SetSaved(true)
+	end
+end
+	
 --储存数据
 function p.SaveData()
 	local bglayer =  p.GetParent()
@@ -470,9 +640,59 @@ function p.SaveData()
 	
 	
 	data(tMissionData, savepath)
+	p.SetSaved(true)
 end	
 
 
+--加载载入数据UI
+function p.LoadLoadingUI()
+	local bglayer = CCLayer:create()
+	--增加背景
+	local bgSprite = CCSprite:create("UI/Bg/BG1.png")
+	bgSprite:setScale(0.5)
+	bglayer:addChild(bgSprite,1)
+	--LoadDataUI
+	
+	local menu = CCMenu:create()	
+	local  itemOK =  CCMenuItemImage:create("UI/missionConfig/okBtn.png","UI/missionConfig/okBtn.png")
+	itemOK:registerScriptTapHandler(p.LoadData)
+	menu:addChild(itemOK,1)
+	bglayer:setPosition(CCPointMake(480, 320))
+
+	--文件ID输入框
+	local FileIdlabel = CCTextFieldTTF:textFieldWithPlaceHolder("fileid", "Arial", 20)
+	FileIdlabel:setPosition(CCPointMake(25, 20))
+	FileIdlabel:setColor(ccc3(0,0,0))
+	FileIdlabel:setString("")
+	local itemLabel = CCMenuItemImage:create("UI/missionConfig/itemSprite.png", "UI/missionConfig/itemSprite.png")
+	itemLabel:registerScriptTapHandler(p.clickText)
+	itemLabel:setPosition(0,50)
+	itemLabel:addChild(FileIdlabel,2,taglabel)
+	menu:addChild(itemLabel,2,nTaground)	
+	
+	itemOK.Label = FileIdlabel
+
+
+	--关闭按钮
+	function close()
+		--如果未储存跳提示
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.LoadDataUI);		
+		layer:removeFromParentAndCleanup(true);
+	end	
+	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
+	closeBtn:setScale(0.5)
+	closeBtn:registerScriptTapHandler(close)
+	closeBtn:setPosition(CCPointMake(100, 100))
+	menu:addChild(closeBtn)		
+	menu:setPosition(CCPointMake(0, 0))
+	
+	bglayer:addChild(menu,2)
+	
+	local scene = Main.GetGameScene();
+	scene:addChild(bglayer,999,UIdefine.LoadDataUI)	
+
+end	
 
 local gX_Step = 100;
 local gY_Step = 100;
@@ -481,6 +701,7 @@ local MonTypeLayer = nil
 local g_Chosed_MontypeItem = nil  --选中怪物类型切换按钮
 --点击怪物类型 切换怪物类型
 function p.clickMontype(tag,sender)
+	
 	g_Chosed_MontypeItem = sender
 	
 	local bglayer = CCLayer:create()
@@ -515,7 +736,7 @@ function p.clickMontype(tag,sender)
 	
 	
 	local scene = Main.GetGameScene();
-	scene:addChild(bglayer,999,UIdefine.SkillUpGradeUI)	
+	scene:addChild(bglayer,999,UIdefine.ChooseMonTypeUI)	
 	
 	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
 	closeBtn:registerScriptTapHandler(p.closeMonType)
@@ -532,6 +753,8 @@ end
 
 --切换怪物类型
 function p.switchType(tag,sender)
+	p.SetSaved(false)
+	
 	local montype = tag
 	--删除动画
 	g_Chosed_MontypeItem:removeChildByTag(99, true)
@@ -563,7 +786,7 @@ function p.switchType(tag,sender)
 	spriteMon:setPosition(CCPointMake(17, 20))
 	pointerbg:addChild(spriteMon)	
 	
-	MonrateBar:switchBtnSprite(pointerbg,btnindex)
+	MonrateBar:switchBtnSprite(pointerbg,btnindex,montype)
 	p.closeMonType()
 end	
 
@@ -586,5 +809,83 @@ function p.GetLabelData(menu,tag)
 	return data
 end
 	
+function p.SetSaved(b)
+	g_bIfSaved = b
+	if b then
+		gTipSprite:setVisible(false)
+	else
+		gTipSprite:setVisible(true)
+	end
+end
 
 
+--忘记储存提示界面
+function p.LoadNotSaveUI()
+	
+	local bglayer = CCLayer:create()
+	--增加背景
+	local bgSprite = CCSprite:create("UI/Bg/BG1.png")
+	bgSprite:setScale(0.5)
+	bglayer:addChild(bgSprite)
+	
+	local menu = CCMenu:create()
+	bglayer:setPosition(CCPointMake(480, 420))
+
+	--显示提示
+	local missionLabel = CCLabelTTF:create("DO U WANT TO SAVE?", "Arial", 20)
+			bglayer:addChild(missionLabel,3)
+			missionLabel:setColor(ccc3(255,0,0))
+			missionLabel:setPosition(-20, 100)
+	
+
+	--关闭按钮
+	function close()
+		--如果未储存跳提示
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.SaveTipUI);		
+		layer:removeFromParentAndCleanup(true);
+	end
+	
+	local closeBtn = CCMenuItemImage:create("UI/Button/CLOSE.png", "UI/Button/CLOSE.png")
+	closeBtn:setScale(0.5)
+	closeBtn:registerScriptTapHandler(close)
+	closeBtn:setPosition(CCPointMake(120, 100))
+	menu:addChild(closeBtn)		
+	menu:setPosition(CCPointMake(0, 0))
+
+	--确定按钮
+	function YES()
+		p.SaveData()
+		close()
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.MissionConfig);		
+		layer:removeFromParentAndCleanup(true);		
+	end		
+
+	--取消按钮
+	function NO()
+		close()
+		local scene = Main.GetGameScene();
+		local layer = scene:getChildByTag(UIdefine.MissionConfig);		
+		layer:removeFromParentAndCleanup(true);			
+	end	
+	
+	local YESBtn = CCMenuItemImage:create("UI/missionConfig/YESBtn.png", "UI/missionConfig/YESBtn.png")	
+	YESBtn:registerScriptTapHandler(YES)
+	YESBtn:setPosition(CCPointMake(-50, 0))
+	menu:addChild(YESBtn)		
+	
+	local NOBtn = CCMenuItemImage:create("UI/missionConfig/NOBtn.png", "UI/missionConfig/NOBtn.png")
+	--NOBtn:setScale(0.5)
+	NOBtn:registerScriptTapHandler(NO)
+	NOBtn:setPosition(CCPointMake(50, 0))
+	menu:addChild(NOBtn)		
+	
+
+	
+	bglayer:addChild(menu,2)
+	
+	local scene = Main.GetGameScene();
+	scene:addChild(bglayer,999,UIdefine.SaveTipUI)	
+
+end	

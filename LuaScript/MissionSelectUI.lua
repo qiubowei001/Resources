@@ -65,7 +65,7 @@ end
 function p.LoadUI()
 		--读取玩家游戏进度
 		g_Chapter ,g_Mission = dataInit.GetPlayerProccessRecord();
-
+		
 		g_sceneGame = CCScene:create();
 		local scene = g_sceneGame;
 		

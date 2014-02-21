@@ -25,22 +25,25 @@ MISSION_TABLE = {}
 MISSION_TABLE[1] = {}
 MISSION_TABLE[1]["name"] = "ChapterI MISSION1"
 MISSION_TABLE[1]["BgId"] = 1 --背景
-MISSION_TABLE[1]["config"] = 
-{
+MISSION_TABLE[1]["configId"] = 1
+MISSION_TABLE[1]["config"] = {}
+
 --[[
+{
+
 {1		,	{14},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
 {1		,	{13},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
 {1		,	{12},		{100}		,10		, 1			,{1}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
---]]
+--
+
+--
 {1000	,	{11},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {1		,	{9},		{100}		,10		, 1			,{6}	,{[tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},
 {10		,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
-
-
 {300	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {9999	,	{1},		{100}		,10		, 1			,{0}	,{[tbrickType.MONSTER]=0,     [tbrickType.SWORD]=30,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=40}},
-
 --]]
+
 --[[
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=0, [tbrickType.MONSTER]=10,     [tbrickType.SWORD]=45,     [tbrickType.BLOOD]=45,     [tbrickType.GOLD]=0}},--lesson1~2 如何链接,杀3个怪
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=0, [tbrickType.MONSTER]=40,     [tbrickType.SWORD]=45,     [tbrickType.BLOOD]=15,     [tbrickType.GOLD]=0}},--lesson3 怪物3只时,介绍怪物CD;4,玩家99%HP,介绍血球
@@ -49,26 +52,30 @@ MISSION_TABLE[1]["config"] =
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=30, [tbrickType.MONSTER]=20,     [tbrickType.SWORD]=20,     [tbrickType.BLOOD]=30,     [tbrickType.GOLD]=0}},--6 介绍篮球 7回蓝
 {50		,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=20, [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=20,     [tbrickType.BLOOD]=20,     [tbrickType.GOLD]=40}},--8 吃金币 --升级装备
 {200	,	{1},			{100}			,10		, 1			,{1},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},--9升级技能 使用技能
---]]
 {9999	,	{},				{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
 
 }
+--]]
 
 MISSION_TABLE[2] = {}
 MISSION_TABLE[2]["name"] = "ChapterIII"
-MISSION_TABLE[2]["config"] = 
+MISSION_TABLE[2]["configId"] = 2
+MISSION_TABLE[2]["config"] = {}
+--[[
 {
 --回合数 --{怪物ID,怪物概率}
 {10		,	{9},		{100}		 },
 {20		,	{2,4},		{95,5		}},
 {20		,	{4},		{100		}},
 }
+--]]
 
 MISSION_TABLE[3] = {}
 MISSION_TABLE[3]["name"] = "ChapterI MISSION3"
 MISSION_TABLE[3]["BgId"] = 1 --背景
-MISSION_TABLE[3]["config"] = 
-
+MISSION_TABLE[3]["configId"] = 3
+MISSION_TABLE[3]["config"] = {}
+--[[
 {
 --回合数 --{怪物ID,		怪物概率,	掉落延迟,掉落怪物数,怪物等级 砖块概率}
 
@@ -93,13 +100,21 @@ MISSION_TABLE[3]["config"] =
 {10		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
 {1		,	{4},		{100}			,10		, 1			,{6},	{[tbrickType.ENERGY]=0,  [tbrickType.MONSTER]=100,     [tbrickType.SWORD]=0,     [tbrickType.BLOOD]=0,     [tbrickType.GOLD]=0}},--BOSS战
 {30		,	{1,2,3},	{33,33,34}		,10		, 1			,{6},	{[tbrickType.ENERGY]=21, [tbrickType.MONSTER]=16,     [tbrickType.SWORD]=21,     [tbrickType.BLOOD]=21,     [tbrickType.GOLD]=21}},
-{9999	,	{},			{}				,10		, 1			,{},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
-                                                               
-}
+{9999	,	{1},		{1}				,10		, 1			,{1},	{[tbrickType.ENERGY]=25,  [tbrickType.MONSTER]=0,     [tbrickType.SWORD]=25,     [tbrickType.BLOOD]=25,     [tbrickType.GOLD]=25}},
+                                                       
+}													
 --]]
 
 
-
+--读取XML关卡数据
+function p.LoadMissionData(index)
+	--for i,v in pairs(MISSION_TABLE) do
+		local savepath = "data\\missionConfig\\mission"..MISSION_TABLE[index]["configId"] ..".xml"
+		local tcache = {}
+		data(savepath, tcache)
+		MISSION_TABLE[index]["config"] = tcache
+	--end
+end
 
 
 
@@ -130,10 +145,12 @@ end
 --初始化MISSION信息
 function p.SetMission(nMission)
 	gMission = nMission
-	
+	p.LoadMissionData(nMission)
 	nRound = 1;
 	local v = p.GetRoundInfoTable()
-	gWaveDelay = v[4]	
+	gWaveDelay = v[4]
+	
+	
 end
 
 function p.GetMission()
@@ -238,11 +255,11 @@ end
 --章节数据
 CHAPTER_TABLE = {}
 	CHAPTER_TABLE[1] = {}
-	CHAPTER_TABLE[1].tMission = {1,2}
+	CHAPTER_TABLE[1].tMission = {1,2,3,4,5}
 	CHAPTER_TABLE[1].BgId = 1
 	
 	CHAPTER_TABLE[2] = {}
-	CHAPTER_TABLE[2].tMission = {3,4,5,6,7}
+	CHAPTER_TABLE[2].tMission = {6,7}
 	CHAPTER_TABLE[2].BgId = 2
 	
 function p.GeCHAPTER_TABLEMission(nChapter)

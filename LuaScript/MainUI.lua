@@ -187,7 +187,19 @@ function p.LoadUI()
 		menuUpGrade:setTag(g_UpgradeBtntag);
 		bglayer:addChild(menuUpGrade)		
 		menuUpGrade:setVisible(true)
-			
+		
+		
+		--返回按钮		
+		local itemBack = CCMenuItemImage:create("UI/Button/BACK.png", "UI/Button/BACK.png")
+    	itemBack:registerScriptTapHandler(p.menuCallbackBack)
+		itemBack:setScale(0.5);
+		local menuBack = CCMenu:create()
+		menuBack:addChild(itemBack,1,1)	
+		menuBack:setPosition(CCPointMake(0, 485))
+		itemBack:setPosition(0,0)
+		--menuBack:setTag(g_UpgradeBtntag);
+		bglayer:addChild(menuBack)		
+		
    -- bglayer:setPosition(CCPointMake(800, 50))
 	local scene = Main.GetGameScene();
 	scene:addChild(bglayer,3)
@@ -229,6 +241,12 @@ table.insert(tUIAll,menuUpGrade)
 	end
 	
 end
+
+
+--返回选关界面
+function p.menuCallbackBack()
+	GameOverUI.LoadUI(1)
+end	
 
 --显示SPEED按钮
 function p.ShowSpeedBtn()

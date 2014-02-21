@@ -141,7 +141,7 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 	
-	player.AddNewSkill(14,17)
+	--player.AddNewSkill(14,17)
 	--player.AddNewSkill(7,16)
 
 	--[[
