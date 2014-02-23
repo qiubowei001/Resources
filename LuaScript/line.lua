@@ -159,7 +159,10 @@ function p.OnHitABrick(pbrick)
 		
 		if	pbrick.chosed == false then
 			LineFunc.InsertLine(pbrick)
-			brick.setChosed(pbrick);	
+			brick.setChosed(pbrick);
+			
+			--提示
+			LineFunc.setTip(pbrick)
 		end
 		
 		--攻击行为
@@ -223,7 +226,44 @@ function p.getPlayerAttDamgeFromLine()
 end
 
 
-
+function LineFunc.setTip(pbrick)
+	--获取周围8个BRICK
+	local X = pbrick.TileX
+	local Y = pbrick.TileY
+	local tBrick = {}
+	for i=X-1,X+1 do
+		for j=Y-1,Y+1 do
+			if i~=X or y~=Y then
+				if i>= 0 and i<=  brickInfo.brick_num_X and j<=  brickInfo.brick_num_Y and j>= 0 then
+					table.insert(tBrick,Board[i][j])
+				else
+					table.insert(tBrick,999)
+				end
+			end
+		end
+	end
+	--[[
+	358
+	2 7
+	146	
+	--]]
+	for i,brick in pairs(tBrick)do
+		--如果类型和pbrick一致
+		if brick.nType == tbrickType.MONSTER or brick.nType == tbrickType.SWORD then--SWORD
+			if pbrick.nType  == tbrickType.MONSTER  or pbrick.nType == tbrickType.SWORD then
+				
+				
+			end
+		elseif brick.nType == pbrick.nType or then
+			
+		end
+		
+		--如果不在line中
+		
+		--则显示提示
+		
+	end
+end
 
 
 

@@ -54,7 +54,7 @@ function brick.setChosed(pbrick)
 		
 		local opacity = CCFadeTo:create(0.4, 115)
 		spriteeff:runAction(opacity)
-		
+	
 end
 
 
