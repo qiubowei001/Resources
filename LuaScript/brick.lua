@@ -26,7 +26,9 @@ local choseefftag = 3001;
 local deathefftag = 3002;
 local MainSpritetag = 3003;
 local animationtag = 3004;
+local Tipefftag = 3005;
 brick.ParticleTag = 5000;
+
 
 
 function brick.GetPosByBrick(brick)
@@ -67,6 +69,37 @@ function brick.setUnChosed(pbrick)
 	pbrick:removeChildByTag(choseefftag, true)
 	pbrick.chosed = false;
 end 
+
+
+	--[[
+	358
+	2 7
+	146	
+	--]]
+	
+--设置方向提示
+function brick.setTip(pbrick,index)
+	if  pbrick:getChildByTag(Tipefftag) ~= nil then
+		return;
+	end	
+
+	local spriteeff = CCSprite:create("brickeffect/TipEff/"..index..".png")--CCSprite:createWithSpriteFrame(frame0)
+	spriteeff:setPosition(brickWidth/2, brickHeight/2);		
+	spriteeff:setScale(1.4);
+	pbrick:addChild(spriteeff,3,Tipefftag)			
+
+	local fadein = CCFadeIn:create(0.5)
+	spriteeff:runAction(fadein)
+end
+
+--取消方向提示
+function brick.setUnTip(pbrick)
+	if  pbrick:getChildByTag(Tipefftag) == nil then
+		return;
+	end	
+	
+	pbrick:removeChildByTag(Tipefftag, true)
+end
 
 
 function brick.GetMainSprite(pbrick)

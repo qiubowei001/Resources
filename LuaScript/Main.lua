@@ -557,6 +557,7 @@ function p.main(nMission)
 						if	pbrick.chosed == false and pbrick.IsAbleLink == true then
 							brick.setChosed(pbrick);
 							LineFunc.SetHead(pbrick);
+							LineFunc.setTip(pbrick);
 						end			
 				end
 			elseif Main.selectMode == SELECTMODE.SINGLE_BRICK then
@@ -600,7 +601,7 @@ function p.main(nMission)
 			--删除点击光效
 			Particle.DelMainHitEff()
 				
-				
+			
 			if Main.selectMode == SELECTMODE.NORMAL then		
 				--====================处于普通攻击模式=======================--
 				--========line结束处理====--

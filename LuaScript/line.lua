@@ -30,6 +30,13 @@ end
 
 --返回是否成功执行一次操作
 function p.OnTouchEnd()
+			--取消tip
+			if #Line >=1 then
+				local pbricklast = Line[#Line]
+				LineFunc.setUnTip(pbricklast);				
+			end	
+						 
+			
 			if LineFunc.GetLineLength() > 2 then
 				local actiontype = false;
 				local nLineNum = #Line;
@@ -158,8 +165,16 @@ function p.OnHitABrick(pbrick)
 		
 		
 		if	pbrick.chosed == false then
+			--取消提示
+			if #Line >=1 then
+				local bricklast = Line[#Line]
+				LineFunc.setUnTip(bricklast)
+			end	
+					
 			LineFunc.InsertLine(pbrick)
 			brick.setChosed(pbrick);
+
+
 			
 			--提示
 			LineFunc.setTip(pbrick)
@@ -185,6 +200,12 @@ end
 
 --将BRICK之后的全删除
 function p.CancelLineFromBrick(pbrick)
+	if #Line>=1 then
+		local pbricklast = Line[#Line]
+		LineFunc.setUnTip(pbricklast)
+	end
+	
+	
 			local indextmp = 1;
 			for i,v in pairs(Line) do
 				if v== pbrick then
@@ -198,7 +219,8 @@ function p.CancelLineFromBrick(pbrick)
 				brick.setUnChosed(Line[i])
 				brick.removedeatheff(Line[i])
 				table.remove(Line, i)
-			end		
+			end
+	LineFunc.setTip(pbrick)	
 end
 
 function p.CancelLine()
@@ -233,8 +255,8 @@ function LineFunc.setTip(pbrick)
 	local tBrick = {}
 	for i=X-1,X+1 do
 		for j=Y-1,Y+1 do
-			if i~=X or y~=Y then
-				if i>= 0 and i<=  brickInfo.brick_num_X and j<=  brickInfo.brick_num_Y and j>= 0 then
+			if i~=X or j~=Y then
+				if i>= 1 and i<=  brickInfo.brick_num_X and j<=  brickInfo.brick_num_Y and j>= 1 then
 					table.insert(tBrick,Board[i][j])
 				else
 					table.insert(tBrick,999)
@@ -242,30 +264,63 @@ function LineFunc.setTip(pbrick)
 			end
 		end
 	end
+	
 	--[[
 	358
 	2 7
 	146	
 	--]]
-	for i,brick in pairs(tBrick)do
-		--如果类型和pbrick一致
-		if brick.nType == tbrickType.MONSTER or brick.nType == tbrickType.SWORD then--SWORD
-			if pbrick.nType  == tbrickType.MONSTER  or pbrick.nType == tbrickType.SWORD then
-				
-				
+	for i,tmpbrick in pairs(tBrick)do
+		if 999 ~= tmpbrick then
+			local bIfTip = false  --是否加TIP
+			--如果类型和pbrick一致
+			if tmpbrick.nType == tbrickType.MONSTER or tmpbrick.nType == tbrickType.SWORD then--SWORD
+				if pbrick.nType  == tbrickType.MONSTER  or pbrick.nType == tbrickType.SWORD then
+					bIfTip  = true				
+				end
+			elseif tmpbrick.nType == pbrick.nType  then
+				bIfTip  = true	
 			end
-		elseif brick.nType == pbrick.nType or then
-			
-		end
 		
-		--如果不在line中
+			--不在line中才显示
+			for j,v in pairs(Line)do
+				if v == tmpbrick then
+					bIfTip = false
+					break
+				end
+			end
 		
-		--则显示提示
-		
+			--则显示提示
+			if bIfTip then		
+				brick.setTip(tmpbrick,i)
+			end
+		end	
 	end
 end
 
-
+function LineFunc.setUnTip(pbrick)
+	--获取周围8个BRICK
+	local X = pbrick.TileX
+	local Y = pbrick.TileY
+	local tBrick = {}
+	for i=X-1,X+1 do
+		for j=Y-1,Y+1 do
+			if i~=X or y~=Y then
+				if i>= 1 and i<=  brickInfo.brick_num_X and j<=  brickInfo.brick_num_Y and j>= 1 then
+					table.insert(tBrick,Board[i][j])
+				else
+					table.insert(tBrick,999)
+				end
+			end
+		end
+	end
+	
+	for i,tmpbrick in pairs(tBrick)do
+		if 999 ~= tmpbrick then	
+			brick.setUnTip(tmpbrick)	
+		end	
+	end	
+end
 
 
 
