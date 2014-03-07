@@ -12,7 +12,7 @@ local bartag = 99;
 local pointertag = 98;
 
 local barheight = 7;
-local barwidth = 161;
+local barwidth = 200;
 
 local tPointerList = {}
 local g_choosedPointer =nil

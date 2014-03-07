@@ -214,6 +214,32 @@ end
 
 
 
+--随机获取未解锁的技能
+function p.GetRandomSkillIdNotLearned()
+	local tRandomAll = {}
+	
+	--遍历技能树，如果没解锁枝干的根技能 则插入根技能
+	--如果解锁,则插入属于此枝干的最顶部技能	
+	for i,v in pairs(p.tSkillTree) do
+		
+		for j,nodeid in pairs(v)do
+			if tSkillLockSave[nodeid] == false then
+				--如果没解锁  则插入技能
+				table.insert(tRandomAll,{i,nodeid})
+				break
+			end					
+		end
+	end
+	
+	--无技能升级
+	if #tRandomAll == 0 then
+		return nil
+	end
+		
+	local ret = tRandomAll[math.random(1,#tRandomAll)]
+	return ret
+end
+
 
 
 

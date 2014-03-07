@@ -207,6 +207,9 @@ function Main.brickfallLogic()
 		local Ymin = tTmp[index][2]
 
 		local nbricktype,bEnd = mission.GenerateBrickType();
+		
+		MainUI.setRound(mission.GetRound())
+		
 		local pbrick=nil;
 		
 

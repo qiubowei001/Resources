@@ -360,7 +360,7 @@ function p.ShowMenuLine(i)
 		--怪物类型bar
 		local MonDragbar = dragBar:Create()
 		itembgSprite:addChild(MonDragbar,3)
-		MonDragbar:setPosition(CCPointMake(320, 0))
+		MonDragbar:setPosition(CCPointMake(370, 0))
 		menu.MonRateBar = MonDragbar
 		
 		--怪物类型按钮 		--怪物类型概率label
@@ -403,7 +403,7 @@ function p.ShowMenuLine(i)
 		--加怪按钮
 		local addMonItem = CCMenuItemImage:create("UI/missionConfig/addMontype.png", "UI/missionConfig/addMontype.png")
 		addMonItem:registerScriptTapHandler(p.AddMonType)
-		addMonItem:setPosition(450,0)
+		addMonItem:setPosition(500,0)
 		menu:addChild(addMonItem,2,nTagAddMonType)
 		
 		tMissionData[i].MENU = menu
@@ -414,7 +414,7 @@ function p.ShowMenuLine(i)
 		--砖块概率拉条
 		local BrickDragbar = dragBar:Create()
 		itembgSprite:addChild(BrickDragbar,3)
-		BrickDragbar:setPosition(CCPointMake(620, 0))
+		BrickDragbar:setPosition(CCPointMake(680, 0))
 		menu.BrickRateBar = BrickDragbar		
 		local tbrickRate = v[7]
 		for i=1,#tbrickRate do	
@@ -436,7 +436,7 @@ function p.ShowMenuLine(i)
 		Levlabel:setString(v[6][1])
 		local itemLev = CCMenuItemImage:create("UI/missionConfig/itemSpriteSmall.png", "UI/missionConfig/itemSpriteSmall.png")
 		itemLev:registerScriptTapHandler(p.clickText)
-		itemLev:setPosition(500,0)
+		itemLev:setPosition(550,0)
 		itemLev:addChild(Levlabel,2,taglabel)
 		menu:addChild(itemLev,2,nTagLev)
 				

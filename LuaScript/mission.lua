@@ -105,7 +105,25 @@ MISSION_TABLE[3]["config"] = {}
 }													
 --]]
 
+MISSION_TABLE[4] = {}
+MISSION_TABLE[4]["name"] = "ChapterI MISSION3"
+MISSION_TABLE[4]["BgId"] = 1 --背景
+MISSION_TABLE[4]["configId"] = 4
+MISSION_TABLE[4]["config"] = {}
 
+
+MISSION_TABLE[5] = {}
+MISSION_TABLE[5]["name"] = "ChapterI MISSION3"
+MISSION_TABLE[5]["BgId"] = 1 --背景
+MISSION_TABLE[5]["configId"] = 5
+MISSION_TABLE[5]["config"] = {}
+
+
+
+function p.GetRound()
+	return nRound
+end
+	
 --读取XML关卡数据
 function p.LoadMissionData(index)
 	--for i,v in pairs(MISSION_TABLE) do

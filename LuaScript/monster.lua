@@ -181,7 +181,7 @@ MONSTER_TYPE = {}
 	
 	--屁股星人
 	MONSTER_TYPE[11] = {}
-	MONSTER_TYPE[11]["name"] = "Octopus"
+	MONSTER_TYPE[11]["name"] = "Asman"
 	MONSTER_TYPE[11]["MAgic"] = {1013} --技能列表
 	MONSTER_TYPE[11]["MAgicRound"] = {999} --无限
 	MONSTER_TYPE[11]["HP"] = 10
@@ -194,7 +194,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[11]["CDGrow"] = -1
 	MONSTER_TYPE[11]["PICID"] = 22
 	MONSTER_TYPE[11]["ScarePICID"] = 23
-	MONSTER_TYPE[11]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
+	MONSTER_TYPE[11]["desc"]	= "Er..It's an Asman.\nBe careful of its poop"
 
 	--嘲諷兵
 	MONSTER_TYPE[12] = {}
@@ -218,8 +218,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[13]["name"] = "thief"
 	MONSTER_TYPE[13]["MAgic"] = {1015} --技能列表
 	MONSTER_TYPE[13]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[13]["HP"] = 50
-	MONSTER_TYPE[13]["HPGrow"] = 4
+	MONSTER_TYPE[13]["HP"] = 8
+	MONSTER_TYPE[13]["HPGrow"] = 1
 	MONSTER_TYPE[13]["HPadj"] = 3
 	MONSTER_TYPE[13]["ATT"] = 1
 	MONSTER_TYPE[13]["ATTGrow"] = 0.1

@@ -305,6 +305,12 @@ function p.SetMainUILEV(nLEV)
 	label:setString("LEV:"..nLEV)	         
 end
 
+function p.setRound(n)
+	local label = bglayer:getChildByTag(g_missionlabeltag)
+	tolua.cast(label,"CCLabelTTF")
+	label:setString("round:"..n)
+end	
+
 --
 function p.SetMainUIEnergy(energy,energymax)
 	--gEnergyBar:setPercentage(100*energy/energymax);

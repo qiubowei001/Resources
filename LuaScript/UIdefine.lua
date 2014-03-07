@@ -16,6 +16,7 @@ UIdefine =
 	ChooseMonTypeUI		= 10014,
 	LoadDataUI			= 10015,
 	SaveTipUI			= 10016,
+	BuySkillUI			= 10017,
 }
 
 
