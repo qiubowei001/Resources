@@ -493,10 +493,13 @@ end
 
 
 function p.main(nMission)
+	cclog("qbw99: Main nMission:"..nMission)
     -- avoid memory leak
     collectgarbage("setpause", 100)
     collectgarbage("setstepmul", 5000)
 
+	cclog("qbw99 main a")
+	
     local cclog = function(...)
         CCLuaLog(string.format(...))
     end
@@ -508,11 +511,13 @@ function p.main(nMission)
     local winSize = CCDirector:sharedDirector():getWinSize()
 
 	mission.SetMission(nMission);
+	cclog("qbw99 main b")
 
 	if nMission == 1 then
 		lesson.Init()
 	end
-	
+	cclog("qbw99 main c")
+
 	--获取BOARD对应X横轴，纵轴Y空位 以及悬空Y位置
 
 
@@ -680,20 +685,20 @@ function p.main(nMission)
             end
 			return true;
         end
-
+	cclog("qbw99: Main")
 		-- 注册触摸事件  
 		layerMain:registerScriptTouchHandler(onTouch)
         layerMain:setTouchEnabled(true)
 		--layerMain:setPosition(300 ,0)
 		--主界面初始化
 		MainUI.LoadUI()
-		
+	cclog("qbw99: Main1")	
 		--被动技能初始化
 		PassiveSkill.Initial()
-		
+	cclog("qbw99: Main2")	
 		--初始化玩家数据
 		player.Initplayer();	
-
+cclog("qbw99: Main3")
 		function DELAY()
 			CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(gDelayTimerId)			
 			gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)
@@ -701,7 +706,7 @@ function p.main(nMission)
 		--等动画播完	
 		--gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)	
 		gDelayTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(DELAY, 2, false)	
-		
+cclog("qbw99: Main4")		
 		gMonsterCdTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.MonsterAttackTimer, 0.3, false)	
 		
 			
@@ -710,7 +715,7 @@ function p.main(nMission)
 		
 		layerMain:setPosition(brickInfo.layerMainAdjX , 0)
 		
-		
+cclog("qbw99: Main5")		
 		
         return layerMain
     end

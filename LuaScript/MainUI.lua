@@ -42,7 +42,7 @@ function p.LoadUI()
 		gEnergyBar:setPosition(CCPointMake(20, 10))
 		bglayer:addChild(gEnergyBar,1,g_EnergyBartag)	
 		--gEnergyBar:setPercentage(100);
-		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
+		local gEnergyBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
 		gEnergyBarBg:setPosition(20, 10)
 		bglayer:addChild(gEnergyBarBg,2)
 		local to2 = CCProgressTo:create(1, 100)
@@ -50,7 +50,7 @@ function p.LoadUI()
 		
 		
 		--ÑªÌõ
-		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/HPbar.png"))
+		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/hpbar.png"))
 		HPBar:setType(kCCProgressTimerTypeBar)
 		HPBar:setMidpoint(CCPointMake(0, 0))
 		HPBar:setBarChangeRate(CCPointMake(0, 1))
@@ -58,7 +58,7 @@ function p.LoadUI()
 		bglayer:addChild(HPBar,1,g_HPBartag)	
 		gHPBar = HPBar
 		HPBar:setPercentage(100);
-		gHPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBG.png", "UI/Bar/HPbarBG.png")
+		gHPBarBg = CCMenuItemImage:create("UI/Bar/HPbarBg.png", "UI/Bar/HPbarBg.png")
 		gHPBarBg:setPosition(-700, 10)
 		bglayer:addChild(gHPBarBg,2)
 		

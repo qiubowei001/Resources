@@ -32,27 +32,28 @@ local NextChapterBtn = nil;
 local LastChapterBtn = nil;
 function p.PortalOnClick(tag,sender)
 	g_Mission = tag
-	
+	cclog("qbw99:PortalOnClick")
 	--未解锁关卡
 	local  chapterRecord ,missionRecord= dataInit.GetPlayerProccessRecord();
 	if g_Mission >	missionRecord+1  then
 		return
 	end
-	
+	cclog("qbw99:PortalOnClick2")
 	Main.main(tag);
 	local winSize = CCDirector:sharedDirector():getWinSize()
-	
+	cclog("qbw99:PortalOnClick3")
 	
 	--隐藏MISSION select UI
 	local opacity = CCFadeOut:create(1)
 	g_menuMain:runAction(opacity)
-	
+	cclog("qbw99:PortalOnClick4")
 	
 	--隐藏portal的menu
 	local menu = g_bglayer:getChildByTag(portalmenutag);
 	menu = tolua.cast(menu, "CCMenu")
 	local opacity = CCFadeOut:create(1)
 	menu:runAction(opacity)
+	cclog("qbw99:PortalOnClick5")
 end
 
 function p.RunScene()
@@ -63,46 +64,55 @@ end
 
 
 function p.LoadUI()
-		--读取玩家游戏进度
-		g_Chapter ,g_Mission = dataInit.GetPlayerProccessRecord();
-		
-		g_sceneGame = CCScene:create();
-		local scene = g_sceneGame;
-		
 		-->>>>>>>>>>游戏数据初始化 --这个到时候要放到主界面
 		dataInit.InitPlayerSave()
 		SkillUpgrade.Init()
 		GlobalEvent.InitEventTable();
 		---<<<<<<<<<<
-
-		--背景层  --和UI层是分开的
-		g_bglayer = p.GetChapterUI(g_Chapter)
-		scene:addChild(g_bglayer,-1,UIdefine.BG_LAYER)
+		
+		cclog("qbw99:MissionSelectUI")
+		--读取玩家游戏进度
+		g_Chapter ,g_Mission = dataInit.GetPlayerProccessRecord();
+		cclog("qbw99:MissionSelectUI2")
+		g_sceneGame = CCScene:create();
+		local scene = g_sceneGame;
+		
 
 		
+		
+		
+		cclog("qbw99:MissionSelectUI3")
+		--背景层  --和UI层是分开的
+		g_bglayer = p.GetChapterUI(g_Chapter)
+		cclog("qbw99:MissionSelectUI31")
+		scene:addChild(g_bglayer,-1,UIdefine.BG_LAYER)
+
+				cclog("qbw99:MissionSelectUI4")
 		--加载UI层
 		g_MissionUI = CCLayer:create()
 		scene:addChild(g_MissionUI,3,UIdefine.MissionSelectUI)
-
+		cclog("qbw99:MissionSelectUI5")
 		g_menuMain = CCMenu:create()
 		--g_menuMain:setPosition(CCPointMake(300, 300))
 		g_MissionUI:addChild(g_menuMain,3)
 		
-		
+				cclog("qbw99:MissionSelectUI6")
 		--技能解锁界面入口
 		local SkilllockBtn = CCMenuItemImage:create("UI/MissionSelect/SkilllockBtn.png","UI/MissionSelect/SkilllockBtn.png")
 		SkilllockBtn:registerScriptTapHandler(SkillLockUI.LoadUI)
 		g_menuMain:addChild(SkilllockBtn)
 		SkilllockBtn:setPosition(350,200)
 		--]]
-		
-			
+				
+
+
+				
 		--配置关卡入口
 		local testBtn = CCMenuItemImage:create("UI/MissionSelect/testBtn.png","UI/MissionSelect/testBtn.png")
 		testBtn:registerScriptTapHandler(MissionConfig.LoadUI)
 		g_menuMain:addChild(testBtn)
 		testBtn:setPosition(350,150)
-			
+					cclog("qbw99:MissionSelectUI8")
 		--上一章节				
 		LastChapterBtn = CCMenuItemImage:create("UI/MissionSelect/LastChapterBtn.png","UI/MissionSelect/LastChapterBtn.png")
 		LastChapterBtn:registerScriptTapHandler(p.LastChapterBtn)
@@ -115,7 +125,7 @@ function p.LoadUI()
 		g_menuMain:addChild(NextChapterBtn)
 		NextChapterBtn:setPosition(350,0)
 		
-
+		cclog("qbw99:MissionSelectUI9")
 		
 		--刷新翻页按钮
 		p.RefreshBtn();
@@ -243,18 +253,23 @@ end
 
 --显示章节背景和关卡入口
 function p.GetChapterUI(nChapter)
-	
+	cclog("qbw99:GetChapterUI nChapter:"..nChapter)
 	local tmission = mission.GeCHAPTER_TABLEMission(nChapter)
-
+	cclog("qbw99:GetChapterUI1")
+	
 	local bg = GameBg.GetBgLayer(CHAPTER_TABLE[nChapter].BgId)
+	cclog("qbw99:GetChapterUI12")
+
 	bg:setPosition(winSize.width / 2 , winSize.height/2)
+	cclog("qbw99:GetChapterUI2")
 	
 	--加入portal
 	nextlayer = CCLayer:create()
 
 	local menu = CCMenu:create()
 	menu:setPosition(CCPointMake(0, 0))
-
+cclog("qbw99:GetChapterUI3")
+	
 	--g_Chapter ,g_Mission
 	
 	for i,missionid in pairs(tmission) do
@@ -286,8 +301,11 @@ function p.GetChapterUI(nChapter)
 		
 		
 	end
+	cclog("qbw99:GetChapterUI4")
+	
 	nextlayer:addChild(menu, 2,portalmenutag)
 	nextlayer:addChild(bg)
+	cclog("qbw99:GetChapterUI5")
 	
 	return nextlayer
 end

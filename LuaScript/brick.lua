@@ -230,12 +230,26 @@ function brick.init(pbrick,nType)
 end
 
 function brick.createParentSprite()
-	local spriteParent = CCSprite:create();
+	--[[
+	local spriteParent = CCNode:create(); --CCSprite:create();
 	local brickWidth = brickInfo.brickWidth ;
 	local brickHeight = brickInfo.brickHeight;
 	local rect = CCRectMake(0, 0, brickWidth, brickHeight)
 	spriteParent:setTextureRect(rect)
 	return spriteParent;
+	--]]
+	
+	--
+	local brickWidth = brickInfo.brickWidth ;
+	local brickHeight = brickInfo.brickHeight;
+	local rect = CCRectMake(0, 0, brickWidth, brickHeight)
+		local test = CCTextureCache:sharedTextureCache():addImage("brick/brickbg.png")
+        local frame0 = CCSpriteFrame:createWithTexture(test, rect)
+        local testspr = CCSprite:createWithSpriteFrame(frame0)
+		
+		return testspr;
+	--]]
+	
 end
 
 function brick.creatMonster(monsterid,nLev)
@@ -247,7 +261,8 @@ function brick.creatMonster(monsterid,nLev)
 		spriteParent:addChild(spriteBrick)
 		spriteBrick:setTag(MainSpritetag)
 		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
-   
+		
+		
 		monster.InitMonster(spriteParent,monsterid,nLev);
 		brick.init(spriteParent,tbrickType.MONSTER)
         return spriteParent;

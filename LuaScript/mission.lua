@@ -127,7 +127,7 @@ end
 --读取XML关卡数据
 function p.LoadMissionData(index)
 	--for i,v in pairs(MISSION_TABLE) do
-		local savepath = "data\\missionConfig\\mission"..MISSION_TABLE[index]["configId"] ..".xml"
+		local savepath = "data/missionConfig/mission"..MISSION_TABLE[index]["configId"] ..".xml"
 		local tcache = {}
 		data(savepath, tcache)
 		MISSION_TABLE[index]["config"] = tcache

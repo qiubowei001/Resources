@@ -8,10 +8,16 @@ local g_StartPosy = 500;
 local gX_Step = 70;
 local gY_Step = 60;
 local gX_Num = 9;
+local tMenuItem = nil
+local tLockSpri = nil
+
+local g_coinlabel = nil
+
 function p.LoadUI()
 		local scene =Main.GetGameScene();
 		bglayer = CCLayer:create()
-
+		tMenuItem = {}
+		tLockSpri = {}
 		local menu = CCMenu:create()
 		menu:setPosition(CCPointMake(g_StartPosx, g_StartPosy))
 
@@ -19,18 +25,8 @@ function p.LoadUI()
 		local tSkillLockUnlock = {}--解锁技能
 		
 		for nNodeid,v in pairs(SkillUpgrade.tSkillNode) do
-			if  SkillUpgrade.IfUnLocked(nNodeid) then --已解锁
-				table.insert(tSkillLockUnlock,nNodeid)
-			else--未解锁
-				table.insert(tSkillLock,nNodeid)
-			end				
-		end
-		
-		
-		--合并成一个新表
-		for i,nNodeid in pairs(tSkillLock)do
 			table.insert(tSkillLockUnlock,nNodeid)
-		end
+		end			
 		
 		--显示
 		for index,nNodeid in pairs(tSkillLockUnlock)do
@@ -44,12 +40,13 @@ function p.LoadUI()
 			--item1:registerScriptTapHandler(p.LearnSkillCallback)
 			item1:setPosition(gX_Step*X,-gY_Step*Y)
 			menu:addChild(item1)
-			
+			tMenuItem[nNodeid] = item1
 			if  SkillUpgrade.IfUnLocked(nNodeid) == false then --未解锁
 				--local lockedSprite = CCSprite:create("skill/skillLocked.png");
 				local lockedSprite = CCMenuItemImage:create("skill/skillLocked.png", "skill/skillLocked.png")
 				lockedSprite:setPosition(gX_Step*X,-gY_Step*Y)
 				menu:addChild(lockedSprite)
+				tLockSpri[nNodeid] = lockedSprite
 			end
 		end
 		
@@ -61,9 +58,20 @@ function p.LoadUI()
 		
 		local UnlockBtn = CCMenuItemImage:create("UI/Button/Unlock.png", "UI/Button/Unlock.png")
 			UnlockBtn:registerScriptTapHandler(p.UnlockUICallback)
-			UnlockBtn:setPosition(CCPointMake(680, 20))
+			UnlockBtn:setPosition(CCPointMake(680, 0))
 		menu:addChild(UnlockBtn)
-				
+		
+		
+		local coinsprite = CCSprite:create("UI/coin.png")
+		bglayer:addChild(coinsprite, 2)
+		coinsprite:setPosition(40, 580)
+		local coinlabel = CCLabelTTF:create("", "Arial", 25)
+			coinsprite:addChild(coinlabel)
+			coinlabel:setColor(ccc3(255,255,255))
+			coinlabel:setPosition(80, 30)
+			g_coinlabel = coinlabel
+			local coin = dataInit.GetPlayerCoin();
+			g_coinlabel:setString(":"..coin) 
 							
 		bglayer:addChild(menu, 2,1)
 		bglayer:setTag(UIdefine.SkillLockUI);
@@ -95,6 +103,42 @@ end
 
 --解锁新技能界面
 function p.UnlockUICallback(tag,sender)
+
+	local tnewNodeid = SkillUpgrade.GetRandomSkillIdNotLearned()
+	if tnewNodeid == nil then
+		return
+	end
+
+	--检测水晶数量
+	local coin = dataInit.GetPlayerCoin();
+	if coin >= 1 then
+		coin = coin - 1
+		dataInit.SetPlayerCoin(coin)
+		g_coinlabel:setString(":"..coin) 	
+	else
+		return
+	end
 	
+	
+	local newNodeid= tnewNodeid[2]
+	local lockspr = tLockSpri[newNodeid]
+	lockspr:removeFromParentAndCleanup(true);
+	
+	--储存
+	SkillUpgrade.UnlockSkill(newNodeid)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

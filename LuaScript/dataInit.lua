@@ -3,9 +3,7 @@
 dataInit = {}
 local  p = dataInit;
 
-
-local savepath = "save\\player1.xml"
-
+local savepath = "save/player1.xml"
 
 --第一次进入游戏初始化玩家数据
 function p.InitPlayerSave()
@@ -27,6 +25,7 @@ function p.InitPlayerSave()
 		tPlayersave.MissionRecord = 2;		--关卡记录
 		
 		tPlayersave.MissionConfigFileId = 0;	--关卡配置工具文件记录
+		tPlayersave.Coin = 100;--玩家水晶
 		data(tPlayersave,savepath)
 	end
 end
@@ -49,8 +48,17 @@ end
 
 --获取玩家进度  返回:章节,关卡
 function p.GetPlayerProccessRecord()
+	cclog("qbw99:GetPlayerProccessRecord111")
 	local tPlayersave = {}
+	cclog("qbw99:GetPlayerProccessRecord2")
+	
 	data(savepath, tPlayersave)
+	cclog("qbw99:GetPlayerProccessRecord3")
+	
+	cclog("qbw99:GetPlayerProccessRecord3 tPlayersave.ChapterRecord:"..tPlayersave.ChapterRecord)
+	cclog("qbw99:GetPlayerProccessRecord3 tPlayersave.MissionRecord:"..tPlayersave.MissionRecord)
+	
+	
 	return 	tPlayersave.ChapterRecord ,tPlayersave.MissionRecord
 end
 
@@ -64,9 +72,20 @@ function p.SetPlayerProccessRecord(nChapter,nMission)
 end
 
 
+--获取玩家水晶
+function p.GetPlayerCoin()
+	local tPlayersave = {}
+	data(savepath, tPlayersave)	
+	return 	tPlayersave.Coin
+end
 
-
-
+--获取玩家水晶
+function p.SetPlayerCoin(nCoin)
+	local tPlayersave = {}
+	data(savepath, tPlayersave)
+	tPlayersave.Coin =nCoin;
+	data(tPlayersave,savepath)	
+end
 
 
 

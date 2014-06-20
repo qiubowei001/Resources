@@ -11,7 +11,7 @@ local p = MissionConfig;
 local g_tRandom = {}
 local grandomskill1,grandomskill2,grandomskill3 = 0,0,0;
 
-local savepath = "data\\missionConfig\\mission.xml"
+local savepath = "data/missionConfig/mission.xml"
 
 local tbrickTypeInfo = {}
 										--SPRITE ID
@@ -159,7 +159,7 @@ function p.LoadUI()
 			--初始化
 			p.Init()
 			
-			savepath = "data\\missionConfig\\mission"..nLastFileId..".xml"
+			savepath = "data/missionConfig/mission"..nLastFileId..".xml"
 			--读取数据
 			data(savepath, tMissionData)			
 			
@@ -592,7 +592,7 @@ function p.LoadData(tag,sender)
 	
 	inputFileid = tonumber(inputFileid)
 	if inputFileid>0 and inputFileid < 9999 then
-		savepath = "data\\missionConfig\\mission"..inputFileid..".xml"
+		savepath = "data/missionConfig/mission"..inputFileid..".xml"
 		--读取数据
 		data(savepath, tMissionData)		
 		

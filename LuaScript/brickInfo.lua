@@ -1,3 +1,5 @@
+cclog("qbw99:brickinfo")
+
 brickInfo = {};
 brickInfo.brick_num_X = 6;
 brickInfo.brick_num_Y = 6;
