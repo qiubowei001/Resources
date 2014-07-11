@@ -42,7 +42,8 @@ function p.OnTouchEnd()
 				local nLineNum = #Line;
 				
 				
-				--普通行为消耗能量1 如果没有能量 则返回				
+				local linetype = LineFunc.GetLineType()
+				
 				if 	player[playerInfo.ENERGY] <1 then				
 					--能量不足 提示
 					Hint.ShowHint(Hint.tHintType.noEnergy)
@@ -53,7 +54,7 @@ function p.OnTouchEnd()
 				
 				
 				
-				if LineFunc.GetLineType() == tbrickType.MONSTER or LineFunc.GetLineType() == tbrickType.SWORD then--SWORD
+				if linetype == tbrickType.MONSTER or linetype == tbrickType.SWORD then--SWORD
 					---攻击操作
 					local nDamage = LineFunc.getPlayerAttDamgeFromLine();						
 					
@@ -79,11 +80,11 @@ function p.OnTouchEnd()
 					tParamEvn.playerAttDamageThisRound = nDamage;
 					
 				else
-					if LineFunc.GetLineType() == tbrickType.BLOOD then
+					if linetype == tbrickType.BLOOD then
 						actiontype = tbrickType.BLOOD;
-					elseif 	LineFunc.GetLineType() == tbrickType.GOLD then
+					elseif 	linetype == tbrickType.GOLD then
 						actiontype = tbrickType.GOLD;
-					elseif	LineFunc.GetLineType() == tbrickType.ENERGY then
+					elseif	linetype == tbrickType.ENERGY then
 						actiontype = tbrickType.ENERGY;
 					end
 					

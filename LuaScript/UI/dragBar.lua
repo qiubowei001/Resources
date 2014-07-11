@@ -206,11 +206,18 @@ function dragBar:AddPointer(nParam,nrate,sprite)
 	for i,v in pairs(tdataPercent)do
 		nTotalPercent = nTotalPercent + v
 	end
+
 	
 	--如果没有输入概率 则默认为剩下所有概率
 	if nrate == nil then
 		nrate = 100 - nTotalPercent
 	end	
+	
+	--如果概率超100 则取剩余部分
+	if nTotalPercent + nrate >= 100 then
+		nrate = 100 - nTotalPercent
+	end
+	
 	
 	--根据概率设置位置
 	local posx = (nTotalPercent+nrate)/100*barwidth - barwidth/2

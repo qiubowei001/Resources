@@ -18,12 +18,12 @@ local g_attspritetag = 103;
 
 local gblinkactionTag = 90000;
 
---È«¾Ö
+--å…¨å±€
 MONSTER_TYPE = {}
 
 	MONSTER_TYPE[1] = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"
-	MONSTER_TYPE[1]["MAgic"] = nil--{7} --¼¼ÄÜÁĞ±í
+	MONSTER_TYPE[1]["MAgic"] = nil--{7} --æŠ€èƒ½åˆ—è¡¨
 	MONSTER_TYPE[1]["HP"] = 8
 	MONSTER_TYPE[1]["HPGrow"] = 1
 	MONSTER_TYPE[1]["HPadj"] = 3
@@ -39,7 +39,7 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[2] = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
-	MONSTER_TYPE[2]["MAgic"] = nil--{7} --¼¼ÄÜÁĞ±í
+	MONSTER_TYPE[2]["MAgic"] = nil--{7} --æŠ€èƒ½åˆ—è¡¨
 	MONSTER_TYPE[2]["HP"] = 13
 	MONSTER_TYPE[2]["HPGrow"] = 2
 	MONSTER_TYPE[2]["HPadj"] = 3
@@ -54,7 +54,7 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[3] = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
-	MONSTER_TYPE[3]["MAgic"] = nil--{7} --¼¼ÄÜÁĞ±í
+	MONSTER_TYPE[3]["MAgic"] = nil--{7} --æŠ€èƒ½åˆ—è¡¨
 	MONSTER_TYPE[3]["HP"] = 10
 	MONSTER_TYPE[3]["HPGrow"] = 1
 	MONSTER_TYPE[3]["HPadj"] = 3
@@ -69,7 +69,7 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[4] = {}
 	MONSTER_TYPE[4]["name"] = "SlimeKing"
-	MONSTER_TYPE[4]["MAgic"] = {1007} --¼¼ÄÜÁĞ±í
+	MONSTER_TYPE[4]["MAgic"] = {1007} --æŠ€èƒ½åˆ—è¡¨
 	MONSTER_TYPE[4]["MAgicRound"] = {1} 
 	MONSTER_TYPE[4]["HP"] = 10
 	MONSTER_TYPE[4]["HPGrow"] = 2
@@ -85,8 +85,8 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[5] = {}
 	MONSTER_TYPE[5]["name"] = "FireSpider"
-	MONSTER_TYPE[5]["MAgic"] = {1008} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[5]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[5]["MAgic"] = {1008} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[5]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[5]["HP"] = 10
 	MONSTER_TYPE[5]["HPGrow"] = 4
 	MONSTER_TYPE[5]["HPadj"] = 3
@@ -116,8 +116,8 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[7] = {}
 	MONSTER_TYPE[7]["name"] = "FrozenEye"
-	MONSTER_TYPE[7]["MAgic"] = {1009} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[7]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[7]["MAgic"] = {1009} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[7]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[7]["HP"] = 10
 	MONSTER_TYPE[7]["HPGrow"] = 4
 	MONSTER_TYPE[7]["HPadj"] = 3
@@ -132,8 +132,8 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[8] = {}
 	MONSTER_TYPE[8]["name"] = "FireEye"
-	MONSTER_TYPE[8]["MAgic"] = {1010} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[8]["MAgicRound"] = {1} --ÎŞÏŞ
+	MONSTER_TYPE[8]["MAgic"] = {1010} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[8]["MAgicRound"] = {1} --æ— é™
 	MONSTER_TYPE[8]["HP"] = 10
 	MONSTER_TYPE[8]["HPGrow"] = 4
 	MONSTER_TYPE[8]["HPadj"] = 3
@@ -149,8 +149,8 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[9] = {}
 	MONSTER_TYPE[9]["name"] = "Bat"
-	MONSTER_TYPE[9]["MAgic"] = {1011} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[9]["MAgicRound"] = {1} --ÎŞÏŞ
+	MONSTER_TYPE[9]["MAgic"] = {1011} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[9]["MAgicRound"] = {1} --æ— é™
 	MONSTER_TYPE[9]["HP"] = 10
 	MONSTER_TYPE[9]["HPGrow"] = 4
 	MONSTER_TYPE[9]["HPadj"] = 3
@@ -165,8 +165,8 @@ MONSTER_TYPE = {}
 	
 	MONSTER_TYPE[10] = {}
 	MONSTER_TYPE[10]["name"] = "wizard"
-	MONSTER_TYPE[10]["MAgic"] = {1012} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[10]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[10]["MAgic"] = {1012} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[10]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[10]["HP"] = 10
 	MONSTER_TYPE[10]["HPGrow"] = 4
 	MONSTER_TYPE[10]["HPadj"] = 3
@@ -179,11 +179,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["ScarePICID"] = 26
 	MONSTER_TYPE[10]["desc"]	= ""
 	
-	--Æ¨¹ÉĞÇÈË
+	--å±è‚¡æ˜Ÿäºº
 	MONSTER_TYPE[11] = {}
 	MONSTER_TYPE[11]["name"] = "Asman"
-	MONSTER_TYPE[11]["MAgic"] = {1013} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[11]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[11]["MAgic"] = {1013} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[11]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[11]["HP"] = 10
 	MONSTER_TYPE[11]["HPGrow"] = 4
 	MONSTER_TYPE[11]["HPadj"] = 3
@@ -196,11 +196,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[11]["ScarePICID"] = 23
 	MONSTER_TYPE[11]["desc"]	= "Er..It's an Asman.\nBe careful of its poop"
 
-	--³°ÖS±ø
+	--å˜²è«·å…µ
 	MONSTER_TYPE[12] = {}
 	MONSTER_TYPE[12]["name"] = "shield"
-	MONSTER_TYPE[12]["MAgic"] = {1014} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[12]["MAgicRound"] = {1} --ÎŞÏŞ
+	MONSTER_TYPE[12]["MAgic"] = {1014} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[12]["MAgicRound"] = {1} --æ— é™
 	MONSTER_TYPE[12]["HP"] = 50
 	MONSTER_TYPE[12]["HPGrow"] = 4
 	MONSTER_TYPE[12]["HPadj"] = 3
@@ -213,11 +213,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[12]["ScarePICID"] = 25
 	MONSTER_TYPE[12]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
 
-	--Ğ¡Íµ
+	--å°å·
 	MONSTER_TYPE[13] = {}
 	MONSTER_TYPE[13]["name"] = "thief"
-	MONSTER_TYPE[13]["MAgic"] = {1015} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[13]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[13]["MAgic"] = {1015} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[13]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[13]["HP"] = 8
 	MONSTER_TYPE[13]["HPGrow"] = 1
 	MONSTER_TYPE[13]["HPadj"] = 3
@@ -230,11 +230,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[13]["ScarePICID"] = 27
 	MONSTER_TYPE[13]["desc"]	= "Er..It's Ass Man.\nBe careful of its poop"
 
-	--·ßÅ­Õß
+	--æ„¤æ€’è€…
 	MONSTER_TYPE[14] = {}
 	MONSTER_TYPE[14]["name"] = "angry"
-	MONSTER_TYPE[14]["MAgic"] = {1016} --¼¼ÄÜÁĞ±í
-	MONSTER_TYPE[14]["MAgicRound"] = {999} --ÎŞÏŞ
+	MONSTER_TYPE[14]["MAgic"] = {1016} --æŠ€èƒ½åˆ—è¡¨
+	MONSTER_TYPE[14]["MAgicRound"] = {999} --æ— é™
 	MONSTER_TYPE[14]["HP"] = 50
 	MONSTER_TYPE[14]["HPGrow"] = 4
 	MONSTER_TYPE[14]["HPadj"] = 3
@@ -262,7 +262,7 @@ end
 function monster.AttackCDPlusOne(pbrick)
 	pbrick.moninfo[monsterInfo.CD] = pbrick.moninfo[monsterInfo.CD] + 1
 	
-	--Éè¶¨½ø¶ÈÌõ
+	--è®¾å®šè¿›åº¦æ¡
 	local nPersent = 100*pbrick.moninfo[monsterInfo.CD]/pbrick.moninfo[monsterInfo.CDMAX]
 	BARbg = pbrick.CDBARBG
 	
@@ -280,23 +280,23 @@ function monster.AttackCDPlusOne(pbrick)
 	--mainsprite:stopActionByTag(gblinkactionTag)
 	mainsprite:setVisible(true)
 	 
-	--90%Ê±ÉÁË¸
+	--90%æ—¶é—ªçƒ
 	if nPersent>= 100 then
 		local sprite = pbrick.attackready 
 		sprite:setVisible(true)
 		BAR:setVisible(false)
 		
 
-		--Ö´ĞĞÊÍ·Å¼¼ÄÜ ºÍ¹¥»÷
+		--æ‰§è¡Œé‡Šæ”¾æŠ€èƒ½ å’Œæ”»å‡»
 		if pbrick.IfBeStunned == false then
 			monster.SpellMagic(pbrick,false)	
 		end
 		monster.attack(pbrick);
 		
-		--Ö´ĞĞMAGICÌØĞ§
+		--æ‰§è¡ŒMAGICç‰¹æ•ˆ
 		magiceff.DoMagicEffAfterMonsterAct(pbrick);
 		
-		--Çå³ı¹ıÆÚÌØĞ§
+		--æ¸…é™¤è¿‡æœŸç‰¹æ•ˆ
 		magiceff.ClearMonTriggerMagicEff(pbrick)
 		
 		
@@ -325,7 +325,7 @@ function monster.AttackCDPlusOne(pbrick)
     
 end	
 	
---³õÊ¼»¯¹ÖÎïÊı¾İ
+--åˆå§‹åŒ–æ€ªç‰©æ•°æ®
 function monster.InitMonster( pBrick,nid,nLev)
 		if nLev == nil then
 			nLev = 0;
@@ -368,11 +368,11 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		
 		
-		--¹¥»÷CDÊÇ·ñÉÁË¸
+		--æ”»å‡»CDæ˜¯å¦é—ªçƒ
 		pBrick.IfScaled  = false;
 		
 		
-		--Ñ£ÔÎ
+		--çœ©æ™•
 		pBrick.IfBeStunned =false;
 		
 		if pBrick.moninfo[monsterInfo.MAGIC]~= nil then
@@ -383,14 +383,14 @@ function monster.InitMonster( pBrick,nid,nLev)
 		end
 		
 		
-		--ÀäÈ´½ø¶ÈÌõ
+		--å†·å´è¿›åº¦æ¡
 		local CDBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
 		CDBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*4/5)
 		pBrick:addChild(CDBarBg)
 		CDBarBg:setTag(g_CDbar);
 		
 		
-		--¹¥»÷×¼±¸
+		--æ”»å‡»å‡†å¤‡
 		attackready = CCSprite:create("UI/Bar/attackready.png")
 		attackready:setPosition(CCPointMake(30, 7))
 		CDBarBg:addChild(attackready,1,2)
@@ -410,7 +410,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		
 		
 		
-		--ÑªÌõ
+		--è¡€æ¡
 		local HPBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
 		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
 		pBrick:addChild(HPBarBg)
@@ -433,7 +433,7 @@ function monster.InitMonster( pBrick,nid,nLev)
 		AttLabel:setTag(g_attlabeltag);
 		--]]
 		
-		--¹¥»÷Á¦±íÊ¾
+		--æ”»å‡»åŠ›è¡¨ç¤º
 		local Attsprite = ValueToPic.GetPicByAttack(pBrick.moninfo[monsterInfo.ATT])
 		pBrick:addChild(Attsprite)
 		Attsprite:setTag(g_attspritetag);
@@ -470,7 +470,7 @@ function monster.SetAtt(pmonster)
 	Attsprite:setTag(g_attspritetag);
 end
 
---ĞŞ¸Ä¹ÖÎïÊôĞÔ
+--ä¿®æ”¹æ€ªç‰©å±æ€§
 function monster.AddHp(pmonster,nRecovery)
 	pmonster.moninfo[monsterInfo.HP]  = pmonster.moninfo[monsterInfo.HP]  + nRecovery
 	
@@ -490,7 +490,7 @@ function monster.AddHp(pmonster,nRecovery)
 end
 
 
---ÉËº¦ACTION³õÊ¼»¯
+--ä¼¤å®³ACTIONåˆå§‹åŒ–
 function monster.InitDamageAction( pTarget,ndamage)
 	local tDamageAction = {
 							defender = pTarget,
@@ -500,11 +500,11 @@ function monster.InitDamageAction( pTarget,ndamage)
 	return tDamageAction;
 end
 
---ÉËº¦¼ÆËã
+--ä¼¤å®³è®¡ç®—
 function monster.damage( pBrick,nDamage,bcritical)
 		local tDamageAction = monster.InitDamageAction( pBrick,nDamage);
 		
-		--ÔÚ¹ÖÎïÎ»ÖÃ²¥·ÅÈ¥Ñªsprite
+		--åœ¨æ€ªç‰©ä½ç½®æ’­æ”¾å»è¡€sprite
 		if bcritical then
 			monster.playDamageEff(pBrick,nDamage)
 		end			
@@ -522,28 +522,35 @@ function monster.damage( pBrick,nDamage,bcritical)
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
 			hpbar:setPercentage(100*percent);
 	
-			--¹ÖÎï¿ÛÑª ÉèÖÃÍ¸Ã÷
+			--æ€ªç‰©æ‰£è¡€ è®¾ç½®é€æ˜
 			local mainsprite = brick.GetMainSprite(pBrick)
 			mainsprite:setOpacity(50+200*percent)
 
 	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
-				--ˆÌĞĞËÀÍöACTION
+				--åŸ·è¡Œæ­»äº¡ACTION
 				local tDeathAction = monster.InitDeathAction(defender);
 				for i,func in pairs(defender.DeathActionFuncT) do
 					func(tDeathAction)
 				end
 				
-				--Í£Ö¹ÉÁË¸
+				--åœæ­¢é—ªçƒ
 				local mainsprite = brick.GetMainSprite(pBrick)		
 				mainsprite:stopActionByTag(gblinkactionTag)
 	
-				--Íæ¼Ò«@È¡½›ò
+				--ç©å®¶ç²å–ç¶“é©—
 				--local nexp =  (defender.moninfo[monsterInfo.LEV])+1
 				local nexp =  1
 				player.GainEXP(nexp);
 
-				--Ö´ĞĞËÀÍö¶¯»­
+				--ç©å®¶è·å–é‡‘å¸
+				local buff =  player[playerInfo.Entity_KILLBUFF ]
+				local lev =  pBrick.moninfo[monsterInfo.LEV]
+				local nGold =  math.floor(brickInfo.GoldPerLev  * lev * buff)
+				player.takeGold(nGold);
+				
+				
+				--æ‰§è¡Œæ­»äº¡åŠ¨ç”»
 				if bcritical == nil or bcritical == false then
 					monster.PlayDeathAnimation(pBrick);
 				else
@@ -557,7 +564,7 @@ function monster.damage( pBrick,nDamage,bcritical)
 end
 
 
---¹ÖÎïËÀÍöĞĞé³õÊ¼»¯
+--æ€ªç‰©æ­»äº¡è¡Œç‚ºåˆå§‹åŒ–
 function monster.InitDeathAction(dyingMon)
 	local tDeathAction = {	
 							dyingMon = dyingMon,
@@ -566,7 +573,7 @@ function monster.InitDeathAction(dyingMon)
 end
 
 
---¹ÖÎï¹¥»÷ACTION³õÊ¼»¯
+--æ€ªç‰©æ”»å‡»ACTIONåˆå§‹åŒ–
 function monster.InitAttAction( pTarget,ndamage,pmonster)
 	local tAttAction = {
 							defender = pTarget,
@@ -576,10 +583,10 @@ function monster.InitAttAction( pTarget,ndamage,pmonster)
 	return tAttAction;
 end
 
---¹ÖÎï¹¥»÷
+--æ€ªç‰©æ”»å‡»
 function monster.attack(pmonster)
 	local ndamage = 0;		
-	--¹¥»÷ÊÇ·ñCD
+	--æ”»å‡»æ˜¯å¦CD
 	if pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
 		
 		local tAttAction = monster.InitAttAction( player,ndamage,pmonster)
@@ -587,16 +594,16 @@ function monster.attack(pmonster)
 		tAttAction.damage = monster.GetMonsterAtt(pmonster)
 		
 		local bSkip = false
-		--±éÀú¹ÖÎï¹¥»÷µ÷Õûº¯Êı
+		--éå†æ€ªç‰©æ”»å‡»è°ƒæ•´å‡½æ•°
 		for k,func in pairs(pmonster.AttAdjFuncT) do
 			if func(tAttAction) == false then
-				--²»¹¥»÷
+				--ä¸æ”»å‡»
 				bSkip = true
 			end
 		end
 		
 		if bSkip == false then
-			--¹ÖÎï¹¥»÷ÌøÔ¾
+			--æ€ªç‰©æ”»å‡»è·³è·ƒ
 			local actionJump = CCJumpBy:create(1.0, ccp(0, 0), 40, 5)
 			local mainsprite = brick.GetMainSprite(pmonster)
 			--mainsprite:runAction(actionJump);
@@ -611,34 +618,34 @@ end
 
 
 
---Ã¿´Î³¡¾°Ë¢ĞÂ¹ÖÎï£¬¶¼»á±éÀú¹ÖÎïÊ©·Å¼¼ÄÜ¡£¹ÖÎïÊı¾İÖĞ Ê£ÓàÊÍ·Å´ÎÊı´óÓÚ0ÔòÊÍ·Å£¬²¢-1, 
---Èç¹ûÊÇÔÚ³öÉúÊ± ÔòÖ±½ÓÖ´ĞĞEFF
+--æ¯æ¬¡åœºæ™¯åˆ·æ–°æ€ªç‰©ï¼Œéƒ½ä¼šéå†æ€ªç‰©æ–½æ”¾æŠ€èƒ½ã€‚æ€ªç‰©æ•°æ®ä¸­ å‰©ä½™é‡Šæ”¾æ¬¡æ•°å¤§äº0åˆ™é‡Šæ”¾ï¼Œå¹¶-1, 
+--å¦‚æœæ˜¯åœ¨å‡ºç”Ÿæ—¶ åˆ™ç›´æ¥æ‰§è¡ŒEFF
 function monster.SpellMagic(pmonster,IfBorn)
-	--µÚ¶ş¸ö²ÎÊı¿ÉÒÔ¿¼ÂÇ×ö¸öÅĞ¶¨ 
-	--²»Í¬¶ÔÏóÀàĞÍ×ö²»Í¬ÊäÈë 
-	--ÏÖÔÚÖ»×öÁËSINGLE_BRICKÊäÈë	
+	--ç¬¬äºŒä¸ªå‚æ•°å¯ä»¥è€ƒè™‘åšä¸ªåˆ¤å®š 
+	--ä¸åŒå¯¹è±¡ç±»å‹åšä¸åŒè¾“å…¥ 
+	--ç°åœ¨åªåšäº†SINGLE_BRICKè¾“å…¥	
 	if pmonster.moninfo[monsterInfo.MAGIC] ~= nil then	
 		for i,nid in pairs(pmonster.moninfo[monsterInfo.MAGIC]) do
 		
-			--¹¥»÷ÊÇ·ñCD
+			--æ”»å‡»æ˜¯å¦CD
 			--if IfBorn ==true or pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
 			if   pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
 				local spelltime =  pmonster.moninfo[monsterInfo.MAGIC_ROUND][i];
 				
 				if spelltime > 0 then
-					--±¾»ØºÏ»¹Î´Ê©·Å¼¼ÄÜ
+					--æœ¬å›åˆè¿˜æœªæ–½æ”¾æŠ€èƒ½
 					local tTargetList,tEffList = magic.monsterSpellMagic(nid,pmonster);
 					pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]= pmonster.moninfo[monsterInfo.MAGIC_ROUND][i]-1;
 
-					--¹ÖÎï¼¼ÄÜÌØĞ§ÊÇ·ñĞèÒªÂíÉÏ´¥·¢
+					--æ€ªç‰©æŠ€èƒ½ç‰¹æ•ˆæ˜¯å¦éœ€è¦é©¬ä¸Šè§¦å‘
 					if magic.GetMagicDoeffAfterSpell(nid) ==true then
-						--¶ÔÍæ¼ÒÊ©·¨
+						--å¯¹ç©å®¶æ–½æ³•
 						if tTargetList == player then
 							local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]			
 							local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
 							efffunc(player,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM],pmonster)
  		 					
-							--»ñÈ¡¹ÖÎïEFFTABLE ROUND --
+							--è·å–æ€ªç‰©EFFTABLE ROUND --
 							tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = tEffList[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1   
 						else
 							for j,v in pairs(tTargetList) do
@@ -647,7 +654,7 @@ function monster.SpellMagic(pmonster,IfBorn)
 								local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
 								efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
         
-								--»ñÈ¡¹ÖÎïEFFTABLE ROUND --
+								--è·å–æ€ªç‰©EFFTABLE ROUND --
 								effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
 							end														
 						end	
@@ -659,7 +666,7 @@ function monster.SpellMagic(pmonster,IfBorn)
 end
 
 
---»ñÈ¡¹ÖÎï¹¥»÷Á¦
+--è·å–æ€ªç‰©æ”»å‡»åŠ›
 function monster.GetMonsterAtt(pmonster)
 	local att = pmonster.moninfo[monsterInfo.ATT] + pmonster.moninfo[monsterInfo.BUFFATT] ;
 	
@@ -667,7 +674,7 @@ function monster.GetMonsterAtt(pmonster)
 	for i,func in pairs(pmonster.AttAdjFuncT) do
 		att = func(att)
 		
-		--¹¥»÷ÎŞĞ§Ôò·µ»Ø
+		--æ”»å‡»æ— æ•ˆåˆ™è¿”å›
 		if att == false then
 			att = 0;
 			break
@@ -694,7 +701,7 @@ function monster.RemoveDamageAdjFunc(pmonster,id)
     pmonster.DamageAdjFuncT[id] = nil
 end	
 
---¹ÖÎïËÀÍöáá•ş°lÉúµÄĞĞé
+--æ€ªç‰©æ­»äº¡å¾Œæœƒç™¼ç”Ÿçš„è¡Œç‚º
 function monster.AddDeathFunc(pmonster,fDeathFunc,id)
 	pmonster.DeathActionFuncT[id] = fDeathFunc
 end
@@ -702,13 +709,13 @@ end
 
 
 
---»ñÈ¡¹ÖÎïÍ¼±êÂ·¾¶
+--è·å–æ€ªç‰©å›¾æ ‡è·¯å¾„
 function monster.GetMonsterIconPath(nMonsterId)
 	
 	return "brick/monster/monster"..nMonsterId..".png";
 end
 
---ÆÕÍ¨ËÀÍö ±ä´ó µ­»¯
+--æ™®é€šæ­»äº¡ å˜å¤§ æ·¡åŒ–
 function monster.PlayDeathAnimation(pBrick)
 	brick.setUnChosed(pBrick)
 	brick.removedeatheff(pBrick)
@@ -716,7 +723,7 @@ function monster.PlayDeathAnimation(pBrick)
 	
 	
 	local parent = pBrick:getParent()
-	--·ÅÖÃµ½¶¥²ã
+	--æ”¾ç½®åˆ°é¡¶å±‚
 	parent:reorderChild(pBrick, 50)
  	
 	local mainsprite = brick.GetMainSprite(pBrick)
@@ -741,10 +748,10 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	brick.setdeatheffect(pBrick)
 	
 	local parent = pBrick:getParent()
-	--·ÅÖÃµ½¸ßŒÓ
+	--æ”¾ç½®åˆ°é«˜å±¤
 	parent:reorderChild(pBrick, 50)
  	
-	--»ñÈ¡·ÉĞĞÂ·¾¶
+	--è·å–é£è¡Œè·¯å¾„
 	local tPosition = monster.GetFlyPositionBorder(pBrick)
 	local arr = CCArray:create()
 	local action = CCMoveBy:create(0.5, CCPointMake(0, 50));
@@ -755,7 +762,7 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	
 	for i,v in pairs(tPosition) do
 		if i ~=1 then		
-			--¼ÆËã¾àÀë
+			--è®¡ç®—è·ç¦»
 			local l = (v[1]-lastx)*(v[1]-lastx) + (v[2]-lasty)*(v[2]-lasty)
 			local t = math.sqrt(l) / velocity;
 			
@@ -787,30 +794,30 @@ end
 
 
 local tRusheToFansheFunc = {}
-			--×ó±ß½ç
+			--å·¦è¾¹ç•Œ
 		  tRusheToFansheFunc[1] = function(RVec)
 									local FVec = {-RVec[1],RVec[2]};
 									return FVec;
 								end
-			--ÓÒ±ß					
+			--å³è¾¹					
 		  tRusheToFansheFunc[2] = function(RVec)
 									local FVec = {-RVec[1],RVec[2]};
 									return FVec;
 								end
-			--ÉÏ±ß					
+			--ä¸Šè¾¹					
 		  tRusheToFansheFunc[3] = function(RVec)
 									local FVec = {RVec[1],-RVec[2]};
 									return FVec;
 								end								
-			--ÏÂ±ß					
+			--ä¸‹è¾¹					
 		  tRusheToFansheFunc[4] = function(RVec)
 									local FVec = {RVec[1],-RVec[2]};
 									return FVec;
 								end								
 
---»ñÈ¡·ÉĞĞÂ·¾¶
+--è·å–é£è¡Œè·¯å¾„
 function monster.GetFlyPositionBorder(pBrick)
-	--Ëæ»úµÚÒ»Åö×²µã
+	--éšæœºç¬¬ä¸€ç¢°æ’ç‚¹
 	local boardW = brickInfo.brick_num_X*brickInfo.brickWidth
 	local boardH = brickInfo.brick_num_Y*brickInfo.brickHeight
 	local x = 0
@@ -821,21 +828,21 @@ function monster.GetFlyPositionBorder(pBrick)
 	local tPosition = {}
 	local nrandomBoard = math.random(1,4)
 	if nrandomBoard ==1 then
-		--×ó±ß½ç
+		--å·¦è¾¹ç•Œ
 		x =  0
 		y =  math.random(1,boardH-1)
 	elseif nrandomBoard ==2 then
-		--ÓÒ±ß
+		--å³è¾¹
 		x =  boardW
 		y =  math.random(1,boardH-1)		
 		
 	elseif nrandomBoard ==3 then
-		--ÉÏ
+		--ä¸Š
 		x =  math.random(1,boardW-1)	
 		y =  boardH	
 		
 	else
-		--ÏÂ
+		--ä¸‹
 		x =  math.random(1,boardW-1)	
 		y =  0		
 	end
@@ -843,28 +850,28 @@ function monster.GetFlyPositionBorder(pBrick)
 	table.insert(tPosition,{originx,originy,nil})
 	table.insert(tPosition,{x,y,nrandomBoard})
 			
-	--ÉèÖÃ·´ÉäµãÊı
+	--è®¾ç½®åå°„ç‚¹æ•°
 	local nCount = 3
 	for i = 1,nCount do 
-		local nHitBoard = tPosition[i+1][3]--×²»÷±ß½ç
-		--µÃ³öÈëÉäÏòÁ¿ 
+		local nHitBoard = tPosition[i+1][3]--æ’å‡»è¾¹ç•Œ
+		--å¾—å‡ºå…¥å°„å‘é‡ 
 		
 		local tRusheVec = {tPosition[i+1][1] - tPosition[i][1],tPosition[i+1][2] - tPosition[i][2]}	
-		--µÃ³ö·´ÉäÏòÁ¿
+		--å¾—å‡ºåå°„å‘é‡
 		local tFanSheVec = tRusheToFansheFunc[nHitBoard](tRusheVec)
 		
 		
 		local PositionOri = tPosition[i+1]
 		
-		--¸ù¾İ·´ÉäµãºÍ·´ÉäÏòÁ¿*ÏµÊı È·¶¨ĞÂ·´Éäµã£¨ÏµÊı´óÓÚ0ÇÒ×îĞ¡£©
-		--ÌØÊâÇé¿ö£º´¹Ö±ºÍË®Æ½ÈëÉä
-		--µ½´ï×ó±ß	
+		--æ ¹æ®åå°„ç‚¹å’Œåå°„å‘é‡*ç³»æ•° ç¡®å®šæ–°åå°„ç‚¹ï¼ˆç³»æ•°å¤§äº0ä¸”æœ€å°ï¼‰
+		--ç‰¹æ®Šæƒ…å†µï¼šå‚ç›´å’Œæ°´å¹³å…¥å°„
+		--åˆ°è¾¾å·¦è¾¹	
 		K1 = - PositionOri[1]/tFanSheVec[1]
-		--ÓÒ±ß
+		--å³è¾¹
 		K2 = (boardW - PositionOri[1])/tFanSheVec[1]
-		--ÉÏ
+		--ä¸Š
 		K3= (boardH- PositionOri[2])/tFanSheVec[2]		
-		--ÏÂ
+		--ä¸‹
 		
 		K4 = - PositionOri[2]/tFanSheVec[2]
 		local t = {}
@@ -884,7 +891,7 @@ function monster.GetFlyPositionBorder(pBrick)
 			end
 		end	
 		
-		--µÃ³öÏÂÒ»¸öÅö×²µã×ø±ê
+		--å¾—å‡ºä¸‹ä¸€ä¸ªç¢°æ’ç‚¹åæ ‡
 		if i==nCount then
 			K = 1.2*K
 		end
@@ -911,21 +918,21 @@ function monster.playDamageEff(pBrick,nDamage)
 	local ZOrder = 100
 	layerMain:addChild(damageSpri,ZOrder)
 
-	--ÎÄ×Ö
+	--æ–‡å­—
 	local Label = CCLabelTTF:create("- "..nDamage, "Arial", 65)
 	Label:setPosition(110,80)
 	damageSpri:addChild(Label)
 	Label:setColor(ccc3(255,255,255))
 	
 		
-	--ÄĞ¡µ½´ó³ö¬F
+	--å¾å°åˆ°å¤§å‡ºç¾
 	damageSpri:setScale(0.2)
 	local scaleact = CCScaleTo:create(0.15, 0.8)
 	
 	
-	--uuë[²Ø
+	--æ¼¸æ¼¸éš±è—
 	local fadeoutac  = CCFadeOut:create(1) 
-	--É¾³ı
+	--åˆ é™¤
 	function delete(sender)
 		sender:removeFromParentAndCleanup(true);
 	end
@@ -941,7 +948,7 @@ function monster.playDamageEff(pBrick,nDamage)
 	local fadeoutac2  = CCFadeOut:create(1) 
 	Label:runAction(fadeoutac2)
 	
-	--½o‚€ëS™C½Ç¶È
+	--çµ¦å€‹éš¨æ©Ÿè§’åº¦
 	damageSpri:setRotation(math.random(-25,25))		
 end
 

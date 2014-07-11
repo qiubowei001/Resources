@@ -17,11 +17,12 @@ playerInfo = {
 	SKILLCD3 = 14,
 	SKILLCD4 = 15,
 	
-	WEAPON 	 = 16,
-	ARMOR	 = 17,
-	NECKLACE = 18,
-	RING	 = 19,
-	CAPE 	 = 20,
+	WEAPON 	 = 116,
+	ARMOR	 = 117,
+	NECKLACE = 118,
+	RING	 = 119,
+	CAPE 	 = 120,
+	MAGICBALL = 121, 
 	
 	Entity_HP    =21,
 	Entity_HPMAX =22,
@@ -30,11 +31,17 @@ playerInfo = {
 	Entity_CRITICALCHANCE   =25,
 	Entity_DODGECHANCE 	= 26,
 	
+	
 	ENERGY = 27,
 	Entity_ENERGY 		= 28,
 	ENERGYMAX			= 29,
 	Entity_ENERGYMAX 	= 30,
 	
+	KILLBUFF			= 31,
+	Entity_KILLBUFF 	= 32,
+	
+	ENERGY_RECOVER		= 33,
+	Entity_ENERGY_RECOVER	= 33,
 }
 
 
@@ -98,30 +105,38 @@ function p.Initplayer()
 	player[playerInfo.BUFFATT] = 0;
 	player[playerInfo.EXP] = 0;
 	player[playerInfo.LEVEL] = 1;
+	player[playerInfo.KILLBUFF ] = 1;
+	
+	player[playerInfo.ENERGY_RECOVER ] = 0.7;
+	player[playerInfo.Entity_ENERGY_RECOVER ] = 0.7;
 	
 	
-	
+		
 	player[playerInfo.WEAPON] 	= 1001;
 	player[playerInfo.ARMOR] 	= 2001;
 	player[playerInfo.NECKLACE] = 3001;
 	player[playerInfo.RING] 	= 4001;
 	player[playerInfo.CAPE] 	= 5001;
+	player[playerInfo.MAGICBALL]= 6001;
 						  
 	
 	
 	player[playerInfo.Entity_HP] 	= 0;
 	player[playerInfo.Entity_HPMAX] 	= 0;
 	player[playerInfo.Entity_ATT] 	= 0;
+	player[playerInfo.Entity_KILLBUFF ] = 0;
+
+
 
 	player[playerInfo.Entity_CRITICALRATE] 	= 0;
 	player[playerInfo.Entity_CRITICALCHANCE] 	= 0;
 	player[playerInfo.Entity_DODGECHANCE] 	= 0;
 
 	
-	player[playerInfo.ENERGY] 				= 15;
-	player[playerInfo.Entity_ENERGY] 		= 15;
-	player[playerInfo.ENERGYMAX] 			= 15;
-	player[playerInfo.Entity_ENERGYMAX] 	= 15;
+	player[playerInfo.ENERGY] 				= 50;
+	player[playerInfo.Entity_ENERGY] 		= 50;
+	player[playerInfo.ENERGYMAX] 			= 50;
+	player[playerInfo.Entity_ENERGYMAX] 	= 50;
 	
 	player.Skill = SkillUpgrade.InitPlayerSkill();
 	player.MagicCD = {}
@@ -135,12 +150,19 @@ function p.Initplayer()
 	player.Dodgechance = 0;
 	
 	player.TauntedByMon = nil;--被誰嘲諷
+
 	
+	--初始金币
+	local nMission = mission.GetMission()
+	local nStartGold = MISSION_TABLE[nMission]["StartGold"]
+	player[playerInfo.GOLD] = nStartGold
+	
+		
 	--能量回复定时器		
 	gEnergy_Recovery_TimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(p.EnergyRecoveryAuto, gEnergyRecoveryTime, false)	
 	
 	player.UpdateEntityData();
-	
+
 	--player.AddNewSkill(14,17)
 	--player.AddNewSkill(7,16)
 
@@ -251,9 +273,9 @@ end
 function player.takeGold(nNum)
 	player[playerInfo.GOLD] = player[playerInfo.GOLD] + nNum*(Combo.GetRatio());
 	player[playerInfo.GOLD] = math.floor(player[playerInfo.GOLD])
-	if player[playerInfo.GOLD] >= 100 then
-		MainUI.ShowUpgradeBtn();
-	end
+	--if player[playerInfo.GOLD] >= 100 then
+	--	MainUI.ShowUpgradeBtn();
+	--end
 
 	----==显示玩家数据==--
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
@@ -271,12 +293,13 @@ function player.LoseGold(nGold)
 	if player[playerInfo.GOLD] < 0 then
 		player[playerInfo.GOLD] = 0
 	end
-		
+	
+		--[[
 	if player[playerInfo.GOLD] >= 100 then
 		MainUI.ShowUpgradeBtn();
 	else
 		MainUI.HideUpgradeBtn();
-	end
+	end--]]
 	----==显示玩家数据==--
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
 end	
@@ -449,7 +472,8 @@ function player.SkillCoolDown()
 end
 
 function player.UpGradeEquip(nEquipId)
-	if player[playerInfo.GOLD]  - 100 < 0 then
+	local  goldneed = tEquipType[nEquipId][10]
+	if player[playerInfo.GOLD]  -goldneed< 0 then
 		return false
 	end
 	
@@ -461,6 +485,7 @@ function player.UpGradeEquip(nEquipId)
 		playerInfo.NECKLACE ,
 		playerInfo.RING,
 		playerInfo.CAPE,
+		playerInfo.MAGICBALL,
 	}
 	
 	local index = tTmp[ntype];
@@ -468,21 +493,39 @@ function player.UpGradeEquip(nEquipId)
 	
 
 	
-	player[playerInfo.GOLD] = player[playerInfo.GOLD]  - 100
+	player[playerInfo.GOLD] = player[playerInfo.GOLD]  -  goldneed
 	
 	--刷新金币显示
 	MainUI.SetMainUIGOLD(player[playerInfo.GOLD])
 	--更新实体数据
 	player.UpdateEntityData();
 	
-	
+	--[[
 	if player[playerInfo.GOLD] < 100 then
 		MainUI.HideUpgradeBtn();
-	end
+	end--]]
 	
 	return true;
 end
 
+
+function player.GetPlayerEquip()
+	--装备数据叠加
+	local tEquipId = {
+	player[playerInfo.WEAPON] 	,
+	player[playerInfo.ARMOR] 	,
+	player[playerInfo.NECKLACE] ,
+	player[playerInfo.RING] 	,
+	player[playerInfo.CAPE] 	,
+	player[playerInfo.MAGICBALL],
+	
+	}
+	
+	return tEquipId
+
+end
+
+	
 --更新玩家实体数据
 function player.UpdateEntityData()
 	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]
@@ -492,16 +535,23 @@ function player.UpdateEntityData()
 	player[playerInfo.Entity_DODGECHANCE] 	= player.Dodgechance;
 
 	player[playerInfo.Entity_ENERGYMAX] 	= player[playerInfo.ENERGYMAX];
+	player[playerInfo.Entity_KILLBUFF] 	= player[playerInfo.KILLBUFF ];
+	
+	player[playerInfo.Entity_ENERGY_RECOVER ] = 	player[playerInfo.ENERGY_RECOVER ]
 	
 	
 	--装备数据叠加
-	local tEquipId = {
+	local tEquipId = player.GetPlayerEquip()
+	--[[{
 	player[playerInfo.WEAPON] 	,
 	player[playerInfo.ARMOR] 	,
 	player[playerInfo.NECKLACE] ,
 	player[playerInfo.RING] 	,
 	player[playerInfo.CAPE] 	,
+	player[playerInfo.MAGICBALL],
 	}
+	--]]
+	
 	
 	for i,v in pairs(tEquipId) do
 		if v ~= 0 then
@@ -509,6 +559,8 @@ function player.UpdateEntityData()
 			player[playerInfo.Entity_HPMAX] = player[playerInfo.Entity_HPMAX] + tEquipType[v][5]
 			player[playerInfo.Entity_CRITICALCHANCE]   = player[playerInfo.Entity_CRITICALCHANCE] +  tEquipType[v][7]
 			player[playerInfo.Entity_DODGECHANCE]  = player[playerInfo.Entity_DODGECHANCE]  + tEquipType[v][8]
+			player[playerInfo.Entity_KILLBUFF] = player[playerInfo.KILLBUFF ] +   tEquipType[v][6];
+			player[playerInfo.Entity_ENERGY_RECOVER ] = 	player[playerInfo.ENERGY_RECOVER ] +    tEquipType[v][11];
 		end	
 	end
 	
@@ -527,11 +579,12 @@ end
 
 --自动回复能量
 function p.EnergyRecoveryAuto()
-	p.EnergyRecovery(1)
+	p.EnergyRecovery(0.5)
 end
 
 function p.EnergyRecovery(nNum)
-	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + nNum*0.7
+	local energybuff = player[playerInfo.Entity_ENERGY_RECOVER ]
+	player[playerInfo.ENERGY] = player[playerInfo.ENERGY] + ( nNum * energybuff)
 	
 
 	

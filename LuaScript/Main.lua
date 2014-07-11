@@ -391,7 +391,7 @@ end
 
 local tBarPosition = 
 {
-	[1] 	= {400,555}, --金币条
+	[1] 	= {50,560}, --金币条
 	[2] 	= {15,55}, --血条
 	[3] 	= {700,55}, --能量条
 }
@@ -624,9 +624,12 @@ function p.main(nMission)
 				--全局事件
 				GlobalEvent.OnEvent(GLOBAL_EVENT.LINK_SUCC)
 		
+
 			
-				--消耗能量豆
-				player.SpendEnergy(1);				
+				--行为消耗能量豆
+				player.SpendEnergy(2);				
+				
+				
 				--tbrickType.MONSTER
 				if nAction == tbrickType.BLOOD then
 					player.drinkBlood(nNum);			

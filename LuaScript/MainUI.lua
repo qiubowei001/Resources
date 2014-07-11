@@ -79,7 +79,7 @@ function p.LoadUI()
 		
 		
 
-		--金币条
+		--[[金币条
 		GoldBar = CCProgressTimer:create(CCSprite:create("UI/Bar/Goldbar.png"))
 		GoldBar:setType(kCCProgressTimerTypeBar)
 		GoldBar:setMidpoint(CCPointMake(0, 0))
@@ -91,7 +91,7 @@ function p.LoadUI()
 		local GoldBarBg = CCMenuItemImage:create("UI/Bar/goldbarbg.png", "UI/Bar/goldbarbg.png")
 		GoldBarBg:setPosition(-320, 540)
 		bglayer:addChild(GoldBarBg,2)
-		
+		--]]
 			
 	
 
@@ -115,7 +115,7 @@ function p.LoadUI()
 		local GOLDlabel = CCLabelTTF:create("", "Arial", 20)
 			bglayer:addChild(GOLDlabel)
 			GOLDlabel:setColor(ccc3(255,0,0))
-			GOLDlabel:setPosition(-20, 150)
+			GOLDlabel:setPosition(-650, 500)
 			GOLDlabel:setTag(g_goldlabeltag);		
 
 		--显示动作提示
@@ -222,7 +222,7 @@ function p.LoadUI()
 table.insert(tUIAll,gEnergyBar)
 table.insert(tUIAll,HPBar)
 table.insert(tUIAll,ExpBar)
-table.insert(tUIAll,GoldBar)
+--table.insert(tUIAll,GoldBar)
 table.insert(tUIAll,gHPBarBg)
 table.insert(tUIAll,ExpBarBg)
 table.insert(tUIAll,GoldBarBg)
@@ -374,14 +374,14 @@ function p.SetMainUIGOLD(nGOLD)
 	
 	--gGoldBar:setPercentage(nGOLD%100);
 	
-	gGoldBar:stopAllActions() 
-	if nGOLD >= 100 then
-		gGoldBar:setPercentage(0);	
-	end
+	--gGoldBar:stopAllActions() 
+	--if nGOLD >= 100 then
+		--gGoldBar:setPercentage(0);	
+	--end
 	
-	local  nPersent = nGOLD%100	
-	local to2 = CCProgressFromTo:create(1, gGoldBar:getPercentage(), nPersent)
-	gGoldBar:runAction(to2)	
+	--local  nPersent = nGOLD%100	
+	--local to2 = CCProgressFromTo:create(1, gGoldBar:getPercentage(), nPersent)
+	--gGoldBar:runAction(to2)	
 end
 
 function p.SetMainUITip(sTip)

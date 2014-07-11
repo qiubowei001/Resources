@@ -18,6 +18,8 @@ brickInfo.WaveCount = 1;--每波砖块的数量
 
 brickInfo.PlayerSkillCount = 4;--玩家主动技能数量
 
+brickInfo.GoldPerLev = 3; --杀怪获得金币倍数(用来*等级)
+
 --游戏阶段定义
 GameLogicPhase ={
 	BEFORE_PLAYER_ACT = 0,--玩家执行消除行为前
