@@ -241,7 +241,7 @@ function p.getPlayerAttDamgeFromLine()
 	local nDamage = player.GetAttack();
 	for i,v in pairs(Line) do
 		if v.nType == tbrickType.SWORD then
-			nDamage = nDamage + 4;							
+			nDamage = nDamage + brickInfo.SwordAtt;							
 		end
 	end
 	

@@ -1,4 +1,4 @@
---Á£×ÓÏµÍ³
+--ç²’å­ç³»ç»Ÿ
 Particle = {};
 local p = Particle;
 
@@ -19,10 +19,12 @@ local tParticleType =
 	shineSporn = 6;
 	suckblood = 7;
 	recovery = 8;
+	suckenergy = 9;
+	fog		= 10;
 }
 
 
---ÉèÖÃ
+--è®¾ç½®
 function p.SetPlayEff(bPlay)
 	if bPlay then
 		gPlayEffNum = gPlayEffNum +1
@@ -49,7 +51,7 @@ function p.Init()
 	
 	gMainHitGrade = Combo.GetRatio();
 end
---ÖÆÔìÒ»¸öemiter
+--åˆ¶é€ ä¸€ä¸ªemiter
 function p.BuildParticle(sEffName)
 	emitter = CCParticleSystemQuad:new()
 	emitter:autorelease()
@@ -59,9 +61,9 @@ function p.BuildParticle(sEffName)
 	return emitter
 end
 
---ÔÚBRICKÉÏÔö¼ÓÌØĞ§
+--åœ¨BRICKä¸Šå¢åŠ ç‰¹æ•ˆ
 function p.AddParticleEffToBrick(pBrick,sEffName)
-	--Èç¹ûÒÑ¾­ÓĞ´ËÌØĞ§ ·µ»Ø
+	--å¦‚æœå·²ç»æœ‰æ­¤ç‰¹æ•ˆ è¿”å›
 	local id = brick.ParticleTag + tParticleType[sEffName]
 	
 	local emitter = pBrick:getChildByTag(id); 
@@ -75,7 +77,7 @@ function p.AddParticleEffToBrick(pBrick,sEffName)
 	pBrick:addChild(emitter, 10,id)
 end
 
---É¾³ıBrickÉÏÌØĞ§
+--åˆ é™¤Brickä¸Šç‰¹æ•ˆ
 function p.RemoveParticleEffFromBrick(pBrick,sEffName)
 	local id = brick.ParticleTag + tParticleType[sEffName]
 	local emitter = pBrick:getChildByTag(id);  
@@ -84,17 +86,18 @@ function p.RemoveParticleEffFromBrick(pBrick,sEffName)
 	end
 end
 
---ÔÚBRICKËùÔÚÊÀ½ç×ø±êÉÏÔö¼ÓÌØĞ§
+--åœ¨BRICKæ‰€åœ¨ä¸–ç•Œåæ ‡ä¸Šå¢åŠ ç‰¹æ•ˆ
 function p.AddParticleEffToWorld(pBrick,sEffName)
 	local emitter = p.BuildParticle(sEffName);
 	local posx,posy = brick.GetPosByBrick(pBrick)
 			
 	emitter:setPosition(posx, posy);		
 	layerMain:addChild(emitter, 9001)
+	return emitter
 end
 
 
---ÌØĞ§Á´  ÊäÈë: 1 brickÁĞ±í  2 Ğ§¹ûÃû  3 Åö×²º¯Êı
+--ç‰¹æ•ˆé“¾  è¾“å…¥: 1 brickåˆ—è¡¨  2 æ•ˆæœå  3 ç¢°æ’å‡½æ•°
 function p.AddParticleEffToLine(tBrick,sEffName,func)
 	
 	Particle.SetPlayEff(true)
@@ -145,6 +148,49 @@ function p.AddParticleEffToLine(tBrick,sEffName,func)
 	layerMain:addChild(emitter, 10)
 end
 
+
+
+
+--ç§»åŠ¨ç²’å­
+function p.MoveParticleTo(emitter,func)
+	
+	local arr = CCArray:create()	
+
+	if func ~= nil then
+		local actionHit = CCCallFuncN:create(func)
+		arr:addObject(actionHit)
+	end
+	
+	local tox,toy = 500,300 --brick.GetPosByBrick(pbrick)
+
+	local posx,posy = emitter:getPosition();
+
+	local l = (posx-tox)*(posx-tox) + (posy-toy)*(posy-toy)
+	local t = math.sqrt(l) / 800;
+
+			
+	local actionto = CCMoveTo:create(t, ccp(tox, toy))
+	arr:addObject(actionto)
+			
+	if func ~= nil then
+		local actionHit = CCCallFuncN:create(func)
+		arr:addObject(actionHit)
+	end
+
+	function calltest(sender)
+		sender:removeFromParentAndCleanup(true);
+	end
+		
+	local actionremove = CCCallFuncN:create(calltest)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	emitter:runAction(seq)
+	--layerMain:addChild(emitter)
+end
+
+
+
 local tHitEffColor = 
 {
 	[1] = ccc4f( 1, 1, 1,1),
@@ -158,7 +204,7 @@ local tHitEffColor =
 	
 }
 
---Êó±êµã»÷¹âĞ§ 1~4ÖÖ¹âĞ§
+--é¼ æ ‡ç‚¹å‡»å…‰æ•ˆ 1~4ç§å…‰æ•ˆ
 function p.BuildHitParticle(grade)
 	if grade>=1 and grade <= 8 then
 		local eff = p.BuildParticle("HitEff1")
@@ -178,7 +224,7 @@ end
 
 function p.SetMainHitEff(posx,posy)
 	local effGrade = Combo.GetGrade()
-	--¹âĞ§²»´æÔÚ
+	--å…‰æ•ˆä¸å­˜åœ¨
 	if gMainHitEff == nil then
 		local hitEff = Particle.BuildHitParticle(effGrade)
 		hitEff:setPosition(posx, posy);
@@ -189,14 +235,14 @@ function p.SetMainHitEff(posx,posy)
 	end	
 	
 	gMainHitGrade = effGrade;
-	--¹âĞ§µÈ¼¶ÏàÍ¬,Ôò¸Ä±äÎ»ÖÃ
+	--å…‰æ•ˆç­‰çº§ç›¸åŒ,åˆ™æ”¹å˜ä½ç½®
 	Particle.setHitEffGrade(effGrade)
 	gMainHitEff:setPosition(posx, posy);
 end
 
 
 
---É¾³ıµã»÷¹âĞ§
+--åˆ é™¤ç‚¹å‡»å…‰æ•ˆ
 function p.DelMainHitEff()
 
 	if gMainHitEff ~= nil then

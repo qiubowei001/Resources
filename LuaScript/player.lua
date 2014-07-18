@@ -97,8 +97,8 @@ function p.Initplayer()
 	magic_effect_afterplayeract = {}
 
 	
-	player[playerInfo.HP] = 100;
-	player[playerInfo.HPMAX] = 100;
+	player[playerInfo.HP] = 200;
+	player[playerInfo.HPMAX] = 200;
 	
 	player[playerInfo.ATT] = 3;
 	player[playerInfo.GOLD] = 0;
@@ -525,7 +525,9 @@ function player.GetPlayerEquip()
 
 end
 
-	
+
+
+
 --更新玩家实体数据
 function player.UpdateEntityData()
 	player[playerInfo.Entity_HPMAX] = player[playerInfo.HPMAX]

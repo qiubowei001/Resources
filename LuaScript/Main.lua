@@ -701,7 +701,10 @@ function p.main(nMission)
 	cclog("qbw99: Main2")	
 		--初始化玩家数据
 		player.Initplayer();	
-cclog("qbw99: Main3")
+
+		--装备界面初始化
+		EquipUpGradeUI.LoadUI();
+		
 		function DELAY()
 			CCDirector:sharedDirector():getScheduler():unscheduleScriptEntry(gDelayTimerId)			
 			gBrickFallTimerId = CCDirector:sharedDirector():getScheduler():scheduleScriptFunc(Main.brickfallLogic, 0.05, false)

@@ -1,5 +1,5 @@
 monster = {}
-
+local p = monster
 monsterInfo = {
 	HP =1,
 	ATT =2,	
@@ -24,7 +24,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[1] = {}
 	MONSTER_TYPE[1]["name"] = "Slimegreen"
 	MONSTER_TYPE[1]["MAgic"] = nil--{7} --技能列表
-	MONSTER_TYPE[1]["HP"] = 8
+	MONSTER_TYPE[1]["HP"] = 24
 	MONSTER_TYPE[1]["HPGrow"] = 1
 	MONSTER_TYPE[1]["HPadj"] = 3
 	MONSTER_TYPE[1]["ATT"] = 2
@@ -40,7 +40,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[2] = {}
 	MONSTER_TYPE[2]["name"] = "Slimered"
 	MONSTER_TYPE[2]["MAgic"] = nil--{7} --技能列表
-	MONSTER_TYPE[2]["HP"] = 13
+	MONSTER_TYPE[2]["HP"] = 30
 	MONSTER_TYPE[2]["HPGrow"] = 2
 	MONSTER_TYPE[2]["HPadj"] = 3
 	MONSTER_TYPE[2]["ATT"] = 2
@@ -55,7 +55,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[3] = {}
 	MONSTER_TYPE[3]["name"] = "Slimeblue"
 	MONSTER_TYPE[3]["MAgic"] = nil--{7} --技能列表
-	MONSTER_TYPE[3]["HP"] = 10
+	MONSTER_TYPE[3]["HP"] = 27
 	MONSTER_TYPE[3]["HPGrow"] = 1
 	MONSTER_TYPE[3]["HPadj"] = 3
 	MONSTER_TYPE[3]["ATT"] = 1
@@ -71,7 +71,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[4]["name"] = "SlimeKing"
 	MONSTER_TYPE[4]["MAgic"] = {1007} --技能列表
 	MONSTER_TYPE[4]["MAgicRound"] = {1} 
-	MONSTER_TYPE[4]["HP"] = 10
+	MONSTER_TYPE[4]["HP"] = 27
 	MONSTER_TYPE[4]["HPGrow"] = 2
 	MONSTER_TYPE[4]["HPadj"] = 3
 	MONSTER_TYPE[4]["ATT"] = 1
@@ -87,7 +87,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[5]["name"] = "FireSpider"
 	MONSTER_TYPE[5]["MAgic"] = {1008} --技能列表
 	MONSTER_TYPE[5]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[5]["HP"] = 10
+	MONSTER_TYPE[5]["HP"] = 27
 	MONSTER_TYPE[5]["HPGrow"] = 4
 	MONSTER_TYPE[5]["HPadj"] = 3
 	MONSTER_TYPE[5]["ATT"] = 1
@@ -102,7 +102,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[6] = {}
 	MONSTER_TYPE[6]["name"] = "littleFireSpider"
 	MONSTER_TYPE[6]["MAgic"] = nil
-	MONSTER_TYPE[6]["HP"] = 10
+	MONSTER_TYPE[6]["HP"] = 15
 	MONSTER_TYPE[6]["HPGrow"] = 4
 	MONSTER_TYPE[6]["HPadj"] = 3
 	MONSTER_TYPE[6]["ATT"] = 1
@@ -118,7 +118,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[7]["name"] = "FrozenEye"
 	MONSTER_TYPE[7]["MAgic"] = {1009} --技能列表
 	MONSTER_TYPE[7]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[7]["HP"] = 10
+	MONSTER_TYPE[7]["HP"] = 25
 	MONSTER_TYPE[7]["HPGrow"] = 4
 	MONSTER_TYPE[7]["HPadj"] = 3
 	MONSTER_TYPE[7]["ATT"] = 1
@@ -134,7 +134,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[8]["name"] = "FireEye"
 	MONSTER_TYPE[8]["MAgic"] = {1010} --技能列表
 	MONSTER_TYPE[8]["MAgicRound"] = {1} --无限
-	MONSTER_TYPE[8]["HP"] = 10
+	MONSTER_TYPE[8]["HP"] = 25
 	MONSTER_TYPE[8]["HPGrow"] = 4
 	MONSTER_TYPE[8]["HPadj"] = 3
 	MONSTER_TYPE[8]["ATT"] = 1
@@ -151,7 +151,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[9]["name"] = "Bat"
 	MONSTER_TYPE[9]["MAgic"] = {1011} --技能列表
 	MONSTER_TYPE[9]["MAgicRound"] = {1} --无限
-	MONSTER_TYPE[9]["HP"] = 10
+	MONSTER_TYPE[9]["HP"] = 25
 	MONSTER_TYPE[9]["HPGrow"] = 4
 	MONSTER_TYPE[9]["HPadj"] = 3
 	MONSTER_TYPE[9]["ATT"] = 1
@@ -167,7 +167,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[10]["name"] = "wizard"
 	MONSTER_TYPE[10]["MAgic"] = {1012} --技能列表
 	MONSTER_TYPE[10]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[10]["HP"] = 10
+	MONSTER_TYPE[10]["HP"] = 25
 	MONSTER_TYPE[10]["HPGrow"] = 4
 	MONSTER_TYPE[10]["HPadj"] = 3
 	MONSTER_TYPE[10]["ATT"] = 1
@@ -184,7 +184,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[11]["name"] = "Asman"
 	MONSTER_TYPE[11]["MAgic"] = {1013} --技能列表
 	MONSTER_TYPE[11]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[11]["HP"] = 10
+	MONSTER_TYPE[11]["HP"] = 25
 	MONSTER_TYPE[11]["HPGrow"] = 4
 	MONSTER_TYPE[11]["HPadj"] = 3
 	MONSTER_TYPE[11]["ATT"] = 1
@@ -218,7 +218,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[13]["name"] = "thief"
 	MONSTER_TYPE[13]["MAgic"] = {1015} --技能列表
 	MONSTER_TYPE[13]["MAgicRound"] = {999} --无限
-	MONSTER_TYPE[13]["HP"] = 8
+	MONSTER_TYPE[13]["HP"] = 20
 	MONSTER_TYPE[13]["HPGrow"] = 1
 	MONSTER_TYPE[13]["HPadj"] = 3
 	MONSTER_TYPE[13]["ATT"] = 1
@@ -247,19 +247,72 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[14]["ScarePICID"] = 28
 	MONSTER_TYPE[14]["desc"]	= "Don't..piss ..me .. off"
 
-function monster.GetPicIdFromMonsterId(nMonsterId)
+
+	--自爆兵
+	MONSTER_TYPE[15] = {}
+	MONSTER_TYPE[15]["name"] = "explode"
+	MONSTER_TYPE[15]["MAgic"] = {1017} --技能列表
+	MONSTER_TYPE[15]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[15]["HP"] = 18
+	MONSTER_TYPE[15]["HPGrow"] = 2
+	MONSTER_TYPE[15]["HPadj"] = 3
+	MONSTER_TYPE[15]["ATT"] = 1
+	MONSTER_TYPE[15]["ATTGrow"] = 0.1
+	MONSTER_TYPE[15]["ATTadj"] = 1
+	MONSTER_TYPE[15]["CD"] = 60
+	MONSTER_TYPE[15]["CDGrow"] = -1
+	MONSTER_TYPE[15]["PICID"] = 29
+	MONSTER_TYPE[15]["ScarePICID"] = 29
+	MONSTER_TYPE[15]["desc"]	= "EXPLODE!!!"
+
+	--燃烧能量
+	MONSTER_TYPE[16] = {}
+	MONSTER_TYPE[16]["name"] = "demon"
+	MONSTER_TYPE[16]["MAgic"] = {1018} --技能列表
+	MONSTER_TYPE[16]["MAgicRound"] = {1} --无限
+	MONSTER_TYPE[16]["HP"] = 25
+	MONSTER_TYPE[16]["HPGrow"] = 4
+	MONSTER_TYPE[16]["HPadj"] = 3
+	MONSTER_TYPE[16]["ATT"] = 1
+	MONSTER_TYPE[16]["ATTGrow"] = 1
+	MONSTER_TYPE[16]["ATTadj"] = 3
+	MONSTER_TYPE[16]["CD"] = 20
+	MONSTER_TYPE[16]["CDGrow"] = -1
+	MONSTER_TYPE[16]["PICID"] = 1
+	MONSTER_TYPE[16]["ScarePICID"] = 1
+	MONSTER_TYPE[16]["desc"]	= "burn your energy!"
+
+	--腐蚀装备
+	MONSTER_TYPE[17] = {}
+	MONSTER_TYPE[17]["name"] = "break"
+	MONSTER_TYPE[17]["MAgic"] = {1019} --技能列表
+	MONSTER_TYPE[17]["MAgicRound"] = {1} --无限
+	MONSTER_TYPE[17]["HP"] = 25
+	MONSTER_TYPE[17]["HPGrow"] = 4
+	MONSTER_TYPE[17]["HPadj"] = 3
+	MONSTER_TYPE[17]["ATT"] = 1
+	MONSTER_TYPE[17]["ATTGrow"] = 1
+	MONSTER_TYPE[17]["ATTadj"] = 3
+	MONSTER_TYPE[17]["CD"] = 20
+	MONSTER_TYPE[17]["CDGrow"] = -1
+	MONSTER_TYPE[17]["PICID"] = 1
+	MONSTER_TYPE[17]["ScarePICID"] = 1
+	MONSTER_TYPE[17]["desc"]	= "break equip!"
+
+
+function p.GetPicIdFromMonsterId(nMonsterId)
 	cclog("GetPicIdFromMonsterId:"..nMonsterId)
 	return MONSTER_TYPE[nMonsterId]["PICID"]
 end
 	
-function monster.GetScarePicIdFromMonsterId(nMonsterId)
+function p.GetScarePicIdFromMonsterId(nMonsterId)
 	return MONSTER_TYPE[nMonsterId]["ScarePICID"]	
 end
 	
 	
 	
 	
-function monster.AttackCDPlusOne(pbrick)
+function p.AttackCDPlusOne(pbrick)
 	pbrick.moninfo[monsterInfo.CD] = pbrick.moninfo[monsterInfo.CD] + 1
 	
 	--设定进度条
@@ -289,9 +342,9 @@ function monster.AttackCDPlusOne(pbrick)
 
 		--执行释放技能 和攻击
 		if pbrick.IfBeStunned == false then
-			monster.SpellMagic(pbrick,false)	
+			p.SpellMagic(pbrick,false)	
 		end
-		monster.attack(pbrick);
+		p.attack(pbrick);
 		
 		--执行MAGIC特效
 		magiceff.DoMagicEffAfterMonsterAct(pbrick);
@@ -326,7 +379,7 @@ function monster.AttackCDPlusOne(pbrick)
 end	
 	
 --初始化怪物数据
-function monster.InitMonster( pBrick,nid,nLev)
+function p.InitMonster( pBrick,nid,nLev)
 		if nLev == nil then
 			nLev = 0;
 		end
@@ -455,8 +508,8 @@ function monster.InitMonster( pBrick,nid,nLev)
 end
 
 
-function monster.SetAtt(pmonster)
-	local natt = monster.GetMonsterAtt(pmonster)
+function p.SetAtt(pmonster)
+	local natt = p.GetMonsterAtt(pmonster)
 	--[[
 	local Attlabel = pmonster:getChildByTag(g_attlabeltag)
 	tolua.cast(Attlabel, "CCLabelTTF")
@@ -471,7 +524,7 @@ function monster.SetAtt(pmonster)
 end
 
 --修改怪物属性
-function monster.AddHp(pmonster,nRecovery)
+function p.AddHp(pmonster,nRecovery)
 	pmonster.moninfo[monsterInfo.HP]  = pmonster.moninfo[monsterInfo.HP]  + nRecovery
 	
 	if pmonster.moninfo[monsterInfo.HP] >= pmonster.moninfo[monsterInfo.HPMAX] then
@@ -491,7 +544,7 @@ end
 
 
 --伤害ACTION初始化
-function monster.InitDamageAction( pTarget,ndamage)
+function p.InitDamageAction( pTarget,ndamage)
 	local tDamageAction = {
 							defender = pTarget,
 							damage = ndamage,
@@ -501,12 +554,12 @@ function monster.InitDamageAction( pTarget,ndamage)
 end
 
 --伤害计算
-function monster.damage( pBrick,nDamage,bcritical)
-		local tDamageAction = monster.InitDamageAction( pBrick,nDamage);
+function p.damage( pBrick,nDamage,bcritical)
+		local tDamageAction = p.InitDamageAction( pBrick,nDamage);
 		
 		--在怪物位置播放去血sprite
 		if bcritical then
-			monster.playDamageEff(pBrick,nDamage)
+			p.playDamageEff(pBrick,nDamage)
 		end			
 		
 		for i,func in pairs(pBrick.DamageAdjFuncT) do
@@ -529,7 +582,7 @@ function monster.damage( pBrick,nDamage,bcritical)
 	
 			if defender.moninfo[monsterInfo.HP] <= 0 then
 				--執行死亡ACTION
-				local tDeathAction = monster.InitDeathAction(defender);
+				local tDeathAction = p.InitDeathAction(defender);
 				for i,func in pairs(defender.DeathActionFuncT) do
 					func(tDeathAction)
 				end
@@ -552,9 +605,9 @@ function monster.damage( pBrick,nDamage,bcritical)
 				
 				--执行死亡动画
 				if bcritical == nil or bcritical == false then
-					monster.PlayDeathAnimation(pBrick);
+					p.PlayDeathAnimation(pBrick);
 				else
-					monster.PlayCriticalHitAnimation(pBrick);
+					p.PlayCriticalHitAnimation(pBrick);
 				end
 				
 				
@@ -565,7 +618,7 @@ end
 
 
 --怪物死亡行為初始化
-function monster.InitDeathAction(dyingMon)
+function p.InitDeathAction(dyingMon)
 	local tDeathAction = {	
 							dyingMon = dyingMon,
 						 }
@@ -574,7 +627,7 @@ end
 
 
 --怪物攻击ACTION初始化
-function monster.InitAttAction( pTarget,ndamage,pmonster)
+function p.InitAttAction( pTarget,ndamage,pmonster)
 	local tAttAction = {
 							defender = pTarget,
 							damage = ndamage,
@@ -584,16 +637,17 @@ function monster.InitAttAction( pTarget,ndamage,pmonster)
 end
 
 --怪物攻击
-function monster.attack(pmonster)
+function p.attack(pmonster)
 	local ndamage = 0;		
 	--攻击是否CD
 	if pmonster.moninfo[monsterInfo.CD]  >= pmonster.moninfo[monsterInfo.CDMAX] then
 		
-		local tAttAction = monster.InitAttAction( player,ndamage,pmonster)
+		local tAttAction = p.InitAttAction( player,ndamage,pmonster)
 		
-		tAttAction.damage = monster.GetMonsterAtt(pmonster)
+		tAttAction.damage = p.GetMonsterAtt(pmonster)
 		
 		local bSkip = false
+		
 		--遍历怪物攻击调整函数
 		for k,func in pairs(pmonster.AttAdjFuncT) do
 			if func(tAttAction) == false then
@@ -620,7 +674,7 @@ end
 
 --每次场景刷新怪物，都会遍历怪物施放技能。怪物数据中 剩余释放次数大于0则释放，并-1, 
 --如果是在出生时 则直接执行EFF
-function monster.SpellMagic(pmonster,IfBorn)
+function p.SpellMagic(pmonster,IfBorn)
 	--第二个参数可以考虑做个判定 
 	--不同对象类型做不同输入 
 	--现在只做了SINGLE_BRICK输入	
@@ -667,7 +721,7 @@ end
 
 
 --获取怪物攻击力
-function monster.GetMonsterAtt(pmonster)
+function p.GetMonsterAtt(pmonster)
 	local att = pmonster.moninfo[monsterInfo.ATT] + pmonster.moninfo[monsterInfo.BUFFATT] ;
 	
 	--[[
@@ -684,25 +738,25 @@ function monster.GetMonsterAtt(pmonster)
 	return  att;
 end
 
-function monster.AddAttAdjFunc(pmonster,fAttAdjFunc,id)
+function p.AddAttAdjFunc(pmonster,fAttAdjFunc,id)
 	pmonster.AttAdjFuncT[id] = fAttAdjFunc
 end
 
-function monster.RemoveAdjFunc(pmonster,id)
+function p.RemoveAdjFunc(pmonster,id)
     pmonster.AttAdjFuncT[id] = nil
 end
 	
 
-function monster.AddDamageAdjFunc(pmonster,fDamageAdjFunc,id)
+function p.AddDamageAdjFunc(pmonster,fDamageAdjFunc,id)
 	pmonster.DamageAdjFuncT[id] = fDamageAdjFunc
 end
 
-function monster.RemoveDamageAdjFunc(pmonster,id)
+function p.RemoveDamageAdjFunc(pmonster,id)
     pmonster.DamageAdjFuncT[id] = nil
 end	
 
 --怪物死亡後會發生的行為
-function monster.AddDeathFunc(pmonster,fDeathFunc,id)
+function p.AddDeathFunc(pmonster,fDeathFunc,id)
 	pmonster.DeathActionFuncT[id] = fDeathFunc
 end
 
@@ -710,13 +764,13 @@ end
 
 
 --获取怪物图标路径
-function monster.GetMonsterIconPath(nMonsterId)
+function p.GetMonsterIconPath(nMonsterId)
 	
 	return "brick/monster/monster"..nMonsterId..".png";
 end
 
 --普通死亡 变大 淡化
-function monster.PlayDeathAnimation(pBrick)
+function p.PlayDeathAnimation(pBrick)
 	brick.setUnChosed(pBrick)
 	brick.removedeatheff(pBrick)
 	
@@ -743,7 +797,7 @@ function monster.PlayDeathAnimation(pBrick)
 	mainsprite:runAction(fadeaction)	
 end
 
-function monster.PlayCriticalHitAnimation(pBrick)
+function p.PlayCriticalHitAnimation(pBrick)
 	brick.setUnChosed(pBrick)
 	brick.setdeatheffect(pBrick)
 	
@@ -752,7 +806,7 @@ function monster.PlayCriticalHitAnimation(pBrick)
 	parent:reorderChild(pBrick, 50)
  	
 	--获取飞行路径
-	local tPosition = monster.GetFlyPositionBorder(pBrick)
+	local tPosition = p.GetFlyPositionBorder(pBrick)
 	local arr = CCArray:create()
 	local action = CCMoveBy:create(0.5, CCPointMake(0, 50));
 	arr:addObject(action)		
@@ -816,7 +870,7 @@ local tRusheToFansheFunc = {}
 								end								
 
 --获取飞行路径
-function monster.GetFlyPositionBorder(pBrick)
+function p.GetFlyPositionBorder(pBrick)
 	--随机第一碰撞点
 	local boardW = brickInfo.brick_num_X*brickInfo.brickWidth
 	local boardH = brickInfo.brick_num_Y*brickInfo.brickHeight
@@ -908,7 +962,7 @@ end
 
 
 
-function monster.playDamageEff(pBrick,nDamage)
+function p.playDamageEff(pBrick,nDamage)
 	local damageSpri =  CCSprite:create("UI/damage.png")
 	local posx,posy = brick.GetPosByBrick(pBrick)
 	

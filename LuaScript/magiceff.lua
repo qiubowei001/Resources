@@ -490,9 +490,81 @@ function p.eff1016(self)
 	self:addChild(spriteBrick)
 	spriteBrick:setTag(MainSpritetag)
 	spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
-
-	
 end
+
+
+--自爆
+function p.eff1017(self,tParam)
+	if self==nil then
+		return
+	end
+
+	--在位置上播放爆炸光效
+	Particle.AddParticleEffToWorld(self,"explode")
+	
+	--{ dmgPerLevel = 5 ,dmgBase = 10} 
+	local level = self.moninfo[monsterInfo.LEV];
+	local dmg = tParam.dmgBase  + tParam.dmgPerLevel*level
+	player.takedamage(dmg,self);	
+	
+	monster.damage( self,9999,false)
+end
+
+--吸魔
+function p.eff1018(pbrick,Tparam1)
+	local rate = Tparam1.rate
+	monster.AddAttAdjFunc(pbrick,
+							function(tAttAction)
+								--增加特效
+								Particle.AddParticleEffToBrick(tAttAction.attacker,"suckenergy")									
+								local nRecovery = tAttAction.damage*rate
+								--消耗能量
+								player.SpendEnergy(nRecovery);	
+							end
+							,1018)
+end
+
+--破坏
+function p.eff1019(pbrick,Tparam1)
+	--破坏概率
+	local rate = Tparam1.rate
+	
+	monster.AddAttAdjFunc(pbrick,
+							function(tAttAction)
+								
+								--Particle.AddParticleEffToBrick(tAttAction.attacker,"suckblood")	
+								local t = player.GetPlayerEquip()								
+								local nEquipId = t[math.random(1,#t)]
+								
+								local lastequipid = 0
+								if (nEquipId )%1000 - 1 > 0 then
+									lastequipid =  nEquipId  - 1
+									local equiptype = tEquipType[lastequipid][3]
+									local tTmp = {
+										playerInfo.WEAPON 	,
+										playerInfo.ARMOR 	,
+										playerInfo.NECKLACE ,
+										playerInfo.RING,
+										playerInfo.CAPE,
+										playerInfo.MAGICBALL,
+									}
+									
+									local index = tTmp[equiptype];
+									player[index] = lastequipid;	
+									player.UpdateEntityData();
+									
+									--UI更新
+									EquipUpGradeUI.RefreshMenu()
+									--增加特效
+									local  emitter = Particle.AddParticleEffToWorld(pbrick,"fog")
+									Particle.MoveParticleTo(emitter,nil)
+
+								end
+								
+							end
+							,1019)
+end
+
 
 --技能特效配置表
 MAGIC_EFFtable = {}
@@ -739,7 +811,34 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
 	MAGIC_EFFtable[1016][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
 	
+	MAGIC_EFFtable[1017]={}
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.ID] = 1017
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.DESCPTION] = "自爆"
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1017
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 9999
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.TPARAM] ={ dmgPerLevel = 5 ,dmgBase = 10} 
+	MAGIC_EFFtable[1017][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
 	
+	MAGIC_EFFtable[1018]={}
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.ID] = 1018
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.DESCPTION] = "吸魔"
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1018
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.TPARAM] ={ rate = 1} 
+	MAGIC_EFFtable[1018][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1019]={}
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.ID] = 1019
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.DESCPTION] = "破坏装备"
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1019
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.TPARAM] ={ rate = 1} 
+	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+	
+		
 --合体 A B C D类型同时出现在屏幕则合成为一个怪物	
 	
 	

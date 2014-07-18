@@ -25,7 +25,7 @@ for i= 1,10000 do
 	tEquipType[i] = nil;
 end
 
-		--类型{1武器 2铠甲 3项链 4戒指 5斗篷} |
+		--类型{1武器 2铠甲 3项链 4戒指 5斗篷 6法珠} |
 					--id 	|	名字 	|	类型	|	攻击力 | 血量增加| killBUFF| CRIT_Chance |Dodge_Chance	|PICTURE | GOLD_NEED | EnergyRecover
 	tEquipType[1001]={1001   ,	"Lv1 ",		1,		  1 ,		0,			0,		0,				0	,		1001,		30	,		0,}
 	tEquipType[1002]={1002   ,	"Lv2 ",		1,		  2 ,		0,			0,		0,				0	,		1001,		60	,		0,}
@@ -50,26 +50,26 @@ end
                                                      
 
 
-	tEquipType[2001]={2001   ,	"Lv1 ",		2,		  0,		10,			0,		0,				0	,		2001,		30	,		0,}
-	tEquipType[2002]={2002   ,	"Lv2 ",		2,		  0,		30,			0,		0,				0	,		2001,		60	,		0,}
-	tEquipType[2003]={2003   ,	"Lv3 ",		2,		  0,		50,			0,		0,				0	,		2001,		90	,		0,}
-	tEquipType[2004]={2004   ,	"Lv4 ",		2,		  0,		70,			0,		0,				0	,		2001,		110	,		0,}
-	tEquipType[2005]={2005   ,	"Lv5 ",		2,		  0,		90,			0,		0,				0	,		2001,		130	,		0,}
-	tEquipType[2006]={2006   ,	"Lv6 ",		2,		  0,		110,		0,		0,				0	,		2001,		150	,		0,}
-	tEquipType[2007]={2007   ,	"Lv7 ",		2,		  0,		130,		0,		0,				0	,		2001,		170	,		0,}
-	tEquipType[2008]={2008   ,	"Lv8 ",		2,		  0,		150,		0,		0,				0	,		2001,		190	,		0,}
-	tEquipType[2009]={2009   ,	"Lv9 ",		2,		  0,		170,		0,		0,				0	,		2001,		200	,		0,}
-	tEquipType[2010]={2010   ,	"Lv10",		2,		  0,		190,		0,		0,				0	,		2001,		210	,		0,}
-	tEquipType[2011]={2011   ,	"Lv11",		2,		  0,		210,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2012]={2012   ,	"Lv12",		2,		  0,		230,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2013]={2013   ,	"Lv13",		2,		  0,		250,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2014]={2014   ,	"Lv14",		2,		  0,		150,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2015]={2015   ,	"Lv15",		2,		  0,		160,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2016]={2016   ,	"Lv16",		2,		  0,		170,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2017]={2017   ,	"Lv17",		2,		  0,		180,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2018]={2018   ,	"Lv18",		2,		  0,		190,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2019]={2019   ,	"Lv19",		2,		  0,		200,		0,		0,				0	,		2001,		220	,		0,}
-	tEquipType[2020]={2020   ,	"Lv20",		2,		  0,		210,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2001]={2001   ,	"Lv1 ",		2,		  0,		20,			0,		0,				0	,		2001,		30	,		0,}
+	tEquipType[2002]={2002   ,	"Lv2 ",		2,		  0,		40,			0,		0,				0	,		2001,		60	,		0,}
+	tEquipType[2003]={2003   ,	"Lv3 ",		2,		  0,		60,			0,		0,				0	,		2001,		90	,		0,}
+	tEquipType[2004]={2004   ,	"Lv4 ",		2,		  0,		90,			0,		0,				0	,		2001,		110	,		0,}
+	tEquipType[2005]={2005   ,	"Lv5 ",		2,		  0,		120,		0,		0,				0	,		2001,		130	,		0,}
+	tEquipType[2006]={2006   ,	"Lv6 ",		2,		  0,		150,		0,		0,				0	,		2001,		150	,		0,}
+	tEquipType[2007]={2007   ,	"Lv7 ",		2,		  0,		200,		0,		0,				0	,		2001,		170	,		0,}
+	tEquipType[2008]={2008   ,	"Lv8 ",		2,		  0,		250,		0,		0,				0	,		2001,		190	,		0,}
+	tEquipType[2009]={2009   ,	"Lv9 ",		2,		  0,		300,		0,		0,				0	,		2001,		200	,		0,}
+	tEquipType[2010]={2010   ,	"Lv10",		2,		  0,		350,		0,		0,				0	,		2001,		210	,		0,}
+	tEquipType[2011]={2011   ,	"Lv11",		2,		  0,		400,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2012]={2012   ,	"Lv12",		2,		  0,		450,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2013]={2013   ,	"Lv13",		2,		  0,		500,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2014]={2014   ,	"Lv14",		2,		  0,		550,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2015]={2015   ,	"Lv15",		2,		  0,		560,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2016]={2016   ,	"Lv16",		2,		  0,		570,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2017]={2017   ,	"Lv17",		2,		  0,		580,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2018]={2018   ,	"Lv18",		2,		  0,		590,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2019]={2019   ,	"Lv19",		2,		  0,		600,		0,		0,				0	,		2001,		220	,		0,}
+	tEquipType[2020]={2020   ,	"Lv20",		2,		  0,		610,		0,		0,				0	,		2001,		220	,		0,}
                                   
 
 
@@ -170,16 +170,7 @@ function p.GetParent()
 	return layer
 end
 
-function p.closeUICallback(tag,sender)
-	--关闭界面 
-	local layer = p.GetParent()
-	local scene = Main.GetGameScene();
-	scene:removeChild(layer, true)
-	
-	if CCDirector:sharedDirector():isPaused() then
-		CCDirector:sharedDirector():resume()
-    end	   
-end
+
 
 function p.LearnEquipCallback(tag,sender)
 	local learningEquipid = 0
@@ -226,6 +217,7 @@ end
 --刷新显示
 function p.RefreshMenu()
 	g_tNext = p.GetNextEquipId()
+	
 	local bglayer = p.GetParent()
 	
 	local menu = bglayer:getChildByTag(gMenuTag);
@@ -239,7 +231,7 @@ function p.RefreshMenu()
 		item = tolua.cast(item, "CCMenuItemImage")
 		local LvLabel = item:getChildByTag(9999)
 		LvLabel = tolua.cast(LvLabel, "CCLabelTTF")
-		LvLabel:setString(tEquipType[v][2])
+		LvLabel:setString(tEquipType[v-1][2])
 		
 		local needLabel = item:getChildByTag(9998)
 		needLabel = tolua.cast(needLabel, "CCLabelTTF")
@@ -257,11 +249,61 @@ function p.RefreshMenu()
 end
 
 
-
-function p.LoadUI()
+function p.ShowAllUI()
 	if CCDirector:sharedDirector():isPaused() then
 		CCDirector:sharedDirector():resume()
     end	   
+	local bglayer = p.GetParent() 
+	-->>>>>>>>>>>>>>>动画效果	
+	function pause()
+		Main.EnableTouch(true)--打开触摸
+		CCDirector:sharedDirector():pause()
+	end	
+	--向左飘入
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(1, ccp(-0.8*winSize.width,0))
+	local actiontoease =  CCEaseBounceOut:create(moveby)	
+	
+	local actionremove = CCCallFuncN:create(pause)
+	arr:addObject(actiontoease)
+	arr:addObject(actionremove)
+	
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+
+	Main.EnableTouch(false)--阻断触摸
+	--<<<<<<<<<<<<<<<--	
+end	
+
+function p.closeUICallback(tag,sender)
+	--关闭界面 
+	local bglayer = p.GetParent()
+	--function resume()
+		if CCDirector:sharedDirector():isPaused() then
+			CCDirector:sharedDirector():resume()
+		end	
+	--end	
+	
+	--向右飘出
+	local arr = CCArray:create()	
+	local moveby = CCMoveBy:create(0.5, ccp(0.8*winSize.width,0))
+	arr:addObject(moveby)
+	
+	
+	--local actionreresume = CCCallFuncN:create(resume)
+	--arr:addObject(actionreresume)
+
+	local  seq = CCSequence:create(arr)	
+	bglayer:runAction(seq)	
+end
+
+
+function p.LoadUI()
+	--[[
+	if CCDirector:sharedDirector():isPaused() then
+		CCDirector:sharedDirector():resume()
+    end	   
+	--]]
 		
 		local tPlayerEquip = player.GetPlayerEquip()
 		--[[
@@ -284,17 +326,17 @@ function p.LoadUI()
 		local tItem = {}
 		local menu = CCMenu:create()
 		
-		--等级
+		--[[等级
 		local LvLabel = CCLabelTTF:create("level", "Arial", 17)
 		LvLabel:setColor(ccc3(0,0,0))
-		LvLabel:setPosition(-240, -40)
+		LvLabel:setPosition(-350, 250)
 		bglayer:addChild(LvLabel,2,10000)--, 2)--:addChild(LvLabel,1,9999)
-			
+		--]]	
 		
-		--等级
+		--金币
 		local needLabel = CCLabelTTF:create("Gold", "Arial", 17)
 		needLabel:setColor(ccc3(0,0,0))
-		needLabel:setPosition(-240, -60)
+		needLabel:setPosition(-350, 250)
 		bglayer:addChild(needLabel,2,10000)--, 2)--:addChild(LvLabel,1,9999)
 			
 		
@@ -306,13 +348,14 @@ function p.LoadUI()
 			
 			
 			--增加等级显示
-			local LvLabel = CCLabelTTF:create(""..tEquipType[v][2], "Arial", 17)
+			local equipLV = tEquipType[v-1][2]
+			local LvLabel = CCLabelTTF:create(""..equipLV, "Arial", 21)
 			LvLabel:setColor(ccc3(0,0,0))
-			LvLabel:setPosition(10, -10)
+			LvLabel:setPosition(30, 30)
 			item:addChild(LvLabel,1,9999)
 			
 			--增加需求金币显示
-			local needLabel = CCLabelTTF:create(""..tEquipType[v][10], "Arial", 17)
+			local needLabel = CCLabelTTF:create(""..tEquipType[v][10], "Arial", 21)
 			if  player[playerInfo.GOLD]  >= tEquipType[v][10]  then
 				needLabel:setColor(ccc3(255,255,255))
 				LvLabel:setColor(ccc3(255,255,255))
@@ -321,12 +364,12 @@ function p.LoadUI()
 				LvLabel:setColor(ccc3(255,0,0))
 			end
 			
-			needLabel:setPosition(10, -30)
+			needLabel:setPosition(100, 30)
 
 
 			item:addChild(needLabel,1,9998)
 			
-			item:setPosition(80*i - 250  ,0)
+			item:setPosition(-400,80*i - 300 )
 			menu:addChild(item,1,i)
 			
 			
@@ -352,36 +395,15 @@ function p.LoadUI()
 		
 		--增加背景
 		local bgSprite = CCSprite:create("UI/Bg/BG1.png")
-		bgSprite:setScale(1.5);
+		bgSprite:setScaleX(1.4);
+		--bgSprite:setScaleY(1.0);
         bglayer:addChild(bgSprite,1)
-		--bglayer:setPosition(CCPointMake(230, 200))
-		
 		
 		local scene = Main.GetGameScene();
 		
 		scene:addChild(bglayer,5)	
 	
-	
-	-->>>>>>>>>>>>>>>动画效果	
-	function pause()
-		Main.EnableTouch(true)--打开触摸
-		CCDirector:sharedDirector():pause()
-	end	
-	--向下飘入
-	local arr = CCArray:create()	
-	bglayer:setPosition(330 , winSize.height+300)
-	local moveby = CCMoveBy:create(1, ccp(0,-winSize.height))
-	local actiontoease =  CCEaseBounceOut:create(moveby)	
-	
-	local actionremove = CCCallFuncN:create(pause)
-	arr:addObject(actiontoease)
-	arr:addObject(actionremove)
-	
-	local  seq = CCSequence:create(arr)	
-	bglayer:runAction(seq)	
-
-	Main.EnableTouch(false)--阻断触摸
-	--<<<<<<<<<<<<<<<--
+		bglayer:setPosition(350 + winSize.width , 300)
 end
 
 

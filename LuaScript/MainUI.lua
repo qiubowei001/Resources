@@ -285,7 +285,7 @@ end
 function p.menuCallbackUpgradeBtn(tag,sender)
      --CCDirector:sharedDirector():pause()
      --加载升级界面 
-	 EquipUpGradeUI.LoadUI();
+	 EquipUpGradeUI.ShowAllUI();
 end
 
 

@@ -2,7 +2,7 @@ cclog = function(...)
        CCLuaLog(string.format(...))
 		end
 
-local Release = false --ÊÇ·ñÓÃÕæ»úµ÷ÊÔ
+local Release = true --æ˜¯å¦ç”¨çœŸæœºè°ƒè¯•
 if Release then
 	dofile = require
 end
@@ -23,14 +23,14 @@ math.randomseed(os.time())
 
 g_sceneGame = nil
 cclog("qbw99:12")
---ÓÎÏ·³õÊ¼»¯¹¤×÷
-dofile("LuaScript/brickInfo.lua")--ºê¶¨Òå
+--æ¸¸æˆåˆå§‹åŒ–å·¥ä½œ
+dofile("LuaScript/brickInfo.lua")--å®å®šä¹‰
 cclog("qbw99:13")
-dofile("LuaScript/extern.lua")--¼Ì³ĞÀà¶¨Òå
+dofile("LuaScript/extern.lua")--ç»§æ‰¿ç±»å®šä¹‰
 cclog("qbw99:14")
-dofile("LuaScript/dataInit.lua")--Êı¾İ³õÊ¼»¯
+dofile("LuaScript/dataInit.lua")--æ•°æ®åˆå§‹åŒ–
 cclog("qbw99:15")
-dofile("LuaScript/GlobalEvent.lua")--È«¾ÖÊÂ¼ş´¥·¢
+dofile("LuaScript/GlobalEvent.lua")--å…¨å±€äº‹ä»¶è§¦å‘
 
 cclog("qbw99:2")
 

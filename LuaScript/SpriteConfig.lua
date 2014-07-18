@@ -200,8 +200,8 @@ SpriteConfig[28].FrameNumX = 10
 SpriteConfig[28].FrameNumY = 3
 
 SpriteConfig[29] = {}
-SpriteConfig[29].Name = "monster/15"
-SpriteConfig[29].Width = 81
-SpriteConfig[29].Height = 91
-SpriteConfig[29].FrameNumX = 10
-SpriteConfig[29].FrameNumY = 3
+SpriteConfig[29].Name = "monster/1"
+SpriteConfig[29].Width = 80
+SpriteConfig[29].Height = 74
+SpriteConfig[29].FrameNumX = 6
+SpriteConfig[29].FrameNumY = 4

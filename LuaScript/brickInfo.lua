@@ -7,9 +7,11 @@ brickInfo.brickWidth = 90;
 brickInfo.brickHeight = 90;
 brickInfo.brickSpeed = 5;
 brickInfo.brickRespondArea = 0.7;--砖块相应区域0-1
-
 brickInfo.layerMainAdjX = 100;--棋盘偏移X
 
+
+
+brickInfo.SwordAtt = 3;
 
 
 --这俩个参数可以考虑做到MISSION里面

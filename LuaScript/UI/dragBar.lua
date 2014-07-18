@@ -115,6 +115,7 @@ local function onTouchEnded()
 	end
 	
 	bLock = false
+	g_choosedPointer = nil
 	return true;
 end
 

@@ -687,7 +687,57 @@ magictable = {}
 	magictable[1016][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
 	magictable[1016][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
 	magictable[1016][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
+
+
+	--如果掉落最下层则爆炸
+	magictable[1017]={}
+	magictable[1017][MAGIC_DEF_TABLE.ID] = 1017
+	magictable[1017][MAGIC_DEF_TABLE.NAME] = "自爆"
+	magictable[1017][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1017][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1017][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
+	magictable[1017][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1017
+	magictable[1017][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1017][MAGIC_DEF_TABLE.DESCPTION] = "愤怒"
+	magictable[1017][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1017][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1017][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1017][MAGIC_DEF_TABLE.CHOOSE_PARAM] = {R = 0}
 		
+
+	--消耗玩家能量
+	magictable[1018]={}
+	magictable[1018][MAGIC_DEF_TABLE.ID] = 1018
+	magictable[1018][MAGIC_DEF_TABLE.NAME] = "燃烧能量"
+	magictable[1018][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1018][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1018][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
+	magictable[1018][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1018
+	magictable[1018][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1018][MAGIC_DEF_TABLE.DESCPTION] = "攻击时吸取玩家能量"
+	magictable[1018][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1018][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1018][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1018][MAGIC_DEF_TABLE.CHOOSE_PARAM] = nil
+			
+
+	--攻击使玩家装备扣级别
+	magictable[1019]={}
+	magictable[1019][MAGIC_DEF_TABLE.ID] = 1019
+	magictable[1019][MAGIC_DEF_TABLE.NAME] = "损毁装备"
+	magictable[1019][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1019][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1019][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
+	magictable[1019][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1019
+	magictable[1019][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1019][MAGIC_DEF_TABLE.DESCPTION] = "攻击时吸取玩家能量"
+	magictable[1019][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncSelf
+	magictable[1019][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1019][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1019][MAGIC_DEF_TABLE.CHOOSE_PARAM] = nil
+		
+		
+				
 --相同怪物组合成新怪物
 
 
