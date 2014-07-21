@@ -737,7 +737,22 @@ magictable = {}
 	magictable[1019][MAGIC_DEF_TABLE.CHOOSE_PARAM] = nil
 		
 		
-				
+--随机与一个BRICK调换位置
+	magictable[1020]={}
+	magictable[1020][MAGIC_DEF_TABLE.ID] = 1020
+	magictable[1020][MAGIC_DEF_TABLE.NAME] = "冰冻"
+	magictable[1020][MAGIC_DEF_TABLE.PICICON] = ""
+	magictable[1020][MAGIC_DEF_TABLE.SPELL_FUNC_ID] = nil
+	magictable[1020][MAGIC_DEF_TABLE.TARGET_TYPE] = TARGET_TYPE.AI_MONSTER
+	magictable[1020][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0] = 1020
+	magictable[1020][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCPHASE_0] = GameLogicPhase.AFTER_MONSTER_SPELL
+	magictable[1020][MAGIC_DEF_TABLE.DESCPTION] = "随机调换位置"
+	magictable[1020][MAGIC_DEF_TABLE.AI_CHOOSE_FUNC] = p.AIChooseFuncRandom
+	magictable[1020][MAGIC_DEF_TABLE.AI_DOEFF_AFTERSPELL] = true
+	magictable[1020][MAGIC_DEF_TABLE.NEXT_MAGIC] =  nil
+	magictable[1020][MAGIC_DEF_TABLE.CHOOSE_PARAM] = nil
+	
+					
 --相同怪物组合成新怪物
 
 

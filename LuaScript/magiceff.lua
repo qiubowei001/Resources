@@ -566,6 +566,18 @@ function p.eff1019(pbrick,Tparam1)
 end
 
 
+
+--调换位置  pbrick
+function p.eff1020(pbrick,Tparam1)
+	
+	if pbrick.IsAbleLink == false then
+		return
+	end
+	Particle.AddParticleEffToBrick(pbrick,"ice")
+	pbrick.IsAbleLink = false;
+end
+
+
 --技能特效配置表
 MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1]={}
@@ -838,7 +850,15 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.TPARAM] ={ rate = 1} 
 	MAGIC_EFFtable[1019][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
 	
-		
+                 
+	MAGIC_EFFtable[1020]={}
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.ID] = 1020
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.DESCPTION] = "随机调换位置"
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 2
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1020
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 2
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.TPARAM] =nil
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false		
 --合体 A B C D类型同时出现在屏幕则合成为一个怪物	
 	
 	
