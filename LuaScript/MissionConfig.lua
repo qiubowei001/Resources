@@ -1,7 +1,9 @@
+print("qbwMisCig 11")
+
 local g_b_UseLocalData  = false --true :使用本地数据 false ：使用文件数据
 
 
-
+--cclog("qbwMisCig 1")
 
 --关卡配置编辑器
 MissionConfig = {}
@@ -11,7 +13,8 @@ local p = MissionConfig;
 local g_tRandom = {}
 local grandomskill1,grandomskill2,grandomskill3 = 0,0,0;
 
-local savepath = "data/missionConfig/mission.xml"
+local savepath = "data\\missionConfig\\mission.xml"
+
 
 local tbrickTypeInfo = {}
 										--SPRITE ID
@@ -26,6 +29,8 @@ local nTagTransparentLayer = 999
 local g_bIfSaved = true;
 
 local gTipSprite = nil;
+
+
 
 
 --测试数据
@@ -61,7 +66,6 @@ tMissionData =
 }
 
 end
-
 
 
 --获取触摸layer	
@@ -159,7 +163,7 @@ function p.LoadUI()
 			--初始化
 			p.Init()
 			
-			savepath = "data/missionConfig/mission"..nLastFileId..".xml"
+			savepath = "data\\missionConfig\\mission"..nLastFileId..".xml"
 			--读取数据
 			data(savepath, tMissionData)			
 			
@@ -592,7 +596,7 @@ function p.LoadData(tag,sender)
 	
 	inputFileid = tonumber(inputFileid)
 	if inputFileid>0 and inputFileid < 9999 then
-		savepath = "data/missionConfig/mission"..inputFileid..".xml"
+		savepath = "data\\missionConfig\\mission"..inputFileid..".xml"
 		--读取数据
 		data(savepath, tMissionData)		
 		
@@ -696,7 +700,7 @@ end
 
 local gX_Step = 100;
 local gY_Step = 100;
-local gX_Num = 5;
+local gX_Num = 7;
 local MonTypeLayer = nil
 local g_Chosed_MontypeItem = nil  --选中怪物类型切换按钮
 --点击怪物类型 切换怪物类型
@@ -721,7 +725,7 @@ function p.clickMontype(tag,sender)
 			X = gX_Num
 		end
 		local Y = math.ceil(i/gX_Num)
-		item1:setPosition(-250+gX_Step*X,200-gY_Step*Y)
+		item1:setPosition(-450+gX_Step*X,350-gY_Step*Y)
 	end
 	
 	menu:setPosition(CCPointMake(0, 0))

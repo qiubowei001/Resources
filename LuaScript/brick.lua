@@ -283,6 +283,36 @@ function brick.creatBrick(nType)
 end
 
 
+function brick.creatBloodBrick()
+		local nType = tbrickType.BLOOD
+		local spriteParent = brick.createParentSprite();
+		local spriteBrick = SpriteManager.creatBrickSprite(tbrickTypeInfo[nType][1])
+		spriteParent:addChild(spriteBrick)
+		spriteBrick:setTag(MainSpritetag)
+		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+   
+		
+		brick.init(spriteParent,nType)
+		spriteParent.BLOOD =  1;
+		return spriteParent
+end
+
+
+function brick.creatPoisonBrick()
+		local nType = tbrickType.BLOOD
+		local spriteParent = brick.createParentSprite();
+		local spriteBrick = SpriteManager.creatBrickSprite(30)
+		spriteParent:addChild(spriteBrick)
+		spriteBrick:setTag(MainSpritetag)
+		spriteBrick:setPosition(CCPointMake(brickWidth/2 , brickHeight/2))
+   
+		
+		brick.init(spriteParent,nType)
+		spriteParent.BLOOD =  -2;
+		return spriteParent
+end
+
+
 function brick.creatGoldBrick(nType)
 		local num = Goldbrick.init()
 		
@@ -318,19 +348,35 @@ end
 function brick.AddMagicEff(effinfoT,pbrick)
 	local magic_effect_aftermonact = pbrick.magic_effect_aftermonact
 	local magic_effect_afterplayeract= pbrick.magic_effect_afterplayeract
-	
+	local efft = nil
 	local bIfPlayerAct = effinfoT[MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT]
 	if bIfPlayerAct then
-		magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
+		--magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
+		efft = magic_effect_afterplayeract
 	else
-		magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
+		--magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
+		efft = magic_effect_aftermonact
 	end
-		
+	
+	--替换重复
+	local effid = effinfoT[MAGIC_EFF_DEF_TABLE.ID]
+	local oldeffindex = player.findEff(effid,efft)
+	if oldeffindex ~=nil then
+		--替换
+		efft[oldeffindex] = effinfoT
+	else
+		--插入
+		efft[#efft+1] = effinfoT;
+	end
+	
+	
 	--增加光效
 	if effinfoT[MAGIC_EFF_DEF_TABLE.EFF_PIC] ~= "" then
 		brick.setMagiceffect(pbrick,effinfoT[MAGIC_EFF_DEF_TABLE.EFF_PIC])
 	end
 end
+
+
 
 --获取玩家行为触发技能特效表
 function brick.GetMagicEffTableAfterPlayerAct(pbrick)

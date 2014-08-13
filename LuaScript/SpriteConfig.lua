@@ -205,3 +205,40 @@ SpriteConfig[29].Width = 80
 SpriteConfig[29].Height = 74
 SpriteConfig[29].FrameNumX = 6
 SpriteConfig[29].FrameNumY = 4
+
+SpriteConfig[30] = {}
+SpriteConfig[30].Name = "poison"
+SpriteConfig[30].Width = 71 
+SpriteConfig[30].Height = 72
+SpriteConfig[30].FrameNumX = 1
+SpriteConfig[30].FrameNumY = 1
+
+SpriteConfig[31] = {}
+SpriteConfig[31].Name = "monster/17"
+SpriteConfig[31].Width = 79
+SpriteConfig[31].Height = 80
+SpriteConfig[31].FrameNumX = 6
+SpriteConfig[31].FrameNumY = 4
+
+SpriteConfig[32] = {}
+SpriteConfig[32].Name = "monster/18"
+SpriteConfig[32].Width = 79
+SpriteConfig[32].Height = 80
+SpriteConfig[32].FrameNumX = 6
+SpriteConfig[32].FrameNumY = 4
+
+
+SpriteConfig[33] = {}
+SpriteConfig[33].Name = "monster/19"
+SpriteConfig[33].Width = 80
+SpriteConfig[33].Height = 87
+SpriteConfig[33].FrameNumX = 6
+SpriteConfig[33].FrameNumY = 5
+
+
+SpriteConfig[34] = {}
+SpriteConfig[34].Name = "monster/20"
+SpriteConfig[34].Width = 65
+SpriteConfig[34].Height = 71
+SpriteConfig[34].FrameNumX = 6
+SpriteConfig[34].FrameNumY = 4

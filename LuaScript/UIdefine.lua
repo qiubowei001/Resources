@@ -17,6 +17,7 @@ UIdefine =
 	LoadDataUI			= 10015,
 	SaveTipUI			= 10016,
 	BuySkillUI			= 10017,
+	ShineSkill			= 10018,
 }
 
 

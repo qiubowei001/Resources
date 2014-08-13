@@ -150,7 +150,7 @@ function p.Initplayer()
 	player.Dodgechance = 0;
 	
 	player.TauntedByMon = nil;--被誰嘲諷
-
+	player.Silent = false;--沉默
 	
 	--初始金币
 	local nMission = mission.GetMission()
@@ -163,7 +163,7 @@ function p.Initplayer()
 	
 	player.UpdateEntityData();
 
-	--player.AddNewSkill(14,17)
+	player.AddNewSkill(14,17)
 	--player.AddNewSkill(7,16)
 
 	--[[
@@ -342,12 +342,34 @@ function player.GetAttack()
 	return  att;
 end
 
+
+function player.findEff(effid,efft)
+	local playereffT = efft--player.GetMagicEffTableAfterMonsterAct()
+	for index,v in pairs(playereffT)do
+		if v[MAGIC_EFF_DEF_TABLE.ID] == effid  then
+			return index	
+		end
+	end
+	return nil
+end
+	
 function player.AddMagicEff(effinfoT,nPhase)
 	local bIfPlayerAct = effinfoT[MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT]
+	local efft = nil
 	if bIfPlayerAct then
-		magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
+		efft = magic_effect_afterplayeract--magic_effect_afterplayeract[#magic_effect_afterplayeract+1] = effinfoT;
 	else
-		magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
+		efft = magic_effect_aftermonact--magic_effect_aftermonact[#magic_effect_aftermonact+1] = effinfoT;
+	end
+	
+	local effid = effinfoT[MAGIC_EFF_DEF_TABLE.ID]
+	local oldeffindex = player.findEff(effid,efft)
+	if oldeffindex ~=nil then
+		--替换
+		efft[oldeffindex] = effinfoT
+	else
+		--插入
+		efft[#efft+1] = effinfoT;
 	end
 end
 
@@ -365,7 +387,7 @@ end
 --玩家攻击
 --tAttAction{damage攻击力 target对象}
 function player.Attack(tAttAction)
-	local nDamage = tAttAction.damage
+	
 	local target = tAttAction.target
 	
 	--如果有嘲諷怪 且存活則改變對象
@@ -375,13 +397,12 @@ function player.Attack(tAttAction)
 		player.TauntedByMon = nil
 	end
 	
-	--local tAttAction = player.InitAttAction(nDamage,target)
 					
 	--遍历攻击调整函数
 	for k,func in pairs(player.AttAdjFuncT) do
 		func(tAttAction)
 	end
-					
+	local nDamage = tAttAction.damage				
 	
 	local bcritical = false
 	--计算暴击伤害

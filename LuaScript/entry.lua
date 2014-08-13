@@ -2,7 +2,7 @@ cclog = function(...)
        CCLuaLog(string.format(...))
 		end
 
-local Release = true --是否用真机调试
+local Release = false --是否用真机调试
 if Release then
 	dofile = require
 end
@@ -32,7 +32,7 @@ dofile("LuaScript/dataInit.lua")--数据初始化
 cclog("qbw99:15")
 dofile("LuaScript/GlobalEvent.lua")--全局事件触发
 
-cclog("qbw99:2")
+cclog("qbw99:2a")
 
 dofile("LuaScript/MissionConfig.lua")
 

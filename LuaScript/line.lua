@@ -28,6 +28,17 @@ function p.GetLineType()
 	return Line[1].nType;
 end
 
+function p.IfInLine(pbrick)
+	
+	for i,linebrick in pairs(Line)do
+		if pbrick == linebrick then
+			return true
+		end		
+	end
+	return false
+end
+
+	
 --返回是否成功执行一次操作
 function p.OnTouchEnd()
 			--取消tip
@@ -95,9 +106,15 @@ function p.OnTouchEnd()
 							Main.BrickMoveToBar(v,1);							
 						end
 					elseif actiontype == tbrickType.BLOOD then
+						nLineNum = 0;
+						for i,v in pairs(Line) do
+							nLineNum = nLineNum + v.BLOOD;							
+							Main.BrickMoveToBar(v,2);							
+						end
+								--[[			
 						for i,v in pairs(Line) do
 							Main.BrickMoveToBar(v,2);
-						end						
+						end			--]]			
 					elseif actiontype == tbrickType.ENERGY then	
 						for i,v in pairs(Line) do
 							Main.BrickMoveToBar(v,3);		
@@ -199,6 +216,26 @@ function p.OnHitABrick(pbrick)
 		end
 end
 
+
+
+function p.RemoveBrickFromLine(pbrick)
+	local indextmp = -1;
+	for i,v in pairs(Line) do
+		if v== pbrick then
+			indextmp = i;
+		end				
+	end	
+	
+	if indextmp ~= -1 then
+		brick.setUnChosed(Line[indextmp])
+		brick.removedeatheff(Line[indextmp])
+		table.remove(Line, indextmp)
+		
+	end
+	
+end
+
+	
 --将BRICK之后的全删除
 function p.CancelLineFromBrick(pbrick)
 	if #Line>=1 then
@@ -223,6 +260,8 @@ function p.CancelLineFromBrick(pbrick)
 			end
 	LineFunc.setTip(pbrick)	
 end
+
+
 
 function p.CancelLine()
 	for i,v in pairs(Line) do

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-  <command>D:\Work\qbwdemo\Resources\qbwdemo.exe</command>
-  <working_directory>D:\Work\qbwdemo\Resources</working_directory>
+  <command>D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources\qbwdemo.exe</command>
+  <working_directory>D:\Work\cocos2d-2.1rc0-x-2.1.3\samples\Lua\qbwdemo\Resources</working_directory>
   <symbols_directory></symbols_directory>
   <command_arguments></command_arguments>
   <scc>

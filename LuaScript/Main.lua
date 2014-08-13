@@ -14,6 +14,7 @@ Board = {};
 --======游戏环境变量=======--
 tParamEvn = {};
 tParamEvn.playerAttDamageThisRound = 0
+tParamEvn.playerActionThisRound	= nil;
 --==========================--
 
 
@@ -241,6 +242,8 @@ function Main.brickfallLogic()
 			
 		elseif nbricktype == tbrickType.GOLD then
 			pbrick = brick.creatGoldBrick(nbricktype)
+		elseif nbricktype == tbrickType.BLOOD then
+			pbrick = brick.creatBloodBrick()
 		else
 			pbrick = brick.creatBrick(nbricktype);
 		end	
@@ -255,7 +258,9 @@ function Main.brickfallLogic()
 		end
 		pbrick.movetoTime = timeinterval;
 
+		p.AddBrickToBoard(pbrick)
 		p.brickSetXY(pbrick,X,Ymin)	
+
 		p.brickFlashIn(pbrick);
 		
 		Board[X][Ymin] = pbrick;
@@ -274,14 +279,21 @@ function Main.GetGameScene()
 end
 
 function Main.destroyBrick(X,Y,ifRemove)
-	
-	
+
 	if Board[X][Y] ~= nil then
+		--[[如果在LINE中 则去除
+		local pbrick =  Board[X][Y]
+		if LineFunc.IfInLine(pbrick) then
+			LineFunc.RemoveBrickFromLine(pbrick)
+		end--]]
+	
+	
 		if ifRemove == nil or ifRemove == true then
 			layerMain:removeChild(Board[X][Y], true)
 		end
 		Board[X][Y] = nil;
 	end
+	
 end
 	
 function Main.GetMonsterList()
@@ -301,6 +313,12 @@ end
 
 
 function Main.menuCallbackOpenPopup(tag,sender)
+			--禁魔
+			if player.Silent then
+				Hint.ShowHint(Hint.tHintType.criticalDown)
+				return
+			end
+			
             --使用技能
 			local nMagicId = SkillBar.GetMagicIdFromTag(tag);
 			
@@ -343,10 +361,13 @@ function p.brickSetBGXY(pbrick,X,Y)
 		layerMain:addChild(pbrick,1);
 end	
 
+function p.AddBrickToBoard(pbrick)
+	layerMain:addChild(pbrick,2);
+end
 
 function p.brickSetXY(pbrick,X,Y)
 		pbrick:setPosition(X*brickInfo.brickWidth+brickInfo.brickWidth/2, Y*brickInfo.brickHeight-brickInfo.brickHeight/2)
-		layerMain:addChild(pbrick,2);
+		--layerMain:addChild(pbrick,2);
 		if X>=1 and X <=brickInfo.brick_num_X and Y>=1 and Y<=brickInfo.brick_num_Y then
 			Board[X][Y] = pbrick;
 			pbrick.TileX = X;
@@ -620,6 +641,11 @@ function p.main(nMission)
 				if nAction == false then
 					return true;
 				end
+				
+				
+				--玩家执行行为记录
+				tParamEvn.playerActionThisRound = nAction
+				
 				
 				--全局事件
 				GlobalEvent.OnEvent(GLOBAL_EVENT.LINK_SUCC)

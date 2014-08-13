@@ -84,7 +84,7 @@ function p.eff03(pbrick,Tparam1)
 			
 
 
-	
+	Main.AddBrickToBoard(brickTo)
 	Main.brickSetXY(brickTo,tileX,tileY)
 	--Board[tileX][tileY] = brickTo;
 	pbrick:removeFromParentAndCleanup(true);
@@ -381,6 +381,7 @@ function p.eff1006(pbrick,Tparam1)
 	 brickTo = brick.creatMonster(nMonsterid)
 	Particle.AddParticleEffToBrick(brickTo,"shineSporn")
 	
+	Main.AddBrickToBoard(brickTo)
 	Main.brickSetXY(brickTo,tileX,tileY)
 	--Board[tileX][tileY] = brickTo;
 	pbrick:removeFromParentAndCleanup(true);
@@ -567,17 +568,293 @@ end
 
 
 
---调换位置  pbrick
-function p.eff1020(pbrick,Tparam1)
-	
-	if pbrick.IsAbleLink == false then
-		return
+--调换位置  ptarget
+function p.eff1020(ptarget,Tparam1,pself)
+	--如果在line里 则断开
+	if LineFunc.IfInLine(pself) or  LineFunc.IfInLine(ptarget) then
+		LineFunc.CancelLine()
 	end
-	Particle.AddParticleEffToBrick(pbrick,"ice")
-	pbrick.IsAbleLink = false;
+	
+	local tileXT = ptarget.TileX
+	local tileYT = ptarget.TileY
+
+	local tileXS = pself.TileX
+	local tileYS = pself.TileY
+	
+	Main.brickSetXY(pself,tileXT,tileYT)
+	Main.brickSetXY(ptarget,tileXS,tileYS)
+	
+	Main.brickFlashIn(pself);
+	Main.brickFlashIn(ptarget);
+	
+	Particle.AddParticleEffToWorld(pself,"shineSporn")
+	Particle.AddParticleEffToWorld(ptarget,"shineSporn")
 end
 
 
+--玩家中毒
+function p.eff1021(player,tparam1)
+	local action = tParamEvn.playerActionThisRound
+	
+	--玩家吃血瓶则去除EFF
+	if action == tbrickType.BLOOD then
+		local playereffT = player.GetMagicEffTableAfterPlayerAct()
+		local effindex = player.findEff(1021,playereffT)
+		if effindex ~= nil then
+			table.remove(playereffT,effindex) 
+		end
+		return
+	end
+	
+	player.AddHp(-10)
+end
+
+
+--玩家攻击力虚弱
+function p.eff1023(player,tparam1)
+	 player.AddAttAdjFunc(function(tAttAction)
+								tAttAction.damage = 0.4*tAttAction.damage
+						  end
+							,1023)
+end
+
+
+function p.effclr1023(pObj)
+	Hint.ShowHint(Hint.tHintType.criticalDown)
+	player.RemoveAdjFunc(1023)
+end
+
+
+
+
+
+--加速游戏速度
+function p.eff1025(pobj,Tparam1)
+	CCDirector:sharedDirector():getScheduler():setTimeScale(2);
+end
+
+function p.effclr1025()
+	CCDirector:sharedDirector():getScheduler():setTimeScale(1);
+end
+
+
+--brick转换为毒药
+function p.eff1026(pbrick,Tparam1)
+	local brickTo = nil;
+
+	local tileX = pbrick.TileX
+	local tileY = pbrick.TileY
+	brickTo = brick.creatPoisonBrick()
+	Particle.AddParticleEffToBrick(brickTo,"poison2")
+	
+	Main.AddBrickToBoard(brickTo)
+	Main.brickSetXY(brickTo,tileX,tileY)
+	pbrick:removeFromParentAndCleanup(true);
+end
+
+--增强所有MON攻击力
+function p.eff1027(pobj,Tparam1)
+		local typeid = pobj.monsterId;
+		local level = pobj.moninfo[monsterInfo.LEV];
+		--加速
+		local CDMAX =  MONSTER_TYPE[typeid]["CD"] + level*MONSTER_TYPE[typeid]["CDGrow"]
+		CDMAX = CDMAX/2
+		pobj.moninfo[monsterInfo.CDMAX] = CDMAX
+		
+		--播放光效
+		Particle.AddParticleEffToBrick(pobj,"buff")
+end
+
+function p.effclr1027(pobj)
+		local typeid = pobj.monsterId;
+		local level = pobj.moninfo[monsterInfo.LEV];	
+		--回复原状
+		local CDMAX = MONSTER_TYPE[typeid]["CD"] + level*MONSTER_TYPE[typeid]["CDGrow"]
+		pobj.moninfo[monsterInfo.CDMAX] = CDMAX	
+end
+
+
+--隐身 无法被攻击
+function p.eff1028(self)
+	local mainsprite = brick.GetMainSprite(self)
+	self.HideRound = self.HideRound - 1
+	
+	if self.HideRound <= 0 then
+		mainsprite:setOpacity(255)
+		self.HideRound = 3
+		monster.RemoveAdjFunc(self,1028)
+	else
+		mainsprite:setOpacity(30)
+		
+		monster.AddAttAdjFunc(self, function(tAttAction)
+											tAttAction.damage = 0
+										end
+							,1028)
+	end
+end
+
+
+--brick被吃掉
+function p.eff1029(pbrick,Tparam1,pself)
+	local brickTo = nil;
+
+	local tileX = pbrick.TileX
+	local tileY = pbrick.TileY
+	
+	--如果在LINE中 则去除
+	if LineFunc.IfInLine(pbrick) then
+		LineFunc.RemoveBrickFromLine(pbrick)
+	end--]]
+		
+	Main.destroyBrick(tileX,tileY,true)
+	Particle.AddParticleEffToWorld(pbrick,"shineSporn")
+	Particle.AddParticleEffToBrick(pself,"shineSporn")
+	
+	pself.moninfo[monsterInfo.ATT] = pself.moninfo[monsterInfo.ATT] * 1.5
+	local recover = pself.moninfo[monsterInfo.HPMAX] * 0.3
+	pself.moninfo[monsterInfo.CDMAX] = pself.moninfo[monsterInfo.CDMAX]*0.8
+
+	--体型变大
+	local mainsprite = brick.GetMainSprite(pself)
+
+
+	--
+	local action = CCScaleBy:create(1, 1.2)
+	mainsprite:runAction(action)--
+	--local  scale = sprite:getScale() 
+	--mainsprite:setScale(1.1)
+	
+	monster.AddHp(pself,recover)
+end
+
+
+--叠加伤害
+function p.eff1030(self)
+	local att = self.moninfo[monsterInfo.ATT] * 1.1
+	self.moninfo[monsterInfo.ATT] = att
+end
+
+--爆发
+function p.eff1031(self)
+	--生命少于50% 攻击翻倍
+		monster.AddAttAdjFunc(self,
+							function(tAttAction)
+								--增加特效
+								--Particle.AddParticleEffToBrick(tAttAction.attacker,"suckenergy")	
+								local percent = 	self.moninfo[monsterInfo.HP]	/ self.moninfo[monsterInfo.HPMAX] 	
+								if percent <= 0.5 then
+									tAttAction.damage = tAttAction.damage * 2
+								end
+							end
+							,1031)			
+end	
+
+
+
+--brick(p1)转换为怪物
+function p.eff1032(pbrick,Tparam1,pself)
+	
+	--不变自己
+	if pself == pbrick then
+		return
+	end	
+	
+	local brickTo = nil;
+	local fromType = Tparam1.fromType;
+	local nMonsterid  = Tparam1.nMonsterid;
+	
+	
+	local tileX = pbrick.TileX
+	local tileY = pbrick.TileY
+	 brickTo = brick.creatMonster(nMonsterid)
+	Particle.AddParticleEffToBrick(brickTo,"shineSporn")
+	
+	Main.AddBrickToBoard(brickTo)
+	Main.brickSetXY(brickTo,tileX,tileY)
+	--Board[tileX][tileY] = brickTo;
+	pbrick:removeFromParentAndCleanup(true);
+end
+
+
+
+--玩家沉默
+function p.eff1033(player,tparam1)
+	player.Silent = true
+end
+
+
+function p.effclr1033(pObj)
+	Hint.ShowHint(Hint.tHintType.criticalDown)
+	player.Silent = false
+end
+
+
+--玩家吃金币耗能+
+function p.eff1034(player,tparam1)
+	local action = tParamEvn.playerActionThisRound
+	
+	if action == tbrickType.GOLD then
+		player.SpendEnergy(5)
+	end
+end
+
+--玩家吃血耗能+
+function p.eff1035(player,tparam1)
+	local action = tParamEvn.playerActionThisRound
+	
+	if action == tbrickType.BLOOD then
+		player.SpendEnergy(5)
+	end
+end
+
+--玩家吃怪耗能+
+function p.eff1036(player,tparam1)
+	local action = tParamEvn.playerActionThisRound
+	
+	if action == tbrickType.SWORD or action == tbrickType.MONSTER then
+		player.SpendEnergy(5)
+	end
+end
+
+
+
+
+--玩家吃金币 怪物加攻
+function p.eff1037(self,tparam1)
+	local action = tParamEvn.playerActionThisRound
+
+	
+	if action == tbrickType.GOLD then
+		Particle.AddParticleEffToBrick(self,"shineSporn")
+		local att = self.moninfo[monsterInfo.ATT] * 1.5  -- 1.1
+		self.moninfo[monsterInfo.ATT] = att	
+	end
+end
+
+
+--玩家吃血 怪物加攻
+function p.eff1038(self,tparam1)
+	local action = tParamEvn.playerActionThisRound
+
+	
+	if action == tbrickType.BLOOD then
+		Particle.AddParticleEffToBrick(self,"shineSporn")
+		local att = self.moninfo[monsterInfo.ATT] * 1.5  -- 1.1
+		self.moninfo[monsterInfo.ATT] = att	
+	end
+end
+
+--玩家吃剑 怪物加攻
+function p.eff1039(self,tparam1)
+	local action = tParamEvn.playerActionThisRound
+
+	
+	if action == tbrickType.SWORD or action == tbrickType.MONSTER then
+		Particle.AddParticleEffToBrick(self,"shineSporn")
+		local att = self.moninfo[monsterInfo.ATT] * 1.5  -- 1.1
+		self.moninfo[monsterInfo.ATT] = att	
+	end
+end
 --技能特效配置表
 MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1]={}
@@ -854,18 +1131,184 @@ MAGIC_EFFtable = {}
 	MAGIC_EFFtable[1020]={}
 	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.ID] = 1020
 	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.DESCPTION] = "随机调换位置"
-	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 2
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
 	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1020
-	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 2
+	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
 	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.TPARAM] =nil
 	MAGIC_EFFtable[1020][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false		
---合体 A B C D类型同时出现在屏幕则合成为一个怪物	
-	
-	
-	
-	
 
+
+	MAGIC_EFFtable[1021]={}
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.ID] = 1021
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.DESCPTION] = "讓玩家攻击时 -血"
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1021
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1021][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
 	
+--effclr1023
+	MAGIC_EFFtable[1023]={}
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.ID] = 1023
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.DESCPTION] = "讓玩家攻击时变弱"
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1023
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr1023		
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1023][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+	
+	MAGIC_EFFtable[1025]={}
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.ID] = 1025
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.DESCPTION] = "加速游戏速度5回合"
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1025
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr1025
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.TPARAM] = {addAttack = 5}
+	MAGIC_EFFtable[1025][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true
+	
+	MAGIC_EFFtable[1026]={}
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.ID] = 1026
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.DESCPTION] = "血变毒"
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1026
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
+	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.TPARAM] ={ fromType = tbrickType.SWORD,nMonsterid = 6} 
+ 	MAGIC_EFFtable[1026][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+	
+	MAGIC_EFFtable[1027]={}
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.ID] = 1027
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.DESCPTION] = "加速"
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1027
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 3
+	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.TPARAM] ={ } 
+ 	MAGIC_EFFtable[1027][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1028]={}
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.ID] = 1028
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.DESCPTION] = "隐身"
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1028
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+ 	MAGIC_EFFtable[1028][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+	
+	MAGIC_EFFtable[1029]={}
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.ID] = 1029
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.DESCPTION] = "吃怪"
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1029
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
+	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+ 	MAGIC_EFFtable[1029][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1030]={}
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.ID] = 1030
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.DESCPTION] = "叠伤"
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1030
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+ 	MAGIC_EFFtable[1030][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1031]={}
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.ID] = 1031
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.DESCPTION] = "爆发"
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1031
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 999
+	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+ 	MAGIC_EFFtable[1031][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+
+	MAGIC_EFFtable[1032]={}
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.ID] = 1008
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.DESCPTION] = "刀转换怪物"
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.EFF_PIC] = 4
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1032
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 1
+	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.TPARAM] ={ fromType = tbrickType.SWORD,nMonsterid = 6} 
+ 	MAGIC_EFFtable[1032][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = false
+	
+	MAGIC_EFFtable[1033]={}
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.ID] = 1033
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.DESCPTION] = "沉默"
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1033
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = p.effclr1033		
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1033][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+		
+	MAGIC_EFFtable[1034]={}
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.ID] = 1034
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.DESCPTION] = "金币耗能+"
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1034
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1034][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+				
+	MAGIC_EFFtable[1035]={}
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.ID] = 1035
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.DESCPTION] = "血瓶耗能+"
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1035
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1035][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+
+	MAGIC_EFFtable[1036]={}
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.ID] = 1036
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.DESCPTION] = "杀怪耗能+"
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1036
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1036][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+
+	MAGIC_EFFtable[1037]={}
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.ID] = 1037
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.DESCPTION] = "吃金币 给怪物BUFF"
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1037
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1037][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+
+	MAGIC_EFFtable[1038]={}
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.ID] = 1038
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.DESCPTION] = "吃血 给怪物BUFF"
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1038
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1038][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+
+	MAGIC_EFFtable[1039]={}
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.ID] = 1039
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.DESCPTION] = "吃剑 给怪物BUFF"
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.EFF_PIC] = nil
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.EFF_FUNC] = p.eff1039
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] = nil
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = 5
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.TPARAM] ={} 
+	MAGIC_EFFtable[1039][MAGIC_EFF_DEF_TABLE.B_IF_TRIGER_AFTER_PLAYER_ACT] = true	
+
+			
 --为玩家新增技能特效
 function p.AddPlayerMagicEff(efffuncid)
 	local effinfoT = p.createMagicEff(efffuncid);
@@ -876,6 +1319,10 @@ end
 
 --为brick新增技能特效
 function p.AddBrickMagicEff(efffuncid,pbrick,nMagicId)
+	if efffuncid == nil then
+		return
+	end
+		
 	if nMagicId ~= nil then
 		if magictable[nMagicId][MAGIC_DEF_TABLE.SPELL_TYPE] ~= nil and magictable[nMagicId][MAGIC_DEF_TABLE.SPELL_TYPE] ~= pbrick.nType then
 			return nil;
@@ -988,7 +1435,7 @@ function p.ClearPlayerTriggerMagicEff(tParamEvn)
 					if v[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] <= 0 then 
 						if v[MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC] ~= nil then
 							v[MAGIC_EFF_DEF_TABLE.CLEAR_EFF_FUNC](pbrick)
-						end	
+						end
 						table.insert(tRemoveTmpT,h)
 						brick.removeMagiceff(Board[i][j],v[MAGIC_EFF_DEF_TABLE.EFF_PIC])
 					end

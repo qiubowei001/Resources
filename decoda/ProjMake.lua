@@ -1,9 +1,11 @@
 lfs = require"lfs"
 print(lfs.currentdir())
 --local resScriptPath = "D:/Work/Slamdunk/slamdunk_client/bin/gameres/res/script"
-local resScriptPath = "D:/Work/qbwdemo/Resources/LuaScript"
+local resScriptPath = "D:/Work/cocos2d-2.1rc0-x-2.1.3/samples/Lua/qbwdemo/Resources/LuaScript"
 
-local resOutPath = "D:/Work/qbwdemo/Resources/decoda/qbwdemo.deproj"
+
+
+local resOutPath = "D:/Work/cocos2d-2.1rc0-x-2.1.3/samples/Lua/qbwdemo/Resources/decoda/qbwdemo.deproj"
 
 
 function getpathes(rootpath, pathes)

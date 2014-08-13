@@ -1,5 +1,5 @@
 --事件触发功能
-
+cclog("GlobalEvent 1")
 GlobalEvent = {};
 local p = GlobalEvent;
 

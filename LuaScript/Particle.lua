@@ -21,6 +21,7 @@ local tParticleType =
 	recovery = 8;
 	suckenergy = 9;
 	fog		= 10;
+	poison2 = 11;
 }
 
 

@@ -126,8 +126,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[7]["ATTadj"] = 3
 	MONSTER_TYPE[7]["CD"] = 20
 	MONSTER_TYPE[7]["CDGrow"] = -1
-	MONSTER_TYPE[7]["PICID"] = 1
-	MONSTER_TYPE[7]["ScarePICID"] = 8
+	MONSTER_TYPE[7]["PICID"] = 32
+	MONSTER_TYPE[7]["ScarePICID"] = 32
 	MONSTER_TYPE[7]["desc"]	= ""
 	
 	MONSTER_TYPE[8] = {}
@@ -142,8 +142,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[8]["ATTadj"] = 3
 	MONSTER_TYPE[8]["CD"] = 20
 	MONSTER_TYPE[8]["CDGrow"] = -1
-	MONSTER_TYPE[8]["PICID"] = 1
-	MONSTER_TYPE[8]["ScarePICID"] = 8
+	MONSTER_TYPE[8]["PICID"] = 31
+	MONSTER_TYPE[8]["ScarePICID"] = 31
 	MONSTER_TYPE[8]["desc"]	= ""
 	
 	
@@ -261,8 +261,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[15]["ATTadj"] = 1
 	MONSTER_TYPE[15]["CD"] = 60
 	MONSTER_TYPE[15]["CDGrow"] = -1
-	MONSTER_TYPE[15]["PICID"] = 29
-	MONSTER_TYPE[15]["ScarePICID"] = 29
+	MONSTER_TYPE[15]["PICID"] = 33
+	MONSTER_TYPE[15]["ScarePICID"] = 33
 	MONSTER_TYPE[15]["desc"]	= "EXPLODE!!!"
 
 	--燃烧能量
@@ -278,8 +278,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[16]["ATTadj"] = 3
 	MONSTER_TYPE[16]["CD"] = 20
 	MONSTER_TYPE[16]["CDGrow"] = -1
-	MONSTER_TYPE[16]["PICID"] = 1
-	MONSTER_TYPE[16]["ScarePICID"] = 1
+	MONSTER_TYPE[16]["PICID"] = 34
+	MONSTER_TYPE[16]["ScarePICID"] = 34
 	MONSTER_TYPE[16]["desc"]	= "burn your energy!"
 
 	--腐蚀装备
@@ -298,6 +298,354 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[17]["PICID"] = 1
 	MONSTER_TYPE[17]["ScarePICID"] = 1
 	MONSTER_TYPE[17]["desc"]	= "break equip!"
+
+	--调换位置
+	MONSTER_TYPE[18] = {}
+	MONSTER_TYPE[18]["name"] = "transport"
+	MONSTER_TYPE[18]["MAgic"] = {1020} --技能列表
+	MONSTER_TYPE[18]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[18]["HP"] = 25
+	MONSTER_TYPE[18]["HPGrow"] = 4
+	MONSTER_TYPE[18]["HPadj"] = 3
+	MONSTER_TYPE[18]["ATT"] = 1
+	MONSTER_TYPE[18]["ATTGrow"] = 1
+	MONSTER_TYPE[18]["ATTadj"] = 3
+	MONSTER_TYPE[18]["CD"] = 20
+	MONSTER_TYPE[18]["CDGrow"] = -1
+	MONSTER_TYPE[18]["PICID"] = 1
+	MONSTER_TYPE[18]["ScarePICID"] = 1
+	MONSTER_TYPE[18]["desc"]	= "transport!"
+
+
+	--毒
+	MONSTER_TYPE[19] = {}
+	MONSTER_TYPE[19]["name"] = "poison"
+	MONSTER_TYPE[19]["MAgic"] = {1021} --技能列表
+	MONSTER_TYPE[19]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[19]["HP"] = 25
+	MONSTER_TYPE[19]["HPGrow"] = 4
+	MONSTER_TYPE[19]["HPadj"] = 3
+	MONSTER_TYPE[19]["ATT"] = 1
+	MONSTER_TYPE[19]["ATTGrow"] = 1
+	MONSTER_TYPE[19]["ATTadj"] = 3
+	MONSTER_TYPE[19]["CD"] = 35
+	MONSTER_TYPE[19]["CDGrow"] = -1
+	MONSTER_TYPE[19]["PICID"] = 1
+	MONSTER_TYPE[19]["ScarePICID"] = 1
+	MONSTER_TYPE[19]["desc"]	= "poison!"
+
+	--闪光
+	MONSTER_TYPE[20] = {}
+	MONSTER_TYPE[20]["name"] = "shine"
+	MONSTER_TYPE[20]["MAgic"] = {1022} --技能列表
+	MONSTER_TYPE[20]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[20]["HP"] = 25
+	MONSTER_TYPE[20]["HPGrow"] = 4
+	MONSTER_TYPE[20]["HPadj"] = 3
+	MONSTER_TYPE[20]["ATT"] = 1
+	MONSTER_TYPE[20]["ATTGrow"] = 1
+	MONSTER_TYPE[20]["ATTadj"] = 3
+	MONSTER_TYPE[20]["CD"] = 20
+	MONSTER_TYPE[20]["CDGrow"] = -1
+	MONSTER_TYPE[20]["PICID"] = 1
+	MONSTER_TYPE[20]["ScarePICID"] = 1
+	MONSTER_TYPE[20]["desc"]	= "shine!"
+
+	--诅咒
+	MONSTER_TYPE[21] = {}
+	MONSTER_TYPE[21]["name"] = "shine"
+	MONSTER_TYPE[21]["MAgic"] = {1023} --技能列表
+	MONSTER_TYPE[21]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[21]["HP"] = 25
+	MONSTER_TYPE[21]["HPGrow"] = 4
+	MONSTER_TYPE[21]["HPadj"] = 3
+	MONSTER_TYPE[21]["ATT"] = 1
+	MONSTER_TYPE[21]["ATTGrow"] = 1
+	MONSTER_TYPE[21]["ATTadj"] = 3
+	MONSTER_TYPE[21]["CD"] = 40
+	MONSTER_TYPE[21]["CDGrow"] = -1
+	MONSTER_TYPE[21]["PICID"] = 1
+	MONSTER_TYPE[21]["ScarePICID"] = 1
+	MONSTER_TYPE[21]["desc"]	= "shine!"
+
+	--偷钱
+	MONSTER_TYPE[22] = {}
+	MONSTER_TYPE[22]["name"] = "steal"
+	MONSTER_TYPE[22]["MAgic"] = {1024} --技能列表
+	MONSTER_TYPE[22]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[22]["HP"] = 25
+	MONSTER_TYPE[22]["HPGrow"] = 4
+	MONSTER_TYPE[22]["HPadj"] = 3
+	MONSTER_TYPE[22]["ATT"] = 1
+	MONSTER_TYPE[22]["ATTGrow"] = 1
+	MONSTER_TYPE[22]["ATTadj"] = 3
+	MONSTER_TYPE[22]["CD"] = 20
+	MONSTER_TYPE[22]["CDGrow"] = -1
+	MONSTER_TYPE[22]["PICID"] = 1
+	MONSTER_TYPE[22]["ScarePICID"] = 1
+	MONSTER_TYPE[22]["desc"]	= "steal!"
+
+	--加速
+	MONSTER_TYPE[23] = {}
+	MONSTER_TYPE[23]["name"] = "steal"
+	MONSTER_TYPE[23]["MAgic"] = {1025} --技能列表
+	MONSTER_TYPE[23]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[23]["HP"] = 25
+	MONSTER_TYPE[23]["HPGrow"] = 4
+	MONSTER_TYPE[23]["HPadj"] = 3
+	MONSTER_TYPE[23]["ATT"] = 1
+	MONSTER_TYPE[23]["ATTGrow"] = 1
+	MONSTER_TYPE[23]["ATTadj"] = 3
+	MONSTER_TYPE[23]["CD"] = 40
+	MONSTER_TYPE[23]["CDGrow"] = -1
+	MONSTER_TYPE[23]["PICID"] = 1
+	MONSTER_TYPE[23]["ScarePICID"] = 1
+	MONSTER_TYPE[23]["desc"]	= "steal!"
+
+	--毒药
+	MONSTER_TYPE[24] = {}
+	MONSTER_TYPE[24]["name"] = "poison"
+	MONSTER_TYPE[24]["MAgic"] = {1026} --技能列表
+	MONSTER_TYPE[24]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[24]["HP"] = 25
+	MONSTER_TYPE[24]["HPGrow"] = 4
+	MONSTER_TYPE[24]["HPadj"] = 3
+	MONSTER_TYPE[24]["ATT"] = 1
+	MONSTER_TYPE[24]["ATTGrow"] = 1
+	MONSTER_TYPE[24]["ATTadj"] = 3
+	MONSTER_TYPE[24]["CD"] = 20
+	MONSTER_TYPE[24]["CDGrow"] = -1
+	MONSTER_TYPE[24]["PICID"] = 1
+	MONSTER_TYPE[24]["ScarePICID"] = 1
+	MONSTER_TYPE[24]["desc"]	= "poison!"
+		
+	--加速
+	MONSTER_TYPE[25] = {}
+	MONSTER_TYPE[25]["name"] = "speed"
+	MONSTER_TYPE[25]["MAgic"] = {1027} --技能列表
+	MONSTER_TYPE[25]["MAgicRound"] = {999} --无限
+	MONSTER_TYPE[25]["HP"] = 25
+	MONSTER_TYPE[25]["HPGrow"] = 4
+	MONSTER_TYPE[25]["HPadj"] = 3
+	MONSTER_TYPE[25]["ATT"] = 1
+	MONSTER_TYPE[25]["ATTGrow"] = 1
+	MONSTER_TYPE[25]["ATTadj"] = 3
+	MONSTER_TYPE[25]["CD"] = 40
+	MONSTER_TYPE[25]["CDGrow"] = -1
+	MONSTER_TYPE[25]["PICID"] = 1
+	MONSTER_TYPE[25]["ScarePICID"] = 1
+	MONSTER_TYPE[25]["desc"]	= "speed!"
+		
+	
+	--隐身
+	MONSTER_TYPE[26] = {}
+	MONSTER_TYPE[26]["name"] = "hide"
+	MONSTER_TYPE[26]["MAgic"] = {1028} --技能列表
+	MONSTER_TYPE[26]["MAgicRound"] = {1} 
+	MONSTER_TYPE[26]["HP"] = 25
+	MONSTER_TYPE[26]["HPGrow"] = 4
+	MONSTER_TYPE[26]["HPadj"] = 3
+	MONSTER_TYPE[26]["ATT"] = 1
+	MONSTER_TYPE[26]["ATTGrow"] = 1
+	MONSTER_TYPE[26]["ATTadj"] = 3
+	MONSTER_TYPE[26]["CD"] = 15
+	MONSTER_TYPE[26]["CDGrow"] = -1
+	MONSTER_TYPE[26]["PICID"] = 1
+	MONSTER_TYPE[26]["ScarePICID"] = 1
+	MONSTER_TYPE[26]["desc"]	= "hide!"
+		
+		
+	--食人魔
+	MONSTER_TYPE[27] = {}
+	MONSTER_TYPE[27]["name"] = "eat"
+	MONSTER_TYPE[27]["MAgic"] = {1029} --技能列表
+	MONSTER_TYPE[27]["MAgicRound"] = {999} 
+	MONSTER_TYPE[27]["HP"] = 35
+	MONSTER_TYPE[27]["HPGrow"] = 4
+	MONSTER_TYPE[27]["HPadj"] = 3
+	MONSTER_TYPE[27]["ATT"] = 2
+	MONSTER_TYPE[27]["ATTGrow"] = 1
+	MONSTER_TYPE[27]["ATTadj"] = 3
+	MONSTER_TYPE[27]["CD"] = 15
+	MONSTER_TYPE[27]["CDGrow"] = -1
+	MONSTER_TYPE[27]["PICID"] = 1
+	MONSTER_TYPE[27]["ScarePICID"] = 1
+	MONSTER_TYPE[27]["desc"]	= "eat!"
+		
+	--叠伤怪
+	MONSTER_TYPE[28] = {}
+	MONSTER_TYPE[28]["name"] = "ATT+"
+	MONSTER_TYPE[28]["MAgic"] = {1030} --技能列表
+	MONSTER_TYPE[28]["MAgicRound"] = {1} 
+	MONSTER_TYPE[28]["HP"] = 35
+	MONSTER_TYPE[28]["HPGrow"] = 4
+	MONSTER_TYPE[28]["HPadj"] = 3
+	MONSTER_TYPE[28]["ATT"] = 1
+	MONSTER_TYPE[28]["ATTGrow"] = 1
+	MONSTER_TYPE[28]["ATTadj"] = 3
+	MONSTER_TYPE[28]["CD"] = 15
+	MONSTER_TYPE[28]["CDGrow"] = -1
+	MONSTER_TYPE[28]["PICID"] = 1
+	MONSTER_TYPE[28]["ScarePICID"] = 1
+	MONSTER_TYPE[28]["desc"]	= "ATT!"
+						
+	--狂暴  血少于XXX 则攻击增加
+	MONSTER_TYPE[29] = {}
+	MONSTER_TYPE[29]["name"] = "ATT++"
+	MONSTER_TYPE[29]["MAgic"] = {1031} --技能列表
+	MONSTER_TYPE[29]["MAgicRound"] = {1} 
+	MONSTER_TYPE[29]["HP"] = 55
+	MONSTER_TYPE[29]["HPGrow"] = 4
+	MONSTER_TYPE[29]["HPadj"] = 3
+	MONSTER_TYPE[29]["ATT"] = 2
+	MONSTER_TYPE[29]["ATTGrow"] = 1
+	MONSTER_TYPE[29]["ATTadj"] = 3
+	MONSTER_TYPE[29]["CD"] = 15
+	MONSTER_TYPE[29]["CDGrow"] = -1
+	MONSTER_TYPE[29]["PICID"] = 1
+	MONSTER_TYPE[29]["ScarePICID"] = 1
+	MONSTER_TYPE[29]["desc"]	= "ATT!"
+
+	--群召唤
+	MONSTER_TYPE[30] = {}
+	MONSTER_TYPE[30]["name"] = "群召唤"
+	MONSTER_TYPE[30]["MAgic"] = {1032} --技能列表
+	MONSTER_TYPE[30]["MAgicRound"] = {999} 
+	MONSTER_TYPE[30]["HP"] = 55
+	MONSTER_TYPE[30]["HPGrow"] = 4
+	MONSTER_TYPE[30]["HPadj"] = 3
+	MONSTER_TYPE[30]["ATT"] = 2
+	MONSTER_TYPE[30]["ATTGrow"] = 1
+	MONSTER_TYPE[30]["ATTadj"] = 3
+	MONSTER_TYPE[30]["CD"] = 15
+	MONSTER_TYPE[30]["CDGrow"] = -1
+	MONSTER_TYPE[30]["PICID"] = 1
+	MONSTER_TYPE[30]["ScarePICID"] = 1
+	MONSTER_TYPE[30]["desc"]	= "群召唤!"
+
+	--沉默
+	MONSTER_TYPE[31] = {}
+	MONSTER_TYPE[31]["name"] = "沉默"
+	MONSTER_TYPE[31]["MAgic"] = {1033} --技能列表
+	MONSTER_TYPE[31]["MAgicRound"] = {999} 
+	MONSTER_TYPE[31]["HP"] = 55
+	MONSTER_TYPE[31]["HPGrow"] = 4
+	MONSTER_TYPE[31]["HPadj"] = 3
+	MONSTER_TYPE[31]["ATT"] = 2
+	MONSTER_TYPE[31]["ATTGrow"] = 1
+	MONSTER_TYPE[31]["ATTadj"] = 3
+	MONSTER_TYPE[31]["CD"] = 15
+	MONSTER_TYPE[31]["CDGrow"] = -1
+	MONSTER_TYPE[31]["PICID"] = 1
+	MONSTER_TYPE[31]["ScarePICID"] = 1
+	MONSTER_TYPE[31]["desc"]	= "沉默!"
+
+	--吃金币耗能+
+	MONSTER_TYPE[32] = {}
+	MONSTER_TYPE[32]["name"] = "吃金币耗能+"
+	MONSTER_TYPE[32]["MAgic"] = {1034} --技能列表
+	MONSTER_TYPE[32]["MAgicRound"] = {999} 
+	MONSTER_TYPE[32]["HP"] = 25
+	MONSTER_TYPE[32]["HPGrow"] = 4
+	MONSTER_TYPE[32]["HPadj"] = 3
+	MONSTER_TYPE[32]["ATT"] = 2
+	MONSTER_TYPE[32]["ATTGrow"] = 1
+	MONSTER_TYPE[32]["ATTadj"] = 3
+	MONSTER_TYPE[32]["CD"] = 15
+	MONSTER_TYPE[32]["CDGrow"] = -1
+	MONSTER_TYPE[32]["PICID"] = 1
+	MONSTER_TYPE[32]["ScarePICID"] = 1
+	MONSTER_TYPE[32]["desc"]	= "吃金币耗能+!"
+
+
+	--吃血耗能+
+	MONSTER_TYPE[33] = {}
+	MONSTER_TYPE[33]["name"] = "吃血耗能+"
+	MONSTER_TYPE[33]["MAgic"] = {1035} --技能列表
+	MONSTER_TYPE[33]["MAgicRound"] = {999} 
+	MONSTER_TYPE[33]["HP"] = 25
+	MONSTER_TYPE[33]["HPGrow"] = 4
+	MONSTER_TYPE[33]["HPadj"] = 3
+	MONSTER_TYPE[33]["ATT"] = 2
+	MONSTER_TYPE[33]["ATTGrow"] = 1
+	MONSTER_TYPE[33]["ATTadj"] = 3
+	MONSTER_TYPE[33]["CD"] = 15
+	MONSTER_TYPE[33]["CDGrow"] = -1
+	MONSTER_TYPE[33]["PICID"] = 1
+	MONSTER_TYPE[33]["ScarePICID"] = 1
+	MONSTER_TYPE[33]["desc"]	= "吃血耗能+!"
+
+
+	
+	--吃怪耗能+
+	MONSTER_TYPE[34] = {}
+	MONSTER_TYPE[34]["name"] = "吃怪耗能+"
+	MONSTER_TYPE[34]["MAgic"] = {1036} --技能列表
+	MONSTER_TYPE[34]["MAgicRound"] = {999} 
+	MONSTER_TYPE[34]["HP"] = 25
+	MONSTER_TYPE[34]["HPGrow"] = 4
+	MONSTER_TYPE[34]["HPadj"] = 3
+	MONSTER_TYPE[34]["ATT"] = 2
+	MONSTER_TYPE[34]["ATTGrow"] = 1
+	MONSTER_TYPE[34]["ATTadj"] = 3
+	MONSTER_TYPE[34]["CD"] = 15
+	MONSTER_TYPE[34]["CDGrow"] = -1
+	MONSTER_TYPE[34]["PICID"] = 1
+	MONSTER_TYPE[34]["ScarePICID"] = 1
+	MONSTER_TYPE[34]["desc"]	= "吃怪耗能+!"
+
+	--吃金币给怪加攻击
+	MONSTER_TYPE[35] = {}
+	MONSTER_TYPE[35]["name"] = "吃金币给怪加攻击+"
+	MONSTER_TYPE[35]["MAgic"] = {1037} --技能列表
+	MONSTER_TYPE[35]["MAgicRound"] = {999} 
+	MONSTER_TYPE[35]["HP"] = 25
+	MONSTER_TYPE[35]["HPGrow"] = 4
+	MONSTER_TYPE[35]["HPadj"] = 3
+	MONSTER_TYPE[35]["ATT"] = 2
+	MONSTER_TYPE[35]["ATTGrow"] = 1
+	MONSTER_TYPE[35]["ATTadj"] = 3
+	MONSTER_TYPE[35]["CD"] = 15
+	MONSTER_TYPE[35]["CDGrow"] = -1
+	MONSTER_TYPE[35]["PICID"] = 1
+	MONSTER_TYPE[35]["ScarePICID"] = 1
+	MONSTER_TYPE[35]["desc"]	= "吃金币给怪加攻击+!"
+
+	--吃血给怪加攻击
+	MONSTER_TYPE[36] = {}
+	MONSTER_TYPE[36]["name"] = "吃血给怪加攻击+"
+	MONSTER_TYPE[36]["MAgic"] = {1038} --技能列表
+	MONSTER_TYPE[36]["MAgicRound"] = {999} 
+	MONSTER_TYPE[36]["HP"] = 25
+	MONSTER_TYPE[36]["HPGrow"] = 4
+	MONSTER_TYPE[36]["HPadj"] = 3
+	MONSTER_TYPE[36]["ATT"] = 2
+	MONSTER_TYPE[36]["ATTGrow"] = 1
+	MONSTER_TYPE[36]["ATTadj"] = 3
+	MONSTER_TYPE[36]["CD"] = 15
+	MONSTER_TYPE[36]["CDGrow"] = -1
+	MONSTER_TYPE[36]["PICID"] = 1
+	MONSTER_TYPE[36]["ScarePICID"] = 1
+	MONSTER_TYPE[36]["desc"]	= "吃血给怪加攻击+!"
+
+	--吃剑给怪加攻击
+	MONSTER_TYPE[37] = {}
+	MONSTER_TYPE[37]["name"] = "吃剑给怪加攻击+"
+	MONSTER_TYPE[37]["MAgic"] = {1039} --技能列表
+	MONSTER_TYPE[37]["MAgicRound"] = {999} 
+	MONSTER_TYPE[37]["HP"] = 25
+	MONSTER_TYPE[37]["HPGrow"] = 4
+	MONSTER_TYPE[37]["HPadj"] = 3
+	MONSTER_TYPE[37]["ATT"] = 2
+	MONSTER_TYPE[37]["ATTGrow"] = 1
+	MONSTER_TYPE[37]["ATTadj"] = 3
+	MONSTER_TYPE[37]["CD"] = 15
+	MONSTER_TYPE[37]["CDGrow"] = -1
+	MONSTER_TYPE[37]["PICID"] = 1
+	MONSTER_TYPE[37]["ScarePICID"] = 1
+	MONSTER_TYPE[37]["desc"]	= "吃剑给怪加攻击+!"
+
+
 
 
 function p.GetPicIdFromMonsterId(nMonsterId)
@@ -570,6 +918,10 @@ function p.damage( pBrick,nDamage,bcritical)
 		local defender = tDamageAction.defender
 		
 		if defender ~= nil then 
+
+
+
+			--损血			
 			defender.moninfo[monsterInfo.HP]  = defender.moninfo[monsterInfo.HP]  - ndamage	
 			local hpbar = defender.HPBar
 			local percent = defender.moninfo[monsterInfo.HP]/ defender.moninfo[monsterInfo.HPMAX]
@@ -706,7 +1058,7 @@ function p.SpellMagic(pmonster,IfBorn)
 								local effT = tEffList[j];
 								local effid = magictable[nid][MAGIC_DEF_TABLE.TOTARGET_EFFECT_FUNCID_0]
 								local efffunc = MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.EFF_FUNC]
-								efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM])
+								efffunc(v,MAGIC_EFFtable[effid][MAGIC_EFF_DEF_TABLE.TPARAM],pmonster)
         
 								--获取怪物EFFTABLE ROUND --
 								effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] = effT[MAGIC_EFF_DEF_TABLE.LAST_ROUNDS] - 1
