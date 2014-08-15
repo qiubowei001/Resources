@@ -673,7 +673,7 @@ function p.effclr1027(pobj)
 		pobj.moninfo[monsterInfo.CDMAX] = CDMAX	
 end
 
-
+--AddDamageAdjFunc RemoveDamageAdjFunc
 --隐身 无法被攻击
 function p.eff1028(self)
 	local mainsprite = brick.GetMainSprite(self)
@@ -682,12 +682,12 @@ function p.eff1028(self)
 	if self.HideRound <= 0 then
 		mainsprite:setOpacity(255)
 		self.HideRound = 3
-		monster.RemoveAdjFunc(self,1028)
+		monster.RemoveDamageAdjFunc(self,1028)
 	else
 		mainsprite:setOpacity(30)
 		
-		monster.AddAttAdjFunc(self, function(tAttAction)
-											tAttAction.damage = 0
+		monster.AddDamageAdjFunc(self, function(tAttAction)
+											tAttAction.defender = nil
 										end
 							,1028)
 	end

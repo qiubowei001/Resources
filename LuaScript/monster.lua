@@ -295,8 +295,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[17]["ATTadj"] = 3
 	MONSTER_TYPE[17]["CD"] = 20
 	MONSTER_TYPE[17]["CDGrow"] = -1
-	MONSTER_TYPE[17]["PICID"] = 1
-	MONSTER_TYPE[17]["ScarePICID"] = 1
+	MONSTER_TYPE[17]["PICID"] = 35
+	MONSTER_TYPE[17]["ScarePICID"] = 35
 	MONSTER_TYPE[17]["desc"]	= "break equip!"
 
 	--调换位置
@@ -312,8 +312,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[18]["ATTadj"] = 3
 	MONSTER_TYPE[18]["CD"] = 20
 	MONSTER_TYPE[18]["CDGrow"] = -1
-	MONSTER_TYPE[18]["PICID"] = 1
-	MONSTER_TYPE[18]["ScarePICID"] = 1
+	MONSTER_TYPE[18]["PICID"] = 36
+	MONSTER_TYPE[18]["ScarePICID"] = 36
 	MONSTER_TYPE[18]["desc"]	= "transport!"
 
 
@@ -330,8 +330,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[19]["ATTadj"] = 3
 	MONSTER_TYPE[19]["CD"] = 35
 	MONSTER_TYPE[19]["CDGrow"] = -1
-	MONSTER_TYPE[19]["PICID"] = 1
-	MONSTER_TYPE[19]["ScarePICID"] = 1
+	MONSTER_TYPE[19]["PICID"] = 38
+	MONSTER_TYPE[19]["ScarePICID"] = 38
 	MONSTER_TYPE[19]["desc"]	= "poison!"
 
 	--闪光
@@ -347,8 +347,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[20]["ATTadj"] = 3
 	MONSTER_TYPE[20]["CD"] = 20
 	MONSTER_TYPE[20]["CDGrow"] = -1
-	MONSTER_TYPE[20]["PICID"] = 1
-	MONSTER_TYPE[20]["ScarePICID"] = 1
+	MONSTER_TYPE[20]["PICID"] = 39
+	MONSTER_TYPE[20]["ScarePICID"] = 39
 	MONSTER_TYPE[20]["desc"]	= "shine!"
 
 	--诅咒
@@ -364,8 +364,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[21]["ATTadj"] = 3
 	MONSTER_TYPE[21]["CD"] = 40
 	MONSTER_TYPE[21]["CDGrow"] = -1
-	MONSTER_TYPE[21]["PICID"] = 1
-	MONSTER_TYPE[21]["ScarePICID"] = 1
+	MONSTER_TYPE[21]["PICID"] = 37
+	MONSTER_TYPE[21]["ScarePICID"] = 37
 	MONSTER_TYPE[21]["desc"]	= "shine!"
 
 	--偷钱
@@ -381,11 +381,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[22]["ATTadj"] = 3
 	MONSTER_TYPE[22]["CD"] = 20
 	MONSTER_TYPE[22]["CDGrow"] = -1
-	MONSTER_TYPE[22]["PICID"] = 1
-	MONSTER_TYPE[22]["ScarePICID"] = 1
+	MONSTER_TYPE[22]["PICID"] = 40
+	MONSTER_TYPE[22]["ScarePICID"] = 40
 	MONSTER_TYPE[22]["desc"]	= "steal!"
 
-	--加速
+	--时间加速
 	MONSTER_TYPE[23] = {}
 	MONSTER_TYPE[23]["name"] = "steal"
 	MONSTER_TYPE[23]["MAgic"] = {1025} --技能列表
@@ -398,8 +398,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[23]["ATTadj"] = 3
 	MONSTER_TYPE[23]["CD"] = 40
 	MONSTER_TYPE[23]["CDGrow"] = -1
-	MONSTER_TYPE[23]["PICID"] = 1
-	MONSTER_TYPE[23]["ScarePICID"] = 1
+	MONSTER_TYPE[23]["PICID"] = 41
+	MONSTER_TYPE[23]["ScarePICID"] = 41
 	MONSTER_TYPE[23]["desc"]	= "steal!"
 
 	--毒药
@@ -415,11 +415,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[24]["ATTadj"] = 3
 	MONSTER_TYPE[24]["CD"] = 20
 	MONSTER_TYPE[24]["CDGrow"] = -1
-	MONSTER_TYPE[24]["PICID"] = 1
-	MONSTER_TYPE[24]["ScarePICID"] = 1
+	MONSTER_TYPE[24]["PICID"] = 42
+	MONSTER_TYPE[24]["ScarePICID"] = 42
 	MONSTER_TYPE[24]["desc"]	= "poison!"
 		
-	--加速
+	--加怪物攻击速度
 	MONSTER_TYPE[25] = {}
 	MONSTER_TYPE[25]["name"] = "speed"
 	MONSTER_TYPE[25]["MAgic"] = {1027} --技能列表
@@ -432,8 +432,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[25]["ATTadj"] = 3
 	MONSTER_TYPE[25]["CD"] = 40
 	MONSTER_TYPE[25]["CDGrow"] = -1
-	MONSTER_TYPE[25]["PICID"] = 1
-	MONSTER_TYPE[25]["ScarePICID"] = 1
+	MONSTER_TYPE[25]["PICID"] = 43
+	MONSTER_TYPE[25]["ScarePICID"] = 43
 	MONSTER_TYPE[25]["desc"]	= "speed!"
 		
 	
@@ -450,8 +450,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[26]["ATTadj"] = 3
 	MONSTER_TYPE[26]["CD"] = 15
 	MONSTER_TYPE[26]["CDGrow"] = -1
-	MONSTER_TYPE[26]["PICID"] = 1
-	MONSTER_TYPE[26]["ScarePICID"] = 1
+	MONSTER_TYPE[26]["PICID"] = 44
+	MONSTER_TYPE[26]["ScarePICID"] = 44
 	MONSTER_TYPE[26]["desc"]	= "hide!"
 		
 		
@@ -468,8 +468,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[27]["ATTadj"] = 3
 	MONSTER_TYPE[27]["CD"] = 15
 	MONSTER_TYPE[27]["CDGrow"] = -1
-	MONSTER_TYPE[27]["PICID"] = 1
-	MONSTER_TYPE[27]["ScarePICID"] = 1
+	MONSTER_TYPE[27]["PICID"] = 45
+	MONSTER_TYPE[27]["ScarePICID"] = 45
 	MONSTER_TYPE[27]["desc"]	= "eat!"
 		
 	--叠伤怪
@@ -485,8 +485,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[28]["ATTadj"] = 3
 	MONSTER_TYPE[28]["CD"] = 15
 	MONSTER_TYPE[28]["CDGrow"] = -1
-	MONSTER_TYPE[28]["PICID"] = 1
-	MONSTER_TYPE[28]["ScarePICID"] = 1
+	MONSTER_TYPE[28]["PICID"] = 47
+	MONSTER_TYPE[28]["ScarePICID"] = 47
 	MONSTER_TYPE[28]["desc"]	= "ATT!"
 						
 	--狂暴  血少于XXX 则攻击增加
@@ -502,8 +502,8 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[29]["ATTadj"] = 3
 	MONSTER_TYPE[29]["CD"] = 15
 	MONSTER_TYPE[29]["CDGrow"] = -1
-	MONSTER_TYPE[29]["PICID"] = 1
-	MONSTER_TYPE[29]["ScarePICID"] = 1
+	MONSTER_TYPE[29]["PICID"] = 48
+	MONSTER_TYPE[29]["ScarePICID"] = 48
 	MONSTER_TYPE[29]["desc"]	= "ATT!"
 
 	--群召唤
@@ -519,11 +519,11 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[30]["ATTadj"] = 3
 	MONSTER_TYPE[30]["CD"] = 15
 	MONSTER_TYPE[30]["CDGrow"] = -1
-	MONSTER_TYPE[30]["PICID"] = 1
-	MONSTER_TYPE[30]["ScarePICID"] = 1
+	MONSTER_TYPE[30]["PICID"] = 46
+	MONSTER_TYPE[30]["ScarePICID"] = 46
 	MONSTER_TYPE[30]["desc"]	= "群召唤!"
 
-	--沉默
+	--沉默(树妖？)
 	MONSTER_TYPE[31] = {}
 	MONSTER_TYPE[31]["name"] = "沉默"
 	MONSTER_TYPE[31]["MAgic"] = {1033} --技能列表
@@ -540,7 +540,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[31]["ScarePICID"] = 1
 	MONSTER_TYPE[31]["desc"]	= "沉默!"
 
-	--吃金币耗能+
+	--吃金币耗能+(金色沙虫)
 	MONSTER_TYPE[32] = {}
 	MONSTER_TYPE[32]["name"] = "吃金币耗能+"
 	MONSTER_TYPE[32]["MAgic"] = {1034} --技能列表
@@ -558,7 +558,7 @@ MONSTER_TYPE = {}
 	MONSTER_TYPE[32]["desc"]	= "吃金币耗能+!"
 
 
-	--吃血耗能+
+	--吃血耗能+(红色沙虫)
 	MONSTER_TYPE[33] = {}
 	MONSTER_TYPE[33]["name"] = "吃血耗能+"
 	MONSTER_TYPE[33]["MAgic"] = {1035} --技能列表
@@ -577,7 +577,7 @@ MONSTER_TYPE = {}
 
 
 	
-	--吃怪耗能+
+	--吃怪耗能+(灰色沙虫)
 	MONSTER_TYPE[34] = {}
 	MONSTER_TYPE[34]["name"] = "吃怪耗能+"
 	MONSTER_TYPE[34]["MAgic"] = {1036} --技能列表
@@ -786,7 +786,7 @@ function p.InitMonster( pBrick,nid,nLev)
 		
 		--冷却进度条
 		local CDBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
-		CDBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*4/5)
+		CDBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth)--*4/5)
 		pBrick:addChild(CDBarBg)
 		CDBarBg:setTag(g_CDbar);
 		
@@ -813,7 +813,7 @@ function p.InitMonster( pBrick,nid,nLev)
 		
 		--血条
 		local HPBarBg = CCMenuItemImage:create("UI/Bar/brickbarbg.png", "UI/Bar/brickbarbg.png")
-		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*7/10)
+		HPBarBg:setPosition(brickInfo.brickWidth/2, brickInfo.brickWidth*9/10)
 		pBrick:addChild(HPBarBg)
 		HPBarBg:setTag(g_hplabeltag);
 		HPBar = CCProgressTimer:create(CCSprite:create("UI/Bar/monsterhpbar.png"))

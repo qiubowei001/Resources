@@ -242,3 +242,103 @@ SpriteConfig[34].Width = 65
 SpriteConfig[34].Height = 71
 SpriteConfig[34].FrameNumX = 6
 SpriteConfig[34].FrameNumY = 4
+
+
+SpriteConfig[35] = {}
+SpriteConfig[35].Name = "monster/21"
+SpriteConfig[35].Width = 80
+SpriteConfig[35].Height = 75
+SpriteConfig[35].FrameNumX = 6
+SpriteConfig[35].FrameNumY = 4
+
+SpriteConfig[36] = {}
+SpriteConfig[36].Name = "monster/22"
+SpriteConfig[36].Width = 85
+SpriteConfig[36].Height = 83
+SpriteConfig[36].FrameNumX = 5
+SpriteConfig[36].FrameNumY = 5
+
+SpriteConfig[37] = {}
+SpriteConfig[37].Name = "monster/23"
+SpriteConfig[37].Width = 75
+SpriteConfig[37].Height = 73
+SpriteConfig[37].FrameNumX = 6
+SpriteConfig[37].FrameNumY = 5
+
+SpriteConfig[38] = {}
+SpriteConfig[38].Name = "monster/24"
+SpriteConfig[38].Width = 69
+SpriteConfig[38].Height = 49
+SpriteConfig[38].FrameNumX = 6
+SpriteConfig[38].FrameNumY = 8
+
+
+SpriteConfig[39] = {}
+SpriteConfig[39].Name = "monster/25"
+SpriteConfig[39].Width = 65
+SpriteConfig[39].Height = 59
+SpriteConfig[39].FrameNumX = 6
+SpriteConfig[39].FrameNumY = 4
+
+SpriteConfig[40] = {}
+SpriteConfig[40].Name = "monster/26"
+SpriteConfig[40].Width = 101
+SpriteConfig[40].Height = 100
+SpriteConfig[40].FrameNumX = 10
+SpriteConfig[40].FrameNumY = 3
+
+SpriteConfig[41] = {}
+SpriteConfig[41].Name = "monster/27"
+SpriteConfig[41].Width = 82
+SpriteConfig[41].Height = 82
+SpriteConfig[41].FrameNumX = 10
+SpriteConfig[41].FrameNumY = 3
+
+SpriteConfig[42] = {}
+SpriteConfig[42].Name = "monster/28"
+SpriteConfig[42].Width = 69
+SpriteConfig[42].Height = 49
+SpriteConfig[42].FrameNumX = 6
+SpriteConfig[42].FrameNumY = 8
+
+SpriteConfig[43] = {}
+SpriteConfig[43].Name = "monster/29"
+SpriteConfig[43].Width = 115
+SpriteConfig[43].Height = 100
+SpriteConfig[43].FrameNumX = 10
+SpriteConfig[43].FrameNumY = 3
+
+SpriteConfig[44] = {}
+SpriteConfig[44].Name = "monster/30"
+SpriteConfig[44].Width = 102
+SpriteConfig[44].Height = 102
+SpriteConfig[44].FrameNumX = 10
+SpriteConfig[44].FrameNumY = 3
+
+SpriteConfig[45] = {}
+SpriteConfig[45].Name = "monster/31"
+SpriteConfig[45].Width = 83
+SpriteConfig[45].Height = 83
+SpriteConfig[45].FrameNumX = 10
+SpriteConfig[45].FrameNumY = 3
+
+SpriteConfig[46] = {}
+SpriteConfig[46].Name = "monster/32"
+SpriteConfig[46].Width = 89
+SpriteConfig[46].Height = 89
+SpriteConfig[46].FrameNumX = 8
+SpriteConfig[46].FrameNumY = 3
+
+SpriteConfig[47] = {}
+SpriteConfig[47].Name = "monster/33"
+SpriteConfig[47].Width = 102
+SpriteConfig[47].Height = 104
+SpriteConfig[47].FrameNumX = 10
+SpriteConfig[47].FrameNumY = 3
+
+SpriteConfig[48] = {}
+SpriteConfig[48].Name = "monster/34"
+SpriteConfig[48].Width = 131
+SpriteConfig[48].Height = 131
+SpriteConfig[48].FrameNumX = 10
+SpriteConfig[48].FrameNumY = 3
